@@ -1,36 +1,26 @@
-#include "hwlistsform.h"
-//#include "qlineedit.h"
-
-#include "ui_hwlistsform.h"
-#include <QFormLayout>
-#include <QLabel>
-#include <QGroupBox>
-
-#include <QLineEdit>
-#include <QPushButton>
+#include "senslistsform.h"
 
 
-HWListsForm::HWListsForm(Global &global, QWidget *parent)
+#include "ui_senslistsform.h"
+//#include <QFormLayout>
+//#include <QLabel>
+//#include <QGroupBox>
+
+//#include <QLineEdit>
+//#include <QPushButton>
+
+
+SensListsForm::SensListsForm(Global &global, QWidget *parent)
     : QMainWindow(parent)
     , global(global)
-    , ui(new Ui::HWListsForm)
+    , ui(new Ui::SensListsForm)
 
 {
 
     ui->setupUi(this);
 
     sensorTableModel = new SensorTableModel(global,this);
-/*
-    sensorTableModel->setHeaderData(0,Qt::Horizontal," Adrese");
-    sensorTableModel->setHeaderData(1,Qt::Horizontal," Nosaukums",Qt::EditRole);
-    sensorTableModel->setHeaderData(2,Qt::Horizontal," Vērtība DI",Qt::EditRole);
-    sensorTableModel->setHeaderData(3,Qt::Horizontal," Vērtība AI",Qt::EditRole);
-    sensorTableModel->setHeaderData(4,Qt::Horizontal," Mainīt DI",Qt::EditRole);
-    sensorTableModel->setHeaderData(5,Qt::Horizontal," Mainīt AI",Qt::EditRole);
-*/
     ui->tableView->setModel(sensorTableModel);
-  //  ui->tableView->setColumnWidth(0,200);
-//    ui->tableView->setColumnWidth(1,200);
 
     int maxRow = global.sensList.size();
 
@@ -45,25 +35,25 @@ HWListsForm::HWListsForm(Global &global, QWidget *parent)
         ui->tableView->setIndexWidget(sensorTableModel->index(row,4),lineEditDi);
         ui->tableView->setIndexWidget(sensorTableModel->index(row,5),lineEditAn);
 
-        connect(lineEditDi, &QLineEdit::editingFinished, this, &HWListsForm::handleEditFinish);
-        connect(lineEditAn, &QLineEdit::editingFinished, this, &HWListsForm::handleEditFinish);
+        connect(lineEditDi, &QLineEdit::editingFinished, this, &SensListsForm::handleEditFinish);
+        connect(lineEditAn, &QLineEdit::editingFinished, this, &SensListsForm::handleEditFinish);
     }
 
     initUI();
 }
 
-HWListsForm::~HWListsForm()
+SensListsForm::~SensListsForm()
 {
     delete ui;
 }
 
 
-void HWListsForm::handleButton()
+void SensListsForm::handleButton()
 {
-    qDebug() << "HWListsForm::handleButton ";
+    qDebug() << "SensListsForm::handleButton ";
 }
 
-void HWListsForm::handleEditFinish()
+void SensListsForm::handleEditFinish()
 
 {
     qDebug() << "handleEditFinish()";
@@ -97,7 +87,7 @@ void HWListsForm::handleEditFinish()
 }
 
 
-void HWListsForm::initUI()
+void SensListsForm::initUI()
 {
 
 

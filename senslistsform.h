@@ -1,5 +1,5 @@
-#ifndef HWLISTSFORM_H
-#define HWLISTSFORM_H
+#ifndef SENSLISTSFORM_H
+#define SENSLISTSFORM_H
 
 #include <QMainWindow>
 #include <QDialog>
@@ -10,26 +10,26 @@
 #include "sensortablemodel.h"
 
 namespace Ui {
-class HWListsForm;
+class SensListsForm;
 }
 
-class HWListsForm : public QMainWindow//, public QDialog
+class SensListsForm : public QMainWindow//, public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit HWListsForm(Global &global, QWidget *parent = nullptr);
+    explicit SensListsForm(Global &global, QWidget *parent = nullptr);
 
     Global &global;
-    ~HWListsForm();
+    ~SensListsForm();
 private slots:
     void handleButton();
     void handleEditFinish();
 
 private:
-    Ui::HWListsForm *ui;
+    Ui::SensListsForm *ui;
     void initUI();
-    //QStandardItemModel *sensorTabModel;
+
     SensorTableModel *sensorTableModel;
 
     //QLineEdit *lineEdit ;
@@ -40,4 +40,4 @@ private:
 
 };
 
-#endif // HWLISTSFORM_H
+#endif // SENSLISTSFORM_H

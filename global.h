@@ -4,6 +4,7 @@
 
 
 #include "qlineedit.h"
+#include "qpushbutton.h"
 #include <QObject>
 #include <QHash>
 #include <QList>
@@ -51,9 +52,11 @@ public:
     struct  act{
         ActuatorType::actT type = ActuatorType::actT::Relay;  // Dyno
         QString name = "Dyno";
-        int adress = 0;
+        int address = 0;
         int analog = 0;
         int digital = 0;
+        QPushButton * ptrLineEditDI = nullptr;
+        QLineEdit * ptrLineEditAN = nullptr;
     } ;
 
     struct  sens{

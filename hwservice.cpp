@@ -2,7 +2,8 @@
 #include "ui_hwservice.h"
 #include <Qdebug>
 #include "global.h"
-#include "hwlistsform.h"
+#include "senslistsform.h"
+#include "actlistform.h"
 
 
 HWService::HWService(Global &global, QWidget *parent)
@@ -26,14 +27,16 @@ HWService::~HWService()
 void HWService::on_pushButton_actuator_clicked()
 {
     qDebug() << "on_pushButton_actuator_clicked";
-    HWListsForm *hwListForm = new HWListsForm(global,this);
-    hwListForm->show();
+    ActListForm *actListForm = new ActListForm(global,this);
+    actListForm->show();
 }
 
 
 void HWService::on_pushButton_sensor_clicked()
 {
  qDebug() << "on_pushButton_sensor_clicked";
+    SensListsForm *sensListsForm = new SensListsForm(global,this);
+    sensListsForm->show();
 }
 
 

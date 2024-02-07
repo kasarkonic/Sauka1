@@ -45,7 +45,7 @@ void Global::addActList(QString name, ActuatorType::actT tp, int addres)
     act data;
 
     data.type = tp;  //
-    data.adress = addres;
+    data.address = addres;
     data.name = name;
     // data.analog = 0; VALUE
     // data.digital = 0; VALUE

@@ -10,9 +10,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    actlistform.cpp \
+    acttablemodel.cpp \
     dyno.cpp \
     global.cpp \
-    hwlistsform.cpp \
     hwservice.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     parmani.cpp \
     pipe.cpp \
     pump.cpp \
+    senslistsform.cpp \
     sensortablemodel.cpp \
     tvertne.cpp \
     valve.cpp \
@@ -27,15 +29,17 @@ SOURCES += \
     widgetservice.cpp
 
 HEADERS += \
+    actlistform.h \
+    acttablemodel.h \
     dyno.h \
     global.h \
-    hwlistsform.h \
     hwservice.h \
     mainwindow.h \
     mix.h \
     parmani.h \
     pipe.h \
     pump.h \
+    senslistsform.h \
     sensortablemodel.h \
     tvertne.h \
     valve.h \
@@ -43,10 +47,11 @@ HEADERS += \
     widgetservice.h
 
 FORMS += \
-    hwlistsform.ui \
+    actlistform.ui \
     hwservice.ui \
     mainwindow.ui \
     parmani.ui \
+    senslistsform.ui \
     widgetservice.ui
 
 # Default rules for deployment.

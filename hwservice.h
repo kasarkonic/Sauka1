@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "global.h"
-#include "hwlistsform.h"
+//#include "senslistsform.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -21,7 +21,7 @@ public:
     Ui::HWService *ui;
 
     ~HWService();
-    // HWListsForm hwListForm;
+
 
 private slots:
     void on_pushButton_actuator_clicked();
@@ -31,7 +31,7 @@ private slots:
     void on_pushButton_invertor_clicked();
 
 private:
-  //HWListsForm hwListForm;
+
 };
 
 #endif // HWSERVICE_H

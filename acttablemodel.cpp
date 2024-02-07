@@ -1,22 +1,20 @@
-#include "sensortablemodel.h"
+#include "acttablemodel.h"
 
-
-SensorTableModel::SensorTableModel(Global &global, QObject *parent)
+ActTableModel::ActTableModel(Global &global, QObject *parent)
     : QAbstractTableModel{parent}
     , global (global)
 {}
-
-int SensorTableModel::rowCount(const QModelIndex &parent) const
+int ActTableModel::rowCount(const QModelIndex &parent) const
 {
-    return 20;
+    return 2;
 }
 
-int SensorTableModel::columnCount(const QModelIndex &parent) const
+int ActTableModel::columnCount(const QModelIndex &parent) const
 {
     return 6;
 }
 
-QVariant SensorTableModel::data(const QModelIndex &index, int role) const
+QVariant ActTableModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     int col = index.column();
@@ -25,13 +23,13 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         switch (col) {
         case SensAddress:
-            return global.sensList[row].address;
+            return global.actList[row].address;
         case SensName:
-            return global.sensList[row].name;
+            return global.actList[row].name;
         case DIvalue:
-            return global.sensList[row].digital;
+            return global.actList[row].digital;
         case ANvalue:
-            return global.sensList[row].analog;
+            return global.actList[row].analog;
 
         default:
             return QVariant();
@@ -68,9 +66,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
 
 
 
-
-
-QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
+QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
@@ -101,4 +97,3 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
 
     return QVariant ();
 }
-

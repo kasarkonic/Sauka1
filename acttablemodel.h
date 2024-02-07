@@ -1,14 +1,13 @@
-#ifndef SENSORTABLEMODEL_H
-#define SENSORTABLEMODEL_H
-
+#ifndef ACTTABLEMODEL_H
+#define ACTTABLEMODEL_H
 
 #include "global.h"
 #include <QAbstractTableModel>
 
-class SensorTableModel : public QAbstractTableModel
+class ActTableModel : public QAbstractTableModel
 {
 public:
-    explicit SensorTableModel(Global &global, QObject *parent = nullptr);
+    explicit ActTableModel(Global &global, QObject *parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -25,6 +24,8 @@ private:
         Button
     };
     Global &global;
-    // QList <QString> list1, list2, list3;
 };
-#endif // SENSORTABLEMODEL_H
+
+
+
+#endif // ACTTABLEMODEL_H
