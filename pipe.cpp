@@ -44,7 +44,7 @@ void Pipe::setNewPosition(float koef)
 
 void Pipe::updateSettings()
 {
-    qDebug() << "Pipe updateSettings" << settings.options;
+    //qDebug() << "Pipe updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
     update();
 
@@ -245,7 +245,7 @@ void Pipe::timerEvent(QTimerEvent *event){
     //  if (att > currHi - arrTop)
     //      att = 0;
 
-    qDebug() << "Pipe::att "<< att ;
+   // qDebug() << "Pipe::att "<< att ;
 }
 /*
 void Pipe::mousePressEvent(QMouseEvent *event){

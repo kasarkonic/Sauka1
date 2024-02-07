@@ -268,7 +268,7 @@ void MainWindow::drawWidgets()
     foreach (Global::wdataStruct widData, global.widHash){
 
         if( widData.page == currPage || widData.page == 3 ){    // all pages
-            qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
+           // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {

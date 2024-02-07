@@ -20,17 +20,17 @@ HWListsForm::HWListsForm(Global &global, QWidget *parent)
     ui->setupUi(this);
 
     sensorTableModel = new SensorTableModel(global,this);
-
-    sensorTableModel->setHeaderData(0,Qt::Horizontal," Adrese",Qt::DisplayRole);
-    sensorTableModel->setHeaderData(1,Qt::Horizontal," Nosaukums",Qt::DisplayRole);
-    sensorTableModel->setHeaderData(2,Qt::Horizontal," Vērtība DI",Qt::DisplayRole);
-    sensorTableModel->setHeaderData(3,Qt::Horizontal," Vērtība AI",Qt::DisplayRole);
-    sensorTableModel->setHeaderData(4,Qt::Horizontal," Mainīt DI",Qt::DisplayRole);
-    sensorTableModel->setHeaderData(5,Qt::Horizontal," Mainīt AI",Qt::DisplayRole);
-
+/*
+    sensorTableModel->setHeaderData(0,Qt::Horizontal," Adrese");
+    sensorTableModel->setHeaderData(1,Qt::Horizontal," Nosaukums",Qt::EditRole);
+    sensorTableModel->setHeaderData(2,Qt::Horizontal," Vērtība DI",Qt::EditRole);
+    sensorTableModel->setHeaderData(3,Qt::Horizontal," Vērtība AI",Qt::EditRole);
+    sensorTableModel->setHeaderData(4,Qt::Horizontal," Mainīt DI",Qt::EditRole);
+    sensorTableModel->setHeaderData(5,Qt::Horizontal," Mainīt AI",Qt::EditRole);
+*/
     ui->tableView->setModel(sensorTableModel);
-
-
+  //  ui->tableView->setColumnWidth(0,200);
+//    ui->tableView->setColumnWidth(1,200);
 
     int maxRow = global.sensList.size();
 

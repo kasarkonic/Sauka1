@@ -22,7 +22,7 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
 
 void Tvertne::updateSettings()
 {
-    qDebug() << "Tvertne::updateSettings()";
+    //qDebug() << "Tvertne::updateSettings()";
     WidgetDiagramElement::updateSettings();
     int dSensAdr = global.widHash[widName].sensAddres1;
     fill = (int)global.sensList[dSensAdr].analog;

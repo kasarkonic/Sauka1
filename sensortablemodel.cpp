@@ -4,8 +4,9 @@ SensorTableModel::SensorTableModel(Global &global, QObject *parent)
     : QAbstractTableModel{parent}
     , global (global)
 {
-
-
+    //setheaderData(SensAddress, Qt::Horizontal, "AAA", Qt::DisplayRole);
+    bool ok = setHeaderData(1, Qt::Horizontal, "A");
+    qDebug() << "header = "<< ok;
 }
 
 int SensorTableModel::rowCount(const QModelIndex &parent) const
@@ -17,7 +18,7 @@ int SensorTableModel::columnCount(const QModelIndex &parent) const
 {
     return 6;
 }
-
+/*
 void SensorTableModel::addRow(QString str1, QString str2, QString str3)
 {
     beginInsertRows( QModelIndex(), 0, 2 );
@@ -26,7 +27,7 @@ void SensorTableModel::addRow(QString str1, QString str2, QString str3)
     list3.append(str3);
     endInsertRows();
 }
-
+*/
 QVariant SensorTableModel::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
@@ -36,7 +37,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         switch (col) {
         case SensAddress:
-           return global.sensList[row].address;
+            return global.sensList[row].address;
         case SensName:
             return global.sensList[row].name;
         case DIvalue:
@@ -60,26 +61,57 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
 
 
     case Qt::DecorationRole:
-       // if (col == PictureColumn) {
-      //      return getToolPicture(row);
-      //  } else {
-            return QVariant();
-      //  }
-  //  case Qt::EditRole:
-  //      return Units::splitInTwoLines(
-   //         index.data(Qt::DisplayRole).toString());
+        // if (col == PictureColumn) {
+        //      return getToolPicture(row);
+        //  } else {
+        return QVariant();
+        //  }
+        //  case Qt::EditRole:
+        //      return Units::splitInTwoLines(
+        //         index.data(Qt::DisplayRole).toString());
     case Qt::TextAlignmentRole:
         return Qt::AlignCenter;
-  //  case Qt::BackgroundRole:
-  //      return QBrush(getBackgroundColor(row));
+        //  case Qt::BackgroundRole:
+        //      return QBrush(getBackgroundColor(row));
     default:
         return QVariant();
     }
 }
 
-QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+
+
+
+
+QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
 {
-return "AAAA";
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+        qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
+
+        switch (role) {
+        case Qt::DisplayRole:       
+            switch (section) {
+            case SensAddress:
+                return "Adrese";
+                 case SensName:
+                     return "Nosaukumse";
+                 case DIvalue:
+                     return "Vērtība Di";
+                  case ANvalue:
+                      return "Vērtība AI";
+            default:
+                return "SensAddress";
+            }
+
+        case Qt::SizeHintRole:
+            return QSize( 200, 50 );
+
+        default:
+            return QVariant ();
+        }
+
+    }
+
+    return QVariant ();
 }
 
 

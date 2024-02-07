@@ -36,7 +36,7 @@ void Pump::updateSettings()
 {
 
     WidgetDiagramElement::updateSettings(); // base class
-    qDebug() << "Pump updateSettings" << settings.options;
+    //qDebug() << "Pump updateSettings" << settings.options;
 
 
     int dSensAdr = global.widHash[widName].sensAddres1;

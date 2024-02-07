@@ -25,7 +25,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
 
 void Valve::updateSettings()
 {
-    qDebug() << "Valve updateSettings" << settings.options;
+    //qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
     int dSensAdr1 = global.widHash[widName].sensAddres1;

@@ -11,9 +11,9 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
-    void addRow(QString str1, QString str2, QString str3);
+  //  void addRow(QString str1, QString str2, QString str3);
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    QVariant headerData(int section, Qt::Orientation orientation,int role = Qt::DisplayRole) const;
     QString getColumnName(int column);
 
 
@@ -30,7 +30,7 @@ private:
         Button
     };
     Global &global;
-    QList <QString> list1, list2, list3;
+   // QList <QString> list1, list2, list3;
 };
 
 #endif // SENSORTABLEMODEL_H
