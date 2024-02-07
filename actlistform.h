@@ -21,6 +21,9 @@ public:
     Global &global;
     ~ActListForm();
 
+signals:
+
+    void updateDataTable();
 private slots:
     void handleButton();
     void handleEditFinish();
@@ -29,6 +32,7 @@ private:
     Ui::ActListForm *ui;
     ActTableModel * acttablemodel;
     QPushButton * butt;
+    QPushButton * buttA;
     QLineEdit *lineEditAn ;
 };
 

@@ -35,6 +35,8 @@ void ActListForm::handleButton()
 {
     qDebug() << "SensListsForm::handleButton ";
     QObject* obj = sender();
+    QPushButton* buttA = qobject_cast<QPushButton*>(sender());
+
     int maxRow = global.actList.size();
     bool ok = true;
     int val;
@@ -45,12 +47,17 @@ void ActListForm::handleButton()
 
             if(global.actList[row].digital){
                 val = 0;
+                buttA->setText("OFF");
+                buttA->setChecked(false);
             }
             else {
                 val = 1;
+                buttA->setText("ON");
+                buttA->setChecked(true);
             }
             global.actList[row].digital = val;
-            qDebug() <<"global.actList[row].digital" <<row<< val;
+
+            qDebug() <<"global.actList[row].digital" <<row<< val << global.actList[row].digital;
         }
     }
 }
@@ -60,7 +67,6 @@ void ActListForm::handleEditFinish()
 {
     qDebug() << "handleEditFinish()";
     QObject* obj = sender();
-
     QLineEdit* lEdit = qobject_cast<QLineEdit*>(sender());
 
     int maxRow = global.actList.size();
