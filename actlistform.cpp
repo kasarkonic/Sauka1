@@ -1,7 +1,6 @@
 #include "actlistform.h"
 #include "ui_actlistform.h"
 
-
 ActListForm::ActListForm(Global &global, QWidget *parent)
     : QMainWindow(parent)
     , global(global)
@@ -11,7 +10,6 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
 
     acttablemodel = new ActTableModel(global,this);
     ui->tableView->setModel(acttablemodel);
-
     int maxRow = global.actList.size();
 
     for(int row = 0; row < maxRow; row++)
@@ -35,6 +33,7 @@ void ActListForm::handleButton()
 {
     qDebug() << "SensListsForm::handleButton ";
     QObject* obj = sender();
+    QPushButton* buttA = qobject_cast<QPushButton*>(sender());
     int maxRow = global.actList.size();
     bool ok = true;
     int val;
@@ -45,12 +44,14 @@ void ActListForm::handleButton()
 
             if(global.actList[row].digital){
                 val = 0;
+                buttA->setText("OFF");
             }
             else {
                 val = 1;
+                buttA->setText("ON");
             }
             global.actList[row].digital = val;
-            qDebug() <<"global.actList[row].digital" <<row<< val;
+            acttablemodel->updateData(row);
         }
     }
 }

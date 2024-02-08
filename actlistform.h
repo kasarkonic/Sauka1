@@ -29,6 +29,7 @@ private:
     Ui::ActListForm *ui;
     ActTableModel * acttablemodel;
     QPushButton * butt;
+    QPushButton * buttA;
     QLineEdit *lineEditAn ;
 };
 

@@ -3,14 +3,16 @@
 ActTableModel::ActTableModel(Global &global, QObject *parent)
     : QAbstractTableModel{parent}
     , global (global)
-{}
-int ActTableModel::rowCount(const QModelIndex &parent) const
 {
+
+}
+int ActTableModel::rowCount(const QModelIndex &parent) const
+{  
     return 2;
 }
 
 int ActTableModel::columnCount(const QModelIndex &parent) const
-{
+{   
     return 6;
 }
 
@@ -21,6 +23,8 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
 
     switch (role) {
     case Qt::DisplayRole:
+
+       // qDebug() << "Update Display role" << row << col << global.actList[row].digital;
         switch (col) {
         case SensAddress:
             return global.actList[row].address;
@@ -69,7 +73,7 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
 QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
-        qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
+        // qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
 
         switch (role) {
         case Qt::DisplayRole:
@@ -96,4 +100,11 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
     }
 
     return QVariant ();
+}
+
+void ActTableModel::updateData(int row)
+{
+    QModelIndex idx1 = createIndex(row,0);
+    QModelIndex idx2 = createIndex(row,5);
+    emit dataChanged(idx1, idx2, { Qt::DisplayRole });
 }
