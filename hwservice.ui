@@ -141,9 +141,9 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_invertor">
+           <widget class="QPushButton" name="pushButton">
             <property name="text">
-             <string>Motori</string>
+             <string>Testi</string>
             </property>
            </widget>
           </item>
@@ -159,13 +159,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>

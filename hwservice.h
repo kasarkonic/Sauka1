@@ -28,8 +28,6 @@ private slots:
 
     void on_pushButton_sensor_clicked();
 
-    void on_pushButton_invertor_clicked();
-
 private:
 
 };

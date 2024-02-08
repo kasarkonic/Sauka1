@@ -23,7 +23,9 @@ private:
         SensName,
         DIvalue,
         ANvalue,
-        Button
+        DIChange,
+        ANchange
+
     };
     Global &global;
 };

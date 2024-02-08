@@ -22,9 +22,9 @@ private:
         SensName,
         DIvalue,
         ANvalue,
-        Button
+        DIChange,
+        ANchange
     };
     Global &global;
-    // QList <QString> list1, list2, list3;
 };
 #endif // SENSORTABLEMODEL_H

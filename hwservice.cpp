@@ -38,10 +38,3 @@ void HWService::on_pushButton_sensor_clicked()
     SensListsForm *sensListsForm = new SensListsForm(global,this);
     sensListsForm->show();
 }
-
-
-void HWService::on_pushButton_invertor_clicked()
-{
- qDebug() << "on_pushButton_invertor_clicked";
-}
-

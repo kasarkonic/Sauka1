@@ -8,11 +8,13 @@ SensorTableModel::SensorTableModel(Global &global, QObject *parent)
 
 int SensorTableModel::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return 20;
 }
 
 int SensorTableModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return 6;
 }
 
@@ -86,8 +88,12 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
                 return "Vērtība Di";
             case ANvalue:
                 return "Vērtība AI";
+            case DIChange:
+                return "Jauna DI";
+            case ANchange:
+                return "Jauna AN";
             default:
-                return "SensAddress";
+                return "Sensors";
             }
 
         case Qt::SizeHintRole:

@@ -8,7 +8,7 @@ ParMani::ParMani(Global &global, QWidget *parent)
     , ui(new Ui::ParMani)
 {
     ui->setupUi(this);
-    ui->label->setText("Es vēl mācos");
+    ui->label->setText("Es vēl augu");
     Dyno *dynoA = new Dyno(global,"",this);
     ui->verticalLayout->addWidget(dynoA);
     //timerId = startTimer(200, Qt::CoarseTimer);

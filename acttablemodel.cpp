@@ -7,12 +7,14 @@ ActTableModel::ActTableModel(Global &global, QObject *parent)
 
 }
 int ActTableModel::rowCount(const QModelIndex &parent) const
-{  
+{
+    Q_UNUSED(parent);
     return 2;
 }
 
 int ActTableModel::columnCount(const QModelIndex &parent) const
-{   
+{
+    Q_UNUSED(parent);
     return 6;
 }
 
@@ -89,8 +91,12 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
                 return "Vērtība Di";
             case ANvalue:
                 return "Vērtība AI";
+            case DIChange:
+                return "Jauna DI";
+            case ANchange:
+                return "Jauna AN";
             default:
-                return "SensAddress";
+                return "Piedziņa";
             }
 
         case Qt::SizeHintRole:

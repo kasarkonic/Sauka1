@@ -18,7 +18,7 @@ SensListsForm::SensListsForm(Global &global, QWidget *parent)
 {
 
     ui->setupUi(this);
-
+    ui->label_head->setText("Sensori");
     sensorTableModel = new SensorTableModel(global,this);
     ui->tableView->setModel(sensorTableModel);
 
