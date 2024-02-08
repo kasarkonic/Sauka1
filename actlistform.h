@@ -21,6 +21,9 @@ public:
     Global &global;
     ~ActListForm();
 
+signals:
+
+    void updateDataTable();
 private slots:
     void handleButton();
     void handleEditFinish();

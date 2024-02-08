@@ -27,12 +27,15 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
        // qDebug() << "Update Display role" << row << col << global.actList[row].digital;
         switch (col) {
         case SensAddress:
+            qDebug()<<"SensAddress "  << row << global.actList[row].address;
             return global.actList[row].address;
         case SensName:
             return global.actList[row].name;
         case DIvalue:
+            qDebug()<<"DIvalue "  << row << global.actList[row].digital;
             return global.actList[row].digital;
         case ANvalue:
+            qDebug()<<"ANvalue "  << row << global.actList[row].analog;
             return global.actList[row].analog;
 
         default:
