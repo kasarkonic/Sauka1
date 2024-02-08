@@ -8,7 +8,7 @@
 
 Global::Global()
 {
-    appSwVers = "0.1 01.02";
+    appSwVers = "0.1 08.02.2024";
     zoomKoef = 1.0;
     UIXsize = 1000;
     UIYsize = 1000;
