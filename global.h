@@ -76,10 +76,7 @@ public:
         int startY = 100;
         int startSize = 50;
         int startSizeWi = 10;
-        int options = 0;   //valve |- and pipe angle
-        int actAdr = 0;
-        int analogSensAdr = 0;
-        int digitaSensAdr = 0;
+        int options = 0;   //valve |- and pipe angle      
         int windowNr = 0;
         bool formExist = false;
         WidgetDiagramElement * ptrCurrWidget = nullptr;
