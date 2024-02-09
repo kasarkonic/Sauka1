@@ -13,6 +13,7 @@ Dyno::Dyno(Global &global,QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 */
+        widName = name;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;

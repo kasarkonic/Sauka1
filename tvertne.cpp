@@ -3,8 +3,9 @@
 
 Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
-{
 
+{
+    widName = name;
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     // pal.setColor(QPalette::Window, QColor(100, 100, 100, 255));
@@ -21,12 +22,17 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
 }
 
 void Tvertne::updateSettings()
+
 {
-    //qDebug() << "Tvertne::updateSettings()";
+    //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int dSensAdr = global.widHash[widName].sensAddres1;
-    fill = (int)global.sensList[dSensAdr].analog;
+    int dSensAdr = global.widHash[widName].actAddres;
+    int an1SensAdr = global.widHash[widName].sensAddres1;
+    int an2SensAdr = global.widHash[widName].sensAddres2;
+
+    fill = (int)global.sensList[an1SensAdr].analog;
     full = global.sensList[dSensAdr].digital;
+    qDebug() << "Tvertne::updateSettings()" <<widName<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr <<(int)global.sensList[an2SensAdr].analog;
 
     update();
 }
@@ -47,7 +53,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    //qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
@@ -67,12 +73,14 @@ void Tvertne::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
      painter.drawImage(QPoint(), *imgBackground);
 
+    qDebug()<<"full:fill" <<full<<":" << fill;
     if (full){
         painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
     }
 
 
-    pen.setWidth(3);    //draw pipe
+
+    pen.setWidth(3);
     pen.setColor(Qt::black);
     painter.setPen(pen);
 
@@ -85,7 +93,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     painter.drawLine(points[2],points[3]);
     painter.drawLine(points[3],points[0]);
 
-    pen.setWidth(1);    //draw pipe
+    pen.setWidth(1);
     pen.setColor(Qt::black);
     painter.setPen(pen);
     painter.setBrush(QColor(0, 32, 255, 50));

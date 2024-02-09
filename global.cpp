@@ -104,12 +104,19 @@ void Global::creatSensList()
 {
     addSensList("Tvertne 1 sensors DI", SensorType::Digital, 1);
     addSensList("Tvertne 1 sensors AN", SensorType::Analog,  2);
-    addSensList("Tvertne 2 sensors DI", SensorType::Digital, 3);
-    addSensList("Tvertne 2 sensors AN", SensorType::Analog,  4);
-    addSensList("Tvertne 3 sensors DI", SensorType::Digital, 5);
-    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  6);
-    addSensList("Tvertne 4 sensors DI", SensorType::Digital, 7);
-    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  8);
+    addSensList("Tvertne 1 sensors AN", SensorType::Analog,  3);
+
+    addSensList("Tvertne 2 sensors DI", SensorType::Digital, 4);
+    addSensList("Tvertne 2 sensors AN", SensorType::Analog,  5);
+    addSensList("Tvertne 2 sensors AN", SensorType::Analog,  6);
+
+    addSensList("Tvertne 3 sensors DI", SensorType::Digital, 7);
+    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  8);
+    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  9);
+
+    addSensList("Tvertne 4 sensors DI", SensorType::Digital, 10);
+    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  11);
+    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  12);
 
 
     qDebug() << "create " << sensList.size() << "sensors";
@@ -164,8 +171,8 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Mix,        "Mix",    415,        443,    100, 0,  0,       0,  0,0,0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   751,         50,   70, 0,  0,        0,  0,0,0);
     addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,1,2);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,3,4);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  0,5,6);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  3,4,5);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  6,7,8);
     addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  0,7,8);
 
     addWidgList(WidgetType::Pump,       "Pump1",  235,        255,    35, 0,  0,        0,  0,0,0);
