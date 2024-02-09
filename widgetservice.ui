@@ -167,9 +167,9 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_11">
            <item>
-            <widget class="QLabel" name="label_6">
+            <widget class="QLabel" name="label_Di">
              <property name="text">
-              <string>Slēdzis</string>
+              <string>Slēdzis DI</string>
              </property>
             </widget>
            </item>
@@ -185,9 +185,9 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
-            <widget class="QLabel" name="label_10">
+            <widget class="QLabel" name="label_AN1">
              <property name="text">
-              <string>Devējs 1</string>
+              <string>Devējs AN1</string>
              </property>
             </widget>
            </item>
@@ -203,14 +203,14 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
            <item>
-            <widget class="QLabel" name="label_15">
+            <widget class="QLabel" name="label_AN2">
              <property name="text">
-              <string>Devējs 2</string>
+              <string>Devējs AN2</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_AddresAI2">
+            <widget class="QLabel" name="label_AddressAI2">
              <property name="text">
               <string>TextLabel</string>
              </property>
@@ -268,6 +268,9 @@
       <widget class="QLabel" name="label_Notes">
        <property name="text">
         <string>Piez.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
      </item>

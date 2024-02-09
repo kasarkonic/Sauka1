@@ -16,6 +16,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
  */
+    widName = name;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
@@ -31,10 +32,10 @@ void Valve::updateSettings()
     int dSensAdr1 = global.widHash[widName].sensAddres1;
     int dSensAdr2 = global.widHash[widName].sensAddres2;
 
-   // options Angle fron vertical CCW  options
-   // startSizeWi  not used
-   // sensAdr1.digital     end switch open
-   // sensAdr2.digital     end switch close
+    // options Angle fron vertical CCW  options
+    // startSizeWi  not used
+    // sensAdr1.digital     end switch open
+    // sensAdr2.digital     end switch close
 
     // default   close angle
     settings.options = global.widHash[settings.name].options;
@@ -42,25 +43,25 @@ void Valve::updateSettings()
     int clSW = global.sensList[dSensAdr2].digital;       // close sw
 
     if(clSW == 1 && opSW == 0){  //close
-       settings.options = global.widHash[settings.name].options;
-       settings.status = 0 ;    // closw
-       settings.options = global.widHash[settings.name].options;
+        settings.options = global.widHash[settings.name].options;
+        settings.status = 0 ;    // closw
+        settings.options = global.widHash[settings.name].options;
     }
     if(clSW == 0 && opSW == 1){  //open
-       settings.options = global.widHash[settings.name].options;
-       settings.status = 1 ;    // open
-       settings.options = global.widHash[settings.name].options + 90;
+        settings.options = global.widHash[settings.name].options;
+        settings.status = 1 ;    // open
+        settings.options = global.widHash[settings.name].options + 90;
     }
     if(clSW == 0 && opSW == 0){  //process
-       settings.options = global.widHash[settings.name].options;
-       settings.status = 2 ;    // process
-       settings.options = global.widHash[settings.name].options + 45;
+        settings.options = global.widHash[settings.name].options;
+        settings.status = 2 ;    // process
+        settings.options = global.widHash[settings.name].options + 45;
     }
 
     if(clSW == 1 && opSW == 1){  //error
-       settings.options = global.widHash[settings.name].options;
-       settings.status = 2 ;    // error
-       settings.options = global.widHash[settings.name].options + 45;
+        settings.options = global.widHash[settings.name].options;
+        settings.status = 2 ;    // error
+        settings.options = global.widHash[settings.name].options + 45;
     }
 
     update();

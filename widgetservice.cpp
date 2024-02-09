@@ -2,6 +2,7 @@
 #include "ui_widgetservice.h"
 #include<QMouseEvent>
 #include <QSettings>
+#include "global.h"
 //#include "widgetdiagramelement.h"
 
 
@@ -67,20 +68,48 @@ void WidgetService::updateFormData()
 
     ui->label_AddressDI->setText(QString::number(addresAct));
     ui->label_AddressAI1->setText(QString::number(addresAN1));
-    ui->label_AddresAI2->setText(QString::number(addresAN2));
+    ui->label_AddressAI2->setText(QString::number(addresAN2));
 
     ui->lineEdit_AddresDI->setText(QString::number(actValue));
     //ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
     ui->lineEdit_AddresAN2->setText(QString::number(an2Value));
 
 
+    ui->label_Di->setText("SW addr."+QString::number(addresAct));
+    ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
+    ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
+
+
     updateSensorVal();
 
-
-
-
-
     widgetElement->updateSettings();
+
+    /*
+      *enum widgT{
+    Dyno,
+    Mix,
+    Pipe,
+    Pump,
+    Tvertne,
+    Valve,
+      */
+    QString str;
+    switch (widgetElement->global.widHash[currentWid].type) {
+    case WidgetType::widgT::Dyno:
+
+        break;
+
+    case WidgetType::widgT::Tvertne:
+        str = "Izvēlēts elements \"TVERTNE \"\n";
+        str.append("ON OFF maina drošibas devēja \"0\" vērtību\n");
+        str.append("\"SLIDER\" maina tvertnes piepildījums sensora \"1\" vērtību. \n");
+        break;
+
+
+    default:
+        break;
+    }
+    ui->label_Notes->setText(str);
 
 }
 
@@ -116,10 +145,13 @@ void WidgetService::updateSensorVal()
         qss2 = QString("background-color: %1").arg(col.name());
         ui->pushButton_OFF->setStyleSheet(qss2);
     }
+    widgetElement->global.sensList[addresAN1].analog = an1Value;
     ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
-     widgetElement->global.sensList[addresAct].digital;
-     ui->lineEdit_AddresDI->setText(QString::number(actValue));
-     ui->label_Notes->setText("Darbībā prblēmas nav novērotas");
+    widgetElement->global.sensList[addresAct].digital = actValue;
+    ui->lineEdit_AddresDI->setText(QString::number(actValue));
+
+ widgetElement->updateSettings();
+
 }
 
 void WidgetService::updateSettings()
@@ -266,9 +298,9 @@ void WidgetService::on_pushButton_OFF_clicked()
 
 void WidgetService::on_pushButton_ON_clicked()
 {
-actValue = 1;
-widgetElement->global.sensList[addresAct].digital = actValue;
-updateSensorVal();
+    actValue = 1;
+    widgetElement->global.sensList[addresAct].digital = actValue;
+    updateSensorVal();
 }
 
 

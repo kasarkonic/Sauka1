@@ -23,6 +23,7 @@ private:
     int fill;
     int full;
 
+
 };
 
 #endif // TVERTNE_H
