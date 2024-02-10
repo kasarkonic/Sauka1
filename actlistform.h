@@ -30,9 +30,9 @@ private slots:
 
 private:
     Ui::ActListForm *ui;
-    ActTableModel * acttablemodel;
-    QPushButton * butt;
-    QPushButton * buttA;
+    ActTableModel *acttablemodel;
+    QPushButton *butt;
+    QPushButton *buttA;
     QLineEdit *lineEditAn ;
 };
 

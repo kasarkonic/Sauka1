@@ -105,6 +105,7 @@ void Mix::paintEvent(QPaintEvent *event)
 
 void Mix::timerEvent(QTimerEvent *event)
 {
+    Q_UNUSED(event)
     if(timerId){
         int step = (int)speed/10;
         step = speed;

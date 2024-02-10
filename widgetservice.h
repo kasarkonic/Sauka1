@@ -61,6 +61,10 @@ private slots:
 
     void on_horizontalSlider_valueChanged(int value);
 
+    void on_lineEdit_AddresAN2_editingFinished();
+
+    void on_lineEdit_AddresAN1_editingFinished();
+
 private:
          // WidgetDiagramElement::widDataStruct &wsettings;
     WidgetDiagramElement *widgetElement;

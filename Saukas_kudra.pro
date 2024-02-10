@@ -1,4 +1,5 @@
 QT       += core gui
+QT      += serialport
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -21,6 +22,7 @@ SOURCES += \
     parmani.cpp \
     pipe.cpp \
     pump.cpp \
+    rs232.cpp \
     senslistsform.cpp \
     sensortablemodel.cpp \
     tvertne.cpp \
@@ -39,6 +41,7 @@ HEADERS += \
     parmani.h \
     pipe.h \
     pump.h \
+    rs232.h \
     senslistsform.h \
     sensortablemodel.h \
     tvertne.h \
@@ -51,6 +54,7 @@ FORMS += \
     hwservice.ui \
     mainwindow.ui \
     parmani.ui \
+    rs232.ui \
     senslistsform.ui \
     widgetservice.ui
 

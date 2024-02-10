@@ -34,7 +34,6 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
             return global.sensList[row].digital;
         case ANvalue:
             return global.sensList[row].analog;
-
         default:
             return QVariant();
         }
@@ -45,11 +44,9 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
             break;
         case ANvalue:
             break;
-        default:
-            break;
-        }
-
-
+        //default:
+          //  break;
+        //}
     case Qt::DecorationRole:
         // if (col == PictureColumn) {
         //      return getToolPicture(row);
@@ -68,7 +65,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
     }
 }
 
-
+}
 
 
 

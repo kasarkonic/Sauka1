@@ -13,6 +13,7 @@
 #include "global.h"
 #include "valve.h"
 #include "hwservice.h"
+#include "rs232.h"
 
 
 
@@ -66,6 +67,7 @@ private:
     Pipe *pipeA;
     Valve *valveA;
     HWService *hwService;
+    Rs232 *rs232;
 
 
     int valveStyleAngle;

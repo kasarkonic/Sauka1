@@ -59,7 +59,11 @@ void WidgetService::updateFormData()
     ui->lineEdit_options->setText(QString::number(widgetElement->global.widHash[currentWid].options));
 
     // sensor data
+
     addresAct = widgetElement->global.widHash[currentWid].actAddres;
+    if(addresAct >= 300){
+        addresAct -= 300;
+    }
     addresAN1 = widgetElement->global.widHash[currentWid].sensAddres1;
     addresAN2 = widgetElement->global.widHash[currentWid].sensAddres2;
     actValue = widgetElement->global.sensList[addresAct].digital;
@@ -93,6 +97,8 @@ void WidgetService::updateFormData()
     Tvertne,
     Valve,
       */
+
+
     QString str;
     switch (widgetElement->global.widHash[currentWid].type) {
     case WidgetType::widgT::Dyno:
@@ -101,10 +107,24 @@ void WidgetService::updateFormData()
 
     case WidgetType::widgT::Tvertne:
         str = "Izvēlēts elements \"TVERTNE \"\n";
-        str.append("ON OFF maina drošibas devēja \"0\" vērtību\n");
+        str.append("ON OFF maina drošības devēja \"0\" vērtību\n");
         str.append("\"SLIDER\" maina tvertnes piepildījums sensora \"1\" vērtību. \n");
-        break;
 
+        ui->label_Di->setText("SW addr."+QString::number(addresAct));
+        ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
+        ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
+        break;
+    case WidgetType::widgT::Valve:
+        str = "Izvēlēts elements \"Valve \"\n";
+        str.append("ON OFF islēdz/ atslēdz vārstu\n");
+        str.append("DI1 un DI2 vārsta gala slēdži.\n");
+
+        ui->label_Di->setText("DI Act. addr. "+QString::number(addresAct));
+        ui->label_AN1->setText("DI1 Sens. addr. "+QString::number(addresAN1));
+        ui->label_AN2->setText("DI2 Sens. addr. "+QString::number(addresAN2));
+
+
+        break;
 
     default:
         break;
@@ -284,7 +304,7 @@ void WidgetService::on_lineEdit_options_editingFinished()
 {
     int val = ui->lineEdit_options->text().toInt();
     widgetElement->global.widHash[currentWid].options = val;
-    updateFormData();
+    updateSensorVal();
 }
 
 
@@ -307,8 +327,44 @@ void WidgetService::on_pushButton_ON_clicked()
 void WidgetService::on_horizontalSlider_valueChanged(int value)
 {
     qDebug() << "slider value: " << value;
-    an1Value = value;
-    widgetElement->global.sensList[addresAN1].analog = an1Value;
+     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve)
+     {
+       an1Value = 0;
+         if(value > 50) {
+              an1Value = 1;
+         }
+     }
+     else{
+    an1Value = value;   
+     }
+     widgetElement->global.sensList[addresAN1].analog = an1Value;
+     updateSensorVal();
+}
+
+int addresAct;
+int addresAN1;
+int addresAN2;
+int actValue;
+int an1Value;
+int an2Value;
+
+
+void WidgetService::on_lineEdit_AddresAN2_editingFinished()
+{
+    int val = ui->lineEdit_AddresAN2->text().toInt();
+
+    widgetElement->global.sensList[addresAN2].analog = val;
+    widgetElement->global.sensList[addresAN2].digital = val;
     updateSensorVal();
 }
 
+
+void WidgetService::on_lineEdit_AddresAN1_editingFinished()
+{
+    int val = ui->lineEdit_AddresAN1->text().toInt();
+
+    widgetElement->global.sensList[addresAN1].analog = val;
+    widgetElement->global.sensList[addresAN1].digital = val;
+    updateSensorVal();
+
+}

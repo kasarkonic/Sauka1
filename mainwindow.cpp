@@ -365,6 +365,10 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         break;
 
     case 2:
+    {
+        Rs232 *rs232 = new Rs232(global,this);
+        rs232->show();
+    }
         break;
 
     case 3:

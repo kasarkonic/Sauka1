@@ -26,44 +26,53 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
 
 void Valve::updateSettings()
 {
-    //qDebug() << "Valve updateSettings" << settings.options;
+    qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
-    int dSensAdr1 = global.widHash[widName].sensAddres1;
-    int dSensAdr2 = global.widHash[widName].sensAddres2;
+    //int dSensAdr1 = global.widHash[widName].sensAddres1;
+   // int dSensAdr2 = global.widHash[widName].sensAddres2;
+
+    int actAdr = global.widHash[widName].actAddres;
+    if( actAdr >= 300){actAdr -= 300;}
+    int an1SensAdr = global.widHash[widName].sensAddres1;
+    int an2SensAdr = global.widHash[widName].sensAddres2;
 
     // options Angle fron vertical CCW  options
     // startSizeWi  not used
     // sensAdr1.digital     end switch open
     // sensAdr2.digital     end switch close
 
-    // default   close angle
-    settings.options = global.widHash[settings.name].options;
-    int opSW = global.sensList[dSensAdr1].digital;       // open SW
-    int clSW = global.sensList[dSensAdr2].digital;       // close sw
+
+
+
+
+
+    int opSW = global.sensList[an1SensAdr].digital;       // open SW
+    int clSW = global.sensList[an2SensAdr].digital;       // close sw
+
 
     if(clSW == 1 && opSW == 0){  //close
         settings.options = global.widHash[settings.name].options;
-        settings.status = 0 ;    // closw
-        settings.options = global.widHash[settings.name].options;
+        settings.status = 0 ;    // close
+
     }
     if(clSW == 0 && opSW == 1){  //open
-        settings.options = global.widHash[settings.name].options;
+        settings.options = global.widHash[settings.name].options + 90;;
         settings.status = 1 ;    // open
-        settings.options = global.widHash[settings.name].options + 90;
+
     }
     if(clSW == 0 && opSW == 0){  //process
-        settings.options = global.widHash[settings.name].options;
-        settings.status = 2 ;    // process
         settings.options = global.widHash[settings.name].options + 45;
+        settings.status = 2 ;    // process
     }
 
     if(clSW == 1 && opSW == 1){  //error
-        settings.options = global.widHash[settings.name].options;
-        settings.status = 2 ;    // error
         settings.options = global.widHash[settings.name].options + 45;
+        settings.status = 2 ;    // error
     }
 
+    global.actList[actAdr].digital = settings.status;
+    qDebug() << widName<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
     update();
 }
 
@@ -101,7 +110,7 @@ void Valve::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    //qDebug() << "Valve::paintEvent";
+    qDebug() << "Valve::paintEvent" <<settings.status <<settings.options ;
     // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     calcPoints(settings.options);

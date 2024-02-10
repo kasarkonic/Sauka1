@@ -15,7 +15,7 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
-    qDebug() << "TVERTNE SETT"<<settings.name <<settings.currX << settings.currY << settings.currSize ;
+    qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 
     fill = 0;
     full = 0;
@@ -27,6 +27,9 @@ void Tvertne::updateSettings()
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
     int dSensAdr = global.widHash[widName].actAddres;
+    if(dSensAdr >= 300){
+        dSensAdr -= 300;
+    }
     int an1SensAdr = global.widHash[widName].sensAddres1;
     int an2SensAdr = global.widHash[widName].sensAddres2;
 
@@ -71,7 +74,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     imgBackground->load(":/pictures/fxup.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-     painter.drawImage(QPoint(), *imgBackground);
+    painter.drawImage(QPoint(), *imgBackground);
 
     qDebug()<<"full:fill" <<full<<":" << fill;
     if (full){

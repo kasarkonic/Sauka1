@@ -37,10 +37,10 @@ public:
         //pārējie on/off/??
         int status = 0;
 
-        int currX;
-        int currY;
-        int currSize;
-        int currSizeWi;
+        int currX = 0;
+        int currY = 0;
+        int currSize = 0;
+        int currSizeWi = 0;
 
     } settings;
 

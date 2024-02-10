@@ -29,19 +29,19 @@ void WidgetDiagramElement::updateSettings()
 {
 
     float koef = global.zoomKoef;
-
     int addresAct = global.widHash[settings.name].actAddres;
+    if(addresAct >= 300){
+        addresAct -= 300;
+    }
     int addresAN1 = global.widHash[settings.name].sensAddres1;
     int addresAN2 = global.widHash[settings.name].sensAddres2;
-    int actValue = global.sensList[addresAct].digital;
+    int actValue = global.actList[addresAct].digital;
     int an1Value = global.sensList[addresAN1].analog;
     int an2Value = global.sensList[addresAN2].analog;
 
-
-
     qDebug() <<settings.name << ":updateSettings()" <<global.widHash[settings.name].startX << global.widHash[settings.name].startY ;
     qDebug() <<settings.name << ":" <<addresAct << actValue;
-    qDebug() <<settings.name << ":" <<addresAN1 << an1Value  << ":" <<addresAN2 << an2Value;
+    qDebug() <<settings.name << ":" <<addresAN1 << an1Value  << ":" <<addresAN2 << an2Value << "\n";
 
 
 

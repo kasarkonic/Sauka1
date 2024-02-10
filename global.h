@@ -102,7 +102,6 @@ public:
 
 private:
 
-
     void creatWidgList();
     void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2);
 

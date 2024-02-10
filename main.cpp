@@ -14,3 +14,6 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
+
+
+//chartWidget.grab().save("test2.png")

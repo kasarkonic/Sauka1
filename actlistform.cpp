@@ -36,7 +36,7 @@ void ActListForm::handleButton()
     QObject* obj = sender();
     QPushButton* buttA = qobject_cast<QPushButton*>(sender());
     int maxRow = global.actList.size();
-    bool ok = true;
+    //bool ok = true;
     int val;
     for(int row = 0; row < maxRow; row++)
     {

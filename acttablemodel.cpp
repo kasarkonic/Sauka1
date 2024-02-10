@@ -26,7 +26,7 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
 
-       // qDebug() << "Update Display role" << row << col << global.actList[row].digital;
+        // qDebug() << "Update Display role" << row << col << global.actList[row].digital;
         switch (col) {
         case SensAddress:
             qDebug()<<"SensAddress "  << row << global.actList[row].address;
@@ -50,30 +50,24 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
             break;
         case ANvalue:
             break;
+        case Qt::DecorationRole:
+            // if (col == PictureColumn) {
+            //      return getToolPicture(row);
+            //  } else {
+            return QVariant();
+            //  }
+            //  case Qt::EditRole:
+            //      return Units::splitInTwoLines(
+            //         index.data(Qt::DisplayRole).toString());
+        case Qt::TextAlignmentRole:
+            return Qt::AlignCenter;
+            //  case Qt::BackgroundRole:
+            //      return QBrush(getBackgroundColor(row));
         default:
-            break;
+            return QVariant();
         }
-
-
-    case Qt::DecorationRole:
-        // if (col == PictureColumn) {
-        //      return getToolPicture(row);
-        //  } else {
-        return QVariant();
-        //  }
-        //  case Qt::EditRole:
-        //      return Units::splitInTwoLines(
-        //         index.data(Qt::DisplayRole).toString());
-    case Qt::TextAlignmentRole:
-        return Qt::AlignCenter;
-        //  case Qt::BackgroundRole:
-        //      return QBrush(getBackgroundColor(row));
-    default:
-        return QVariant();
     }
 }
-
-
 
 QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
 {
