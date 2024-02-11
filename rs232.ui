@@ -16,16 +16,86 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="20,1,1">
       <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>SE232</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_chart"/>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEditInfo"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="7,10,10,10,10,10,10,10">
+        <item>
+         <widget class="QLabel" name="label_statuss">
+          <property name="text">
+           <string>Ierakstu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonStart">
+          <property name="text">
+           <string>Sākt</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_Stop">
+          <property name="text">
+           <string>Beigt</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Laika iedaļas vērtība</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_1s">
+          <property name="text">
+           <string>1 s</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_10s">
+          <property name="text">
+           <string>10 s</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_60s">
+          <property name="text">
+           <string>60 s</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
+          <item>
+           <widget class="QTextEdit" name="textEditInfo"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
