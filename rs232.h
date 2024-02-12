@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include "global.h"
-#include <QThread>
+
 #include <QSerialPort>
 #include <QSplineSeries>
 #include <QChartView>
-#include <QValueAxis>
+//#include <QValueAxis>
 
 
 namespace Ui {
@@ -38,6 +38,8 @@ private slots:
 
     void on_pushButton_60s_clicked();
 
+    void on_pushButton_Save_clicked();
+
 protected:
     void    timerEvent(QTimerEvent *event) override;
 
@@ -56,8 +58,8 @@ private:
     };
 
     struct chart1Data{
-        QPointF chart1;
-        QPointF chart2;
+        QPointF chartT1;
+        QPointF chartT2;
     };
 
     QList<chart1Data> chartDataList;
@@ -77,6 +79,8 @@ private:
     QString qssGreen;
     QString qssRed;
     QString qssGray;
+    QString qssCyan;
+
 
     QChart *chart1;
     QSplineSeries *sp_seriesT1;
@@ -84,16 +88,18 @@ private:
     QSplineSeries *sp_seriesMin;
     QSplineSeries *sp_seriesMax;
 
-    QValueAxis *axisX;
-    QValueAxis *axisY;
+    //QValueAxis *axisX;
+   // QValueAxis *axisY;
     QChartView *chartView1;
-
+    QPointF  spser;
 
 
     void drawTchart();
     int  timerId = 0;
     int timerInit = 0;
+    int timer1sId = 0;
     int  att = 0;
+    QString currentTime;
 
 
 

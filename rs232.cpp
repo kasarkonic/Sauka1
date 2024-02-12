@@ -1,49 +1,36 @@
 #include "rs232.h"
 #include "ui_rs232.h"
 #include <QtSerialPort/QSerialPortInfo>
-#include <QSerialPort>
-//#include <QPointF>
+#include <QDateTime>
 
 
-#define TMIN 60
-#define TMAX 70
+
+#define TMIN 65
+#define TMAX 80
 Rs232::Rs232(Global &global,QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::Rs232)
 {
+
+    timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
 
     m_serial = new QSerialPort(this);
     if (!initPort()){
         qDebug() << "start timemark 1000";
         timerInit = startTimer(1000, Qt::CoarseTimer);
-
     }
-
-
-
 
     connect(m_serial, &QSerialPort::readyRead,   //readyRead
-            this, &readSerial);
+            this, &Rs232::readSerial);
     initUI();
-
+    /*
     sp_seriesT1 = new QSplineSeries();
-    //////////////////////////////////////////////////////////////
-
-    QPointF  spser;
-    for(int i = 0; i<5;i++){
-        spser.setX (i);
-        spser.setY ((int)i/10 ); // for testing
-        sp_seriesT1->append(spser);
-    }
-
-    /////////////////////////////////////////////////////////////
     sp_seriesT2 = new QSplineSeries();
     sp_seriesMin = new QSplineSeries();
     sp_seriesMax = new QSplineSeries();
-
-    // m_serial = new QSerialPort(this);
+*/
     drawTchart();
 }
 
@@ -172,7 +159,10 @@ void Rs232::initUI()
     col = QColor(Qt::gray);
     qssGray = QString("background-color: %1").arg(col.name());
 
+    col = QColor(Qt::cyan);
+    qssCyan = QString("background-color: %1").arg(col.name());
 
+    ui->pushButton_Save->setStyleSheet(qssCyan);
 
 }
 
@@ -187,6 +177,13 @@ void Rs232::readSerial()
 
 void Rs232::timerEvent(QTimerEvent *event)
 {
+
+    if(event->timerId() == timer1sId){
+        currentTime = QTime::currentTime().toString("hh:mm:ss");
+        setWindowTitle(currentTime);
+    }
+
+
     if(event->timerId() == timerId){
         att++;
         bool ok;
@@ -195,62 +192,53 @@ void Rs232::timerEvent(QTimerEvent *event)
         auto str= QString(currserdata);
         QStringList elements = str.split(',');
 
-        qDebug() << "elemrnt" <<elements.size();
-        if(elements.size() > 3){
+        qDebug() << "element" <<elements.size();
+        if(elements.size() ==4){
             qDebug() << elements[0]<< elements[1] << elements[2] << elements[3];
 
             t1 = elements[1].toInt(&ok);
             if(!ok){
                 t1 = 0;
+                ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             }
             t2 = elements[3].toInt(&ok);
             if(!ok){
                 t2 = 0;
+                ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             }
+
+            chart1Data chdat;
+            // QPointF  spser;
+            spser.setX (att);
+            spser.setY (t1);
+
+            sp_seriesT1->append(spser);
+            chdat.chartT1 = spser;
+
+            spser.setY (t2);
+            sp_seriesT2->append(spser);
+            chdat.chartT2 = spser;
+
+            chartDataList.append(chdat);
+
+            qDebug() << "add T2: " << spser.x() << spser.y();
+
+            sp_seriesMin->append(att,TMIN);
+            sp_seriesMax->append(att,TMAX);
+
         }
+        else{
+            ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
+        }
+        QString strn = "Dino temperatūra        ";
+        strn.append(currentTime)  ;
+        chart1->setTitle(strn);
 
-        QPointF  spser;
-        spser.setX (att);
-        spser.setY (t1);
-        sp_seriesT1->append(spser);
-
-        chart1Data chdat;
-        chdat.chart1 = spser;
-
-        spser.setY (t2);
-        sp_seriesT2->append(spser);
-        chdat.chart2 = spser;
-
-        chartDataList.append(chdat);
-
-        qDebug() << "add" << spser.x() << spser.y();
-
-
-        sp_seriesMin->append(att,TMIN);
-        sp_seriesMax->append(att,TMAX);
-
-        //chart1->axes(Qt::Horizontal).first()->setRange(0, 200);
-
-
-        // chartView1->update();
-        //  chartView1->repaint();
-        //chart1->removeAllSeries();
-        chart1->removeSeries(sp_seriesT1);
-        chart1->removeSeries(sp_seriesT2);
-        chart1->removeSeries(sp_seriesMin);
-        chart1->removeSeries(sp_seriesMax);
-
-        chart1->addSeries(sp_seriesT1);
-        chart1->addSeries(sp_seriesT2);
-        chart1->addSeries(sp_seriesMin);
-        chart1->addSeries(sp_seriesMax);
-
-
-
-        ui->textEditInfo->append(QString(currserdata));
-        //ui->verticalLayout_chart->addWidget(chart1);
+        if(att > 100){
+        int range = att * 1.1;
+        chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+        }
     }
-
     if(event->timerId() == timerInit){
         initPort();
     }
@@ -268,6 +256,12 @@ void Rs232::on_pushButtonStart_clicked()
         killTimer(timerId);
     }
     timerId = startTimer(timeMark * 100, Qt::CoarseTimer); //1000 for testing
+    sp_seriesT1->clear();
+    sp_seriesT2->clear();
+    sp_seriesMin->clear();
+    sp_seriesMax->clear();
+    att = 0;
+    chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
 }
 
 
@@ -314,6 +308,11 @@ void Rs232::drawTchart()
 {
     qDebug() <<"drawTchart ";
 
+    sp_seriesT1 = new QSplineSeries();
+    sp_seriesT2 = new QSplineSeries();
+    sp_seriesMin = new QSplineSeries();
+    sp_seriesMax = new QSplineSeries();
+
     chart1 = new QChart();
     sp_seriesT1->setName("T1");
     sp_seriesT2->setName("T2");
@@ -321,47 +320,18 @@ void Rs232::drawTchart()
     sp_seriesMax->setName("Max");
 
     chart1->addSeries(sp_seriesT1);
-    // chart1->addSeries(sp_seriesT2);
-    // chart1->addSeries(sp_seriesMin);
-    // chart1->addSeries(sp_seriesMax);
+    chart1->addSeries(sp_seriesT2);
+    chart1->addSeries(sp_seriesMin);
+    chart1->addSeries(sp_seriesMax);
 
 
+    QString str = "Dino temperatūra        ";
+    str.append(currentTime)  ;
+    chart1->setTitle(str);
 
-    //QValueAxis *axisX = new QValueAxis;
-    //QValueAxis *axisY = new QValueAxis;
-
-    axisX = new QValueAxis;
-    axisY = new QValueAxis;
-
-    axisX->setLabelFormat("%i");
-    axisX->setTitleText("time");
-    axisX->setRange(0, 650);
-    //axisX->setLabelFormat("%.2f");
-    axisX->setTickCount(14);
-
-
-    axisY->setLabelFormat("%i");
-    axisY->setTitleText("Temperature");
-    axisY->setRange(0, 100);
-    // axisY->setLabelFormat("%.2f");
-    axisY->setTickCount(7);
-
-
-    // sp_series1->attachAxis(axisX);
-    //sp_series1->attachAxis(axisY);
-
-
-    chart1->setTitle("Temperatūra pēc Dino");
-
-
-
-    chart1->addAxis(axisX, Qt::AlignBottom);
-    chart1->addAxis(axisY, Qt::AlignLeft);
-
-
-
+    chart1->createDefaultAxes();
     chart1->axes(Qt::Vertical).first()->setRange(0,100);
-    chart1->axes(Qt::Horizontal).first()->setRange(0, 500);
+    chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
     chart1->legend()->setVisible(true);
     chart1->legend()->setAlignment(Qt::AlignBottom);
 
@@ -373,17 +343,22 @@ void Rs232::drawTchart()
     //chart1->setTitle("Name1");
 
     // Change the line color and weight
-    QPen pen(QRgb(0x00CED1));
+    //QPen pen(QRgb(0xff7700));
+    QPen pen(Qt::blue);
     pen.setWidth(1);
 
     sp_seriesT1->setPen(pen);
-    sp_seriesT2->setPen(pen);
 
-    QPen pen1(Qt::red);
+    //QPen pen1(QRgb(0x05fe01));
+    QPen pen1(Qt::green);
     pen1.setWidth(1);
+    sp_seriesT2->setPen(pen1);
 
-    sp_seriesMax->setPen(pen1);
-    sp_seriesMin->setPen(pen1);
+    QPen pen2(Qt::red);
+    pen2.setWidth(1);
+
+    sp_seriesMax->setPen(pen2);
+    sp_seriesMin->setPen(pen2);
 
 
 
@@ -397,5 +372,22 @@ void Rs232::drawTchart()
     pal.setColor(QPalette::Window,QRgb(0xffffff));
     pal.setColor(QPalette::WindowText,QRgb(0x404040));
     qApp->setPalette(pal);
-    ui->verticalLayout_chart->addWidget(chartView1);//       for testing
+    ui->verticalLayout_chart->addWidget(chartView1);
 }
+
+void Rs232::on_pushButton_Save_clicked()
+{
+    QString newstr = currentTime.replace(":","_");
+
+    qDebug() << currentTime << newstr;
+
+    QString strName = "Dino_T_";
+
+
+    strName.append (currentTime);
+    strName.append(".png");
+    chartView1->grab().save(strName) ;
+
+    ui->textEditInfo->append(QString("Izveidots fails: ") + strName);
+}
+
