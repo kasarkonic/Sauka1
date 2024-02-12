@@ -8,7 +8,14 @@
 #include <QSplineSeries>
 #include <QChartView>
 //#include <QValueAxis>
+#include <QTime>
 
+#define START_MSG       '$'
+#define END_MSG         ';'
+
+#define WAIT_START      1
+#define IN_MESSAGE      2
+#define UNDEFINED       3
 
 namespace Ui {
 class Rs232;
@@ -40,10 +47,15 @@ private slots:
 
     void on_pushButton_Save_clicked();
 
+    void newDataUpdateCh(QStringList);
+signals:
+    void newData(QStringList data);
+
 protected:
     void    timerEvent(QTimerEvent *event) override;
 
 private:
+
     Global &global;
     Ui::Rs232 *ui;
 
@@ -74,6 +86,7 @@ private:
     int timeMark = 60;
 
     QByteArray currserdata;
+    QString receivedData;
 
     QColor col;
     QString qssGreen;
@@ -100,7 +113,11 @@ private:
     int timer1sId = 0;
     int  att = 0;
     QString currentTime;
+    QTime startTime = QTime(0, 0);
+   // void newDataUpdateCh(QStringList currSdata);
+    bool receiveDataRequest = false;
 
+    int STATE;
 
 
 };

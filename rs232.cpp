@@ -7,12 +7,13 @@
 
 #define TMIN 65
 #define TMAX 80
+
+
 Rs232::Rs232(Global &global,QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::Rs232)
 {
-
     timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
 
@@ -22,8 +23,9 @@ Rs232::Rs232(Global &global,QWidget *parent)
         timerInit = startTimer(1000, Qt::CoarseTimer);
     }
 
-    connect(m_serial, &QSerialPort::readyRead,   //readyRead
-            this, &Rs232::readSerial);
+    STATE = WAIT_START;
+    connect(m_serial, &QSerialPort::readyRead,this, &Rs232::readSerial);   //readyRead
+    connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
     initUI();
     /*
     sp_seriesT1 = new QSplineSeries();
@@ -36,8 +38,28 @@ Rs232::Rs232(Global &global,QWidget *parent)
 
 Rs232::~Rs232()
 {
+    m_serial->close();
     delete ui;
 }
+
+void Rs232::initUI()
+{
+    col = QColor(Qt::green);
+    qssGreen = QString("background-color: %1").arg(col.name());
+
+    col = QColor(Qt::red);
+    qssRed = QString("background-color: %1").arg(col.name());
+
+    col = QColor(Qt::gray);
+    qssGray = QString("background-color: %1").arg(col.name());
+
+    col = QColor(Qt::cyan);
+    qssCyan = QString("background-color: %1").arg(col.name());
+
+    ui->pushButton_Save->setStyleSheet(qssCyan);
+
+}
+
 
 bool Rs232::initPort()
 {
@@ -102,7 +124,7 @@ bool Rs232::initPort()
 
     if(corectPort != nullptr){
         m_serial->setPortName(corectPort);
-        m_serial->setBaudRate(115200);
+        m_serial->setBaudRate(QSerialPort::Baud115200);
         m_serial->setDataBits(QSerialPort::Data8);
         m_serial->setParity(QSerialPort::NoParity);
         m_serial->setStopBits(QSerialPort::OneStop);
@@ -148,98 +170,90 @@ void Rs232::sendData(QString send)
     Q_UNUSED(written);
 }
 
-void Rs232::initUI()
-{
-    col = QColor(Qt::green);
-    qssGreen = QString("background-color: %1").arg(col.name());
-
-    col = QColor(Qt::red);
-    qssRed = QString("background-color: %1").arg(col.name());
-
-    col = QColor(Qt::gray);
-    qssGray = QString("background-color: %1").arg(col.name());
-
-    col = QColor(Qt::cyan);
-    qssCyan = QString("background-color: %1").arg(col.name());
-
-    ui->pushButton_Save->setStyleSheet(qssCyan);
-
-}
-
 void Rs232::readSerial()
 {
-    const QByteArray data = m_serial->readAll();
-    // qDebug()<< "data" << data;
-    QString str = QString(data);
-    //ui->textEditInfo->append("Receive " + str);
-    currserdata = data;
+    if(m_serial->bytesAvailable()) {                                                    // If any bytes are available
+        QByteArray data = m_serial->readAll();
+        //qDebug() <<"readSerial()" <<data ;
+
+        if(!data.isEmpty()) {                                                             // If the byte array is not empty
+            char *temp = data.data();
+            // Get a '\0'-terminated char* to the data
+
+            for(int i = 0; temp[i] != '\0'; i++) {                                        // Iterate over the char*
+                switch(STATE) {                                                           // Switch the current state of the message
+                case WAIT_START:                                                          // If waiting for start [$], examine each char
+                    if(temp[i] == START_MSG) {                                            // If the char is $, change STATE to IN_MESSAGE
+                        STATE = IN_MESSAGE;
+                        receivedData.clear();                                             // Clear temporary QString that holds the message
+                        break;                                                            // Break out of the switch
+                    }
+                    break;
+                case IN_MESSAGE:                                                          // If state is IN_MESSAGE
+                    if(temp[i] == END_MSG) {                                              // If char examined is ;, switch state to END_MSG
+                        STATE = WAIT_START;
+                        QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
+                        //emit newData(incomingData);                                       // Emit signal for data received with the list
+
+                        if(receiveDataRequest){
+                            emit newData(incomingData);
+                            //qDebug() <<"emit" <<incomingData;
+                            receiveDataRequest = false;
+                        }
+                        break;
+                    }
+                    else if (isdigit (temp[i]) || isspace (temp[i]) || temp[i] =='-' || temp[i] =='.')
+                    {
+                        /* If examined char is a digit, and not '$' or ';', append it to temporary string */
+                        receivedData.append(temp[i]);
+                    }
+                    break;
+                default: break;
+                }
+            }
+        }
+    }
+
 }
 
 void Rs232::timerEvent(QTimerEvent *event)
 {
 
+
     if(event->timerId() == timer1sId){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
+
+        if(startTime.isValid()){
+            QTime finishTime = QTime::currentTime();
+
+            int sec = startTime.secsTo(finishTime);
+            QTime t = QTime(0,0).addSecs(sec);
+              QString durat = QString("%1 hours, %2 minutes, %3 seconds")
+                .arg(t.hour()).arg(t.minute()).arg(t.second());
+
+            QString str = "  ieraksts sākts: ";
+            str.append(startTime.toString("hh:mm:ss"));
+            str.append("ieraksta ilgums: ");
+            str.append(durat);     //.toString("hh:mm:ss")
+            ui->label_chart_info->setText(str);
+        }
     }
 
 
     if(event->timerId() == timerId){
+        // qDebug()<< "Event Id";
         att++;
-        bool ok;
-        int t1 = 0;
-        int t2 = 0;
-        auto str= QString(currserdata);
-        QStringList elements = str.split(',');
-
-        qDebug() << "element" <<elements.size();
-        if(elements.size() ==4){
-            qDebug() << elements[0]<< elements[1] << elements[2] << elements[3];
-
-            t1 = elements[1].toInt(&ok);
-            if(!ok){
-                t1 = 0;
-                ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
-            }
-            t2 = elements[3].toInt(&ok);
-            if(!ok){
-                t2 = 0;
-                ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
-            }
-
-            chart1Data chdat;
-            // QPointF  spser;
-            spser.setX (att);
-            spser.setY (t1);
-
-            sp_seriesT1->append(spser);
-            chdat.chartT1 = spser;
-
-            spser.setY (t2);
-            sp_seriesT2->append(spser);
-            chdat.chartT2 = spser;
-
-            chartDataList.append(chdat);
-
-            qDebug() << "add T2: " << spser.x() << spser.y();
-
-            sp_seriesMin->append(att,TMIN);
-            sp_seriesMax->append(att,TMAX);
-
-        }
-        else{
-            ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
-        }
-        QString strn = "Dino temperatūra        ";
-        strn.append(currentTime)  ;
-        chart1->setTitle(strn);
+        receiveDataRequest = true;
 
         if(att > 100){
-        int range = att * 1.1;
-        chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+            int range = att * 1.1;
+            chart1->axes(Qt::Horizontal).first()->setRange(0, range);
         }
     }
+
     if(event->timerId() == timerInit){
+        qDebug()<< "Event Init";
         initPort();
     }
 
@@ -261,6 +275,7 @@ void Rs232::on_pushButtonStart_clicked()
     sp_seriesMin->clear();
     sp_seriesMax->clear();
     att = 0;
+    startTime = QTime::currentTime();
     chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
 }
 
@@ -374,6 +389,67 @@ void Rs232::drawTchart()
     qApp->setPalette(pal);
     ui->verticalLayout_chart->addWidget(chartView1);
 }
+
+void Rs232::newDataUpdateCh(QStringList currSdata)
+{
+
+    bool ok;
+    int t1 = 0;
+    int t2 = 0;
+
+
+    // QStringList elements = QString(currSdata).split(',');
+
+    qDebug() << "currSdata" <<currSdata.size() << currSdata;
+
+    if(currSdata.size() == 3){
+        qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
+
+        t1 = currSdata[1].toInt(&ok);
+        if(!ok){
+            ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
+            t1 = 0;
+        }
+        t2 = currSdata[2].toInt(&ok);
+        if(!ok){
+            ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
+            t2 = 0;
+        }
+
+        chart1Data chdat;
+        // QPointF  spser;
+        spser.setX (att);
+        spser.setY (t1);
+
+        sp_seriesT1->append(spser);
+        chdat.chartT1 = spser;
+
+        spser.setY (t2);
+        sp_seriesT2->append(spser);
+        chdat.chartT2 = spser;
+
+        chartDataList.append(chdat);
+
+
+        //qDebug() << "add T2: " << spser.x() << spser.y();
+
+        sp_seriesMin->append(att,TMIN);
+        sp_seriesMax->append(att,TMAX);
+
+    }
+
+    // QString strn = "Dino temperatūra        ";
+    // strn.append(currentTime)  ;
+    // chart1->setTitle(strn);
+
+    if(att > 100){
+        int range = att * 1.1;
+        chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+    }
+
+}
+
+
 
 void Rs232::on_pushButton_Save_clicked()
 {
