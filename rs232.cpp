@@ -172,9 +172,18 @@ void Rs232::sendData(QString send)
 
 void Rs232::readSerial()
 {
-    if(m_serial->bytesAvailable()) {                                                    // If any bytes are available
-        QByteArray data = m_serial->readAll();
-        //qDebug() <<"readSerial()" <<data ;
+    if(m_serial->bytesAvailable()) {
+
+        if(!m_serial->canReadLine()){
+          qDebug() <<"line not receive all";
+            return;
+        }
+
+        // If any bytes are available
+        QByteArray data = m_serial->readLine(25);// readAll();  //readData()  readLineData()
+
+
+        qDebug() <<"readSerial()" <<data ;//<< m_serial->waitForReadyRead();
 
         if(!data.isEmpty()) {                                                             // If the byte array is not empty
             char *temp = data.data();
@@ -229,13 +238,16 @@ void Rs232::timerEvent(QTimerEvent *event)
 
             int sec = startTime.secsTo(finishTime);
             QTime t = QTime(0,0).addSecs(sec);
-              QString durat = QString("%1 hours, %2 minutes, %3 seconds")
+              QString durat = QString("%1 h., %2 min., %3 sek.")
                 .arg(t.hour()).arg(t.minute()).arg(t.second());
 
-            QString str = "  ieraksts sākts: ";
+            QString str = "  Ieraksts sākts ";
             str.append(startTime.toString("hh:mm:ss"));
-            str.append("ieraksta ilgums: ");
+            str.append(",  ieraksta ilgums ");
             str.append(durat);     //.toString("hh:mm:ss")
+            str.append(", laika iedaļas vērtība ");
+            str.append(QString::number(timeMark,10));
+            str.append("s.");
             ui->label_chart_info->setText(str);
         }
     }
@@ -400,10 +412,10 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
 
     // QStringList elements = QString(currSdata).split(',');
 
-    qDebug() << "currSdata" <<currSdata.size() << currSdata;
+    //qDebug() << "currSdata" <<currSdata.size() << currSdata;
 
     if(currSdata.size() == 3){
-        qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
+       // qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
 
         t1 = currSdata[1].toInt(&ok);
         if(!ok){
@@ -436,6 +448,9 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
         sp_seriesMin->append(att,TMIN);
         sp_seriesMax->append(att,TMAX);
 
+    }
+    else{
+        qDebug() << currSdata;
     }
 
     // QString strn = "Dino temperatūra        ";
