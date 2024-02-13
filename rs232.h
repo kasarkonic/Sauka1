@@ -113,7 +113,7 @@ private:
     int timer1sId = 0;
     int  att = 0;
     QString currentTime;
-    QTime startTime = QTime(0, 0);
+    QTime startTime;
    // void newDataUpdateCh(QStringList currSdata);
     bool receiveDataRequest = false;
 

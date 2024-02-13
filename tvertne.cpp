@@ -56,7 +56,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
@@ -76,7 +76,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    qDebug()<<"full:fill" <<full<<":" << fill;
+   // qDebug()<<"full:fill" <<full<<":" << fill;
     if (full){
         painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
     }

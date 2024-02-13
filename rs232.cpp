@@ -2,6 +2,7 @@
 #include "ui_rs232.h"
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
+#include <QFile>
 
 
 
@@ -24,6 +25,7 @@ Rs232::Rs232(Global &global,QWidget *parent)
     }
 
     STATE = WAIT_START;
+    startTime = QTime(0,0);
     connect(m_serial, &QSerialPort::readyRead,this, &Rs232::readSerial);   //readyRead
     connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
     initUI();
@@ -232,13 +234,16 @@ void Rs232::timerEvent(QTimerEvent *event)
     if(event->timerId() == timer1sId){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
+        qDebug() <<startTime << currentTime;
 
-        if(startTime.isValid()){
+       // if(!startTime.isNull()){
+        if(startTime != QTime(0,0)){
+
             QTime finishTime = QTime::currentTime();
 
             int sec = startTime.secsTo(finishTime);
             QTime t = QTime(0,0).addSecs(sec);
-              QString durat = QString("%1 h., %2 min., %3 sek.")
+              QString durat = QString("%1h. %2min. %3sek.")
                 .arg(t.hour()).arg(t.minute()).arg(t.second());
 
             QString str = "  Ieraksts sākts ";
@@ -301,6 +306,7 @@ void Rs232::on_pushButton_Stop_clicked()
     if(timerId > 0){
         killTimer(timerId);
     }
+    startTime = QTime(0,0);
 }
 
 
@@ -472,13 +478,50 @@ void Rs232::on_pushButton_Save_clicked()
 
     qDebug() << currentTime << newstr;
 
-    QString strName = "Dino_T_";
+    QString filename = "Dino_T_";
 
 
-    strName.append (currentTime);
-    strName.append(".png");
-    chartView1->grab().save(strName) ;
+    filename.append (currentTime);
+    filename.append(".png");
+    chartView1->grab().save(filename) ;
 
-    ui->textEditInfo->append(QString("Izveidots fails: ") + strName);
+    ui->textEditInfo->append(QString("Izveidots fails: ") + filename);
+
+
+    filename = "Dino_T_";
+    filename.append (currentTime);
+    filename.append(".txt");
+
+    QFile file(filename);
+    if (file.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&file);
+
+        stream<< "\t" <<filename<< "\n\n\n";
+
+         for(int i = 0; i < chartDataList.size();i++){
+
+            stream<< QString::number(i) << ",\t";
+            stream<< QString::number(chartDataList[i].chartT1.x());
+            stream<<  ", ";
+            stream<< QString::number(chartDataList[i].chartT1.y());
+            stream<<  ",\t";
+            stream<< QString::number(chartDataList[i].chartT2.x());
+            stream<<  ", ";
+            stream<< QString::number(chartDataList[i].chartT2.y());
+            stream<< "\n";
+         }
+    }
+          //      foreach (chart1Data, chartDataList) {
+        //stream << "something" << endl;
+            file.close();
+   // filename = "Dino_T_";
+   // filename.append (currentTime);
+   // filename.append(".txt");
+   // chartView1->grab().save(filename) ;
+
+    ui->textEditInfo->append(QString("Izveidots fails: ") + filename);
+   // }
+
+
 }
 
