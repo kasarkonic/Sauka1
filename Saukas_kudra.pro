@@ -24,6 +24,7 @@ SOURCES += \
     pipe.cpp \
     pump.cpp \
     rs232.cpp \
+    scale.cpp \
     senslistsform.cpp \
     sensortablemodel.cpp \
     tvertne.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     pipe.h \
     pump.h \
     rs232.h \
+    scale.h \
     senslistsform.h \
     sensortablemodel.h \
     tvertne.h \
@@ -56,6 +58,7 @@ FORMS += \
     mainwindow.ui \
     parmani.ui \
     rs232.ui \
+    scale.ui \
     senslistsform.ui \
     widgetservice.ui
 

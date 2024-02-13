@@ -4,6 +4,7 @@
 #include "global.h"
 #include "senslistsform.h"
 #include "actlistform.h"
+#include "scale.h"
 
 
 HWService::HWService(Global &global, QWidget *parent)
@@ -38,3 +39,11 @@ void HWService::on_pushButton_sensor_clicked()
     SensListsForm *sensListsForm = new SensListsForm(global,this);
     sensListsForm->show();
 }
+
+void HWService::on_pushButton_Scales_clicked()
+{
+    qDebug() << "on_pushButton_scale_clicked";
+       Scale *scale = new Scale(global,this);
+       scale->show();
+}
+
