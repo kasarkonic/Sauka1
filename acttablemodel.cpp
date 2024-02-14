@@ -47,8 +47,10 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
     case Qt::EditRole:
         switch (col) {
         case DIvalue:
+            return QVariant();
             break;
         case ANvalue:
+            return QVariant();
             break;
         case Qt::DecorationRole:
             // if (col == PictureColumn) {
@@ -67,6 +69,7 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
+    return QVariant();
 }
 
 QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role ) const

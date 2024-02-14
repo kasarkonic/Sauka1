@@ -341,14 +341,6 @@ void WidgetService::on_horizontalSlider_valueChanged(int value)
      updateSensorVal();
 }
 
-int addresAct;
-int addresAN1;
-int addresAN2;
-int actValue;
-int an1Value;
-int an2Value;
-
-
 void WidgetService::on_lineEdit_AddresAN2_editingFinished()
 {
     int val = ui->lineEdit_AddresAN2->text().toInt();

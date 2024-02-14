@@ -53,6 +53,8 @@ signals:
 
 protected:
     void    timerEvent(QTimerEvent *event) override;
+    void    closeEvent (QCloseEvent *event) override;
+    void    mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
 
@@ -108,6 +110,7 @@ private:
 
 
     void drawTchart();
+    bool createMessageBox(QString text);
     int  timerId = 0;
     int timerInit = 0;
     int timer1sId = 0;

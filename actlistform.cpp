@@ -11,7 +11,7 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
     acttablemodel = new ActTableModel(global,this);
     ui->tableView->setModel(acttablemodel);
     int maxRow = global.actList.size();
-
+/*
     for(int row = 0; row < maxRow; row++)
     {
         butt = new QPushButton();
@@ -26,7 +26,7 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
         connect(butt, &QPushButton::clicked, this, &ActListForm::handleButton);
         connect(lineEditAn, &QLineEdit::editingFinished, this, &ActListForm::handleEditFinish);
     }
-
+*/
 }
 
 

@@ -44,27 +44,27 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
             break;
         case ANvalue:
             break;
-        //default:
-          //  break;
-        //}
-    case Qt::DecorationRole:
-        // if (col == PictureColumn) {
-        //      return getToolPicture(row);
-        //  } else {
-        return QVariant();
-        //  }
-        //  case Qt::EditRole:
-        //      return Units::splitInTwoLines(
-        //         index.data(Qt::DisplayRole).toString());
-    case Qt::TextAlignmentRole:
-        return Qt::AlignCenter;
-        //  case Qt::BackgroundRole:
-        //      return QBrush(getBackgroundColor(row));
-    default:
-        return QVariant();
+            //default:
+            //  break;
+            //}
+        case Qt::DecorationRole:
+            // if (col == PictureColumn) {
+            //      return getToolPicture(row);
+            //  } else {
+            return QVariant();
+            //  }
+            //  case Qt::EditRole:
+            //      return Units::splitInTwoLines(
+            //         index.data(Qt::DisplayRole).toString());
+        case Qt::TextAlignmentRole:
+            return Qt::AlignCenter;
+            //  case Qt::BackgroundRole:
+            //      return QBrush(getBackgroundColor(row));
+        default:
+            return QVariant();
+        }
     }
-}
-
+    return QVariant();
 }
 
 

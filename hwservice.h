@@ -30,6 +30,8 @@ private slots:
 
     void on_pushButton_Scales_clicked();
 
+    void on_pushButton_Com_Ports_clicked();
+
 private:
 
 };

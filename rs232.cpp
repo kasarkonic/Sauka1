@@ -3,6 +3,8 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QFile>
+#include <QMessageBox>
+
 
 
 
@@ -20,7 +22,7 @@ Rs232::Rs232(Global &global,QWidget *parent)
 
     m_serial = new QSerialPort(this);
     if (!initPort()){
-        qDebug() << "start timemark 1000";
+        qDebug() <<"start timemark 1000";
         timerInit = startTimer(1000, Qt::CoarseTimer);
     }
 
@@ -246,13 +248,13 @@ void Rs232::timerEvent(QTimerEvent *event)
               QString durat = QString("%1h. %2min. %3sek.")
                 .arg(t.hour()).arg(t.minute()).arg(t.second());
 
-            QString str = "  Ieraksts sākts ";
+            QString str = tr("  Ieraksts sākts ");
             str.append(startTime.toString("hh:mm:ss"));
-            str.append(",  ieraksta ilgums ");
+            str.append(tr(",  ieraksta ilgums "));
             str.append(durat);     //.toString("hh:mm:ss")
-            str.append(", laika iedaļas vērtība ");
+            str.append(tr(", laika iedaļas vērtība "));
             str.append(QString::number(timeMark,10));
-            str.append("s.");
+            str.append(tr("s."));
             ui->label_chart_info->setText(str);
         }
     }
@@ -276,13 +278,24 @@ void Rs232::timerEvent(QTimerEvent *event)
 
 }
 
+void Rs232::closeEvent(QCloseEvent *event)
+{
+    m_serial->close();
+    delete ui;
+}
+
+void Rs232::mouseDoubleClickEvent(QMouseEvent *event)
+{
+
+}
+
 
 void Rs232::on_pushButtonStart_clicked()
 {
     recordStatus = true;
     ui->pushButtonStart->setStyleSheet(qssGreen);
     ui->pushButton_Stop->setStyleSheet(qssGray);
-    ui->label_statuss->setText("Notiek ieraksts");
+    ui->label_statuss->setText(tr("Notiek ieraksts"));
     if(timerId > 0){
         killTimer(timerId);
     }
@@ -299,10 +312,13 @@ void Rs232::on_pushButtonStart_clicked()
 
 void Rs232::on_pushButton_Stop_clicked()
 {
+    if(!createMessageBox(tr("Vai vēlaties pārtraut ierakstu?"))){
+        return;
+    }
     recordStatus = false;
     ui->pushButtonStart->setStyleSheet(qssGray);
     ui->pushButton_Stop->setStyleSheet(qssRed);
-    ui->label_statuss->setText("Ieraksts izslēgts");
+    ui->label_statuss->setText(tr("Ieraksts pārtraukts"));
     if(timerId > 0){
         killTimer(timerId);
     }
@@ -358,7 +374,7 @@ void Rs232::drawTchart()
     chart1->addSeries(sp_seriesMax);
 
 
-    QString str = "Dino temperatūra        ";
+    QString str = tr("Dino temperatūra        ");
     str.append(currentTime)  ;
     chart1->setTitle(str);
 
@@ -406,6 +422,13 @@ void Rs232::drawTchart()
     pal.setColor(QPalette::WindowText,QRgb(0x404040));
     qApp->setPalette(pal);
     ui->verticalLayout_chart->addWidget(chartView1);
+}
+
+bool Rs232::createMessageBox(QString text)
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, " ", text, QMessageBox::Yes|QMessageBox::No);
+    return (reply == QMessageBox::Yes);
 }
 
 void Rs232::newDataUpdateCh(QStringList currSdata)

@@ -16,6 +16,7 @@ SOURCES += \
     acttablemodel.cpp \
     dyno.cpp \
     global.cpp \
+    hwports.cpp \
     hwservice.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     acttablemodel.h \
     dyno.h \
     global.h \
+    hwports.h \
     hwservice.h \
     mainwindow.h \
     mix.h \
@@ -54,6 +56,7 @@ HEADERS += \
 
 FORMS += \
     actlistform.ui \
+    hwports.ui \
     hwservice.ui \
     mainwindow.ui \
     parmani.ui \
