@@ -24,29 +24,38 @@ private slots:
 
     void on_pushButton_Update_clicked();
 
+    void on_comboBox_R1_activated(int index);
+
+    void on_comboBox_R2_activated(int index);
+
+    void on_comboBox_R3_activated(int index);
+
+    void on_comboBox_R4_activated(int index);
+
 private:
     Global &global;
     Ui::HwPorts *ui;
     void initUI();
 
-     enum { NumGridCol = 8,
+    enum { NumGridCol = 8,
            NumGridRows = 3};
 
-     QLabel* labels[NumGridRows][NumGridCol];
-     QComboBox* comboBox[NumGridRows];
+    QLabel* labels[NumGridRows][NumGridCol];
+    QComboBox* comboBox[NumGridRows];
+    QStringList cmbList;
 
-     struct  ComInfo{
-         QString port = "";
-         QString location = "";
-         QString description = "";
-         QString manufacturer = "";
-         QString serialNumber = "";
-         QString vendorIdentifier = "";
-         QString productIdentifier = "";
-     };
-      QMap<QString,ComInfo> comPortMap;
-     void scanPortsInfo();
-      void clearDisplay();
+    struct  ComInfo{
+        QString port = "";
+        QString location = "";
+        QString description = "";
+        QString manufacturer = "";
+        QString serialNumber = "";
+        QString vendorIdentifier = "";
+        QString productIdentifier = "";
+    };
+    QMap<QString,ComInfo> comPortMap;
+    void scanPortsInfo();
+    void clearDisplay();
 
 };
 

@@ -14,6 +14,10 @@ Global::Global()
     UIYsize = 1000;
     UIXresizeSize = 1000;
     UIYresizeSize = 1000;
+     dev1 = "";
+     dev2 = "";
+     dev3 = "";
+     dev4 = "";
 
 
     sens sdata;

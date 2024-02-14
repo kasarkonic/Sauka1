@@ -100,6 +100,15 @@ public:
     int UIXresizeSize;
     int UIYresizeSize;
 
+
+    // attach Com. port
+    QString dev1;
+    QString dev2;
+    QString dev3;
+    QString dev4;
+
+
+
 private:
 
     void creatWidgList();
