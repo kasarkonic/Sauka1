@@ -18,6 +18,10 @@ Global::Global()
      dev2 = "";
      dev3 = "";
      dev4 = "";
+   // dev1_VendorId = "";
+   // dev2_VendorId = "";
+   // dev3_VendorId = "";
+   // dev4_VendorId = "";
 
 
     sens sdata;

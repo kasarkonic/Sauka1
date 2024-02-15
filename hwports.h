@@ -17,6 +17,8 @@ class HwPorts : public QMainWindow
 public:
     explicit HwPorts(Global&  global, QWidget *parent = nullptr);
     ~HwPorts();
+    bool autoScanComPorts();
+    void updateUI();
 
 private slots:
 
@@ -56,6 +58,7 @@ private:
     QMap<QString,ComInfo> comPortMap;
     void scanPortsInfo();
     void clearDisplay();
+    void loadSettings();
 
 };
 

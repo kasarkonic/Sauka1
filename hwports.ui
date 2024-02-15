@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,10,5">
+   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,10,5">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -67,23 +67,20 @@
      </layout>
     </item>
     <item>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>For uto select port : use vendor id</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0,0">
       <item>
        <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0,0,0" columnstretch="5,0,0,0,0,0,0,0,0">
-        <item row="4" column="2">
-         <widget class="QLabel" name="label_R3_desc">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="2">
-         <widget class="QLabel" name="label_R4_desc">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="6">
          <widget class="QLabel" name="label_23">
           <property name="text">
@@ -91,188 +88,10 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="7">
-         <widget class="QLabel" name="label_R1_stat">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="7">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Status</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="5">
-         <widget class="QLabel" name="label_R4_vend">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="9">
-         <widget class="Line" name="line_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QLabel" name="label_R1_desc">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_6">
           <property name="text">
            <string>Device Name</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_R3_port">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="label_30">
-          <property name="text">
-           <string>Vendor Id</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="5">
-         <widget class="QLabel" name="label_R2_vend">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3">
-         <widget class="QLabel" name="label_R2_man">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="6">
-         <widget class="QLabel" name="label_R1_pr_nr">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="6">
-         <widget class="QLabel" name="label_R3_pr_nr">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="6">
-         <widget class="QLabel" name="label_R4_pr_nr">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="4">
-         <widget class="QLabel" name="label_R4_ser">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="7">
-         <widget class="QLabel" name="label_R3_stat">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
-         <widget class="QLabel" name="label_R1_vend">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QLabel" name="label_R3_man">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="4">
-         <widget class="QLabel" name="label_R3_ser">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_22">
-          <property name="text">
-           <string>Manufacturer</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="label_R4_port">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Temperature</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="8">
-         <widget class="QComboBox" name="comboBox_R1">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>5</horstretch>
-            <verstretch>5</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="7">
-         <widget class="QLabel" name="label_R2_stat">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="6">
-         <widget class="QLabel" name="label_R2_pr_nr">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QLabel" name="label_R1_man">
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="4">
-         <widget class="QLabel" name="label_R2_ser">
-          <property name="text">
-           <string>TextLabel</string>
           </property>
          </widget>
         </item>
@@ -284,12 +103,102 @@
             <verstretch>5</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
          </widget>
         </item>
-        <item row="5" column="7">
-         <widget class="QLabel" name="label_R4_stat">
+        <item row="5" column="6">
+         <widget class="QLabel" name="label_R4_pr_nr">
           <property name="text">
-           <string>TextLabel</string>
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_22">
+          <property name="text">
+           <string>Manufacturer</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="6">
+         <widget class="QLabel" name="label_R3_pr_nr">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QLabel" name="label_R2_vend">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_R1_desc">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_R1_port">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QLabel" name="label_R1_vend">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_18">
+          <property name="text">
+           <string>Description</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="4">
+         <widget class="QLabel" name="label_R4_ser">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="6">
+         <widget class="QLabel" name="label_R2_pr_nr">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="7">
+         <widget class="QLabel" name="label_R2_stat">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>RS485   sensr.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="4">
+         <widget class="QLabel" name="label_R3_ser">
+          <property name="text">
+           <string> </string>
           </property>
          </widget>
         </item>
@@ -309,7 +218,28 @@
         <item row="3" column="2">
          <widget class="QLabel" name="label_R2_desc">
           <property name="text">
-           <string>TextLabel</string>
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="4">
+         <widget class="QLabel" name="label_R2_ser">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QLabel" name="label_30">
+          <property name="text">
+           <string>Vendor Id</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Temperature</string>
           </property>
          </widget>
         </item>
@@ -320,55 +250,31 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_4">
+        <item row="2" column="3">
+         <widget class="QLabel" name="label_R1_man">
           <property name="text">
-           <string>RS485   sensr.</string>
+           <string> </string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label_11">
+        <item row="5" column="7">
+         <widget class="QLabel" name="label_R4_stat">
           <property name="text">
-           <string>Port Nr</string>
+           <string> </string>
           </property>
          </widget>
         </item>
-        <item row="4" column="5">
-         <widget class="QLabel" name="label_R3_vend">
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_R3_desc">
           <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="label_29">
-          <property name="text">
-           <string>Serial nr.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="8">
-         <widget class="QComboBox" name="comboBox_R4">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>5</horstretch>
-            <verstretch>5</verstretch>
-           </sizepolicy>
+           <string> </string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
          <widget class="QLabel" name="label_R2_port">
           <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="label_R1_port">
-          <property name="text">
-           <string>TextLabel</string>
+           <string> </string>
           </property>
          </widget>
         </item>
@@ -380,26 +286,125 @@
             <verstretch>5</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>Description</string>
+        <item row="1" column="0" colspan="9">
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item row="5" column="3">
          <widget class="QLabel" name="label_R4_man">
           <property name="text">
-           <string>TextLabel</string>
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <widget class="QLabel" name="label_R2_man">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="8">
+         <widget class="QComboBox" name="comboBox_R1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>5</horstretch>
+            <verstretch>5</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="5">
+         <widget class="QLabel" name="label_R3_vend">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="QLabel" name="label_R1_pr_nr">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="7">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_R3_port">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3">
+         <widget class="QLabel" name="label_R3_man">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="5">
+         <widget class="QLabel" name="label_R4_vend">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="label_R4_port">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="7">
+         <widget class="QLabel" name="label_R3_stat">
+          <property name="text">
+           <string> </string>
           </property>
          </widget>
         </item>
         <item row="2" column="4">
          <widget class="QLabel" name="label_R1_ser">
           <property name="text">
-           <string>TextLabel</string>
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_29">
+          <property name="text">
+           <string>Serial nr.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>Port Nr</string>
           </property>
          </widget>
         </item>
@@ -407,6 +412,36 @@
          <widget class="QLabel" name="label_35">
           <property name="text">
            <string>Scales</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="8">
+         <widget class="QComboBox" name="comboBox_R4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>5</horstretch>
+            <verstretch>5</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="7">
+         <widget class="QLabel" name="label_R1_stat">
+          <property name="text">
+           <string> </string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_R4_desc">
+          <property name="text">
+           <string> </string>
           </property>
          </widget>
         </item>
@@ -474,7 +509,7 @@
      <x>0</x>
      <y>0</y>
      <width>816</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

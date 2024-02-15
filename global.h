@@ -106,7 +106,10 @@ public:
     QString dev2;
     QString dev3;
     QString dev4;
-
+    QString dev1_VendorId;
+    QString dev2_VendorId;
+    QString dev3_VendorId;
+    QString dev4_VendorId;
 
 
 private:

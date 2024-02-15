@@ -54,5 +54,6 @@ void HWService::on_pushButton_Com_Ports_clicked()
     qDebug() << "on_pushButton_Com_Ports_clicked";
     HwPorts *hwPorts = new HwPorts(global,this);
     hwPorts->show();
+    hwPorts->updateUI();
 }
 

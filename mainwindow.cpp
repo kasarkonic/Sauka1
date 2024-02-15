@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "dyno.h"
+#include "hwports.h"
 #include "qforeach.h"
 #include "ui_mainwindow.h"
 #include <Qdebug>
@@ -44,6 +45,18 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
      initUI();
     drawWidgets();
+
+
+    qDebug() << "Autosettings  Com ports";
+    HwPorts *hwPorts = new HwPorts(global,this);
+    if(!hwPorts->autoScanComPorts()){
+        qDebug()<< "ERROR!!! Com port nof found !!";
+        ui->textEdit_Field->setText("Kļūda sistērmā!\n Nevar automātiski atrast Com. portus! Veiciet to manuāli!");
+    }
+    else{
+       ui->textEdit_Field->setText("Komunikācija ar perifēriju izveidota!");
+    }
+
 
     initTimer = true;
     timerId = startTimer(100);
@@ -150,7 +163,7 @@ void MainWindow::loadSettings()
 {
 
     // QString settingsFile = global.settingsFileName;
-    //  QSettings settings(settingsFile, QSettings::NativeFormat);
+    //  QSettings settings(settingsFile, QSettings::IniFormat);
     // QString sText = settings.value("last_save", "").toString();
     //  qDebug() << "last_save " << sText ;
 
@@ -165,8 +178,6 @@ void MainWindow::saveSettings()
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
     QString sText = settingsFile;
-
-
 
     settings.beginGroup("mainwindow");
     settings.setValue("settingsFile", global.appSwVers);
