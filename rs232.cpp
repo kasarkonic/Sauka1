@@ -17,7 +17,10 @@ Rs232::Rs232(Global &global,QWidget *parent)
     , global(global)
     , ui(new Ui::Rs232)
 {
-    timer1sId  = startTimer(100, Qt::CoarseTimer);
+    myAxisX = new QValueAxis();
+    myAxisY = new QValueAxis();
+
+    timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
 
     m_serial = new QSerialPort(this);
@@ -121,7 +124,10 @@ bool Rs232::initPort()
 
         // "403"  FDI RS232
         // "2341" Arduino MEGA
-        if(cInfo.vendorIdentifier == "2341"){
+       // if(cInfo.vendorIdentifier == "2341"){
+
+        qDebug() << "search port:" << cInfo.description <<"Dev2 " << global.dev2_description;
+         if(cInfo.description == global.dev2_description){
             corectPort = cInfo.port;
         }
     }
@@ -267,7 +273,8 @@ void Rs232::timerEvent(QTimerEvent *event)
 
         if(att > 100){
             int range = att * 1.1;
-            chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+            //chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+            myAxisX->setRange(0, range);
         }
     }
 
@@ -280,8 +287,8 @@ void Rs232::timerEvent(QTimerEvent *event)
 
 void Rs232::closeEvent(QCloseEvent *event)
 {
+    Q_UNUSED(event);
     m_serial->close();
-    delete ui;
 }
 
 void Rs232::mouseDoubleClickEvent(QMouseEvent *event)
@@ -299,14 +306,15 @@ void Rs232::on_pushButtonStart_clicked()
     if(timerId > 0){
         killTimer(timerId);
     }
-    timerId = startTimer(timeMark * 100, Qt::CoarseTimer); //1000 for testing
+    timerId = startTimer(timeMark * 1000, Qt::CoarseTimer); //1000 for testing
     sp_seriesT1->clear();
     sp_seriesT2->clear();
     sp_seriesMin->clear();
     sp_seriesMax->clear();
     att = 0;
     startTime = QTime::currentTime();
-    chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+    //chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+    myAxisX->setRange(0, 110);
 }
 
 
@@ -332,6 +340,7 @@ void Rs232::on_pushButton_1s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGreen);
     ui->pushButton_10s->setStyleSheet(qssGray);
     ui->pushButton_60s->setStyleSheet(qssGray);
+    myAxisX->setTitleText("Laiks 1iedaļa 1s");
 }
 
 
@@ -341,6 +350,7 @@ void Rs232::on_pushButton_10s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGray);
     ui->pushButton_10s->setStyleSheet(qssGreen);
     ui->pushButton_60s->setStyleSheet(qssGray);
+    myAxisX->setTitleText("Laiks 1iedaļa 10s");
 }
 
 
@@ -350,6 +360,7 @@ void Rs232::on_pushButton_60s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGray);
     ui->pushButton_10s->setStyleSheet(qssGray);
     ui->pushButton_60s->setStyleSheet(qssGreen);
+    myAxisX->setTitleText("Laiks 1iedaļa 60s");
 }
 
 
@@ -378,9 +389,34 @@ void Rs232::drawTchart()
     str.append(currentTime)  ;
     chart1->setTitle(str);
 
+
+
     chart1->createDefaultAxes();
     chart1->axes(Qt::Vertical).first()->setRange(0,100);
     chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+
+
+    //myAxisX = new QValueAxis();
+    //myAxisY = new QValueAxis();
+    myAxisX->setLabelFormat("%i");
+    myAxisX->setRange(0, 110);
+   // myAxisX->setTitleText("Laiks s");
+    myAxisX->setTickCount(5);
+    chart1->addAxis(myAxisX, Qt::AlignBottom);
+
+   // myAxisY = new QValueAxis();
+    myAxisY->setLabelFormat("%i");
+    myAxisY->setRange(0, 100);
+    myAxisY->setTitleText("Temperatūra \u2103"); //u8"\u00B0"
+    myAxisY->setTickCount(6);
+    chart1->addAxis(myAxisY, Qt::AlignLeft);
+
+
+
+
+
+
+
     chart1->legend()->setVisible(true);
     chart1->legend()->setAlignment(Qt::AlignBottom);
 
@@ -444,7 +480,7 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
     qDebug() << "currSdata" <<currSdata.size() << currSdata;
 
     if(currSdata.size() == 4){
-        qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
+       // qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
 
         t1 = currSdata[1].toFloat(&ok);
         if(!ok){
@@ -476,7 +512,6 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
 
         sp_seriesMin->append(att,TMIN);
         sp_seriesMax->append(att,TMAX);
-
     }
     else{
         qDebug() << currSdata;
@@ -486,9 +521,11 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
     // strn.append(currentTime)  ;
     // chart1->setTitle(strn);
 
+
     if(att > 100){
         int range = att * 1.1;
-        chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+        //chart1->axes(Qt::Horizontal).first()->setRange(0, range);
+        myAxisX->setRange(0, range);
     }
 
 }
@@ -520,16 +557,16 @@ void Rs232::on_pushButton_Save_clicked()
         QTextStream stream(&file);
 
         stream<< "\t" <<filename<< "\n\n\n";
-
+        stream<< "N.P.K.\t\t" <<"Time\t\t"<< "T1\t\t" << "T2";
          for(int i = 0; i < chartDataList.size();i++){
 
-            stream<< QString::number(i) << ",\t";
+            stream<< QString::number(i) << ",\t\t";
             stream<< QString::number(chartDataList[i].chartT1.x());
-            stream<<  ", ";
+            stream<<  ",\t\t";
             stream<< QString::number(chartDataList[i].chartT1.y());
-            stream<<  ",\t";
-            stream<< QString::number(chartDataList[i].chartT2.x());
-            stream<<  ", ";
+            stream<<  ",\t\t";
+ //           stream<< QString::number(chartDataList[i].chartT2.x());
+ //           stream<<  ", ";
             stream<< QString::number(chartDataList[i].chartT2.y());
             stream<< "\n";
          }

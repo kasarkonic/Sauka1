@@ -23,7 +23,7 @@ Adafruit_MAX31865 thermo2 = Adafruit_MAX31865(9, 11, 12, 13);
 #define START_MSG 2
 #define END_MSG 3
 
-int timerCount;
+int timerCount = 0;
 int rad;
 int koef = 1;
 
@@ -33,110 +33,77 @@ byte end = END_MSG;
 void setup() {
   Serial.begin(115200);
 
-//  Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
-//  Timer1.attachInterrupt(timerIsr); // attach the service routine here
+  //  Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
+  //  Timer1.attachInterrupt(timerIsr); // attach the service routine here
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(12,INPUT_PULLUP); 
-  
+  //pinMode(9, OUTPUT);
+  //pinMode(10, OUTPUT);
+  //pinMode(12,INPUT_PULLUP);
+
   thermo1.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   thermo2.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
-  timerCount = 0;
-    delay(1000);
+  delay(1000);
+
+
 }
 
 
 void loop() {
-
-  uint16_t rtd1 = thermo1.readRTD();
-  delay(500);
-  uint16_t rtd2 = thermo2.readRTD();
   
-//Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
+    uint16_t rtd1 = thermo1.readRTD();
+    //digitalWrite(LED_BUILTIN, HIGH);
+    delay(500);
+    //digitalWrite(LED_BUILTIN, LOW);
+    uint16_t rtd2 = thermo2.readRTD();
 
-float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3892.0);
-float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
+    //Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
 
- String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
-  if (timerCount % 2) {
+    float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3893.0);
+    float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.5);
+
+    String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+   // if (timerCount % 2) {
+   //   digitalWrite(LED_BUILTIN, HIGH);
+   // }
+    //else {
+    //  digitalWrite(LED_BUILTIN, HIGH);
+   // }
+    Serial.println(str);
     digitalWrite(LED_BUILTIN, HIGH);
-  }
-  else {
-    digitalWrite(LED_BUILTIN, LOW);
-  }
-Serial.println(str);
- delay(500);
- timerCount++;
-  if (timerCount % 2) {
-    digitalWrite(LED_BUILTIN, HIGH);
-  }
-  else {
-    digitalWrite(LED_BUILTIN, LOW);
-  }
-}
+    delay(500);
+    //digitalWrite(LED_BUILTIN, LOW);
 
-
-
-
-
-
-
-
-
-///////////////////////////////////////
-void timerIsr() {
-  timerCount++;
-  if (timerCount % 2) {
-    digitalWrite(LED_BUILTIN, HIGH);
-  }
-  else {
-    digitalWrite(LED_BUILTIN, LOW);
-  }
-
-  /*
-    int t = timerCount % 10000;
-    rad = rad + koef;
-    if (rad >= 30)
-      koef = -1;
-    if (rad <= 0)
-      koef = 1;
-
-    //Serial.print("T1,");
-    String str = "$" + String(timerCount) + (" ") + String(rad + 50) + (" ")  + String(rad + 25) + ";" ;
-  */
-
-
-//  uint16_t rtd1 = thermo1.readRTD();
-  delay(200);
- // uint16_t rtd2 = thermo2.readRTD();
-
-  
-//thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
-//float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3892.0);
-//float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
-
+    timerCount++;
+    //if (timerCount % 2) {
+   //   digitalWrite(LED_BUILTIN, HIGH);
+   // }
+   // else {
+   //   digitalWrite(LED_BUILTIN, LOW);
+    //}
+     
+    }
 
 
   
+  ///////////////////////////////////////
+  void timerIsr() {
+    timerCount++;
+    if (timerCount % 2 == 0) {
+      //digitalWrite(LED_BUILTIN, HIGH);
+    }
+    else {
+     // digitalWrite(LED_BUILTIN, LOW);
+    }
+    
+    uint16_t rtd1 = thermo1.readRTD();
+    uint16_t rtd2 = thermo2.readRTD();
 
-//Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
+    //thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
+    float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3850.0);
+    float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3876.0);
 
+    String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+    Serial.println(str);
 
-
-
-
-
+  }
   
-  
- // float ratio = rtd2;
-  //ratio /= 32768;
-  // Serial.print("Ratio = "); Serial.println(ratio,8);
-  //Serial.print("Resistance = "); Serial.println(RREF*ratio,8);
-  // Serial.print("Temperature = "); Serial.println(thermo.temperature(RNOMINAL, RREF));
-
- //  String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
-
- // Serial.println(str);
-
-}

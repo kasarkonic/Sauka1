@@ -205,7 +205,10 @@ void HwPorts::loadSettings()
     global.dev2_VendorId = settings.value("Device_2/Vendor_Id", "na").toString();
     global.dev3_VendorId = settings.value("Device_3/Vendor_Id", "na").toString();
     global.dev4_VendorId = settings.value("Device_4/Vendor_Id", "na").toString();
-
+    global.dev1_description = settings.value("Device_1/Description", "na").toString();
+    global.dev2_description = settings.value("Device_2/Description", "na").toString();
+    global.dev3_description = settings.value("Device_3/Description", "na").toString();
+    global.dev4_description = settings.value("Device_4/Description", "na").toString();
 
     qDebug()<< "loadSettings() Vendor Id:"<< global.dev1_VendorId<< global.dev2_VendorId<< global.dev3_VendorId<< global.dev4_VendorId;
 }
@@ -219,22 +222,26 @@ void HwPorts::loadSettings()
         settings.beginGroup("Device_1");
         settings.setValue("port_Nr", global.dev1);
         settings.setValue("Vendor_Id", global.dev1_VendorId);
+        settings.setValue("Description", global.dev1_description);
         settings.endGroup();
 
 
         settings.beginGroup("Device_2");
         settings.setValue("port_Nr", global.dev2);
         settings.setValue("Vendor_Id", global.dev2_VendorId);
+        settings.setValue("Description", global.dev2_description);
         settings.endGroup();
 
         settings.beginGroup("Device_3");
         settings.setValue("port_Nr", global.dev3);
         settings.setValue("Vendor_Id", global.dev3_VendorId);
+        settings.setValue("Description", global.dev3_description);
         settings.endGroup();
 
         settings.beginGroup("Device_4");
         settings.setValue("port_Nr", global.dev4);
         settings.setValue("Vendor_Id", global.dev4_VendorId);
+        settings.setValue("Description", global.dev4_description);
         settings.endGroup();
 
 
@@ -279,6 +286,7 @@ void HwPorts::loadSettings()
         ui->label_R1_stat->setText("");
         global.dev1 = comPortMap[ind].port;
         global.dev1_VendorId = comPortMap[ind].vendorIdentifier;
+        global.dev1_description = comPortMap[ind].description;
     }
 
 
@@ -297,6 +305,7 @@ void HwPorts::loadSettings()
         ui->label_R2_stat->setText("");
         global.dev2 = comPortMap[ind].port;
         global.dev2_VendorId = comPortMap[ind].vendorIdentifier;
+        global.dev2_description = comPortMap[ind].description;
     }
 
 
@@ -315,6 +324,7 @@ void HwPorts::loadSettings()
         ui->label_R3_stat->setText("");
         global.dev3 = comPortMap[ind].port;
         global.dev3_VendorId = comPortMap[ind].vendorIdentifier;
+        global.dev3_description = comPortMap[ind].description;
     }
 
 
@@ -333,5 +343,6 @@ void HwPorts::loadSettings()
         ui->label_R4_stat->setText("");
         global.dev4 = comPortMap[ind].port;
         global.dev4_VendorId = comPortMap[ind].vendorIdentifier;
+        global.dev4_description = comPortMap[ind].description;
     }
 

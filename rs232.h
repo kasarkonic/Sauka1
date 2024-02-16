@@ -7,7 +7,7 @@
 #include <QSerialPort>
 #include <QSplineSeries>
 #include <QChartView>
-//#include <QValueAxis>
+#include <QValueAxis>
 #include <QTime>
 
 #define START_MSG       '$'
@@ -103,8 +103,8 @@ private:
     QSplineSeries *sp_seriesMin;
     QSplineSeries *sp_seriesMax;
 
-    //QValueAxis *axisX;
-   // QValueAxis *axisY;
+    QValueAxis *myAxisX;
+    QValueAxis *myAxisY;
     QChartView *chartView1;
     QPointF  spser;
 
