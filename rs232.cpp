@@ -8,8 +8,8 @@
 
 
 
-#define TMIN 65
-#define TMAX 80
+#define TMIN 56
+#define TMAX 70
 
 
 Rs232::Rs232(Global &global,QWidget *parent)
@@ -17,7 +17,7 @@ Rs232::Rs232(Global &global,QWidget *parent)
     , global(global)
     , ui(new Ui::Rs232)
 {
-    timer1sId  = startTimer(1000, Qt::CoarseTimer);
+    timer1sId  = startTimer(100, Qt::CoarseTimer);
     ui->setupUi(this);
 
     m_serial = new QSerialPort(this);
@@ -236,7 +236,7 @@ void Rs232::timerEvent(QTimerEvent *event)
     if(event->timerId() == timer1sId){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
-        qDebug() <<startTime << currentTime;
+       // qDebug() <<startTime << currentTime;
 
        // if(!startTime.isNull()){
         if(startTime != QTime(0,0)){
@@ -441,17 +441,17 @@ void Rs232::newDataUpdateCh(QStringList currSdata)
 
     // QStringList elements = QString(currSdata).split(',');
 
-    //qDebug() << "currSdata" <<currSdata.size() << currSdata;
+    qDebug() << "currSdata" <<currSdata.size() << currSdata;
 
-    if(currSdata.size() == 3){
-       // qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
+    if(currSdata.size() == 4){
+        qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
 
-        t1 = currSdata[1].toInt(&ok);
+        t1 = currSdata[1].toFloat(&ok);
         if(!ok){
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t1 = 0;
         }
-        t2 = currSdata[2].toInt(&ok);
+        t2 = currSdata[2].toFloat(&ok);
         if(!ok){
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t2 = 0;

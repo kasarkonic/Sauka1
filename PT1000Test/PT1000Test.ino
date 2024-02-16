@@ -1,5 +1,5 @@
 
-#include <TimerOne.h>
+//#include <TimerOne.h>
 #include <Adafruit_MAX31865.h>
 
 // Use software SPI: CS, DI, DO, CLK
@@ -10,7 +10,7 @@ Adafruit_MAX31865 thermo2 = Adafruit_MAX31865(9, 11, 12, 13);
 //Adafruit_MAX31865 thermo = Adafruit_MAX31865(10);
 
 // The value of the Rref resistor. Use 430.0 for PT100 and 4300.0 for PT1000
-#define RREF      3900.0  //430.0  thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
+//#define RREF      3900.0  //430.0  thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
 
 
 
@@ -33,20 +33,58 @@ byte end = END_MSG;
 void setup() {
   Serial.begin(115200);
 
-  Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
-  Timer1.attachInterrupt(timerIsr); // attach the service routine here
+//  Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
+//  Timer1.attachInterrupt(timerIsr); // attach the service routine here
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(12,INPUT_PULLUP); 
+  
   thermo1.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   thermo2.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   timerCount = 0;
+    delay(1000);
 }
 
 
 void loop() {
 
+  uint16_t rtd1 = thermo1.readRTD();
+  delay(500);
+  uint16_t rtd2 = thermo2.readRTD();
+  
+//Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
+
+float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3892.0);
+float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
+
+ String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+  if (timerCount % 2) {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
+Serial.println(str);
+ delay(500);
+ timerCount++;
+  if (timerCount % 2) {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
 }
 
 
+
+
+
+
+
+
+
+///////////////////////////////////////
 void timerIsr() {
   timerCount++;
   if (timerCount % 2) {
@@ -69,18 +107,20 @@ void timerIsr() {
   */
 
 
-  uint16_t rtd1 = thermo1.readRTD();
-  uint16_t rtd2 = thermo2.readRTD();
-//thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
+//  uint16_t rtd1 = thermo1.readRTD();
+  delay(200);
+ // uint16_t rtd2 = thermo2.readRTD();
 
-float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3892.0);
-float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
+  
+//thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
+//float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3892.0);
+//float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
+
 
 
   
 
-  //Serial.print("RTD1 value: "); Serial.println(rtd1);
-  //Serial.print("RTD2 value: "); Serial.println(rtd2);
+//Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
 
 
 
@@ -95,12 +135,8 @@ float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.0);
   //Serial.print("Resistance = "); Serial.println(RREF*ratio,8);
   // Serial.print("Temperature = "); Serial.println(thermo.temperature(RNOMINAL, RREF));
 
-   String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+ //  String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
 
- // String str = "$" + String(timerCount) + (" ") + String(thermo2.temperature(RNOMINAL, RREF)) + (" ")  + String(thermo2.temperature(RNOMINAL, RREF)) + ";" ;
-
-  //String str = "$" + String(timerCount) + (" ") + String(thermo1.temperature(RNOMINAL, RREF)) + (" ")  + String(thermo2.temperature(RNOMINAL, RREF)) + ";" ;
-
-  Serial.println(str);
+ // Serial.println(str);
 
 }
