@@ -107,7 +107,7 @@ private:
     QValueAxis *myAxisY;
     QChartView *chartView1;
     QPointF  spser;
-
+    QString myAxisYtitle;
 
     void drawTchart();
     bool createMessageBox(QString text);

@@ -17,9 +17,9 @@ Rs232::Rs232(Global &global,QWidget *parent)
     , global(global)
     , ui(new Ui::Rs232)
 {
-    myAxisX = new QValueAxis();
-    myAxisY = new QValueAxis();
-
+   // myAxisX = new QValueAxis();
+   // myAxisY = new QValueAxis();
+    myAxisYtitle = "Laiks 1 iedaļa 1s";
     timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
 
@@ -340,7 +340,8 @@ void Rs232::on_pushButton_1s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGreen);
     ui->pushButton_10s->setStyleSheet(qssGray);
     ui->pushButton_60s->setStyleSheet(qssGray);
-    myAxisX->setTitleText("Laiks 1iedaļa 1s");
+    //myAxisX->setTitleText("Laiks 1iedaļa 1s");
+    myAxisYtitle = "Laiks 1 iedaļa 1s";
 }
 
 
@@ -350,7 +351,8 @@ void Rs232::on_pushButton_10s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGray);
     ui->pushButton_10s->setStyleSheet(qssGreen);
     ui->pushButton_60s->setStyleSheet(qssGray);
-    myAxisX->setTitleText("Laiks 1iedaļa 10s");
+    //myAxisX->setTitleText("Laiks 1iedaļa 10s");
+    myAxisYtitle = "Laiks 1 iedaļa 10s";
 }
 
 
@@ -360,7 +362,8 @@ void Rs232::on_pushButton_60s_clicked()
     ui->pushButton_1s->setStyleSheet(qssGray);
     ui->pushButton_10s->setStyleSheet(qssGray);
     ui->pushButton_60s->setStyleSheet(qssGreen);
-    myAxisX->setTitleText("Laiks 1iedaļa 60s");
+   // myAxisX->setTitleText("Laiks 1iedaļa 60s");
+    myAxisYtitle = "Laiks 1 iedaļa 60s";
 }
 
 
@@ -391,29 +394,52 @@ void Rs232::drawTchart()
 
 
 
-    chart1->createDefaultAxes();
-    chart1->axes(Qt::Vertical).first()->setRange(0,100);
-    chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+  //  chart1->createDefaultAxes();
+   // chart1->axes(Qt::Vertical).first()->setRange(0,100);
+   // chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+
+   // chart1->axes(Qt::Horizontal).first()->setTitleText(myAxisYtitle);
 
 
-    //myAxisX = new QValueAxis();
-    //myAxisY = new QValueAxis();
+
+    myAxisX = new QValueAxis();
+    myAxisY = new QValueAxis();
     myAxisX->setLabelFormat("%i");
+  //  myAxisX->setTitleText(myAxisYtitle);
     myAxisX->setRange(0, 110);
-   // myAxisX->setTitleText("Laiks s");
     myAxisX->setTickCount(5);
     chart1->addAxis(myAxisX, Qt::AlignBottom);
 
-   // myAxisY = new QValueAxis();
+
+    myAxisY = new QValueAxis();
     myAxisY->setLabelFormat("%i");
+   //myAxisY->setTitleText("Temperatūra"); //u8"\u00B0"
     myAxisY->setRange(0, 100);
     myAxisY->setTitleText("Temperatūra \u2103"); //u8"\u00B0"
     myAxisY->setTickCount(6);
     chart1->addAxis(myAxisY, Qt::AlignLeft);
 
 
+    sp_seriesT1->attachAxis(myAxisX);
+    sp_seriesT1->attachAxis(myAxisY);
+    sp_seriesT2->attachAxis(myAxisX);
+    sp_seriesT2->attachAxis(myAxisY);
+    sp_seriesMin->attachAxis(myAxisX);
+    sp_seriesMin->attachAxis(myAxisY);
+    sp_seriesMax->attachAxis(myAxisX);
+    sp_seriesMax->attachAxis(myAxisY);
 
+/*
+     chart1 = new QChart();
+     chart1->addSeries(sp_seriesT1);
+     chart1->addSeries(sp_seriesT2);
+     chart1->addSeries(sp_seriesMin);
+     chart1->addSeries(sp_seriesMax);
 
+     chart1->setTitle(str);
+      chart1->addAxis(myAxisX, Qt::AlignBottom);
+     chart1->addAxis(myAxisY, Qt::AlignLeft);
+*/
 
 
 
