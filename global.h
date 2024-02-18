@@ -116,7 +116,7 @@ public:
     QString dev4_description;
 
 
-    QColor  backgroundColor = QColor(250, 250, 250, 175);
+    QColor  backgroundColor = QColor(250, 250, 250, 175);   // 255 transparent
 
 private:
 
