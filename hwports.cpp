@@ -30,6 +30,12 @@ HwPorts::~HwPorts()
 
 void HwPorts::initUI()
 {
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+
     /*
     for (int row = 0 ; row < NumGridRows; row++){
 

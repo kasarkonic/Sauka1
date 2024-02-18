@@ -7,6 +7,12 @@ ParMani::ParMani(Global &global, QWidget *parent)
     , global(global)
     , ui(new Ui::ParMani)
 {
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+
     ui->setupUi(this);
     ui->label->setText("Es vēl augu");
     Dyno *dynoA = new Dyno(global,"",this);

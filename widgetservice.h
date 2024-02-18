@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-//#include"global.h"
+#include"global.h"
 
 #include "widgetDiagramElement.h"
 #include <QMainWindow>
@@ -18,12 +18,13 @@ class WidgetService :  public  QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
+    explicit WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
 
     ~WidgetService();
     void openWidgetServiceForm();
     Ui::WidgetService *ui;
     void updateSettings();
+    Global &global;
 
 protected:
     void    closeEvent (QCloseEvent *event) override;

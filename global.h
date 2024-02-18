@@ -115,6 +115,9 @@ public:
     QString dev3_description;
     QString dev4_description;
 
+
+    QColor  backgroundColor = QColor(250, 250, 250, 175);
+
 private:
 
     void creatWidgList();

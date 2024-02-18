@@ -20,7 +20,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::MainWindow)
-//,  widgetData(global)
+    //,  widgetData(global)
 
 
 { 
@@ -43,7 +43,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     global.UIYsize = size().height();
     qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
 
-     initUI();
+    initUI();
     drawWidgets();
 
 
@@ -54,9 +54,8 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
         ui->textEdit_Field->setText("Kļūda sistērmā!\n Nevar automātiski atrast Com. portus! Veiciet to manuāli!");
     }
     else{
-       ui->textEdit_Field->setText("Komunikācija ar perifēriju izveidota!");
+        ui->textEdit_Field->setText("Komunikācija ar perifēriju izveidota!");
     }
-
 
     initTimer = true;
     timerId = startTimer(100);
@@ -120,42 +119,42 @@ void MainWindow::timerEvent(QTimerEvent *event)
     Q_UNUSED(event)
 
 
-   // global.widHash["Dyno1"].startX
+    // global.widHash["Dyno1"].startX
 
-   // if(initTimer){
-       // initTimer = false;
-        // timerId = startTimer(1000);
-       // killTimer(timerId);
-        //  timerId = startTimer(1000);
+    // if(initTimer){
+    // initTimer = false;
+    // timerId = startTimer(1000);
+    // killTimer(timerId);
+    //  timerId = startTimer(1000);
 
-        // setShow2();
-        // updateSettingForAll();
-   // }
-   // else{
-        currentTime = QTime::currentTime().toString("hh:mm:ss");
-        setWindowTitle(currentTime);
+    // setShow2();
+    // updateSettingForAll();
+    // }
+    // else{
+    currentTime = QTime::currentTime().toString("hh:mm:ss");
+    setWindowTitle(currentTime);
 
-        ui->statusbar->showMessage (statusStr + currentTime);
+    ui->statusbar->showMessage (statusStr + currentTime);
 
-        //QRandomGenerator gen1;
-       //  QRandomGenerator gen2;
-       // int randx = gen1.bounded(-10,10);
-       // int randy = gen2.bounded(-10,10);
-
-
-       // int randx = QRandomGenerator::global()->bounded(-5,5);
-       //  int randy = QRandomGenerator::global()->bounded(-5,5);
-
-      //  global.widHash["Dyno1"].startX += randx;
-      //  global.widHash["Dyno1"].startY += randy;
-      //  global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
-
-       // qDebug() << currentTime << randx << randy;
-      //  att += 1;
+    //QRandomGenerator gen1;
+    //  QRandomGenerator gen2;
+    // int randx = gen1.bounded(-10,10);
+    // int randy = gen2.bounded(-10,10);
 
 
+    // int randx = QRandomGenerator::global()->bounded(-5,5);
+    //  int randy = QRandomGenerator::global()->bounded(-5,5);
 
- //   }
+    //  global.widHash["Dyno1"].startX += randx;
+    //  global.widHash["Dyno1"].startY += randy;
+    //  global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
+
+    // qDebug() << currentTime << randx << randy;
+    //  att += 1;
+
+
+
+    //   }
 }
 
 
@@ -202,7 +201,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::resizeAllKoef(float koef)
 {
-Q_UNUSED (koef)
+    Q_UNUSED (koef)
     // tvertne.setNewPosition(koef);
     // tvertne1.setNewPosition(koef);
 
@@ -221,8 +220,11 @@ void MainWindow::initUI()
 {
     qDebug() << "start UI settings";
     this->move(1000,1000);
+
+
     QPalette pal = QPalette();
-    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
@@ -279,28 +281,28 @@ void MainWindow::drawWidgets()
     foreach (Global::wdataStruct widData, global.widHash){
 
         if( widData.page == currPage || widData.page == 3 ){    // all pages
-           // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
+            // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {
                 Dyno *dynoA = new Dyno(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(dynoA);
             }
-            break;
+                break;
 
             case WidgetType::widgT::Mix:
             {
                 Mix *mixA = new Mix(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(mixA);
             }
-            break;
+                break;
 
             case WidgetType::widgT::Pipe:
             {
                 Pipe *pipeA = new Pipe(global,widData.name,this);
                 ui->horizontalLayout_ProcessFlow->addWidget(pipeA);
             }
-            break;
+                break;
 
             case WidgetType::Pump:
             {
@@ -308,7 +310,7 @@ void MainWindow::drawWidgets()
                 ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
 
             }
-            break;
+                break;
 
             case WidgetType::Tvertne:
             {
@@ -316,7 +318,7 @@ void MainWindow::drawWidgets()
                 ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
 
             }
-            break;
+                break;
 
             case WidgetType::Valve:
             {
@@ -324,7 +326,7 @@ void MainWindow::drawWidgets()
                 ui->horizontalLayout_ProcessFlow->addWidget(valveA);
 
             }
-            break;
+                break;
 
 
             default:
@@ -337,7 +339,7 @@ void MainWindow::drawWidgets()
 
 void MainWindow::delAllWid()
 {
-     foreach (Global::wdataStruct widData, global.widHash){
+    foreach (Global::wdataStruct widData, global.widHash){
         // qDebug() << widData.name<< " exist ? " <<widData.ptrCurrWidget;
         if(widData.ptrCurrWidget){
             widData.ptrCurrWidget->close();

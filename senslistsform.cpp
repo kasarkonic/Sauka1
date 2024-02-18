@@ -16,6 +16,11 @@ SensListsForm::SensListsForm(Global &global, QWidget *parent)
     , ui(new Ui::SensListsForm)
 
 {
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
 
     ui->setupUi(this);
     ui->label_head->setText("Sensori");

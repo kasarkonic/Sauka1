@@ -35,6 +35,13 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_Zero_clicked();
+
+    void on_pushButton_Tare_clicked();
+
+    void on_pushButton_Read_clicked();
+    void newDataUpdate(QStringList);
+
 private:
     Global &global;
     Ui::Scale *ui;
@@ -44,8 +51,6 @@ private:
     void readSerial();
     QString corectPort;
     QString receivedData;
-    bool receiveDataRequest = false;
-
 
 
     struct  ComInfo{

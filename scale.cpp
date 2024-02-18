@@ -17,8 +17,8 @@ Scale::Scale(Global &global, QWidget *parent) :
         timerInit = startTimer(1000, Qt::CoarseTimer);
     }
     connect(sc_serial, &QSerialPort::readyRead,this, &Scale::readSerial);   //readyRead
-    connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
-    initUI();
+    connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdate(QStringList)));
+    // initUI();
 }
 
 Scale::~Scale()
@@ -27,14 +27,17 @@ Scale::~Scale()
 }
 void Scale::initUI()
 {
-
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
 }
 
 bool Scale::initPort()
 {
     qDebug() << "\ninitPort()";
-
-    /*
+    QString str;
 
     corectPort = global.dev1;
     if(corectPort != nullptr){
@@ -63,77 +66,88 @@ bool Scale::initPort()
     }
     else{
         str = "Available com port nof fond \n search Vendor Id ";
-        str.append("403");
+        str.append("403  ????????????????????");
         qDebug() << str;
         return false;
     }
-    */
+
     return false;
 }
 
 void Scale::sendData(QString send)
 {
-    QString str = "01";
+    QString str = "";
     str.append(send);
     QByteArray utf8Data = str.toUtf8();
     const qint64 written = sc_serial->write(utf8Data);
+    qDebug() << "sendData" << send << utf8Data ;
     Q_UNUSED(written);
 }
 
 void Scale::readSerial()
 {
     if(sc_serial->bytesAvailable()) {
-
         if(!sc_serial->canReadLine()){
-          qDebug() <<"line not receive all";
+            qDebug() <<"line not receive all";
             return;
         }
 
         // If any bytes are available
         QByteArray data = sc_serial->readLine(25);// readAll();  //readData()  readLineData()
 
+        if(!data.isEmpty()) {
+            QString receivedData = QString(data);
+            QStringList incomingData = receivedData.split(',');
+            qDebug() <<"1 receivedData" <<incomingData;
+            qDebug() <<"2 incomingData" <<incomingData;
 
+            emit newData(incomingData);
+            ui->label_Receive->setText(receivedData);
+        }
+    }
+    /*
         qDebug() <<"readSerial()" <<data ;//<< m_serial->waitForReadyRead();
 
-        if(!data.isEmpty()) {                                                             // If the byte array is not empty
+        if(!data.isEmpty()) {
             char *temp = data.data();
             // Get a '\0'-terminated char* to the data
 
-            for(int i = 0; temp[i] != '\0'; i++) {                                        // Iterate over the char*
-                switch(STATE) {                                                           // Switch the current state of the message
-                case WAIT_START:                                                          // If waiting for start [$], examine each char
-                    if(temp[i] == START_MSG) {                                            // If the char is $, change STATE to IN_MESSAGE
+
+            for(int i = 0; temp[i] != '\0'; i++) {
+                switch(STATE) {
+                case WAIT_START:
+                    if(temp[i] == START_MSG) {
                         STATE = IN_MESSAGE;
-                        receivedData.clear();                                             // Clear temporary QString that holds the message
-                        break;                                                            // Break out of the switch
+                        receivedData.clear();
+                        break;
                     }
                     break;
-                case IN_MESSAGE:                                                          // If state is IN_MESSAGE
-                    if(temp[i] == END_MSG) {                                              // If char examined is ;, switch state to END_MSG
+                case IN_MESSAGE:
+                    if(temp[i] == END_MSG) {
                         STATE = WAIT_START;
-                        QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
-                        //emit newData(incomingData);                                       // Emit signal for data received with the list
-
-                        if(receiveDataRequest){
-                            emit newData(incomingData);
-                            //qDebug() <<"emit" <<incomingData;
-                            receiveDataRequest = false;
-                        }
+                        QStringList incomingData = receivedData.split(',');
+                        // Emit signal for data received with the list
+                        emit newData(incomingData);
+                        ui->label_Receive->setText(temp);
+                        //qDebug() <<"emit" <<incomingData;
                         break;
                     }
                     else if (isdigit (temp[i]) || isspace (temp[i]) || temp[i] =='-' || temp[i] =='.')
                     {
-                        /* If examined char is a digit, and not '$' or ';', append it to temporary string */
+                        // If examined char is a digit, and not '$' or ';', append it to temporary string
                         receivedData.append(temp[i]);
                     }
                     break;
                 default: break;
                 }
             }
-        }
+        } //if(!data.isEmpty())
+
     }
 
+*/
 }
+
 
 
 void Scale::timerEvent(QTimerEvent *event)
@@ -142,7 +156,7 @@ void Scale::timerEvent(QTimerEvent *event)
     if(event->timerId() == timer1sId){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
-       // qDebug() <<startTime << currentTime;
+        // qDebug() <<startTime << currentTime;
 
         /*
        // if(!startTime.isNull()){
@@ -171,12 +185,7 @@ void Scale::timerEvent(QTimerEvent *event)
     if(event->timerId() == timerId){
         // qDebug()<< "Event Id";
         att++;
-        receiveDataRequest = true;
 
-        //if(att > 100){
-        //    int range = att * 1.1;
-        //    chart1->axes(Qt::Horizontal).first()->setRange(0, range);
-        //}
     }
 
     if(event->timerId() == timerInit){
@@ -191,12 +200,69 @@ void Scale::on_lineEdit_Send_editingFinished()
 {
 
     QString val = ui->lineEdit_Send->text();
-     sendData(val);
+    sendData(val);
 }
 
 
 void Scale::on_pushButton_clicked()
 {
     sendData("READ");
+    readSerial();
+}
+
+
+void Scale::on_pushButton_Zero_clicked()
+{
+    sendData("ZERO\r\n");
+}
+
+
+void Scale::on_pushButton_Tare_clicked()
+{
+    sendData("TARE\r\n");
+}
+
+
+void Scale::on_pushButton_Read_clicked()
+{
+    sendData("READ\r\n");
+}
+
+void Scale::newDataUpdate(QStringList currSdata)
+{
+
+    bool ok;
+    float t1 = 0.0;
+
+
+    qDebug() << "currSdata" <<currSdata.size() << currSdata;
+
+
+    foreach (QString str, currSdata) {
+        qDebug() << str;
+    }
+
+    if(currSdata.size() == 4){
+
+        ui->label_Stat1->setText(currSdata[0]);
+        ui->label_Stat2->setText(currSdata[1]);
+
+        t1 = currSdata[2].toFloat(&ok);
+        if(!ok){
+              // ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
+            t1 = 0;
+        }
+
+       // t1 = currSdata[2].toFloat(&ok);
+
+        ui->label_Value->setText(QString::number(t1));
+
+
+
+
+    }
+
+
+
 }
 

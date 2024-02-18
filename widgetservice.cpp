@@ -6,12 +6,19 @@
 //#include "widgetdiagramelement.h"
 
 
-WidgetService::WidgetService(WidgetDiagramElement *widgetElement, QWidget *parent)
+WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent)
 
     : QWidget(parent)
+    , global(global)
     , ui(new Ui::WidgetService)
     , widgetElement(widgetElement)
 {
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+
     currentWid =  widgetElement->settings.name;
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = this;
 

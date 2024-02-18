@@ -64,7 +64,7 @@ void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
 
     if(!global.widHash[settings.name].ptrCurrWidgetService){
         //global.widHash[settings.name].formExist = true;
-        WidgetService *serviceForm = new WidgetService( this );
+        WidgetService *serviceForm = new WidgetService(global, this );
         serviceForm->show();
     }
     else{
