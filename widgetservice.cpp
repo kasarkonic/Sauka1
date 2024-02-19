@@ -113,23 +113,85 @@ void WidgetService::updateFormData()
         break;
 
     case WidgetType::widgT::Tvertne:
+
+        /*
+         * Widget Tvertne
+         *
+         * avārijas līmeņa sensors sensList[sensor address].digital.
+         * līmeņa sensors sensList[sensor address].analog.
+         *
+         */
+
         str = "Izvēlēts elements \"TVERTNE \"\n";
         str.append("ON OFF maina drošības devēja \"0\" vērtību\n");
         str.append("\"SLIDER\" maina tvertnes piepildījums sensora \"1\" vērtību. \n");
+        ui->horizontalSlider->setDisabled(false);
 
-        ui->label_Di->setText("SW addr."+QString::number(addresAct));
+        ui->label_Di->setText("DI addr."+QString::number(addresAct));
         ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
         ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
         break;
-    case WidgetType::widgT::Valve:
+    case WidgetType::widgT::Valve:  //??????????????????????????
+
+        /*
+         * Widget Valve
+         *
+         * vārsta gala slēdži sensList[sensor address1].digital.
+         * vārsta gala slēdži sensList[sensor address1].digital.
+         *
+         */
+
         str = "Izvēlēts elements \"Valve \"\n";
         str.append("ON OFF islēdz/ atslēdz vārstu\n");
         str.append("DI1 un DI2 vārsta gala slēdži.\n");
+        ui->horizontalSlider->setDisabled(true);
 
-        ui->label_Di->setText("DI Act. addr. "+QString::number(addresAct));
-        ui->label_AN1->setText("DI1 Sens. addr. "+QString::number(addresAN1));
-        ui->label_AN2->setText("DI2 Sens. addr. "+QString::number(addresAN2));
+        ui->label_Di->setText("DI1 sens. addr. "+QString::number(addresAct));
+        // ui->label_AN1->setText("DI1 Sens. addr. "+QString::number(addresAN1));
+        ui->label_AN1->setText("-");
+        ui->label_AN2->setText("DI2 sens. addr. . "+QString::number(addresAN2));
 
+        break;
+
+    case WidgetType::widgT::Pump:
+
+        /*
+         * Widget Pump
+         *
+         * sūknis act[actList address1].digital.
+         * griežšanās ātrums act[actList address1].analog.
+         *
+         */
+        str = "Izvēlēts sūknis \"Pump \"\n";
+        str.append("ON OFF ieslēdz/ atslēdz sūkni\n");
+        str.append("AN1 sūkņa griežšanās ātrums\n");
+        ui->horizontalSlider->setDisabled(false);
+
+        ui->label_Di->setText("DI addr."+QString::number(addresAct));
+        ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
+
+        ui->label_AN2->setText("-");
+
+        break;
+
+    case WidgetType::widgT::Mix:
+
+        /*
+         * Widget Mix
+         *
+         * mikseris act[actList address1].digital.
+         * griežšanās ātrums act[actList address1].analog.
+         *
+         */
+        str = "Izvēlēts maisītājs \"Mix \"\n";
+        str.append("ON OFF ieslēdz/ atslēdz maisītāju\n");
+        str.append("AN1 sūkņa griežšanās ātrums\n");
+        ui->horizontalSlider->setDisabled(false);
+
+        ui->label_Di->setText("DI addr."+QString::number(addresAct));
+        ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
+
+        ui->label_AN2->setText("-");
 
         break;
 
@@ -172,12 +234,13 @@ void WidgetService::updateSensorVal()
         qss2 = QString("background-color: %1").arg(col.name());
         ui->pushButton_OFF->setStyleSheet(qss2);
     }
+
     widgetElement->global.sensList[addresAN1].analog = an1Value;
     ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
     widgetElement->global.sensList[addresAct].digital = actValue;
     ui->lineEdit_AddresDI->setText(QString::number(actValue));
 
- widgetElement->updateSettings();
+    widgetElement->updateSettings();
 
 }
 
@@ -317,6 +380,9 @@ void WidgetService::on_lineEdit_options_editingFinished()
 
 void WidgetService::on_pushButton_OFF_clicked()
 {
+
+
+
     actValue = 0;
     widgetElement->global.sensList[addresAct].digital = actValue;
     updateSensorVal();
@@ -334,18 +400,29 @@ void WidgetService::on_pushButton_ON_clicked()
 void WidgetService::on_horizontalSlider_valueChanged(int value)
 {
     qDebug() << "slider value: " << value;
-     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve)
-     {
-       an1Value = 0;
-         if(value > 50) {
-              an1Value = 1;
-         }
-     }
-     else{
-    an1Value = value;   
-     }
-     widgetElement->global.sensList[addresAN1].analog = an1Value;
-     updateSensorVal();
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve)
+    {
+        an1Value = 0;
+        if(value > 50) {
+            an1Value = 1;
+        }
+    }
+    else{
+        an1Value = value;
+    }
+    widgetElement->global.sensList[addresAN1].analog = an1Value;
+    updateSensorVal();
+}
+
+void WidgetService::on_lineEdit_AddresAN1_editingFinished()
+{
+    int val = ui->lineEdit_AddresAN1->text().toInt();
+
+    widgetElement->global.sensList[addresAN1].analog = val;
+    widgetElement->global.sensList[addresAN1].digital = val;
+    updateSensorVal();
+    // qDebug() << "lineEdit_AddresAN1 " << val;
+
 }
 
 void WidgetService::on_lineEdit_AddresAN2_editingFinished()
@@ -355,15 +432,6 @@ void WidgetService::on_lineEdit_AddresAN2_editingFinished()
     widgetElement->global.sensList[addresAN2].analog = val;
     widgetElement->global.sensList[addresAN2].digital = val;
     updateSensorVal();
+        // qDebug() << "lineEdit_AddresAN2 " << val;
 }
 
-
-void WidgetService::on_lineEdit_AddresAN1_editingFinished()
-{
-    int val = ui->lineEdit_AddresAN1->text().toInt();
-
-    widgetElement->global.sensList[addresAN1].analog = val;
-    widgetElement->global.sensList[addresAN1].digital = val;
-    updateSensorVal();
-
-}

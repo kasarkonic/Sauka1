@@ -172,18 +172,18 @@ void Global::creatWidgList()
     //addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2)
 
     // page  Mix
-    // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2
+    // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr, int sensAdr1, int sensAdr2
     addWidgList(WidgetType::Mix,        "Mix",     415,        443,   100, 0, 0,        0,  0,0,0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   751,         50,   70, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  1,2,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  3,4,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  5,6,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  7,8,0);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,2,3);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,4,5);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  0,6,7);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  0,8,9);
 
-    addWidgList(WidgetType::Pump,       "Pump1",  235,        255,    35, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Pump,       "Pump2",  378,        255,    35, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Pump,       "Pump3",  526,        255,    35, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Pump,       "Pump4",  652,        255,    35, 0,  0,        0,  0,0,0);
+    addWidgList(WidgetType::Pump,       "Pump1",  235,        255,    35, 0,  0,        0,  304,0,0);
+    addWidgList(WidgetType::Pump,       "Pump2",  378,        255,    35, 0,  0,        0,  305,0,0);
+    addWidgList(WidgetType::Pump,       "Pump3",  526,        255,    35, 0,  0,        0,  306,0,0);
+    addWidgList(WidgetType::Pump,       "Pump4",  652,        255,    35, 0,  0,        0,  307,0,0);
 
     addWidgList(WidgetType::Valve,      "Valve 1",  231,       165,   25, 0,  45,       0,  301,9,10);
     addWidgList(WidgetType::Valve,      "Valve 2",  386,       165,   25, 10, 45,       0,  302,11,12);

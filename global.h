@@ -70,7 +70,7 @@ public:
     };
 
     struct wdataStruct {
-        WidgetType::widgT type; // valve
+        WidgetType::widgT type;
         QString name ;
         int startX = 100;
         int startY = 100;

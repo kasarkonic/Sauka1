@@ -34,8 +34,9 @@ void Valve::updateSettings()
 
     int actAdr = global.widHash[widName].actAddres;
     if( actAdr >= 300){actAdr -= 300;}
-    int an1SensAdr = global.widHash[widName].sensAddres1;
-    int an2SensAdr = global.widHash[widName].sensAddres2;
+    int di1SensAdr = global.widHash[widName].sensAddres1;
+    int di2SensAdr = global.widHash[widName].sensAddres2;
+
 
     // options Angle fron vertical CCW  options
     // startSizeWi  not used
@@ -47,8 +48,11 @@ void Valve::updateSettings()
 
 
 
-    int opSW = global.sensList[an1SensAdr].digital;       // open SW
-    int clSW = global.sensList[an2SensAdr].digital;       // close sw
+    int opSW = global.sensList[di1SensAdr].digital;       // open SW
+    int clSW = global.sensList[di2SensAdr].digital;       // close sw
+
+
+
 
 
     if(clSW == 1 && opSW == 0){  //close
