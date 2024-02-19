@@ -26,7 +26,7 @@ void Tvertne::updateSettings()
 {
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int dSensAdr = global.widHash[widName].actAddres;
+    int dSensAdr = global.widHash[widName].act_sensAddres;
     if(dSensAdr >= 300){
         dSensAdr -= 300;
     }

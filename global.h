@@ -53,8 +53,8 @@ public:
         ActuatorType::actT type = ActuatorType::actT::Relay;  // Dyno
         QString name = "Dyno";
         int address = 0;
-        int analog = 0;
         int digital = 0;
+        int analog = 0;
         QPushButton * ptrLineEditDI = nullptr;
         QLineEdit * ptrLineEditAN = nullptr;
     } ;
@@ -82,7 +82,7 @@ public:
         WidgetDiagramElement * ptrCurrWidget = nullptr;
         WidgetService * ptrCurrWidgetService = nullptr;
         int page = 0;
-        int actAddres = 0;
+        int act_sensAddres = 0;
         int sensAddres1 = 0;
         int sensAddres2 = 0;
 

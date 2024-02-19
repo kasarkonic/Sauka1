@@ -56,8 +56,6 @@ private slots:
 
     void on_lineEdit_options_editingFinished();
 
-    void on_pushButton_OFF_clicked();
-
     void on_pushButton_ON_clicked();
 
     void on_horizontalSlider_valueChanged(int value);
@@ -65,6 +63,10 @@ private slots:
     void on_lineEdit_AddresAN2_editingFinished();
 
     void on_lineEdit_AddresAN1_editingFinished();
+
+    void on_pushButton_Reset_clicked();
+
+    void on_lineEdit_AddresDI_editingFinished();
 
 private:
          // WidgetDiagramElement::widDataStruct &wsettings;
@@ -81,10 +83,24 @@ private:
     void updateFormData();
     void updateSensorVal();
     QString currentWid;
-    int addresAct;
-    int addresAN1;
-    int addresAN2;
-    int actValue;
+
+
+    int addresAct;  // global.widHash[].act_sensAddres
+    int addresAN1;  // global.widHash[].sensAddres1
+    int addresAN2;  // global.widHash[].sensAddres2
+
+    int actValueDi1;    // sensList[addresAN1].digital
+    int actValueAn1;    // sensList[addresAN1].analog
+    int actValueDi2;    // sensList[addresAN2].digital
+    int actValueAn2;    // sensList[addresAN2].analog
+
+    int addresSens;
+    int addresSens2;
+    int addresactDi;
+    int addresactAn;
+
+    int actValueDi; // push button value == lineedit DI value
+    int actValueAn;
     int an1Value;
     int an2Value;
 };

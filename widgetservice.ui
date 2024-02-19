@@ -126,7 +126,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_ON">
              <property name="text">
-              <string>ON</string>
+              <string>ON/OFF</string>
              </property>
             </widget>
            </item>
@@ -138,9 +138,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_OFF">
+            <widget class="QPushButton" name="pushButton_Reset">
              <property name="text">
-              <string>OFF</string>
+              <string>RESET</string>
              </property>
             </widget>
            </item>

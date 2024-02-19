@@ -32,7 +32,7 @@ void Valve::updateSettings()
     //int dSensAdr1 = global.widHash[widName].sensAddres1;
    // int dSensAdr2 = global.widHash[widName].sensAddres2;
 
-    int actAdr = global.widHash[widName].actAddres;
+    int actAdr = global.widHash[widName].act_sensAddres;
     if( actAdr >= 300){actAdr -= 300;}
     int di1SensAdr = global.widHash[widName].sensAddres1;
     int di2SensAdr = global.widHash[widName].sensAddres2;

@@ -14,14 +14,14 @@ Global::Global()
     UIYsize = 1000;
     UIXresizeSize = 1000;
     UIYresizeSize = 1000;
-     dev1 = "";
-     dev2 = "";
-     dev3 = "";
-     dev4 = "";
-   // dev1_VendorId = "";
-   // dev2_VendorId = "";
-   // dev3_VendorId = "";
-   // dev4_VendorId = "";
+    dev1 = "";
+    dev2 = "";
+    dev3 = "";
+    dev4 = "";
+    // dev1_VendorId = "";
+    // dev2_VendorId = "";
+    // dev3_VendorId = "";
+    // dev4_VendorId = "";
 
 
     sens sdata;
@@ -54,6 +54,10 @@ void Global::creatActList()
     addActList("Valve 2",ActuatorType::Relay,302);
     addActList("Valve 3",ActuatorType::Relay,303);
     addActList("Valve 4",ActuatorType::Relay,304);
+    addActList("Pump 1",ActuatorType::Relay,305);
+    addActList("Pump 2",ActuatorType::Relay,306);
+    addActList("Pump 3",ActuatorType::Relay,307);
+    addActList("Pump 4",ActuatorType::Relay,308);
 
     addActList("Mix invertor 1",ActuatorType::Invertor,325);
 
@@ -90,19 +94,21 @@ void Global::creatSensList()
 {
     addSensList("Tvertne 1 sensors DI", SensorType::Digital, 1);
     addSensList("Tvertne 1 sensors AN", SensorType::Analog,  2);
-    addSensList("Tvertne 1 sensors AN", SensorType::Analog,  3);
 
-    addSensList("Tvertne 2 sensors DI", SensorType::Digital, 4);
+    addSensList("Tvertne 2 sensors DI", SensorType::Digital, 3);
     addSensList("Tvertne 2 sensors AN", SensorType::Analog,  5);
-    addSensList("Tvertne 2 sensors AN", SensorType::Analog,  6);
 
-    addSensList("Tvertne 3 sensors DI", SensorType::Digital, 7);
-    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  8);
-    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  9);
+    addSensList("Tvertne 3 sensors DI", SensorType::Digital, 4);
+    addSensList("Tvertne 3 sensors AN", SensorType::Analog,  5);
 
-    addSensList("Tvertne 4 sensors DI", SensorType::Digital, 10);
-    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  11);
-    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  12);
+    addSensList("Tvertne 4 sensors DI", SensorType::Digital, 6);
+    addSensList("Tvertne 4 sensors AN", SensorType::Analog,  7);
+
+
+
+
+    addSensList("Pump1 1 sensors AN", SensorType::Digital,  32);
+    addSensList("Tvertne 2 sensors AN", SensorType::Digital,  33);
 
 
     qDebug() << "create " << sensList.size() << "sensors";
@@ -127,7 +133,7 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres)
 
 /*
 0-256  AN vai DI ieejas
-300->  DI izejas
+300->  DI izejas actuator
 
 Left upper corner coordinates:
 startX
@@ -136,27 +142,47 @@ startY
 Widget size
 startSize
 
+
+
 for MIX:
-sensAdr1.analog     speed of flow  1-100%
-sensAdr1.digital     MIX ON/OFF
+act_sensAddres act  address
+    digital  - on/off
+    analog   - speed
+sensAddres   - no
+sensAddres2  - no
+
+
 
 for  Pipe :
 Hight startSize
 Width  startSizeWi
 Angle > 0 fron vertical CCW  options
-sensAdr1.analog     speed of flow
+act_sensAddres act  address
+    digital  - on/off
+    analog   - speed ????
 
 
 for  Valve :
 options Angle fron vertical CCW  options mean close  open = option + 90
-startSizeWi  not used
-sensAdr1.digital     end switch open
-sensAdr2.digital     end switch close
+Hight startSize
+Width  startSizeWi
+Angle > 0 fron vertical CCW  options
+act_sensAddres act  address
+    digital  - on/off
+    analog   - speed
+act_sensAddres sensor1 address
+    digital - stop switch1
+act_sensAddres sensor2 address
+     digital - stop switch2
+
 
 
 for pump:
-sensAdr1.digital     On/Off
-sensAdr1.analog     speed of flow  1-100%
+act_sensAddres act  address
+    digital  - on/off
+    analog   - speed
+
+
 
 
 
@@ -175,20 +201,20 @@ void Global::creatWidgList()
     // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr, int sensAdr1, int sensAdr2
     addWidgList(WidgetType::Mix,        "Mix",     415,        443,   100, 0, 0,        0,  0,0,0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   751,         50,   70, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,2,3);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,4,5);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  0,6,7);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  0,8,9);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,1,2);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,3,4);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  0,5,6);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  0,7,8);
 
-    addWidgList(WidgetType::Pump,       "Pump1",  235,        255,    35, 0,  0,        0,  304,0,0);
-    addWidgList(WidgetType::Pump,       "Pump2",  378,        255,    35, 0,  0,        0,  305,0,0);
-    addWidgList(WidgetType::Pump,       "Pump3",  526,        255,    35, 0,  0,        0,  306,0,0);
-    addWidgList(WidgetType::Pump,       "Pump4",  652,        255,    35, 0,  0,        0,  307,0,0);
+    addWidgList(WidgetType::Pump,       "Pump1",  235,        255,    35, 0,  0,        0,  305,0,0);
+    addWidgList(WidgetType::Pump,       "Pump2",  378,        255,    35, 0,  0,        0,  306,0,0);
+    addWidgList(WidgetType::Pump,       "Pump3",  526,        255,    35, 0,  0,        0,  307,0,0);
+    addWidgList(WidgetType::Pump,       "Pump4",  652,        255,    35, 0,  0,        0,  308,0,0);
 
-    addWidgList(WidgetType::Valve,      "Valve 1",  231,       165,   25, 0,  45,       0,  301,9,10);
-    addWidgList(WidgetType::Valve,      "Valve 2",  386,       165,   25, 10, 45,       0,  302,11,12);
-    addWidgList(WidgetType::Valve,      "Valve 3",  534,       165,   25, 0,  45,       0,  303,13,14);
-    addWidgList(WidgetType::Valve,      "Valve 4",  658,       165,   25, 10, 45,       0,  304,15,16);
+    addWidgList(WidgetType::Valve,      "Valve 1",  231,       165,   25, 0,  45,       0,  301,0,0);
+    addWidgList(WidgetType::Valve,      "Valve 2",  386,       165,   25, 10, 45,       0,  302,0,0);
+    addWidgList(WidgetType::Valve,      "Valve 3",  534,       165,   25, 0,  45,       0,  303,0,0);
+    addWidgList(WidgetType::Valve,      "Valve 4",  658,       165,   25, 10, 45,       0,  304,0,0);
 
     addWidgList(WidgetType::Pipe,     "Pipe 1",   240,        105,    60,  10,  0,      0,  0,0,0);
     addWidgList(WidgetType::Pipe,    "Pipe 2",    392,        105,    60,  10,  0,      0,  0,0,0);
@@ -260,7 +286,7 @@ void Global::addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size
     data.startSizeWi = sizeW;
     data.options = options;
     data.page = page;
-    data.actAddres = actAdr;
+    data.act_sensAddres = actAdr;
     data.sensAddres1 = sensAdr1;
     data.sensAddres2 = sensAdr2;
     widHash.insert(na, data);

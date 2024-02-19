@@ -25,7 +25,7 @@ WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement,
     qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService ;
     ui->setupUi(this);
     //qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
-    updateFormData();
+    updateFormData();   // data from global. ...
 }
 void WidgetService::openWidgetServiceForm()
 {
@@ -56,7 +56,7 @@ void WidgetService::updateUIvalue()
 
 }
 
-void WidgetService::updateFormData()
+void WidgetService::updateFormData()        // read data from global and display in to UI
 {
     //geometry data
     ui->labelName->setText(widgetElement->global.widHash[currentWid].name);
@@ -67,28 +67,46 @@ void WidgetService::updateFormData()
 
     // sensor data
 
-    addresAct = widgetElement->global.widHash[currentWid].actAddres;
-    if(addresAct >= 300){
-        addresAct -= 300;
+    addresAct = widgetElement->global.widHash[currentWid].act_sensAddres;
+    if(addresAct >= 300){   // actuator
+
+        addresactDi = global.actList[addresAct-300].digital;
+        addresactAn = global.actList[addresAct-300].digital;
+
+        ui->label_AddressDI->setText("act DI " + QString::number(addresAct));
+        ui->label_AddressAI1->setText("act AN " + QString::number(addresAct));
+
+        ui->lineEdit_AddresDI->setText(QString::number(global.actList[addresAct-300].digital));
+        ui->lineEdit_AddresAN1->setText(QString::number(global.actList[addresAct-300].analog));
     }
-    addresAN1 = widgetElement->global.widHash[currentWid].sensAddres1;
-    addresAN2 = widgetElement->global.widHash[currentWid].sensAddres2;
-    actValue = widgetElement->global.sensList[addresAct].digital;
-    an1Value = widgetElement->global.sensList[addresAN1].analog;
-    an2Value = widgetElement->global.sensList[addresAN2].analog;
+    if( widgetElement->global.widHash[currentWid].sensAddres1 > 0 ){       // sensor
+        addresAN1 =  widgetElement->global.widHash[currentWid].sensAddres1;
+        actValueDi1 = widgetElement->global.sensList[addresAN1].digital;
+        actValueAn1 = widgetElement->global.sensList[addresAN1].analog;
 
-    ui->label_AddressDI->setText(QString::number(addresAct));
-    ui->label_AddressAI1->setText(QString::number(addresAN1));
-    ui->label_AddressAI2->setText(QString::number(addresAN2));
+        addresAN2 =  widgetElement->global.widHash[currentWid].sensAddres2;
+        actValueDi2 = widgetElement->global.sensList[addresAN2].digital;
+        actValueAn2 = widgetElement->global.sensList[addresAN2].analog;
 
-    ui->lineEdit_AddresDI->setText(QString::number(actValue));
-    //ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
-    ui->lineEdit_AddresAN2->setText(QString::number(an2Value));
+        ui->label_AddressDI->setText("sens DI " + QString::number(addresAN1));
+        ui->label_AddressAI1->setText("sens AN " + QString::number(addresAN1));
+
+        ui->lineEdit_AddresDI->setText(QString::number(global.sensList[addresSens].digital));
+        ui->lineEdit_AddresAN1->setText(QString::number(global.sensList[addresSens].analog));
 
 
-    ui->label_Di->setText("SW addr."+QString::number(addresAct));
-    ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
-    ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
+        if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve){
+            ui->label_AddressAI2->setText("sens2 DI " + QString::number(addresAN2));
+            ui->lineEdit_AddresAN2->setText(QString::number(global.sensList[addresSens2].digital));
+        }
+
+    }
+
+    if(addresAct >= 300 && widgetElement->global.widHash[currentWid].sensAddres1 > 0 ){// valve  addresAN1 >0
+
+
+}
+
 
 
     updateSensorVal();
@@ -202,43 +220,64 @@ void WidgetService::updateFormData()
 
 }
 
-void WidgetService::updateSensorVal()
+void WidgetService::updateSensorVal()  // take data from UI and update global. ....
 {
     QColor col;
     QString qss1;
     QString qss2;
 
-    if(actValue >= 2){
+    /*   if(actValueDi >= 2){
         col = QColor(Qt::yellow);
         qss1 = QString("background-color: %1").arg(col.name());
         ui->pushButton_ON->setStyleSheet(qss1);
-        ui->pushButton_OFF->setStyleSheet(qss1);
-        actValue = 2;
+     //   ui->pushButton_OFF->setStyleSheet(qss1);
+        actValueDi = 2;}
+*/
 
+    if(actValueDi > 0){
+        col = QColor(Qt::red);
+        qss1 = QString("background-color: %1").arg(col.name());
+        ui->pushButton_ON->setStyleSheet(qss1);
+        ui->pushButton_ON->setText("OFF");
     }
-    if(actValue == 1){
+
+    if(actValueDi == 0){
         col = QColor(Qt::green);
         qss1 = QString("background-color: %1").arg(col.name());
         ui->pushButton_ON->setStyleSheet(qss1);
-        col = QColor(Qt::gray);
-        qss2 = QString("background-color: %1").arg(col.name());
-        ui->pushButton_OFF->setStyleSheet(qss2);
+        ui->pushButton_ON->setText("ON");
+    }
+
+
+    int adr = widgetElement->global.widHash[currentWid].act_sensAddres;
+    if (adr > 300){ // actuator
+        widgetElement->global.actList[adr - 300].digital = actValueDi;
+     //   widgetElement->global.actList[adr - 300].analog = actValueAn;
+    }
+    else{    // sensors
+
+
+        addresSens =  widgetElement->global.widHash[currentWid].sensAddres1;
+        widgetElement->global.sensList[addresSens].digital = actValueDi;
+     //   widgetElement->global.sensList[addresSens].analog = actValueAn;
+
+        addresSens2 =  widgetElement->global.widHash[currentWid].sensAddres2;
+    //    widgetElement->global.sensList[addresSens2].digital = ;
+    //    widgetElement->global.sensList[addresSens2].analog = ;
 
     }
 
-    if(actValue == 0){
-        col = QColor(Qt::gray);
-        qss1 = QString("background-color: %1").arg(col.name());
-        ui->pushButton_ON->setStyleSheet(qss1);
-        col = QColor(Qt::red);
-        qss2 = QString("background-color: %1").arg(col.name());
-        ui->pushButton_OFF->setStyleSheet(qss2);
-    }
 
-    widgetElement->global.sensList[addresAN1].analog = an1Value;
-    ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
-    widgetElement->global.sensList[addresAct].digital = actValue;
-    ui->lineEdit_AddresDI->setText(QString::number(actValue));
+
+
+
+
+
+
+    // widgetElement->global.sensList[addresAN1].analog = an1Value;
+    // ui->lineEdit_AddresAN1->setText(QString::number(an1Value));
+    // widgetElement->global.sensList[addresAct].digital = actValueDi;
+    // ui->lineEdit_AddresDI->setText(QString::number(actValueDi));
 
     widgetElement->updateSettings();
 
@@ -378,22 +417,17 @@ void WidgetService::on_lineEdit_options_editingFinished()
 }
 
 
-void WidgetService::on_pushButton_OFF_clicked()
-{
-
-
-
-    actValue = 0;
-    widgetElement->global.sensList[addresAct].digital = actValue;
-    updateSensorVal();
-}
-
 
 void WidgetService::on_pushButton_ON_clicked()
 {
-    actValue = 1;
-    widgetElement->global.sensList[addresAct].digital = actValue;
+    if(actValueDi){
+        actValueDi = 0;
+    }
+    else{
+        actValueDi = 1;}
+
     updateSensorVal();
+
 }
 
 
@@ -410,28 +444,36 @@ void WidgetService::on_horizontalSlider_valueChanged(int value)
     else{
         an1Value = value;
     }
-    widgetElement->global.sensList[addresAN1].analog = an1Value;
+
+    actValueAn = value;
+    // widgetElement->global.sensList[addresAN1].analog = an1Value;
     updateSensorVal();
 }
 
 void WidgetService::on_lineEdit_AddresAN1_editingFinished()
 {
-    int val = ui->lineEdit_AddresAN1->text().toInt();
-
-    widgetElement->global.sensList[addresAN1].analog = val;
-    widgetElement->global.sensList[addresAN1].digital = val;
+    actValueAn = ui->lineEdit_AddresAN1->text().toInt();
     updateSensorVal();
-    // qDebug() << "lineEdit_AddresAN1 " << val;
-
 }
 
 void WidgetService::on_lineEdit_AddresAN2_editingFinished()
 {
     int val = ui->lineEdit_AddresAN2->text().toInt();
-
-    widgetElement->global.sensList[addresAN2].analog = val;
-    widgetElement->global.sensList[addresAN2].digital = val;
+    addresSens2 =  widgetElement->global.widHash[currentWid].sensAddres2;
+    widgetElement->global.sensList[addresSens2].digital = val;
     updateSensorVal();
-        // qDebug() << "lineEdit_AddresAN2 " << val;
+    // qDebug() << "lineEdit_AddresAN2 " << val;
+}
+
+
+void WidgetService::on_pushButton_Reset_clicked()
+{
+
+}
+
+
+void WidgetService::on_lineEdit_AddresDI_editingFinished()
+{
+    actValueDi = ui->lineEdit_AddresDI->text().toInt();
 }
 
