@@ -138,9 +138,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_Reset">
-             <property name="text">
-              <string>RESET</string>
+            <widget class="QSlider" name="horizontalSlider_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>

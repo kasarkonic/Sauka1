@@ -211,7 +211,7 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pump,       "Pump3",  526,        255,    35, 0,  0,        0,  307,0,0);
     addWidgList(WidgetType::Pump,       "Pump4",  652,        255,    35, 0,  0,        0,  308,0,0);
 
-    addWidgList(WidgetType::Valve,      "Valve 1",  231,       165,   25, 0,  45,       0,  301,0,0);
+    addWidgList(WidgetType::Valve,      "Valve 1",  231,       165,   25, 0,  45,       0,  301,31,32);
     addWidgList(WidgetType::Valve,      "Valve 2",  386,       165,   25, 10, 45,       0,  302,0,0);
     addWidgList(WidgetType::Valve,      "Valve 3",  534,       165,   25, 0,  45,       0,  303,0,0);
     addWidgList(WidgetType::Valve,      "Valve 4",  658,       165,   25, 10, 45,       0,  304,0,0);
