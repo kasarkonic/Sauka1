@@ -246,6 +246,12 @@ void WidgetService::updateFormData()        // read data from global and display
         // ui->label_AN2->setText("-");
 
         break;
+         case WidgetType::widgT::ScalesBase:
+        str = "Izvēlēta svaru pamatne \"ScalesBase \"\n";
+        break;
+         case WidgetType::widgT::ScalesMass:
+         str = "Izvēlēta svaru atsvars \"ScalesMass \"\n";
+        break;
 
     default:
         break;

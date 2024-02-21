@@ -38,6 +38,8 @@ enum widgT{
     Pump,
     Tvertne,
     Valve,
+    ScalesBase,
+    ScalesMass
 };
 }
 

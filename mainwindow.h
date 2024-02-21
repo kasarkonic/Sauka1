@@ -12,6 +12,8 @@
 #include "tvertne.h"
 #include "global.h"
 #include "valve.h"
+#include "scalesbase.h"
+#include "scalesmass.h"
 #include "hwservice.h"
 #include "rs232.h"
 
@@ -68,7 +70,8 @@ private:
     Valve *valveA;
     HWService *hwService;
     Rs232 *rs232;
-
+    ScalesBase *scalesBase;
+    ScalesMass *scalesMass;
 
     int valveStyleAngle;
     int minWidgSize;

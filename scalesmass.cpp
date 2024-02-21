@@ -35,44 +35,9 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-
-    QPoint points[4];
-
-    points[0] = QPoint(0 + settings.currX,0 + settings.currY);
-    points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
-    points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
-    points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
-
-    painter.drawPolygon(points,4);
-
-    int rad = settings.currSize - 4;// minus pen
-    rad = (int)settings.currSize/5 ;
-
-    float an = att * M_PI /180;
-
-    points[0] = QPoint(rad * cos(an) + rad, rad * sin(an) + rad);
-    points[1] = QPoint(rad * cos(an + 2*M_PI/3) + rad, rad * sin(an + 2*M_PI/3) + rad);
-    points[2] = QPoint(rad * cos(an + 4*M_PI/3) + rad, rad * sin(an + 4*M_PI/3) + rad);
-
-    pen.setWidth(2);
-    pen.setColor(Qt::blue);
-    painter.setBrush(triangColor);
-    painter.setPen(pen);
-    painter.drawPolygon(points,3);
-
-
-
-
-
-
-
-    //  imgBackground= new QImage();
-    //  imgBackground->load(":/pictures/mixeris3.png");
-
-    //  *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-    //  painter.drawImage(QPoint(), *imgBackground);
-
-
+    QFont font("times", settings.currSize/6);
+    painter.setFont(font);
+    painter.drawText(QRect(0, 0, settings.currSize, settings.currSize), Qt::AlignCenter, "123,4 kg");
 }
 
 void ScalesMass::timerEvent(QTimerEvent *event)

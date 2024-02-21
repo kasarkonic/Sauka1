@@ -328,6 +328,22 @@ void MainWindow::drawWidgets()
             }
                 break;
 
+            case WidgetType::ScalesBase:
+            {
+                ScalesBase *scalesBase = new ScalesBase(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(scalesBase);
+
+            }
+                break;
+
+            case WidgetType::ScalesMass:
+            {
+                ScalesMass *scalesMass = new ScalesMass(global,widData.name,this);
+                ui->horizontalLayout_ProcessFlow->addWidget(scalesMass);
+
+            }
+                break;
+
 
             default:
                 qDebug() << "Wrong widget type !!! "  <<widData.type;

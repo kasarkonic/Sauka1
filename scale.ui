@@ -14,11 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_11">
+   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,1,5">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,10,2">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,1,1,0,0,0,10">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,1,1,1,0,0">
         <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
@@ -315,13 +315,10 @@
           </property>
          </widget>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7"/>
-        </item>
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,1,1,1,0,20">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,1,1,1,0,0">
         <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
@@ -484,14 +481,14 @@
          </layout>
         </item>
         <item>
-         <widget class="Line" name="line_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_14"/>
+        </item>
+        <item>
+         <widget class="Line" name="line_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2"/>
         </item>
        </layout>
       </item>
@@ -505,6 +502,24 @@
          </widget>
         </item>
        </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

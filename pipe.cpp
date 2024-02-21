@@ -20,6 +20,7 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
+
     settings.startSizeWi = global.widHash[settings.name].startSizeWi;
     settings.options = global.widHash[settings.name].options;
     angle = settings.options;
@@ -68,47 +69,7 @@ void Pipe::updateSettings()
 
 
 /*
-void Pipe::loadSettings()
-{
-    QString settingsFile = Global::settingsFileName;
-    QSettings sett(settingsFile, QSettings::IniFormat);
 
-    QString sText = settings.name;
-    sett.beginGroup(sText);
-
-    settings.name = sett.value("name","Pipe").toString();
-    settings.note = sett.value("note").toString();
-    settings.startX = sett.value("startX","100").toInt();
-    settings.startY = sett.value("startY","100").toInt();
-    settings.starwi = sett.value("starwi","10").toInt();
-    settings.starhi = sett.value("starhi","100").toInt();
-
-    sett.endGroup();
-
-    qDebug() << "Pump updateSettings() load settings in group "<< sText  << settingsFile << settings.startX << settings.startY;
-    //    setNewPosition(1);
-    //? updateSettings();
-}
-
-void Pipe::saveSettings()
-{
-    QString settingsFile = global.settingsFileName;
-    QSettings sett(settingsFile, QSettings::IniFormat);
-
-    QString sText = settings.name;
-    sett.beginGroup(sText);
-
-    sett.setValue("name", settings.name);
-    sett.setValue("note", settings.note);
-    sett.setValue("startX", settings.startX);
-    sett.setValue("startY", settings.startY);
-
-    sett.setValue("starwi", settings.starwi);
-    sett.setValue("starhi", settings.starhi);
-
-    sett.endGroup();
-    qDebug() << "Pipe, save settings in group " << sText;
-}
 */
 
 
@@ -143,12 +104,6 @@ void Pipe::paintEvent(QPaintEvent *event)
 
     settings.options %=360;
     float an = settings.options * M_PI /180;
-
-
-
-
-    // int diog = sqrt(wi*wi + hi*hi);
-    // float diogAngle = atan((double)wi/hi);
 
 
     if (settings.options >= 0 && settings.options <= 90){

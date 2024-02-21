@@ -7,7 +7,10 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
-    timerId = startTimer(200, Qt::CoarseTimer);
+    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
+    settings.currSize = settings.startSize;        //Hi
+    settings.currSizeWi = settings.startSizeWi;
+  //  timerId = startTimer(200, Qt::CoarseTimer);
 }
 
 void ScalesBase::updateSettings()
@@ -16,16 +19,64 @@ void ScalesBase::updateSettings()
 
 }
 
+void ScalesBase::setNewPosition(float koef)
+{
+    WidgetDiagramElement::setNewPosition(koef); // call base class
+    settings.currSize = int(settings.startSize /koef);        //Hi
+    settings.currSizeWi = int(settings.startSizeWi /koef);
+    //   qDebug() << "Pipe::setNewPosition";
+}
+
 void ScalesBase::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    // qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+     qDebug() << "ScalesBase"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
-    pen.setWidth(4);    //draw pipe
-    pen.setColor(Qt::red);
+    pen.setWidth(2);    //draw pipe
+    pen.setColor(Qt::black);
+    painter.setBrush(Qt::cyan);
+    painter.setPen(pen);
+
+
+    QPoint points[4];
+
+
+    int stX = 0;
+    int stY = 0;
+
+    int hi = settings.currSize;        //Hi
+    int wi = settings.currSizeWi;
+
+    qDebug() << stX << stY << hi << wi;
+
+    points[0] = QPoint(stX, stY);
+    points[1] = QPoint(stX + hi, stY);
+    points[2] = QPoint(stX + hi, stY + wi/2);
+    points[3] = QPoint(stX, stY + wi/2);
+
+    painter.drawPolygon(points,4);
+
+
+    points[0] = QPoint(stX + hi/2, stY + wi/2);
+    points[1] = QPoint(stX + hi/2 + wi, stY + wi + wi);
+    points[2] = QPoint(stX + hi/2 - wi, stY + wi + wi);
+
+    pen.setWidth(2);
+    pen.setColor(Qt::black);
+    painter.setBrush(Qt::cyan);
+    painter.setPen(pen);
+    painter.drawPolygon(points,3);
+
+
+
+/*
+    //QPainter painter(this);
+    QPen pen1;
+    pen1.setWidth(4);    //draw pipe
+    pen1.setColor(Qt::red);
     painter.setBrush(Qt::red);
     painter.setPen(pen);
 
@@ -34,44 +85,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
-
-
-    QPoint points[4];
-
-    points[0] = QPoint(0 + settings.currX,0 + settings.currY);
-    points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
-    points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
-    points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
-
-    painter.drawPolygon(points,4);
-
-    int rad = settings.currSize - 4;// minus pen
-    rad = (int)settings.currSize/5 ;
-
-    float an = att * M_PI /180;
-
-    points[0] = QPoint(rad * cos(an) + rad, rad * sin(an) + rad);
-    points[1] = QPoint(rad * cos(an + 2*M_PI/3) + rad, rad * sin(an + 2*M_PI/3) + rad);
-    points[2] = QPoint(rad * cos(an + 4*M_PI/3) + rad, rad * sin(an + 4*M_PI/3) + rad);
-
-    pen.setWidth(2);
-    pen.setColor(Qt::blue);
-    painter.setBrush(triangColor);
-    painter.setPen(pen);
-    painter.drawPolygon(points,3);
-
-
-
-
-
-
-
-    //  imgBackground= new QImage();
-    //  imgBackground->load(":/pictures/mixeris3.png");
-
-    //  *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-    //  painter.drawImage(QPoint(), *imgBackground);
-
+*/
 
 }
 
