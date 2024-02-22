@@ -23,13 +23,14 @@ protected:
     void    timerEvent(QTimerEvent *event) override;
 private:
     Ui::ParMani *ui;
-    Dyno *dynoA;
-    int timerId;
     int att;
+   /* Dyno *dynoA;
+    int timerId;
     int attX = 1;
     int attY = 1;
     int currX = 0;
     int currY = 0;
+*/
 };
 
 #endif // PARMANI_H

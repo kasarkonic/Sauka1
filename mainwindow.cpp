@@ -6,7 +6,7 @@
 #include <Qdebug>
 
 #include <QFile>
-#include "parmani.h"
+
 
 
 #include <QMouseEvent>
@@ -118,43 +118,11 @@ void MainWindow::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
 
-
-    // global.widHash["Dyno1"].startX
-
-    // if(initTimer){
-    // initTimer = false;
-    // timerId = startTimer(1000);
-    // killTimer(timerId);
-    //  timerId = startTimer(1000);
-
-    // setShow2();
-    // updateSettingForAll();
-    // }
-    // else{
     currentTime = QTime::currentTime().toString("hh:mm:ss");
     setWindowTitle(currentTime);
 
     ui->statusbar->showMessage (statusStr + currentTime);
 
-    //QRandomGenerator gen1;
-    //  QRandomGenerator gen2;
-    // int randx = gen1.bounded(-10,10);
-    // int randy = gen2.bounded(-10,10);
-
-
-    // int randx = QRandomGenerator::global()->bounded(-5,5);
-    //  int randy = QRandomGenerator::global()->bounded(-5,5);
-
-    //  global.widHash["Dyno1"].startX += randx;
-    //  global.widHash["Dyno1"].startY += randy;
-    //  global.widHash["Dyno1"].ptrCurrWidget->updateSettings();
-
-    // qDebug() << currentTime << randx << randy;
-    //  att += 1;
-
-
-
-    //   }
 }
 
 
@@ -251,6 +219,7 @@ void MainWindow::initUI()
 
     cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
     ui->comboBox->addItems(cmbList);
+    ui->comboBox->setCurrentIndex(0);
 
 
 
@@ -396,29 +365,31 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     case 2:
     {
         Rs232 *rs232 = new Rs232(global,this);
+        //rs232 = new Rs232(global,this);
         rs232->show();
-    }
         break;
-
+    }
     case 3:
     {
         HWService *hwService = new HWService(global,this);
+        //hwService = new HWService(global,this);
         hwService->show();
-    }
         break;
-
+    }
     case 4:
     {
         ParMani *parmani = new ParMani(global,this);
+        //parmani = new ParMani(global,this);
         parmani->show();
-    }
         break;
+    }
 
     default:
         break;
     }
 
-
+    ui->comboBox->setCurrentIndex(0);
+     qDebug() << " Combo box index Finish" << index << cmbList[index];
 }
 
 

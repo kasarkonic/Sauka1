@@ -18,12 +18,19 @@ Scale::Scale(Global &global, QWidget *parent) :
     }
     connect(sc_serial, &QSerialPort::readyRead,this, &Scale::readSerial);   //readyRead
     connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdate(QStringList)));
-    // initUI();
+    initUI();
 }
 
 Scale::~Scale()
 {
+    sc_serial->close();
     delete ui;
+}
+void Scale::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event);
+    sc_serial->close();
+    qDebug() <<"Scale::closeEvent";
 }
 void Scale::initUI()
 {
@@ -32,6 +39,7 @@ void Scale::initUI()
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
+    ui->verticalSlider->setMaximum(10);
 }
 
 bool Scale::initPort()
@@ -52,6 +60,7 @@ bool Scale::initPort()
         str = corectPort;
         if(sc_serial->open(QIODevice::ReadWrite)){
             str.append(" open successful!\n");
+            ui->label_5->setText(str);
             qDebug() << str;
             if(timerInit > 0){
                 killTimer(timerInit);
@@ -60,6 +69,7 @@ bool Scale::initPort()
         }
         else{
             str.append(" open error!");
+            ui->label_5->setText(str);
             qDebug() << str;
             return false;
         }
@@ -82,6 +92,7 @@ void Scale::sendData(QString send)
     const qint64 written = sc_serial->write(utf8Data);
     qDebug() << "sendData" << send << utf8Data ;
     Q_UNUSED(written);
+    ui->lineEdit_Send->setText(send);
 }
 
 void Scale::readSerial()
@@ -113,41 +124,17 @@ void Scale::readSerial()
 void Scale::timerEvent(QTimerEvent *event)
 {
 
-    if(event->timerId() == timer1sId){
+    if(event->timerId() == timerTime){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
-        // qDebug() <<startTime << currentTime;
-
-        /*
-       // if(!startTime.isNull()){
-        if(startTime != QTime(0,0)){
-
-            QTime finishTime = QTime::currentTime();
-
-            int sec = startTime.secsTo(finishTime);
-            QTime t = QTime(0,0).addSecs(sec);
-              QString durat = QString("%1h. %2min. %3sek.")
-                .arg(t.hour()).arg(t.minute()).arg(t.second());
-
-            QString str = "  Ieraksts sākts ";
-            str.append(startTime.toString("hh:mm:ss"));
-            str.append(",  ieraksta ilgums ");
-            str.append(durat);     //.toString("hh:mm:ss")
-            str.append(", laika iedaļas vērtība ");
-            str.append(QString::number(timeMark,10));
-            str.append("s.");
-            ui->label_chart_info->setText(str);
-        }
-        */
     }
 
 
     if(event->timerId() == timerId){
-         qDebug()<< "Event Id";
+        // qDebug()<< "Event Id";
         att++;
         sendData("READ");
         readSerial();
-
     }
 
     if(event->timerId() == timerInit){
@@ -232,7 +219,7 @@ void Scale::on_pushButton_cont_reading_clicked()
         ui->pushButton_cont_reading->setText(str);
     }
     else{
-        timerInit = startTimer(repeatePeriod, Qt::CoarseTimer);
+        timerId = startTimer(repeatePeriod, Qt::CoarseTimer);
         ui->pushButton_cont_reading->setText("Stop reading.");
     }
     qDebug() << "on_verticalSlider_valueChanged" << timerInit << repeatePeriod;
@@ -245,7 +232,7 @@ void Scale::on_verticalSlider_valueChanged(int value)
     repeatePeriod = (1000 - 10 * value);
     if(timerId){
         killTimer(timerId);
-        timerInit = startTimer(repeatePeriod, Qt::CoarseTimer);
+        timerId = startTimer(repeatePeriod, Qt::CoarseTimer);
         ui->pushButton_cont_reading->setText("Start reading %1.");
     }
      qDebug() << "on_verticalSlider_valueChanged" << value << repeatePeriod;

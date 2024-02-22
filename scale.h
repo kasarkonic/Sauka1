@@ -40,11 +40,14 @@ private slots:
     void on_pushButton_Tare_clicked();
 
     void on_pushButton_Read_clicked();
+
     void newDataUpdate(QStringList);
 
     void on_pushButton_cont_reading_clicked();
 
     void on_verticalSlider_valueChanged(int value);
+
+    void closeEvent (QCloseEvent *event) override;
 
 private:
     Global &global;
@@ -69,6 +72,7 @@ private:
 
     QMap<QString,ComInfo> comPortMap;
 
+    int  timerTime = 0;
     int  timerId = 0;
     int timerInit = 0;
     int timer1sId = 0;

@@ -58,14 +58,6 @@
            <widget class="QLineEdit" name="lineEdit_Send"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>+r
-</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="horizontalSpacer_12">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -98,7 +90,7 @@
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>Receive</string>
+             <string>Receive strings:</string>
             </property>
            </widget>
           </item>
@@ -531,7 +523,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

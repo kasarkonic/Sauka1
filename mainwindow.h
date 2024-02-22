@@ -16,6 +16,7 @@
 #include "scalesmass.h"
 #include "hwservice.h"
 #include "rs232.h"
+#include "parmani.h"
 
 
 
@@ -68,10 +69,13 @@ private:
     Pump *pumpA;
     Pipe *pipeA;
     Valve *valveA;
-    HWService *hwService;
-    Rs232 *rs232;
     ScalesBase *scalesBase;
     ScalesMass *scalesMass;
+
+    //HWService *hwService;
+   // Rs232 *rs232;
+   // ParMani *parmani;
+
 
     int valveStyleAngle;
     int minWidgSize;

@@ -199,7 +199,7 @@ void Global::creatWidgList()
 
     // page  Mix
     // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr, int sensAdr1, int sensAdr2
-    addWidgList(WidgetType::Mix,        "Mix",     415,        443,   100, 0, 0,        0,  0,0,0);
+    addWidgList(WidgetType::Mix,        "Mix",     424,        468,   96, 0, 0,        0,  0,0,0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0,  0,0,0);
     addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,1,2);
     addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,3,4);
@@ -233,7 +233,7 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pipe,    "Pipe 13",    457,       567,     115,   10,  0,   0,  0,0,0);
 
     addWidgList(WidgetType::ScalesBase,    "Scales Base",    413,        545,    250,   15, 0,   0,  0,0,0);
-    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    564,       443,     100,   0,  0,   0,  0,0,0);
+    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    584,       485,     62,   0,  0,   0,  0,0,0);
 
 
     // page Dyno

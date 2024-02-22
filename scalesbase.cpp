@@ -31,7 +31,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-     qDebug() << "ScalesBase"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    // qDebug() << "ScalesBase"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
@@ -50,7 +50,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
     int hi = settings.currSize;        //Hi
     int wi = settings.currSizeWi;
 
-    qDebug() << stX << stY << hi << wi;
+   //qDebug() << stX << stY << hi << wi;
 
     points[0] = QPoint(stX, stY);
     points[1] = QPoint(stX + hi, stY);

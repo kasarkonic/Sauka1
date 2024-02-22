@@ -23,9 +23,12 @@ Rs232::Rs232(Global &global,QWidget *parent)
     timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
 
+
+
     m_serial = new QSerialPort(this);
+
     if (!initPort()){
-        qDebug() <<"start timemark 1000";
+        qDebug() <<"start timemark 1000" << m_serial->openMode();
         timerInit = startTimer(1000, Qt::CoarseTimer);
     }
 
@@ -34,17 +37,14 @@ Rs232::Rs232(Global &global,QWidget *parent)
     connect(m_serial, &QSerialPort::readyRead,this, &Rs232::readSerial);   //readyRead
     connect (this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
     initUI();
-    /*
-    sp_seriesT1 = new QSplineSeries();
-    sp_seriesT2 = new QSplineSeries();
-    sp_seriesMin = new QSplineSeries();
-    sp_seriesMax = new QSplineSeries();
-*/
+
     drawTchart();
+
 }
 
 Rs232::~Rs232()
 {
+    qDebug() <<"Rs232::~Rs232()";
     m_serial->close();
     delete ui;
 }
@@ -71,7 +71,7 @@ void Rs232::initUI()
 bool Rs232::initPort()
 {
     qDebug() << "\ninitPort()";
-
+/*
     QTextStream out(stdout);
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
     //qDebug() << "\n";
@@ -131,6 +131,9 @@ bool Rs232::initPort()
             corectPort = cInfo.port;
         }
     }
+*/
+
+    corectPort = global.dev1;
 
     if(corectPort != nullptr){
         m_serial->setPortName(corectPort);
@@ -165,8 +168,10 @@ bool Rs232::initPort()
         }
     }
     else{
-        str = "Available com port nof fond \n search Vendor Id ";
-        str.append("2341");
+        str = corectPort;
+        str.append(" Not fond \n Vendor Id: ");
+        str.append(global.dev1_VendorId);
+        str.append("\n");
         ui->textEditInfo->append(str);
         return false;
     }
@@ -289,6 +294,7 @@ void Rs232::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event);
     m_serial->close();
+    qDebug() <<"Rs232::closeEvent";
 }
 
 void Rs232::mouseDoubleClickEvent(QMouseEvent *event)

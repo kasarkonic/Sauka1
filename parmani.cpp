@@ -15,8 +15,8 @@ ParMani::ParMani(Global &global, QWidget *parent)
 
     ui->setupUi(this);
     ui->label->setText("Es vēl augu");
-    Dyno *dynoA = new Dyno(global,"",this);
-    ui->verticalLayout->addWidget(dynoA);
+    //Dyno *dynoA = new Dyno(global,"",this);
+   // ui->verticalLayout->addWidget(dynoA);
     //timerId = startTimer(200, Qt::CoarseTimer);
      qDebug() << "parmani::att "<< att ;
 }
@@ -24,6 +24,8 @@ ParMani::ParMani(Global &global, QWidget *parent)
 ParMani::~ParMani()
 {
     delete ui;
+
+
 }
 
 void ParMani::on_pushButtonExit_clicked()
@@ -34,9 +36,6 @@ void ParMani::on_pushButtonExit_clicked()
 void ParMani::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
-
-    int step = 1;
-    att = att + step;
 
     qDebug() << "Mani::att "<< att ;
 
