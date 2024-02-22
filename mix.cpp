@@ -58,7 +58,7 @@ void Mix::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
       imgBackground= new QImage();
-      imgBackground->load(":/pictures/mixeris3.png");
+      imgBackground->load(":/pictures/mixeris31.png");
 
       *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
       painter.drawImage(QPoint(), *imgBackground);

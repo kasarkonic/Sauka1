@@ -71,7 +71,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     QPoint points[4];
 
     imgBackground= new QImage();
-    imgBackground->load(":/pictures/fxup.png");
+    imgBackground->load(":/pictures/fxup1.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);

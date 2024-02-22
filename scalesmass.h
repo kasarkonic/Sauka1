@@ -20,6 +20,7 @@ private:
     int att = 360;
     int timerId = 0;
     QColor  triangColor = Qt::blue;
+    float massValue = 0;
 };
 
 #endif // SCALESMASS_H

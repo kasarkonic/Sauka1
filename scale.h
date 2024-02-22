@@ -42,6 +42,10 @@ private slots:
     void on_pushButton_Read_clicked();
     void newDataUpdate(QStringList);
 
+    void on_pushButton_cont_reading_clicked();
+
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Global &global;
     Ui::Scale *ui;
@@ -68,6 +72,7 @@ private:
     int  timerId = 0;
     int timerInit = 0;
     int timer1sId = 0;
+    int repeatePeriod = 100;
     int att;
     QString currentTime;
     int STATE;

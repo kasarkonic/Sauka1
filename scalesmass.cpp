@@ -13,7 +13,9 @@ ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
 void ScalesMass::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-
+    int an1SensAdr = global.widHash[widName].sensAddres1;
+    massValue = global.sensList[an1SensAdr].analog;
+     update();
 }
 
 void ScalesMass::paintEvent(QPaintEvent *event)
@@ -30,14 +32,16 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     imgBackground= new QImage();
-    imgBackground->load(":/pictures/icons-scales-weightl.png");
+    imgBackground->load(":/pictures/kettlebell1.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
+    QString str =QString::number(massValue);
+
     QFont font("times", settings.currSize/6);
     painter.setFont(font);
-    painter.drawText(QRect(0, 0, settings.currSize, settings.currSize), Qt::AlignCenter, "123,4 kg");
+    painter.drawText(QRect(0, 0, settings.currSize, settings.currSize), Qt::AlignCenter, str);
 }
 
 void ScalesMass::timerEvent(QTimerEvent *event)

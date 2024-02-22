@@ -105,47 +105,7 @@ void Scale::readSerial()
             ui->label_Receive->setText(receivedData);
         }
     }
-    /*
-        qDebug() <<"readSerial()" <<data ;//<< m_serial->waitForReadyRead();
 
-        if(!data.isEmpty()) {
-            char *temp = data.data();
-            // Get a '\0'-terminated char* to the data
-
-
-            for(int i = 0; temp[i] != '\0'; i++) {
-                switch(STATE) {
-                case WAIT_START:
-                    if(temp[i] == START_MSG) {
-                        STATE = IN_MESSAGE;
-                        receivedData.clear();
-                        break;
-                    }
-                    break;
-                case IN_MESSAGE:
-                    if(temp[i] == END_MSG) {
-                        STATE = WAIT_START;
-                        QStringList incomingData = receivedData.split(',');
-                        // Emit signal for data received with the list
-                        emit newData(incomingData);
-                        ui->label_Receive->setText(temp);
-                        //qDebug() <<"emit" <<incomingData;
-                        break;
-                    }
-                    else if (isdigit (temp[i]) || isspace (temp[i]) || temp[i] =='-' || temp[i] =='.')
-                    {
-                        // If examined char is a digit, and not '$' or ';', append it to temporary string
-                        receivedData.append(temp[i]);
-                    }
-                    break;
-                default: break;
-                }
-            }
-        } //if(!data.isEmpty())
-
-    }
-
-*/
 }
 
 
@@ -183,8 +143,10 @@ void Scale::timerEvent(QTimerEvent *event)
 
 
     if(event->timerId() == timerId){
-        // qDebug()<< "Event Id";
+         qDebug()<< "Event Id";
         att++;
+        sendData("READ");
+        readSerial();
 
     }
 
@@ -257,12 +219,36 @@ void Scale::newDataUpdate(QStringList currSdata)
 
         ui->label_Value->setText(QString::number(t1));
 
-
-
-
     }
 
+}
 
+
+void Scale::on_pushButton_cont_reading_clicked()
+{
+    if(timerId){
+        killTimer(timerId);
+        QString str = QString("Start reading F=%1").arg(repeatePeriod);
+        ui->pushButton_cont_reading->setText(str);
+    }
+    else{
+        timerInit = startTimer(repeatePeriod, Qt::CoarseTimer);
+        ui->pushButton_cont_reading->setText("Stop reading.");
+    }
+    qDebug() << "on_verticalSlider_valueChanged" << timerInit << repeatePeriod;
+}
+
+
+void Scale::on_verticalSlider_valueChanged(int value)
+{
+    qDebug() << "on_verticalSlider_valueChanged" << value << repeatePeriod;
+    repeatePeriod = (1000 - 10 * value);
+    if(timerId){
+        killTimer(timerId);
+        timerInit = startTimer(repeatePeriod, Qt::CoarseTimer);
+        ui->pushButton_cont_reading->setText("Start reading %1.");
+    }
+     qDebug() << "on_verticalSlider_valueChanged" << value << repeatePeriod;
 
 }
 
