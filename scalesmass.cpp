@@ -14,7 +14,8 @@ void ScalesMass::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
     int an1SensAdr = global.widHash[widName].sensAddres1;
-    massValue = global.sensList[an1SensAdr].analog;
+    massValue = global.sensList[an1SensAdr].analog /10;
+    qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
      update();
 }
 
@@ -47,7 +48,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
 void ScalesMass::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    if(timerId){
-        update();
+    if(event->timerId() == timerId){
+        updateSettings();
     }
 }

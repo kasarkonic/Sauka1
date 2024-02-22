@@ -109,8 +109,8 @@ void Scale::readSerial()
         if(!data.isEmpty()) {
             QString receivedData = QString(data);
             QStringList incomingData = receivedData.split(',');
-            qDebug() <<"1 receivedData" <<incomingData;
-            qDebug() <<"2 incomingData" <<incomingData;
+            //qDebug() <<"scale receivedData" <<incomingData;
+
 
             emit newData(incomingData);
             ui->label_Receive->setText(receivedData);
@@ -188,7 +188,7 @@ void Scale::newDataUpdate(QStringList currSdata)
 
 
     foreach (QString str, currSdata) {
-        qDebug() << str;
+   //     qDebug() << str;
     }
 
     if(currSdata.size() == 4){
@@ -205,6 +205,9 @@ void Scale::newDataUpdate(QStringList currSdata)
        // t1 = currSdata[2].toFloat(&ok);
 
         ui->label_Value->setText(QString::number(t1));
+
+        global.sensList[11].analog = (int)t1*10;
+        qDebug() << "save data sensor 11 AN" <<(int)t1*10;
 
     }
 

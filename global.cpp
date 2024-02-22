@@ -103,7 +103,7 @@ void Global::creatSensList()
 
     addSensList("Tvertne 4 sensors DI", SensorType::Digital, 6);
     addSensList("Tvertne 4 sensors AN", SensorType::Analog,  7);
-
+    addSensList("Scale AN", SensorType::Analog,  11);
 
 
 
@@ -233,7 +233,7 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pipe,    "Pipe 13",    457,       567,     115,   10,  0,   0,  0,0,0);
 
     addWidgList(WidgetType::ScalesBase,    "Scales Base",    413,        545,    250,   15, 0,   0,  0,0,0);
-    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    584,       485,     62,   0,  0,   0,  0,0,0);
+    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    584,       485,     62,   0,  0,   0,  0,11,0);
 
 
     // page Dyno
