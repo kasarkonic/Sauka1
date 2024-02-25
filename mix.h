@@ -25,7 +25,7 @@ protected:
         QImage *imgBackground;
         int att = 360;
         int speed = 0;
-        int timerId = 0;
+        int timerIdUpd = 0;
         QColor  triangColor = Qt::blue;
 
 };

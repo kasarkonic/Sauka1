@@ -23,6 +23,8 @@ SOURCES += \
     mix.cpp \
     parmani.cpp \
     pipe.cpp \
+    procui1.cpp \
+    procui2.cpp \
     pump.cpp \
     rs232.cpp \
     scale.cpp \
@@ -46,6 +48,8 @@ HEADERS += \
     mix.h \
     parmani.h \
     pipe.h \
+    procui1.h \
+    procui2.h \
     pump.h \
     rs232.h \
     scale.h \
@@ -64,6 +68,8 @@ FORMS += \
     hwservice.ui \
     mainwindow.ui \
     parmani.ui \
+    procui1.ui \
+    procui2.ui \
     rs232.ui \
     scale.ui \
     scalesbase.ui \

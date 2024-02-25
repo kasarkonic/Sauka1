@@ -20,10 +20,16 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::MainWindow)
-    //,  widgetData(global)
-
 
 { 
+    //ProcUI2 *procUI2 = new ProcUI2(global,this);
+    procUI2 = new ProcUI2(global,this);
+    procUI2->show();
+
+    //ProcUI1 *procUI1 = new ProcUI1(global,this);
+    procUI1 = new ProcUI1(global,this);
+    procUI1->show();
+
     ui->setupUi(this);
 
 
@@ -44,7 +50,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
 
     initUI();
-    drawWidgets();
+   // drawWidgets();
 
 
     qDebug() << "Autosettings  Com ports";
@@ -58,7 +64,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     }
 
     initTimer = true;
-    timerId = startTimer(100);
+    timerIdUpd = startTimer(100);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -75,9 +81,6 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -249,7 +252,7 @@ void MainWindow::drawWidgets()
 
     foreach (Global::wdataStruct widData, global.widHash){
 
-        if( widData.page == currPage || widData.page == 3 ){    // all pages
+        if( widData.page == 0 || widData.page == 3 ){    // all pages
             // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
@@ -395,17 +398,27 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
 void MainWindow::on_pushButton_Dyno_clicked()
 {
-    qDebug() << "pushButton_Dyno_clicked() ";
-    currPage = 1;
-    delAllWid();
-    drawWidgets();
+    if( procUI2 == nullptr){
+        procUI2 = new ProcUI2(global,this);
+        procUI2->show();
+         ui->setupUi(this);
+}
+        else{
+          procUI2->raise();
+        }
 }
 
 void MainWindow::on_pushButton_Mix_clicked()
 {
+    if( procUI1 == nullptr){
+        procUI1 = new ProcUI1(global,this);
+        procUI1->show();
+}
+        else{
+          procUI1->raise();
+        }
+
     qDebug() << "pushButton_Mix_clicked()";
-    currPage = 0;
-    delAllWid();
-    drawWidgets();
+
 }
 

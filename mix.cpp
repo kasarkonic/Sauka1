@@ -29,10 +29,10 @@ void Mix::updateSettings()
 
 
     if(global.sensList[dSensAdr].digital){
-         timerId = startTimer(150, Qt::CoarseTimer);
+         timerIdUpd = startTimer(150, Qt::CoarseTimer);
     }
     else{
-        killTimer(timerId);
+        killTimer(timerIdUpd);
     }
 }
 /*
@@ -106,13 +106,14 @@ void Mix::paintEvent(QPaintEvent *event)
 void Mix::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    if(timerId){
+    if(timerIdUpd){
         int step = (int)speed/10;
         step = speed;
         att += step;
         if (att > 360){
             att = 0;
         }
+        qDebug() << att;
         update();
     }
 }

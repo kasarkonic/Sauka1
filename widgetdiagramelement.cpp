@@ -33,19 +33,15 @@ void WidgetDiagramElement::updateSettings()
     if(addresAct >= 300){
         addresAct -= 300;
     }
-    int addresAN1 = global.widHash[settings.name].sensAddres1;
-    int addresAN2 = global.widHash[settings.name].sensAddres2;
-    int actValueDi = global.actList[addresAct].digital;
+   // int addresAN1 = global.widHash[settings.name].sensAddres1;
+   // int addresAN2 = global.widHash[settings.name].sensAddres2;
+   // int actValueDi = global.actList[addresAct].digital;
     //int an1Value = global.sensList[addresAN1].analog;
     //int an2Value = global.sensList[addresAN2].analog;
 
-    qDebug() <<settings.name << ":updateSettings()" <<global.widHash[settings.name].startX << global.widHash[settings.name].startY ;
-    qDebug() <<settings.name << ":" <<addresAct << actValueDi;
-    qDebug() <<settings.name << ":" <<addresAN1 << global.sensList[addresAN1].analog  << ":" <<addresAN2 << global.sensList[addresAN2].analog << "\n";
-
-
-
-
+    //qDebug() <<settings.name << ":updateSettings()" <<global.widHash[settings.name].startX << global.widHash[settings.name].startY ;
+   // qDebug() <<settings.name << ":" <<addresAct << actValueDi;
+   // qDebug() <<settings.name << ":" <<addresAN1 << global.sensList[addresAN1].analog  << ":" <<addresAN2 << global.sensList[addresAN2].analog << "\n";
 
     settings.currX = global.widHash[settings.name].startX/koef;
     settings.currY = global.widHash[settings.name].startY/koef;

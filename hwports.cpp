@@ -83,6 +83,8 @@ void HwPorts::scanPortsInfo()
     QString manufacturer;
     QString serialNumber;
     comPortMap.clear();
+    ComInfo  comInfo;
+    cmbList.clear();
 
     QString str = "Available com port: \n";
     ui->textEditInfo->append(str);

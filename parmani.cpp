@@ -17,7 +17,7 @@ ParMani::ParMani(Global &global, QWidget *parent)
     ui->label->setText("Es vēl augu");
     //Dyno *dynoA = new Dyno(global,"",this);
    // ui->verticalLayout->addWidget(dynoA);
-    //timerId = startTimer(200, Qt::CoarseTimer);
+    //timerIdUpd = startTimer(200, Qt::CoarseTimer);
      qDebug() << "parmani::att "<< att ;
 }
 

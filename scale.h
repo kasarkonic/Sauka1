@@ -33,8 +33,6 @@ signals:
 private slots:
     void on_lineEdit_Send_editingFinished();
 
-    void on_pushButton_clicked();
-
     void on_pushButton_Zero_clicked();
 
     void on_pushButton_Tare_clicked();
@@ -73,7 +71,7 @@ private:
     QMap<QString,ComInfo> comPortMap;
 
     int  timerTime = 0;
-    int  timerId = 0;
+    int  timerRead = 0;
     int timerInit = 0;
     int timer1sId = 0;
     int repeatePeriod = 100;

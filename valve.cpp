@@ -21,7 +21,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
     settings.options = global.widHash[settings.name].options;
-    //  timerId = startTimer(100, Qt::CoarseTimer);
+    //  timerIdUpd = startTimer(100, Qt::CoarseTimer);
 }
 
 void Valve::updateSettings()

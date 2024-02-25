@@ -17,6 +17,8 @@
 #include "hwservice.h"
 #include "rs232.h"
 #include "parmani.h"
+#include "procui1.h"
+#include "procui2.h"
 
 
 
@@ -71,6 +73,8 @@ private:
     Valve *valveA;
     ScalesBase *scalesBase;
     ScalesMass *scalesMass;
+    ProcUI1 *procUI1;
+    ProcUI2 *procUI2;
 
     //HWService *hwService;
    // Rs232 *rs232;
@@ -90,7 +94,7 @@ private:
     void resizeAllKoef(float koef);
     void updateSettingForAll();
     void initUI();
-    int  timerId = 0;
+    int  timerIdUpd = 0;
     int att = 0;
 
     QString currentTime; // HH:mm:ss
@@ -100,7 +104,6 @@ private:
     QStringList  cmbList;
     void drawWidgets();
     bool initTimer;
-    int currPage = 0;   // Mix = 0, Dyno = 1
     void delAllWid();
 
 QString statusStr = "\u00A9 2023. vers. 0.0  tel. 29222201   02.02.2024  ";

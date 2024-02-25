@@ -90,7 +90,7 @@ void Scale::sendData(QString send)
     str.append(send);
     QByteArray utf8Data = str.toUtf8();
     const qint64 written = sc_serial->write(utf8Data);
-    qDebug() << "sendData" << send << utf8Data ;
+    //qDebug() << "sendData" << send << utf8Data ;
     Q_UNUSED(written);
     ui->lineEdit_Send->setText(send);
 }
@@ -130,11 +130,10 @@ void Scale::timerEvent(QTimerEvent *event)
     }
 
 
-    if(event->timerId() == timerId){
+    if(event->timerId() == timerRead){
         // qDebug()<< "Event Id";
         att++;
-        sendData("READ");
-        readSerial();
+        sendData("READ\r\n");
     }
 
     if(event->timerId() == timerInit){
@@ -151,14 +150,6 @@ void Scale::on_lineEdit_Send_editingFinished()
     QString val = ui->lineEdit_Send->text();
     sendData(val);
 }
-
-
-void Scale::on_pushButton_clicked()
-{
-    sendData("READ");
-    readSerial();
-}
-
 
 void Scale::on_pushButton_Zero_clicked()
 {
@@ -182,17 +173,13 @@ void Scale::newDataUpdate(QStringList currSdata)
 
     bool ok;
     float t1 = 0.0;
-
-
-    qDebug() << "currSdata" <<currSdata.size() << currSdata;
-
-
-    foreach (QString str, currSdata) {
-   //     qDebug() << str;
-    }
+   // qDebug() << "currSdata" <<currSdata.size() << currSdata;
+   // foreach (QString str, currSdata) {
+        //qDebug() << str;
+   // }
 
     if(currSdata.size() == 4){
-
+        qDebug() << currSdata[2];
         ui->label_Stat1->setText(currSdata[0]);
         ui->label_Stat2->setText(currSdata[1]);
 
@@ -203,26 +190,24 @@ void Scale::newDataUpdate(QStringList currSdata)
         }
 
        // t1 = currSdata[2].toFloat(&ok);
-
+    t1 = 10.0 * t1;
         ui->label_Value->setText(QString::number(t1));
 
-        global.sensList[11].analog = (int)t1*10;
-        qDebug() << "save data sensor 11 AN" <<(int)t1*10;
-
+        global.sensList[11].analog = (int)t1;
+        qDebug() << "save data sensor 11 AN" <<(int)t1;
     }
-
 }
 
 
 void Scale::on_pushButton_cont_reading_clicked()
 {
-    if(timerId){
-        killTimer(timerId);
+    if(timerRead){
+        killTimer(timerRead);
         QString str = QString("Start reading F=%1").arg(repeatePeriod);
         ui->pushButton_cont_reading->setText(str);
     }
     else{
-        timerId = startTimer(repeatePeriod, Qt::CoarseTimer);
+        timerRead = startTimer(repeatePeriod, Qt::CoarseTimer);
         ui->pushButton_cont_reading->setText("Stop reading.");
     }
     qDebug() << "on_verticalSlider_valueChanged" << timerInit << repeatePeriod;
@@ -233,9 +218,9 @@ void Scale::on_verticalSlider_valueChanged(int value)
 {
     qDebug() << "on_verticalSlider_valueChanged" << value << repeatePeriod;
     repeatePeriod = (1000 - 10 * value);
-    if(timerId){
-        killTimer(timerId);
-        timerId = startTimer(repeatePeriod, Qt::CoarseTimer);
+    if(timerRead){
+        killTimer(timerRead);
+        timerRead   = startTimer(repeatePeriod, Qt::CoarseTimer);
         ui->pushButton_cont_reading->setText("Start reading %1.");
     }
      qDebug() << "on_verticalSlider_valueChanged" << value << repeatePeriod;

@@ -92,7 +92,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
 void ScalesBase::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    if(timerId){
+    if(event->timerId() == timerIdUpd){
         update();
     }
 }

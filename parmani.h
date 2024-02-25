@@ -25,7 +25,7 @@ private:
     Ui::ParMani *ui;
     int att;
    /* Dyno *dynoA;
-    int timerId;
+    int timerIdUpd;
     int attX = 1;
     int attY = 1;
     int currX = 0;

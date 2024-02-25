@@ -4,18 +4,19 @@
 ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
+    widName = name;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
-    timerId = startTimer(200, Qt::CoarseTimer);
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);
 }
 
 void ScalesMass::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
     int an1SensAdr = global.widHash[widName].sensAddres1;
-    massValue = global.sensList[an1SensAdr].analog /10;
-    qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
+    massValue = global.sensList[an1SensAdr].analog /10.0;
+    //qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
      update();
 }
 
@@ -38,17 +39,18 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    QString str =QString::number(massValue);
+    QString str = QString::number(massValue);
+   // qDebug() << massValue << str;
 
     QFont font("times", settings.currSize/6);
     painter.setFont(font);
-    painter.drawText(QRect(0, 0, settings.currSize, settings.currSize), Qt::AlignCenter, str);
+    painter.drawText(QRect(0, settings.currSize/6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
 }
 
 void ScalesMass::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    if(event->timerId() == timerId){
+    if(event->timerId() == timerIdUpd){
         updateSettings();
     }
 }

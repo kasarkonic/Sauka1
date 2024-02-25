@@ -111,7 +111,7 @@ private:
 
     void drawTchart();
     bool createMessageBox(QString text);
-    int  timerId = 0;
+    int  timerIdUpd = 0;
     int timerInit = 0;
     int timer1sId = 0;
     int  att = 0;

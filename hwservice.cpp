@@ -1,7 +1,7 @@
 #include "hwservice.h"
 #include "ui_hwservice.h"
 #include <Qdebug>
-#include "global.h"
+//#include "global.h"
 #include "senslistsform.h"
 #include "actlistform.h"
 #include "scale.h"

@@ -44,10 +44,10 @@ void Pump::updateSettings()
     speed = (int)global.sensList[dSensAdr].analog /3;
 
     if(global.sensList[dSensAdr].digital){
-         timerId = startTimer(150, Qt::CoarseTimer);
+         timerIdUpd = startTimer(150, Qt::CoarseTimer);
     }
     else{
-        killTimer(timerId);
+        killTimer(timerIdUpd);
     }
 
 
@@ -93,7 +93,7 @@ void Pump::timerEvent(QTimerEvent *event)
 
     // qDebug() << "Pump timerEvent" <<timerId << att;
 
-    if(timerId){
+    if(event->timerId() == timerIdUpd){
         int step = (int)speed/10;
         step = speed;
          //settings.value/10; //360/72;

@@ -60,10 +60,10 @@ void Pipe::updateSettings()
     // move(settings.startX,settings.startY);
 
     // if(settings.flow == 0){        // 0 stop, 1 ->, 2<-)
-    //     killTimer(timerId);
+    //     killTimer(timerIdUpd);
     // }
     // else{
-    //      timerId = startTimer(200, Qt::CoarseTimer);
+    //      timerIdUpd = startTimer(200, Qt::CoarseTimer);
     // }
 }
 

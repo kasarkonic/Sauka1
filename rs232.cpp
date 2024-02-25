@@ -271,7 +271,7 @@ void Rs232::timerEvent(QTimerEvent *event)
     }
 
 
-    if(event->timerId() == timerId){
+    if(event->timerId() == timerIdUpd){
         // qDebug()<< "Event Id";
         att++;
         receiveDataRequest = true;
@@ -309,10 +309,10 @@ void Rs232::on_pushButtonStart_clicked()
     ui->pushButtonStart->setStyleSheet(qssGreen);
     ui->pushButton_Stop->setStyleSheet(qssGray);
     ui->label_statuss->setText(tr("Notiek ieraksts"));
-    if(timerId > 0){
-        killTimer(timerId);
+    if(timerIdUpd > 0){
+        killTimer(timerIdUpd);
     }
-    timerId = startTimer(timeMark * 1000, Qt::CoarseTimer); //1000 for testing
+    timerIdUpd = startTimer(timeMark * 1000, Qt::CoarseTimer); //1000 for testing
     sp_seriesT1->clear();
     sp_seriesT2->clear();
     sp_seriesMin->clear();
@@ -333,8 +333,8 @@ void Rs232::on_pushButton_Stop_clicked()
     ui->pushButtonStart->setStyleSheet(qssGray);
     ui->pushButton_Stop->setStyleSheet(qssRed);
     ui->label_statuss->setText(tr("Ieraksts pārtraukts"));
-    if(timerId > 0){
-        killTimer(timerId);
+    if(timerIdUpd > 0){
+        killTimer(timerIdUpd);
     }
     startTime = QTime(0,0);
 }
