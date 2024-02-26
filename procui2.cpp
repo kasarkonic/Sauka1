@@ -42,7 +42,7 @@ ui->textEdit_Info->setPalette(pal);
 
 }
 
-ProcUI2::drawWidgets()
+void ProcUI2::drawWidgets()
 {
     qDebug() << "widData draw  " << global.widHash.size() << "elements";
 

@@ -20,18 +20,13 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::MainWindow)
+    , procUI1(global,this)
+    , procUI2(global,this)
 
-{ 
-    //ProcUI2 *procUI2 = new ProcUI2(global,this);
-    procUI2 = new ProcUI2(global,this);
-    procUI2->show();
-
-    //ProcUI1 *procUI1 = new ProcUI1(global,this);
-    procUI1 = new ProcUI1(global,this);
-    procUI1->show();
-
+{
     ui->setupUi(this);
-
+    procUI2.show();
+    procUI1.show();
 
     QString settingsFile = QApplication::applicationDirPath() + "/settings.ini";
     global.settingsFileName =  settingsFile;
@@ -398,27 +393,12 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
 void MainWindow::on_pushButton_Dyno_clicked()
 {
-    if( procUI2 == nullptr){
-        procUI2 = new ProcUI2(global,this);
-        procUI2->show();
-         ui->setupUi(this);
-}
-        else{
-          procUI2->raise();
-        }
+        procUI2.show();
+        procUI2.raise();
 }
 
 void MainWindow::on_pushButton_Mix_clicked()
 {
-    if( procUI1 == nullptr){
-        procUI1 = new ProcUI1(global,this);
-        procUI1->show();
+        procUI1.show();
+        procUI1.raise();
 }
-        else{
-          procUI1->raise();
-        }
-
-    qDebug() << "pushButton_Mix_clicked()";
-
-}
-

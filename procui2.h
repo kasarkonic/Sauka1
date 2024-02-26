@@ -41,7 +41,7 @@ private:
     Global &global;
     Ui::ProcUI2 *ui;
     void initUI();
-    drawWidgets();
+    void drawWidgets();
 };
 
 #endif // PROCUI2_H

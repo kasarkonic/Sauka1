@@ -2,6 +2,7 @@
 #include "ui_procui1.h"
 
 
+
 ProcUI1::ProcUI1(Global &global, QWidget *parent) :
     QMainWindow(parent)
    , global(global)
@@ -46,7 +47,7 @@ void ProcUI1::initUI()
 
 }
 
-ProcUI1::drawWidgets()
+void ProcUI1::drawWidgets()
 {
     qDebug() << "widData draw  " << global.widHash.size() << "elements";
 

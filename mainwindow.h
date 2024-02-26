@@ -73,8 +73,8 @@ private:
     Valve *valveA;
     ScalesBase *scalesBase;
     ScalesMass *scalesMass;
-    ProcUI1 *procUI1;
-    ProcUI2 *procUI2;
+    ProcUI1 procUI1;
+    ProcUI2 procUI2;
 
     //HWService *hwService;
    // Rs232 *rs232;

@@ -41,7 +41,7 @@ private:
     Global &global;
     Ui::ProcUI1 *ui;
     void initUI();
-    drawWidgets();
+    void drawWidgets();
 
 };
 
