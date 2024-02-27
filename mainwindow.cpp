@@ -76,6 +76,8 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
+    currentTime = "currentTime";
+    ui->label_2->setText(currentTime);
 }
 
 MainWindow::~MainWindow()
