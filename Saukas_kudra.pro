@@ -1,6 +1,7 @@
 QT  += core gui
 QT  += serialport
 QT  += gui charts
+QT += serialbus
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -21,6 +22,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mix.cpp \
+    modbusserver.cpp \
     parmani.cpp \
     pipe.cpp \
     procui1.cpp \
@@ -46,6 +48,7 @@ HEADERS += \
     hwservice.h \
     mainwindow.h \
     mix.h \
+    modbusserver.h \
     parmani.h \
     pipe.h \
     procui1.h \
