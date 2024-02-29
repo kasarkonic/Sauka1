@@ -1,5 +1,7 @@
 #include "modbusserver.h"
 #include "QtSerialBus/qmodbusdataunit.h"
+#include <QSerialPort>
+//#include <QModbusRtuSerialServer>
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
@@ -14,75 +16,98 @@ static constexpr int ReadRequestSize {4};
 static constexpr int WriteHeaderSize {5};
 static constexpr int MinimumWriteRequestSize {WriteHeaderSize + 2}; // 2 payload bytes
 
-ModbusServer::ModbusServer(QObject *parent)
+ModbusServer::ModbusServer(Global &global, QObject *parent)
     : QModbusRtuSerialServer(parent)
+    , global(global)
 {
-    //setMap({{QModbusDataUnit::HoldingRegisters, {QModbusDataUnit::HoldingRegisters, 0, 10}}});
 
-    QModbusRequest::registerDataSizeCalculator(ModbusClient::CustomRead, [](const QModbusRequest &request) {
-        if (!request.isValid())
-            return -1;
-        return (request.dataSize() != ReadRequestSize ? -1 : ReadRequestSize);
-    });
+    connect(modbusDevice, &QModbusServer::dataWritten,
+            this, &ModbusServer::updateWidgets);
 
-    QModbusRequest::registerDataSizeCalculator(ModbusClient::CustomWrite, [](const QModbusRequest &request) {
-        if (!request.isValid())
-            return -1;
+    connect(modbusDevice, &QModbusServer::stateChanged,
+            this, &ModbusServer::onStateChanged);
 
-        if (request.dataSize() < MinimumWriteRequestSize)
-            return -1;
-        return WriteHeaderSize + quint8(request.data().at(WriteHeaderSize - 1));
-    });
+    connect(modbusDevice, &QModbusServer::errorOccurred,
+            this, &ModbusServer::handleDeviceError);
+
+
+
 }
 
-QModbusResponse ModbusServer::processPrivateRequest(const QModbusPdu &request)
+bool ModbusServer::init()
 {
-    if (!request.isValid())
-        return ModbusServer::processPrivateRequest(request);
+    modbusDevice = new QModbusRtuSerialServer(this);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialPortNameParameter, global.dev3);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::NoParity);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, QSerialPort::Baud9600);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, QSerialPort::Data8);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);
 
-    //! [handle_custom_read]
-    if (ModbusClient::CustomRead == request.functionCode()) {
-        quint16 startAddress, count;
-        request.decodeData(&startAddress, &count);
 
-        QModbusDataUnit unit(QModbusDataUnit::HoldingRegisters, startAddress, count);
-        if (!data(&unit)) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::IllegalDataAddress);
-        }
-        return QModbusResponse(request.functionCode(), startAddress, quint8(count * 2), unit.values());
-    }
-    //! [handle_custom_read]
+    modbusDevice->setServerAddress(7);          // !!!! address
 
-    //! [handle_custom_write]
-    if (ModbusClient::CustomWrite == request.functionCode()) {
-        quint8 byteCount;
-        quint16 startAddress, numberOfRegisters;
-        request.decodeData(&startAddress, &numberOfRegisters, &byteCount);
+    QModbusDataUnitMap reg;
+    reg.insert(QModbusDataUnit::Coils, { QModbusDataUnit::Coils, 0, 32 });
+    reg.insert(QModbusDataUnit::DiscreteInputs, { QModbusDataUnit::DiscreteInputs, 0, 32 });
+    reg.insert(QModbusDataUnit::InputRegisters, { QModbusDataUnit::InputRegisters, 0, 32 });
+    reg.insert(QModbusDataUnit::HoldingRegisters, { QModbusDataUnit::HoldingRegisters, 0, 32 });
 
-        if (byteCount % 2 != 0) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::IllegalDataValue);
-        }
-
-        const QByteArray pduData = request.data().remove(0, WriteHeaderSize);
-        QDataStream stream(pduData);
-
-        QList<quint16> values;
-        for (int i = 0; i < numberOfRegisters; i++) {
-            quint16 tmp;
-            stream >> tmp;
-            values.append(tmp);
-        }
-
-        if (!writeData({QModbusDataUnit::HoldingRegisters, startAddress, values})) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::ServerDeviceFailure);
-        }
-
-        return QModbusResponse(request.functionCode(), startAddress, numberOfRegisters);
-    }
-    //! [handle_custom_write]
-
-    return QModbusServer::processPrivateRequest(request);
+    modbusDevice->setMap(reg);
 }
+
+void ModbusServer::onStateChanged(int state)
+{
+    if (state == QModbusDevice::UnconnectedState)
+        qDebug() << "Modbus disconected !!!!";
+}
+void ModbusServer::coilChanged(int id, bool value)
+{
+
+    bitChanged(id, QModbusDataUnit::Coils, value);
+    qDebug() << "coilChanged" <<QModbusDataUnit::DiscreteInputs << id << value;
+}
+
+void ModbusServer::discreteInputChanged(int id, bool value)
+{
+
+    bitChanged(id, QModbusDataUnit::DiscreteInputs, value);
+     qDebug() << "bitChanged" <<QModbusDataUnit::DiscreteInputs << id << value;
+}
+
+void ModbusServer::bitChanged(int id, QModbusDataUnit::RegisterType table, bool value)
+{
+    if (!modbusDevice)
+        return;
+
+    if (!modbusDevice->setData(table, quint16(id), value))
+        qDebug() << "bitChanged" <<"Could not set data: " + modbusDevice->errorString() << id << value;
+
+}
+
+void ModbusServer::updateWidgets(QModbusDataUnit::RegisterType table, int address, int size)
+{
+    for (int i = 0; i < size; ++i) {
+        quint16 value;
+        QString text;
+        switch (table) {
+        case QModbusDataUnit::Coils:
+            modbusDevice->data(QModbusDataUnit::Coils, quint16(address + i), &value);
+            qDebug() << " rec. Coils" << value;
+            break;
+        case QModbusDataUnit::HoldingRegisters:
+            modbusDevice->data(QModbusDataUnit::HoldingRegisters, quint16(address + i), &value);
+            qDebug() << " rec. HoldingRegisters" << value;
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void ModbusServer::handleDeviceError(Error newError)
+{
+    if (newError == QModbusDevice::NoError || !modbusDevice)
+        return;
+    qDebug() << " Error " << modbusDevice->errorString();
+}
+

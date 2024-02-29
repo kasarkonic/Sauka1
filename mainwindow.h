@@ -19,6 +19,7 @@
 #include "parmani.h"
 #include "procui1.h"
 #include "procui2.h"
+#include "modbusserver.h"
 
 
 
@@ -64,7 +65,6 @@ private:
 
     // WidgetData widgetData;
 
-
     Dyno *dynoA;
     Mix *mixA;
     Tvertne *tvertneA;
@@ -75,6 +75,7 @@ private:
     ScalesMass *scalesMass;
     ProcUI1 procUI1;
     ProcUI2 procUI2;
+    ModbusServer modbusServer;
 
     //HWService *hwService;
    // Rs232 *rs232;

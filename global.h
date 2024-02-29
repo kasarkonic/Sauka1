@@ -104,9 +104,9 @@ public:
 
 
     // attach Com. port
-    QString dev1;
-    QString dev2;
-    QString dev3;
+    QString dev1;   // rs232 for temperature sensor
+    QString dev2;   // rs232 for scale
+    QString dev3;   // for RS485 Modbus DI DO An input
     QString dev4;
     QString dev1_VendorId;
     QString dev2_VendorId;

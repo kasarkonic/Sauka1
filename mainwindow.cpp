@@ -13,7 +13,7 @@
 #include "global.h"
 #include <QDateTime>
 #include <QRandomGenerator>
-
+#include "modbusserver.h"
 
 
 MainWindow::MainWindow(Global &global,  QWidget *parent)
@@ -22,6 +22,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , ui(new Ui::MainWindow)
     , procUI1(global,this)
     , procUI2(global,this)
+    , modbusServer(global,this)
 
 {
     ui->setupUi(this);
@@ -78,6 +79,11 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
+    modbusServer.init();
+
+    for (int var = 0; var < 199; ++var) {
+    modbusServer.coilChanged(var,true);
+    }
 }
 
 MainWindow::~MainWindow()

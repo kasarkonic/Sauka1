@@ -71,67 +71,6 @@ void Rs232::initUI()
 bool Rs232::initPort()
 {
     qDebug() << "\ninitPort()";
-/*
-    QTextStream out(stdout);
-    const auto serialPortInfos = QSerialPortInfo::availablePorts();
-    //qDebug() << "\n";
-    out << QObject::tr("Total number of ports available: ") << serialPortInfos.count() << "\n";
-
-    const QString blankString = QObject::tr("N/A");
-    QString description;
-    QString manufacturer;
-    QString serialNumber;
-
-    str = "Available com port: \n";
-    ui->textEditInfo->append(str);
-
-    for (const QSerialPortInfo &serialPortInfo : serialPortInfos) {
-        description = serialPortInfo.description();
-        manufacturer = serialPortInfo.manufacturer();
-        serialNumber = serialPortInfo.serialNumber();
-        qDebug() <<serialNumber <<description << manufacturer << "\n"; // << endl
-
-        ComInfo  comInfo;
-        comInfo.port = serialPortInfo.portName();
-        comInfo.location = serialPortInfo.systemLocation();
-        comInfo.description = !description.isEmpty() ? description : blankString;
-        comInfo.manufacturer = !manufacturer.isEmpty() ? manufacturer : blankString;
-        comInfo.serialNumber = !serialNumber.isEmpty() ? serialNumber : blankString;
-        comInfo.vendorIdentifier = serialPortInfo.hasVendorIdentifier() ? QByteArray::number(serialPortInfo.vendorIdentifier(), 16) : blankString;
-        comInfo.productIdentifier = serialPortInfo.hasProductIdentifier() ? QByteArray::number(serialPortInfo.productIdentifier(), 16) : blankString;
-
-
-        comPortMap.insert(serialPortInfo.portName(),comInfo);
-        str = "";
-        str.append(QObject::tr("Port: ") + serialPortInfo.portName() + "\n");
-        str.append(QObject::tr("Location: ") + serialPortInfo.systemLocation() + "\n");
-        str.append(QObject::tr("Description: ") + (!description.isEmpty() ? description : blankString) + "\n");
-        str.append(QObject::tr("Manufacturer: ") + (!manufacturer.isEmpty() ? manufacturer : blankString) + "\n");
-        str.append(QObject::tr("Serial number: ") + (!serialNumber.isEmpty() ? serialNumber : blankString) + "\n");
-        str.append(QObject::tr("Vendor Identifier: ") + (serialPortInfo.hasVendorIdentifier() ? QByteArray::number(serialPortInfo.vendorIdentifier(), 16) : blankString) + "\n");
-        str.append(QObject::tr("Product Identifier: ") + (serialPortInfo.hasProductIdentifier() ? QByteArray::number(serialPortInfo.productIdentifier(), 16) : blankString) + "\n\n");
-
-        qDebug() << str;
-        ui->textEditInfo->append(str);
-
-
-    }
-    qDebug() << "Open port:";
-    //  m_serial = new QSerialPort(this);
-
-    corectPort = nullptr;
-    foreach (ComInfo cInfo, comPortMap){
-
-        // "403"  FDI RS232
-        // "2341" Arduino MEGA
-       // if(cInfo.vendorIdentifier == "2341"){
-
-        qDebug() << "search port:" << cInfo.description <<"Dev2 " << global.dev2_description;
-         if(cInfo.description == global.dev2_description){
-            corectPort = cInfo.port;
-        }
-    }
-*/
 
     corectPort = global.dev1;
 
