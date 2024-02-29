@@ -1,5 +1,8 @@
 #include "modbusserver.h"
 #include "QtSerialBus/qmodbusdataunit.h"
+#include <QModbusDevice>
+#include <QSerialPort>
+
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 
@@ -14,75 +17,103 @@ static constexpr int ReadRequestSize {4};
 static constexpr int WriteHeaderSize {5};
 static constexpr int MinimumWriteRequestSize {WriteHeaderSize + 2}; // 2 payload bytes
 
-ModbusServer::ModbusServer(QObject *parent)
+ModbusServer::ModbusServer(Global &global, QObject *parent)
     : QModbusRtuSerialServer(parent)
+    , global(global)
 {
+   //global.dev1    port Nr
+
+    modbusDevice = new QModbusRtuSerialServer(this);
+
+
+    QModbusDataUnitMap reg;
+    reg.insert(QModbusDataUnit::Coils, { QModbusDataUnit::Coils, 0, 10 });
+    reg.insert(QModbusDataUnit::DiscreteInputs, { QModbusDataUnit::DiscreteInputs, 0, 10 });
+    reg.insert(QModbusDataUnit::InputRegisters, { QModbusDataUnit::InputRegisters, 0, 10 });
+    reg.insert(QModbusDataUnit::HoldingRegisters, { QModbusDataUnit::HoldingRegisters, 0, 10 });
+
+    modbusDevice->setMap(reg);
+
+
+
+
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialPortNameParameter, global.dev1);
+
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter,QSerialPort::NoParity);
+
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialBaudRateParameter,QSerialPort::Baud9600);
+
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialDataBitsParameter,QSerialPort::Data8);
+
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);
+
+
+    QModbusServer::connectDevice() ;
+
+
     //setMap({{QModbusDataUnit::HoldingRegisters, {QModbusDataUnit::HoldingRegisters, 0, 10}}});
 
-    QModbusRequest::registerDataSizeCalculator(ModbusClient::CustomRead, [](const QModbusRequest &request) {
-        if (!request.isValid())
-            return -1;
-        return (request.dataSize() != ReadRequestSize ? -1 : ReadRequestSize);
-    });
 
-    QModbusRequest::registerDataSizeCalculator(ModbusClient::CustomWrite, [](const QModbusRequest &request) {
-        if (!request.isValid())
-            return -1;
-
-        if (request.dataSize() < MinimumWriteRequestSize)
-            return -1;
-        return WriteHeaderSize + quint8(request.data().at(WriteHeaderSize - 1));
-    });
 }
 
-QModbusResponse ModbusServer::processPrivateRequest(const QModbusPdu &request)
+ModbusServer::~ModbusServer()
 {
-    if (!request.isValid())
-        return ModbusServer::processPrivateRequest(request);
+    // close port ???
+}
 
-    //! [handle_custom_read]
-    if (ModbusClient::CustomRead == request.functionCode()) {
-        quint16 startAddress, count;
-        request.decodeData(&startAddress, &count);
+void ModbusServer::bitChanged(int id, QModbusDataUnit::RegisterType table, bool value)
+{
+    if (!modbusDevice)
+        return;
 
-        QModbusDataUnit unit(QModbusDataUnit::HoldingRegisters, startAddress, count);
-        if (!data(&unit)) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::IllegalDataAddress);
+    if (!modbusDevice->setData(table, quint16(id), value))
+        qDebug()<< "Could not set data: " + modbusDevice->errorString();
+}
+
+void ModbusServer::setRegister(const QString &value)
+{
+    if (!modbusDevice)
+        return;
+
+    const QString objectName = QObject::sender()->objectName();
+  //  if (registers.contains(objectName)) {
+        bool ok = true;
+        const quint16 id = quint16(QObject::sender()->property("ID").toUInt());
+        if (objectName.startsWith(QStringLiteral("inReg"))) {
+            const auto uval = value.toUShort(&ok, 16);
+            if (ok)
+                ok = modbusDevice->setData(QModbusDataUnit::InputRegisters, id, uval);
+        } else if (objectName.startsWith(QStringLiteral("holdReg"))) {
+            const auto uval = value.toUShort(&ok, 16);
+            if (ok)
+                ok = modbusDevice->setData(QModbusDataUnit::HoldingRegisters, id, uval);
         }
-        return QModbusResponse(request.functionCode(), startAddress, quint8(count * 2), unit.values());
+
+        if (!ok)
+        qDebug()<< "Could not set register: " + modbusDevice->errorString();
+  //  }
+}
+
+
+void ModbusServer::updateWidgets(QModbusDataUnit::RegisterType table, int address, int size)
+{
+    for (int i = 0; i < size; ++i) {
+        quint16 value;
+        QString text;
+        switch (table) {
+        case QModbusDataUnit::Coils:
+            modbusDevice->data(QModbusDataUnit::Coils, quint16(address + i), &value);
+            // coilButtons.button(address + i)->setChecked(value);
+            qDebug() <<"coil:"<< address + i << value;
+            break;
+        case QModbusDataUnit::HoldingRegisters:
+            modbusDevice->data(QModbusDataUnit::HoldingRegisters, quint16(address + i), &value);
+            //registers.value(QStringLiteral("holdReg_%1").arg(address + i))->setText(text.setNum(value, 16));
+            qDebug() << "registers:" << QStringLiteral("holdReg_%1").arg(address + i) << value;
+
+            break;
+        default:
+            break;
+        }
     }
-    //! [handle_custom_read]
-
-    //! [handle_custom_write]
-    if (ModbusClient::CustomWrite == request.functionCode()) {
-        quint8 byteCount;
-        quint16 startAddress, numberOfRegisters;
-        request.decodeData(&startAddress, &numberOfRegisters, &byteCount);
-
-        if (byteCount % 2 != 0) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::IllegalDataValue);
-        }
-
-        const QByteArray pduData = request.data().remove(0, WriteHeaderSize);
-        QDataStream stream(pduData);
-
-        QList<quint16> values;
-        for (int i = 0; i < numberOfRegisters; i++) {
-            quint16 tmp;
-            stream >> tmp;
-            values.append(tmp);
-        }
-
-        if (!writeData({QModbusDataUnit::HoldingRegisters, startAddress, values})) {
-            return QModbusExceptionResponse(request.functionCode(),
-                                            QModbusExceptionResponse::ServerDeviceFailure);
-        }
-
-        return QModbusResponse(request.functionCode(), startAddress, numberOfRegisters);
-    }
-    //! [handle_custom_write]
-
-    return QModbusServer::processPrivateRequest(request);
 }
