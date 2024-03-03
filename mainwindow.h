@@ -19,7 +19,8 @@
 #include "parmani.h"
 #include "procui1.h"
 #include "procui2.h"
-#include "modbusserver.h"
+#include "modbus485.h"
+
 
 
 
@@ -75,7 +76,7 @@ private:
     ScalesMass *scalesMass;
     ProcUI1 procUI1;
     ProcUI2 procUI2;
-    ModbusServer modbusServer;
+    Modbus485 modbus485;
 
     //HWService *hwService;
    // Rs232 *rs232;

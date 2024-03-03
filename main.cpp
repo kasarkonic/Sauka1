@@ -3,6 +3,7 @@
 #include <QApplication>
 #include "global.h"
 
+
 int main(int argc, char *argv[])
 {
     Global global;

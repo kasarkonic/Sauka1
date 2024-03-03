@@ -113,7 +113,7 @@ void Mix::timerEvent(QTimerEvent *event)
         if (att > 360){
             att = 0;
         }
-        qDebug() << att;
+       // qDebug() << att;
         update();
     }
 }

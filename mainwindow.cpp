@@ -13,7 +13,7 @@
 #include "global.h"
 #include <QDateTime>
 #include <QRandomGenerator>
-#include "modbusserver.h"
+#include "modbus485.h"
 
 
 MainWindow::MainWindow(Global &global,  QWidget *parent)
@@ -22,7 +22,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , ui(new Ui::MainWindow)
     , procUI1(global,this)
     , procUI2(global,this)
-    , modbusServer(global,this)
+    , modbus485(global,this)
 
 {
     ui->setupUi(this);
@@ -60,7 +60,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     }
 
     initTimer = true;
-    timerIdUpd = startTimer(100);
+    timerIdUpd = startTimer(200);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -79,11 +79,8 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
-    modbusServer.init();
-
-    for (int var = 0; var < 199; ++var) {
-    modbusServer.coilChanged(var,true);
-    }
+    qDebug() <<  "-------------------modbus485.init()";
+    modbus485.init();
 }
 
 MainWindow::~MainWindow()
@@ -128,6 +125,19 @@ void MainWindow::timerEvent(QTimerEvent *event)
     setWindowTitle(currentTime);
 
     ui->statusbar->showMessage (statusStr + currentTime);
+    att++;
+
+
+    qDebug() <<  "-------------------";
+
+    modbus485.test(0x70,1);
+
+
+
+
+   // modbusServer.coilChanged(att,true);
+    if (att > 192)
+        att = 0;
 
 }
 
