@@ -81,6 +81,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     ui->label_2->setText(currentTime);
     qDebug() <<  "-------------------modbus485.init()";
     modbus485.init();
+    att = 1;
 }
 
 MainWindow::~MainWindow()
@@ -125,19 +126,24 @@ void MainWindow::timerEvent(QTimerEvent *event)
     setWindowTitle(currentTime);
 
     ui->statusbar->showMessage (statusStr + currentTime);
-    att++;
+    //att++;
 
 
     qDebug() <<  "-------------------";
 
-    modbus485.test(0x70,1);
 
+     //  if (att < 0xffff)
+       // modbus485.wr23IOD32(7,0x70,att);  // wr23IOD32(7,0x70, 0xff);
+      //  else
+       // modbus485.wr23IOD32(7,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
 
-
-
+        att = att*2;
    // modbusServer.coilChanged(att,true);
-    if (att > 192)
-        att = 0;
+    if (att & 0x80000000)
+        att = 1;
+
+
+    modbus485.test(7,1);
 
 }
 

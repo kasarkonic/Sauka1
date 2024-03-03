@@ -16,6 +16,7 @@ public:
     Global &global;
     bool init();
     void test(int address, int value);
+    bool wr23IOD32(int boardAdr,int regAdr, quint16 value);
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
@@ -28,6 +29,7 @@ private:
     QModbusDataUnit readRequest() const;
     QModbusDataUnit writeRequest() const;
     void readData();
+    void writeDat(QModbusDataUnit writeUnit, int boardAdr);
     void writeDat();
 
 };

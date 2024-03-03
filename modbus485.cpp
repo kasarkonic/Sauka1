@@ -56,8 +56,38 @@ void Modbus485::test(int address, int value)
 
     //onReadReady();
 
-     //readData();
-    writeDat();
+    readData();
+   // writeDat();
+   // wr23IOD32(7,0x70, 0xff);
+
+}
+
+bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 0xffff
+{
+
+    const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
+    int startAddress = regAdr;
+    Q_ASSERT(startAddress >= 0 && startAddress < 200);
+
+    quint16 numberOfEntries =2;
+    //return QModbusDataUnit(table, startAddress, numberOfEntries);
+
+
+
+    //! [write_data_0]
+    //QModbusDataUnit writeUnit = writeRequest();
+    QModbusDataUnit writeUnit = QModbusDataUnit(table, startAddress, numberOfEntries);
+
+
+    //for (qsizetype i = 0, total = 1 /*writeUnit.valueCount()*/; i < total; ++i) {
+    //    const auto addr = i + 0x70; //writeUnit.startAddress();
+    //}
+
+    writeUnit.setValue(0, value ); // writeModel->m_coils[addr]);
+
+    qDebug() << "writeUnit1? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+    writeDat(writeUnit,boardAdr);
 
 }
 
@@ -78,7 +108,7 @@ void Modbus485::onReadReady()
             const QString entry = tr("Address: %1, Value: %2").arg(unit.startAddress() + i)
                     .arg(QString::number(unit.value(i),
                                          unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
-            qDebug() << "entry" << entry;
+            qDebug() << "entry" <<unit.value(i) << entry;
 
         }
     } else if (reply->error() == QModbusDevice::ProtocolError) {
@@ -123,7 +153,8 @@ QModbusDataUnit Modbus485::readRequest() const
 QModbusDataUnit Modbus485::writeRequest() const
 {
     //const auto table = ui->writeTable->currentData().value<QModbusDataUnit::RegisterType>();
-    const auto table = QModbusDataUnit::HoldingRegisters;
+    //  //DiscreteInputs,Coils,InputRegisters, HoldingRegisters,
+    const auto table = QModbusDataUnit::HoldingRegisters;  // coils->0f   HoldingRegisters -> 10 InputRegisters -> invalid request
     int startAddress = 0x70;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
 
@@ -157,27 +188,35 @@ void Modbus485::readData()
     }
 }
 
-void Modbus485::writeDat()
+void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr)
 {
     if (!modbusDevice){
         qDebug() << "writeDat RET";
-        return;
-    }
+        return ;
 
+    }
+/*
     //! [write_data_0]
     QModbusDataUnit writeUnit = writeRequest();
-    QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
-    for (qsizetype i = 112; i <= 113; ++i) {
 
-            int value = 1;
-            writeUnit.setValue(i, value);
+    qDebug() << "writeUnit? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+    QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
+    for (qsizetype i = 0, total = 1 ; i < total; ++i) {
+        const auto addr = i + 0x70; //writeUnit.startAddress();
+            writeUnit.setValue(i, 0x0f ); // writeModel->m_coils[addr]);
     }
 
 
-    qDebug()<< writeUnit.values();
+    qDebug() << "writeUnit1? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
 
 
-    if (auto *reply = modbusDevice->sendWriteRequest(writeUnit, 7)) {
+
+*/
+    qDebug() << "writeUnit2? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+
+    if (auto *reply = modbusDevice->sendWriteRequest(writeUnit, boardAdr)) {
         if (!reply->isFinished()) {
             //if error
             connect(reply, &QModbusReply::finished, this, [this, reply]() {
@@ -208,3 +247,61 @@ void Modbus485::writeDat()
         qDebug() << "Write error:" << modbusDevice->errorString();
     }
 }
+
+    void Modbus485::writeDat()
+    {
+        if (!modbusDevice){
+            qDebug() << "writeDat RET";
+            return ;
+
+        }
+
+        //! [write_data_0]
+        QModbusDataUnit writeUnit = writeRequest();
+
+        qDebug() << "writeUnit? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+        QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
+        for (qsizetype i = 0, total = 1 ; i < total; ++i) {
+            const auto addr = i + 0x70; //writeUnit.startAddress();
+                writeUnit.setValue(i, 0xcc ); // writeModel->m_coils[addr]);
+        }
+
+
+        qDebug() << "writeUnit1? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+
+
+
+        if (auto *reply = modbusDevice->sendWriteRequest(writeUnit, 7)) {
+            if (!reply->isFinished()) {
+                //if error
+                connect(reply, &QModbusReply::finished, this, [this, reply]() {
+                    const auto error = reply->error();
+
+                    if (error == QModbusDevice::ProtocolError) {
+                        //  statusBar()->showMessage(tr("Write response error: %1 (Modbus exception: 0x%2)")
+                        //      .arg(reply->errorString()).arg(reply->rawResult().exceptionCode(), -1, 16),
+                        //       5000);
+
+
+                    } else if (error != QModbusDevice::NoError) {
+                        // statusBar()->showMessage(tr("Write response error: %1 (code: 0x%2)").
+                        //   arg(reply->errorString()).arg(error, -1, 16), 5000);
+                        qDebug() << "Write response error:  (code:)"<< reply->errorString()<<reply->rawResult().exceptionCode();
+
+                    }
+                    reply->deleteLater();
+                });
+
+
+            } else {
+                // broadcast replies return immediately
+                reply->deleteLater();
+            }
+        } else {
+            //statusBar()->showMessage(tr("Write error: %1").arg(modbusDevice->errorString()), 5000);
+            qDebug() << "Write error:" << modbusDevice->errorString();
+        }
+    }
+
