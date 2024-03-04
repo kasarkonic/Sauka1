@@ -142,9 +142,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
     if (att & 0x80000000)
         att = 1;
 
+    //modbus485.readData();
 
-    modbus485.test(7,1);
-
+    modbus485.rd24DIB32(7,0xc0);
 }
 
 

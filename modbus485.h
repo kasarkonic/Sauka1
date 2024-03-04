@@ -17,6 +17,7 @@ public:
     bool init();
     void test(int address, int value);
     bool wr23IOD32(int boardAdr,int regAdr, quint16 value);
+    bool rd24DIB32(int boardAdr,int regAdr);
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
