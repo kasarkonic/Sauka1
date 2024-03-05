@@ -60,7 +60,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     }
 
     initTimer = true;
-    timerIdUpd = startTimer(200);
+    timerIdUpd = startTimer(500);
 
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style

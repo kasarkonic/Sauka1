@@ -14,6 +14,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
 
     QLoggingCategory::setFilterRules("qt.modbus* = true");
+   // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
 
 }
@@ -103,7 +104,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
 
-    quint16 numberOfEntries = 1;
+    quint16 numberOfEntries = 2;
     QModbusDataUnit dataUnit =  QModbusDataUnit(table, startAddress, numberOfEntries);
 
 
@@ -144,6 +145,9 @@ void Modbus485::onReadReady()
                     .arg(QString::number(unit.value(i),
                                          unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
             qDebug() << "entry" <<unit.value(i) << entry;
+
+            //adr C0 -> x00 -. X15  entry[0]
+            //adr C1 -> x16 -. X31  entry[1]
 
         }
     } else if (reply->error() == QModbusDevice::ProtocolError) {
