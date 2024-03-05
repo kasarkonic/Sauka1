@@ -127,6 +127,11 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
     }
 }
 
+bool Modbus485::rdN4AIB16(int boardAdr, int regAdr)
+{
+
+}
+
 void Modbus485::errorHandler(QModbusDevice::Error error)
 {
     qDebug() << "ERROR !!!" << error;
