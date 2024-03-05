@@ -129,7 +129,36 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
 
 bool Modbus485::rdN4AIB16(int boardAdr, int regAdr)
 {
+    if (!modbusDevice){
+        qDebug() << "readDat RET";
+        return false;
+    }
 
+    const auto table = QModbusDataUnit::HoldingRegisters;
+    int startAddress = regAdr;
+    Q_ASSERT(startAddress >= 0 && startAddress < 200);
+
+    quint16 numberOfEntries = 2;
+    QModbusDataUnit dataUnit =  QModbusDataUnit(table, startAddress, numberOfEntries);
+
+
+
+    //! [read_data_1]
+    if (auto *reply = modbusDevice->sendReadRequest(dataUnit, boardAdr)) {
+        if (!reply->isFinished()){
+            connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
+            QModbusDataUnit writeUnit = dataUnit;
+            qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
+                       readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+        }
+        else
+            delete reply; // broadcast replies return immediately
+        return true;
+    } else {
+        // statusBar()->showMessage(tr("Read error: %1").arg(modbusDevice->errorString()), 5000);
+        qDebug() << "Read error:" << modbusDevice->errorString();
+        return false;
+    }
 }
 
 void Modbus485::errorHandler(QModbusDevice::Error error)
