@@ -127,18 +127,23 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
     }
 }
 
-bool Modbus485::rdN4AIB16(int boardAdr, int regAdr)
+bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 {
+    //01,04,00,00,00,10,crc
     if (!modbusDevice){
         qDebug() << "readDat RET";
         return false;
     }
 
-    const auto table = QModbusDataUnit::HoldingRegisters;
+    //const auto table = QModbusDataUnit::HoldingRegisters;   // tr 03
+    //const auto table = QModbusDataUnit::Coils;   // tr 01
+    // const auto table = QModbusDataUnit::DiscreteInputs; // tr 02
+
+    const auto table = QModbusDataUnit::InputRegisters;  // tr 4
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
 
-    quint16 numberOfEntries = 2;
+    quint16 numberOfEntries = len;
     QModbusDataUnit dataUnit =  QModbusDataUnit(table, startAddress, numberOfEntries);
 
 
