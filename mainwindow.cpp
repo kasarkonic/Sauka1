@@ -144,7 +144,8 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
     //modbus485.readData();
 
-    modbus485.rd24DIB32(7,0xc0);
+    //modbus485.rd24DIB32(7,0xc0);
+    modbus485.rdN4AIB16(1, 0,16);
 }
 
 
