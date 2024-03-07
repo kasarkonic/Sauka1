@@ -10,11 +10,11 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
 {
 
-// qt.modbus: (RTU client) Received ADU:
+    // qt.modbus: (RTU client) Received ADU:
 
 
     QLoggingCategory::setFilterRules("qt.modbus* = true");
-   // QLoggingCategory::setFilterRules("qt* = true");
+    // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
 
 }
@@ -58,8 +58,8 @@ void Modbus485::test(int address, int value)
     //onReadReady();
 
     readData();
-   // writeDat();
-   // wr23IOD32(7,0x70, 0xff);
+    // writeDat();
+    // wr23IOD32(7,0x70, 0xff);
 
 }
 
@@ -173,22 +173,69 @@ void Modbus485::errorHandler(QModbusDevice::Error error)
 
 void Modbus485::onReadReady()
 {
+
+    QByteArray replayDataArray;
+    int datalen;
     auto reply = qobject_cast<QModbusReply *>(sender());
     if (!reply)
         return;
 
     if (reply->error() == QModbusDevice::NoError) {
         const QModbusDataUnit unit = reply->result();
+
+        switch (reply->serverAddress()) {
+        case 1:     // rdN4AIB16
+            datalen = reply->rawResult().data().length();
+            replayDataArray = reply->rawResult().data();
+            qDebug() << "datalen" << replayDataArray.length() << datalen;
+            if(unit.registerType() == 3 && replayDataArray.length() == datalen){
+
+
+                //int hex = replayDataArray.toInt(&ok, 16);
+
+               for(int i = 0; i < (datalen-1)*2; i+=2){
+
+
+
+               //int val = replayDataArray.at(i).toInt * 10 + replayDataArray.at(i+1).toInt;
+               qDebug() << i << replayDataArray.at(i)<< replayDataArray.at(i+1) ;
+               }
+}
+
+
+            else{
+                qDebug() << "error";
+            }
+
+
+
+            break;
+        default:
+            break;
+        }
+
+
+
+
+        qDebug() << "reply->serverAddress()is: " << reply->serverAddress();//QModbusDataUnit::
+        qDebug() << "unit.registerType()is: " << unit.registerType();// int
+        qDebug() << "reply->rawResult().data() " << reply->rawResult().data() ;
+        qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data().length() ;
+        //qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data();
+        qDebug() << "reply->result().registerType() " << reply->result().registerType() ;
+        /*
         for (qsizetype i = 0, total = unit.valueCount(); i < total; ++i) {
+
+
             const QString entry = tr("Address: %1, Value: %2").arg(unit.startAddress() + i)
                     .arg(QString::number(unit.value(i),
                                          unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
             qDebug() << "entry" <<unit.value(i) << entry;
 
-            //adr C0 -> x00 -. X15  entry[0]
-            //adr C1 -> x16 -. X31  entry[1]
-
         }
+
+*/
+
     } else if (reply->error() == QModbusDevice::ProtocolError) {
         //statusBar()->showMessage(tr("Read response error: %1 (Modbus exception: 0x%2)").
         //                             arg(reply->errorString()).
@@ -255,8 +302,8 @@ void Modbus485::readData()
         if (!reply->isFinished()){
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             //QModbusDataUnit writeUnit = readRequest();
-           // qDebug()<< readRequest().values() << readRequest().valueCount() <<
-                      // readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+            // qDebug()<< readRequest().values() << readRequest().valueCount() <<
+            // readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -273,7 +320,7 @@ void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr)
         return ;
 
     }
-/*
+    /*
     //! [write_data_0]
     QModbusDataUnit writeUnit = writeRequest();
 
@@ -326,60 +373,60 @@ void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr)
     }
 }
 
-    void Modbus485::writeDat()
-    {
-        if (!modbusDevice){
-            qDebug() << "writeDat RET";
-            return ;
+void Modbus485::writeDat()
+{
+    if (!modbusDevice){
+        qDebug() << "writeDat RET";
+        return ;
 
-        }
-
-        //! [write_data_0]
-        QModbusDataUnit writeUnit = writeRequest();
-
-        qDebug() << "writeUnit? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
-
-        QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
-        for (qsizetype i = 0, total = 1 ; i < total; ++i) {
-            const auto addr = i + 0x70; //writeUnit.startAddress();
-                writeUnit.setValue(i, 0xcc ); // writeModel->m_coils[addr]);
-        }
-
-
-        qDebug() << "writeUnit1? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
-
-
-
-
-        if (auto *reply = modbusDevice->sendWriteRequest(writeUnit, 7)) {
-            if (!reply->isFinished()) {
-                //if error
-                connect(reply, &QModbusReply::finished, this, [this, reply]() {
-                    const auto error = reply->error();
-
-                    if (error == QModbusDevice::ProtocolError) {
-                        //  statusBar()->showMessage(tr("Write response error: %1 (Modbus exception: 0x%2)")
-                        //      .arg(reply->errorString()).arg(reply->rawResult().exceptionCode(), -1, 16),
-                        //       5000);
-
-
-                    } else if (error != QModbusDevice::NoError) {
-                        // statusBar()->showMessage(tr("Write response error: %1 (code: 0x%2)").
-                        //   arg(reply->errorString()).arg(error, -1, 16), 5000);
-                        qDebug() << "Write response error:  (code:)"<< reply->errorString()<<reply->rawResult().exceptionCode();
-
-                    }
-                    reply->deleteLater();
-                });
-
-
-            } else {
-                // broadcast replies return immediately
-                reply->deleteLater();
-            }
-        } else {
-            //statusBar()->showMessage(tr("Write error: %1").arg(modbusDevice->errorString()), 5000);
-            qDebug() << "Write error:" << modbusDevice->errorString();
-        }
     }
+
+    //! [write_data_0]
+    QModbusDataUnit writeUnit = writeRequest();
+
+    qDebug() << "writeUnit? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+    QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
+    for (qsizetype i = 0, total = 1 ; i < total; ++i) {
+        const auto addr = i + 0x70; //writeUnit.startAddress();
+        writeUnit.setValue(i, 0xcc ); // writeModel->m_coils[addr]);
+    }
+
+
+    qDebug() << "writeUnit1? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
+
+
+
+
+    if (auto *reply = modbusDevice->sendWriteRequest(writeUnit, 7)) {
+        if (!reply->isFinished()) {
+            //if error
+            connect(reply, &QModbusReply::finished, this, [this, reply]() {
+                const auto error = reply->error();
+
+                if (error == QModbusDevice::ProtocolError) {
+                    //  statusBar()->showMessage(tr("Write response error: %1 (Modbus exception: 0x%2)")
+                    //      .arg(reply->errorString()).arg(reply->rawResult().exceptionCode(), -1, 16),
+                    //       5000);
+
+
+                } else if (error != QModbusDevice::NoError) {
+                    // statusBar()->showMessage(tr("Write response error: %1 (code: 0x%2)").
+                    //   arg(reply->errorString()).arg(error, -1, 16), 5000);
+                    qDebug() << "Write response error:  (code:)"<< reply->errorString()<<reply->rawResult().exceptionCode();
+
+                }
+                reply->deleteLater();
+            });
+
+
+        } else {
+            // broadcast replies return immediately
+            reply->deleteLater();
+        }
+    } else {
+        //statusBar()->showMessage(tr("Write error: %1").arg(modbusDevice->errorString()), 5000);
+        qDebug() << "Write error:" << modbusDevice->errorString();
+    }
+}
 
