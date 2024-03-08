@@ -22,6 +22,12 @@ public:
 
     ~HWService();
 
+signals:
+     void setBaudrate(int address);
+     bool factoryReset(int address);
+
+
+
 
 private slots:
     void on_pushButton_actuator_clicked();
@@ -32,7 +38,16 @@ private slots:
 
     void on_pushButton_Com_Ports_clicked();
 
+    void on_pushButton_ReadBaudR_clicked();
+
+    void on_lineEdit_Input_address_editingFinished();
+
+    void on_pushButton_ChangeAddress_clicked();
+
+    void on_pushButton_FactoryReset_clicked();
+
 private:
+    int modbusAddress = 0;;
 
 };
 

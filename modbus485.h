@@ -22,6 +22,9 @@ public:
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
+    bool setBaudrate(int address);
+    bool factoryReset(int address);
+
 
 
 private slots:

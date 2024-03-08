@@ -13,7 +13,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     // qt.modbus: (RTU client) Received ADU:
 
 
-    QLoggingCategory::setFilterRules("qt.modbus* = true");
+  //  QLoggingCategory::setFilterRules("qt.modbus* = true");
     // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
 
@@ -171,8 +171,56 @@ void Modbus485::errorHandler(QModbusDevice::Error error)
     qDebug() << "ERROR !!!" << error;
 }
 
+bool Modbus485::setBaudrate(int address)
+{
+
+
+    //reset address 0x01;
+    // FF 06 00 FB 00 00 ED E5
+}
+
+bool Modbus485::factoryReset(int address)
+{
+    qDebug() << "Rese--------------------------------------" << address ;
+    if (!modbusDevice){
+        qDebug() << "readDat RET";
+        return false;
+    }
+
+    //const auto table = QModbusDataUnit::HoldingRegisters;   // tr 03
+    //const auto table = QModbusDataUnit::Coils;   // tr 01
+    // const auto table = QModbusDataUnit::DiscreteInputs; // tr 02
+
+    const auto table = QModbusDataUnit::HoldingRegisters;  // tr 4
+    int startAddress = 251;
+
+    quint16 numberOfEntries = 0;
+    QModbusDataUnit dataUnit =  QModbusDataUnit(table, startAddress, numberOfEntries);
+    int boardAdr = 0xff;
+
+
+    //! [read_data_1]
+    if (auto *reply = modbusDevice->sendReadRequest(dataUnit, boardAdr)) {
+        if (!reply->isFinished()){
+            connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
+            QModbusDataUnit writeUnit = dataUnit;
+            qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
+                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+        }
+        else
+            delete reply; // broadcast replies return immediately
+        return true;
+    } else {
+        // statusBar()->showMessage(tr("Read error: %1").arg(modbusDevice->errorString()), 5000);
+        qDebug() << "Read error:" << modbusDevice->errorString();
+        return false;
+    }
+}
+
+
 void Modbus485::onReadReady()
 {
+
 
     QByteArray replayDataArray;
     int datalen;
@@ -187,18 +235,16 @@ void Modbus485::onReadReady()
         case 1:     // rdN4AIB16
             datalen = reply->rawResult().data().length();
             replayDataArray = reply->rawResult().data();
-            qDebug() << "datalen" << replayDataArray.length() << datalen;
+           // qDebug() << "datalen" << replayDataArray.length() << datalen;
+
             if(unit.registerType() == 3 && replayDataArray.length() == datalen){
 
 
                 //int hex = replayDataArray.toInt(&ok, 16);
 
-               for(int i = 0; i < (datalen-1)*2; i+=2){
+               for(int i = 0; i < (datalen)/2; i++){
 
-
-
-               //int val = replayDataArray.at(i).toInt * 10 + replayDataArray.at(i+1).toInt;
-               qDebug() << i << replayDataArray.at(i)<< replayDataArray.at(i+1) ;
+             //      qDebug() << i << reply->result().value(i) ;        BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
                }
 }
 
@@ -217,12 +263,12 @@ void Modbus485::onReadReady()
 
 
 
-        qDebug() << "reply->serverAddress()is: " << reply->serverAddress();//QModbusDataUnit::
-        qDebug() << "unit.registerType()is: " << unit.registerType();// int
-        qDebug() << "reply->rawResult().data() " << reply->rawResult().data() ;
-        qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data().length() ;
+       // qDebug() << "reply->serverAddress()is: " << reply->serverAddress();//QModbusDataUnit::
+       // qDebug() << "unit.registerType()is: " << unit.registerType();// int
+       // qDebug() << "reply->rawResult().data() " << reply->rawResult().data() ;
+       // qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data().length() ;
         //qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data();
-        qDebug() << "reply->result().registerType() " << reply->result().registerType() ;
+       // qDebug() << "reply->result().registerType() " << reply->result().registerType() ;
         /*
         for (qsizetype i = 0, total = unit.valueCount(); i < total; ++i) {
 

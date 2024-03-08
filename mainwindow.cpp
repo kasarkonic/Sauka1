@@ -23,6 +23,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , procUI1(global,this)
     , procUI2(global,this)
     , modbus485(global,this)
+    , hwService(global,this)
 
 {
     ui->setupUi(this);
@@ -74,6 +75,8 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //                );
 
 
+    connect (&hwService, &HWService::factoryReset,
+            &modbus485, &Modbus485::factoryReset);
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
@@ -145,7 +148,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
     //modbus485.readData();
 
     //modbus485.rd24DIB32(7,0xc0);
-    modbus485.rdN4AIB16(1, 0,16);
+    modbus485.rdN4AIB16(1, 0,15);
 }
 
 
@@ -394,9 +397,9 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     }
     case 3:
     {
-        HWService *hwService = new HWService(global,this);
+        //HWService *hwService = new HWService(global,this);
         //hwService = new HWService(global,this);
-        hwService->show();
+        hwService.show();
         break;
     }
     case 4:

@@ -78,7 +78,7 @@ private:
     ProcUI2 procUI2;
     Modbus485 modbus485;
 
-    //HWService *hwService;
+    HWService hwService;
    // Rs232 *rs232;
    // ParMani *parmani;
 
