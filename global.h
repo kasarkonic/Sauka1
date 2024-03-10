@@ -127,7 +127,8 @@ public:
 
 
     QColor  backgroundColor = QColor(250, 250, 250, 175);   // 255 transparent
-
+    //WidgetDiagramElement * ptrCurrWidget = nullptr;
+     //       comPortptr = nullptr
 private:
 
     void create_IN_OUT_list();
