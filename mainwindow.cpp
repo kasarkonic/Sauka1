@@ -47,7 +47,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
 
     initUI();
-   // drawWidgets();
+    // drawWidgets();
 
 
     qDebug() << "Autosettings  Com ports";
@@ -76,7 +76,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
 
     connect (&hwService, &HWService::factoryReset,
-            &modbus485, &Modbus485::factoryReset);
+             &modbus485, &Modbus485::factoryReset);
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
@@ -135,20 +135,36 @@ void MainWindow::timerEvent(QTimerEvent *event)
     qDebug() <<  "-------------------";
 
 
-     //  if (att < 0xffff)
-       // modbus485.wr23IOD32(7,0x70,att);  // wr23IOD32(7,0x70, 0xff);
-      //  else
-       // modbus485.wr23IOD32(7,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
-
-        att = att*2;
-   // modbusServer.coilChanged(att,true);
-    if (att & 0x80000000)
-        att = 1;
+    //att = att*2;
+    // modbusServer.coilChanged(att,true);
+    //if (att & 0x80000000)
+    //    att = 1;
 
     //modbus485.readData();
 
-    //modbus485.rd24DIB32(7,0xc0);
-    modbus485.rdN4AIB16(1, 0,15);
+  //  modbus485.rd24DIB32(4,0xc0);
+
+   // modbus485.rd23IOD32(4,0xc0);
+
+
+    // digital output
+  /*  if (att < 0xffff)
+        modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
+    else
+        modbus485.wr23IOD32(4,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
+ */
+
+
+
+
+
+    // ok digital out
+    //   modbus485.updateDIOut();  // ok digital out
+
+    // analog input, next DI input, next update DI output
+     modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+
+
 }
 
 
@@ -415,18 +431,18 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     }
 
     ui->comboBox->setCurrentIndex(0);
-     qDebug() << " Combo box index Finish" << index << cmbList[index];
+    qDebug() << " Combo box index Finish" << index << cmbList[index];
 }
 
 
 void MainWindow::on_pushButton_Dyno_clicked()
 {
-        procUI2.show();
-        procUI2.raise();
+    procUI2.show();
+    procUI2.raise();
 }
 
 void MainWindow::on_pushButton_Mix_clicked()
 {
-        procUI1.show();
-        procUI1.raise();
+    procUI1.show();
+    procUI1.raise();
 }

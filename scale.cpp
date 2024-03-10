@@ -107,6 +107,7 @@ void Scale::readSerial()
         QByteArray data = sc_serial->readLine(25);// readAll();  //readData()  readLineData()
 
         if(!data.isEmpty()) {
+            bool ok;
             QString receivedData = QString(data);
             QStringList incomingData = receivedData.split(',');
             //qDebug() <<"scale receivedData" <<incomingData;
@@ -114,6 +115,10 @@ void Scale::readSerial()
 
             emit newData(incomingData);
             ui->label_Receive->setText(receivedData);
+            global.scaleVal = receivedData.toInt(&ok);
+            if(!ok){
+               global.scaleVal = 0;
+            }
         }
     }
 
@@ -168,7 +173,7 @@ void Scale::on_pushButton_Read_clicked()
     sendData("READ\r\n");
 }
 
-void Scale::newDataUpdate(QStringList currSdata)
+void Scale:: newDataUpdate(QStringList currSdata)
 {
 
     bool ok;

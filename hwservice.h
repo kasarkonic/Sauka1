@@ -26,7 +26,8 @@ signals:
      void setBaudrate(int address);
      bool factoryReset(int address);
 
-
+protected:
+         void    timerEvent(QTimerEvent *event) override;
 
 
 private slots:
@@ -47,7 +48,8 @@ private slots:
     void on_pushButton_FactoryReset_clicked();
 
 private:
-    int modbusAddress = 0;;
+    int modbusAddress = 0;
+    int timerId;
 
 };
 

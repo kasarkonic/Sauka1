@@ -1,0 +1,7 @@
+Demo : https://youtu.be/VAXZCPh-PwA
+
+Set Up Remote IO:
+
+Enable Remote IO Receiver: 01 06 00 F6 00 01 A8 38
+
+Enable  Remote IO Sender : 01 06 00 F5 00 01 58 38

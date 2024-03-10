@@ -23,12 +23,24 @@ HWService::HWService(Global &global, QWidget *parent)
    this->setPalette(pal);
    ui->setupUi(this);
    ui->lineEdit_Input_address->setText("0");
+   timerId = startTimer(1000, Qt::CoarseTimer);
 
 }
 
 HWService::~HWService()
 {
     delete ui;
+}
+
+void HWService::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+    float volt24 = global.ANinput4_20[0] * 0.020797;
+    qDebug() << "HWService::timerEvent";
+    QString str = "24V Barošanas bloka spriegums = ";
+    str.append(QString::number(volt24));
+    str.append("V");
+    ui->textEdit->setText(str);
 }
 
 void HWService::on_pushButton_actuator_clicked()

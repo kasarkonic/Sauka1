@@ -9,7 +9,9 @@
 #include <QHash>
 #include <QList>
 //#include <QTimer>
-
+#define DI_IN_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIinput
+#define DI_OUT_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIoutput
+#define AN_IN_START_ADDRESS 1 // modbuss address 2  ANinput 1-15
 
 class WidgetService;
 class WidgetDiagramElement;
@@ -78,7 +80,7 @@ public:
         int startY = 100;
         int startSize = 50;
         int startSizeWi = 10;
-        int options = 0;   //valve |- and pipe angle      
+        int options = 0;   //valve |- and pipe angle
         int windowNr = 0;
         bool formExist = false;
         WidgetDiagramElement * ptrCurrWidget = nullptr;
@@ -93,6 +95,12 @@ public:
     QList<act> actList;
     QList<sens> sensList;
     QHash<QString,wdataStruct> widHash;
+
+    //board input output;
+    QList<bool>DIinput;
+    QList<bool>DIoutput;
+    QList<int>ANinput4_20; // value/100 = x,xx(mA)
+    int scaleVal;
 
     QString settingsFileName;
     QString appSwVers;
@@ -122,6 +130,7 @@ public:
 
 private:
 
+    void create_IN_OUT_list();
     void creatWidgList();
     void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2);
 

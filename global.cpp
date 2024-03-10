@@ -44,6 +44,26 @@ Global::Global()
     //foreach(sens item,  sensList){
     //    qDebug() << item.name << item.type ;
     //}
+    create_IN_OUT_list();
+}
+
+void Global::create_IN_OUT_list()
+{
+    for(int i = 0; i < 32; i++){
+        DIinput.append(0);
+        DIoutput.append(0);
+    }
+    for(int i = 0; i < 16; i++){
+        ANinput4_20.append(0);
+    }
+    scaleVal = 0;
+// for testing only
+    DIoutput[0] = 1;
+    DIoutput[1] = 1;
+    DIoutput[2] = 1;
+    DIoutput[29] = 1;
+    DIoutput[30] = 1;
+    DIoutput[31] = 1;
 }
 
 

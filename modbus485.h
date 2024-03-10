@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #    include <QModbusRtuSerialClient>
 #    include <QSerialPortInfo>
+#include <QElapsedTimer>
 
 
 class Modbus485  : public QMainWindow
@@ -17,8 +18,10 @@ public:
     bool init();
     void test(int address, int value);
     bool wr23IOD32(int boardAdr,int regAdr, quint16 value);
+    bool rd23IOD32(int boardAdr,int regAdr);
     bool rd24DIB32(int boardAdr,int regAdr);
     bool rdN4AIB16(int boardAdr,int regAdr,int len);
+    bool updateDIOut();
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
@@ -36,6 +39,7 @@ private:
     void readData();
     void writeDat(QModbusDataUnit writeUnit, int boardAdr);
     void writeDat();
+    QElapsedTimer timer;
 
 };
 
