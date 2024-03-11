@@ -47,6 +47,31 @@ Global::Global()
     create_IN_OUT_list();
 }
 
+//QList<bool>DIinput;
+//QList<bool>DIoutput;
+//QList<int>ANinput4_20; // value/100 = x,xx(mA)
+
+int Global::getANval(int addres)
+{
+    int val = 0;
+    if(addres > 300 && addres < 316 ){
+        val = ANinput4_20[addres - 300];
+    }
+    return val;
+}
+
+bool Global::getDIval(int addres)
+{
+    bool val = 0;
+    if (addres < 100  && addres < 32){
+       val = DIinput[addres];
+    }
+    else if (addres < 200  && addres < 132){
+        val = DIoutput[addres-100];
+     }
+    return val;
+}
+
 void Global::create_IN_OUT_list()
 {
     for(int i = 0; i < 32; i++){
@@ -57,7 +82,7 @@ void Global::create_IN_OUT_list()
         ANinput4_20.append(0);
     }
     scaleVal = 0;
-// for testing only
+    // for testing only
     DIoutput[0] = 1;
     DIoutput[1] = 1;
     DIoutput[2] = 1;
@@ -146,14 +171,15 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres)
     sensList[addres] = data;
 }
 //*************************************************************
+//in out number:
 
-
+//QList<bool>DIinput;           + 0
+//QList<bool>DIoutput;          + 100
+//QList<int>ANinput4_20; // value/100 = x,xx(mA)   + 200
 
 
 
 /*
-0-256  AN vai DI ieejas
-300->  DI izejas actuator
 
 Left upper corner coordinates:
 startX
@@ -201,6 +227,8 @@ for pump:
 act_sensAddres act  address
     digital  - on/off
     analog   - speed
+
+for tvertne:
 
 
 

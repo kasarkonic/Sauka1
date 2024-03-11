@@ -8,6 +8,9 @@
 #include <QObject>
 #include <QHash>
 #include <QList>
+
+
+
 //#include <QTimer>
 #define DI_IN_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIinput
 #define DI_OUT_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIoutput
@@ -50,8 +53,6 @@ class Global
 
 public:
     Global();
-
-    //QTimer *timer;
 
     struct  act{
         ActuatorType::actT type = ActuatorType::actT::Relay;  // Dyno
@@ -101,6 +102,9 @@ public:
     QList<bool>DIoutput;
     QList<int>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;
+
+    int getANval(int addres);
+    bool getDIval(int addres);
 
     QString settingsFileName;
     QString appSwVers;

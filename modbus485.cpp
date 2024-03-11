@@ -295,24 +295,21 @@ void Modbus485::onReadReady()
         case 2:     // rdN4AIB16
             if(unit.registerType() == 3 && replayDataArray.length() == datalen){
                 qDebug() << reply->result().values();
-                //int hex = replayDataArray.toInt(&ok, 16);
 
                 for(int i = 0; i < (datalen)/2; i++){
-                    global.ANinput4_20[i] = reply->result().value(i);           //ret  type int or QString ???
-                    //qDebug() << i << reply->result().value(i) ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+                    global.ANinput4_20[i] = reply->result().value(i);
                 }
-                qDebug() << "processTime " << timer.elapsed();
-
-                for(int i = 0; i < 16; i++){
-                    qDebug() << i << global.ANinput4_20[i]/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-                }
+                //qDebug() << "processTime " << timer.elapsed();
+               // for(int i = 0; i < 16; i++){
+               //     qDebug() << i << global.ANinput4_20[i]/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+               // }
 
             }
             else{
                 qDebug() << "error";
             }
 
-         //***   rd23IOD32(4,0xc0);  // 2
+            rd23IOD32(4,0xc0);  // 2
             break;
 
         case 4:     // rd23IOD32
@@ -324,29 +321,23 @@ void Modbus485::onReadReady()
                 //   reply->result().value(0)    // biti [in1:in16] => [d0:d15]
                 //   reply->result().value(1)    // biti [in17:in32] => [d0:d15]
 
+                qDebug() << QString::number(reply->result().value(0), 16);
+                qDebug() << QString::number(reply->result().value(1), 16);
                 for(int i = 0; i < 16; i++){
-                    global.DIinput[i] = (bool)reply->result().value(0) & (1 << i);
-                    global.DIinput[i + 16] = (bool)reply->result().value(1) & (1 << i);
+                    global.DIinput[i] = (bool)(reply->result().value(0) & (1 << i));
+                    global.DIinput[i + 16] = (bool)(reply->result().value(1) & (1 << i));
                 }
 
-                for(int i = 0; i < datalen/2; i++){
-                    global.DIinput[i] = reply->result().value(i);           //ret  type int or QString ???
-                    qDebug() << i << reply->result().value(i) ;  //
-                }
-
-                for(int i = 0; i < 32 ; i++){
-                    qDebug() << i << global.DIinput[i] ;  //
-                }
-
-
-                //qDebug() << "processTime " << timer.elapsed();
+                //for(int i = 0; i < 32 ; i++){
+                //    qDebug() << i << global.getDIval(i) ;  //
+                //}
             }
             else{
                 qDebug() << "error";
             }
 
        //***     updateDIOut();  // 3
-
+qDebug() << "processTime " << timer.elapsed();
 
             break;
 
@@ -363,7 +354,7 @@ void Modbus485::onReadReady()
 
 
 
-
+        //(int)*
 
 
 

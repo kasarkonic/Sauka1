@@ -9,6 +9,7 @@ Scale::Scale(Global &global, QWidget *parent) :
   , global(global)
   , ui(new Ui::Scale)
 {
+    timerRead = startTimer(500, Qt::CoarseTimer);
     timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);
     sc_serial = new QSerialPort(this);
@@ -110,7 +111,7 @@ void Scale::readSerial()
             bool ok;
             QString receivedData = QString(data);
             QStringList incomingData = receivedData.split(',');
-            //qDebug() <<"scale receivedData" <<incomingData;
+            qDebug() <<"scale receivedData" <<incomingData;
 
 
             emit newData(incomingData);
@@ -145,7 +146,6 @@ void Scale::timerEvent(QTimerEvent *event)
         qDebug()<< "Event Init";
         initPort();
     }
-
 
 }
 

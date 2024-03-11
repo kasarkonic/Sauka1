@@ -16,6 +16,7 @@
 #include "modbus485.h"
 
 
+
 MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
@@ -24,11 +25,13 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , procUI2(global,this)
     , modbus485(global,this)
     , hwService(global,this)
+    , scale(global,this)
 
 {
     ui->setupUi(this);
     procUI2.show();
     procUI1.show();
+    //global.scalePtr = *scale;
 
     QString settingsFile = QApplication::applicationDirPath() + "/settings.ini";
     global.settingsFileName =  settingsFile;

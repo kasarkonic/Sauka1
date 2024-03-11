@@ -20,6 +20,7 @@
 #include "procui1.h"
 #include "procui2.h"
 #include "modbus485.h"
+#include "scale.h"
 
 
 
@@ -38,6 +39,9 @@ public:
     ~MainWindow();
 
     Global &global;
+
+protected:
+    Scale scale;
 
 private slots:
 
@@ -58,6 +62,8 @@ protected:
     void    mouseMoveEvent (QMouseEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
 
+
+
 private:
 
     //Global &global;
@@ -77,6 +83,7 @@ private:
     ProcUI1 procUI1;
     ProcUI2 procUI2;
     Modbus485 modbus485;
+   // Scale scale;
 
     HWService hwService;
    // Rs232 *rs232;
