@@ -35,8 +35,8 @@ HWService::~HWService()
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    float volt24 = global.ANinput4_20[0] * 0.020797;
-    qDebug() << "HWService::timerEvent";
+    float volt24 = global.ANinput4_20[15];// * 0.020797;  voltage input
+    qDebug() << "HWService::timerEvent " << volt24;
     QString str = "24V Barošanas bloka spriegums = ";
     str.append(QString::number(volt24));
     str.append("V");

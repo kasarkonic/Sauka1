@@ -227,8 +227,6 @@ void Modbus485::errorHandler(QModbusDevice::Error error)
 
 bool Modbus485::setBaudrate(int address)
 {
-
-
     //reset address 0x01;
     // FF 06 00 FB 00 00 ED E5
     return true;
@@ -299,14 +297,16 @@ void Modbus485::onReadReady()
                 for(int i = 0; i < (datalen)/2; i++){
                     global.ANinput4_20[i] = reply->result().value(i);
                 }
-                //qDebug() << "processTime " << timer.elapsed();
-               // for(int i = 0; i < 16; i++){
-               //     qDebug() << i << global.ANinput4_20[i]/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-               // }
+
 
             }
             else{
                 qDebug() << "error";
+            }
+
+            //qDebug() << "processTime " << timer.elapsed();
+            for(int i = 0; i < 16; i++){
+                qDebug() << i << global.ANinput4_20[i]/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
             }
 
             rd23IOD32(4,0xc0);  // 2

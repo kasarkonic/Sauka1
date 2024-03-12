@@ -54,8 +54,9 @@ Global::Global()
 int Global::getANval(int addres)
 {
     int val = 0;
-    if(addres > 300 && addres < 316 ){
-        val = ANinput4_20[addres - 300];
+    int addr = addres - 200;
+    if(addr >= 0 && addr < MAX_ANinput4_20 ){
+        val = ANinput4_20[addr];
     }
     return val;
 }
@@ -63,24 +64,37 @@ int Global::getANval(int addres)
 bool Global::getDIval(int addres)
 {
     bool val = 0;
-    if (addres < 100  && addres < 32){
+
+    if (addres >= 0  && addres < MAX_DIinput){
        val = DIinput[addres];
     }
-    else if (addres < 200  && addres < 132){
-        val = DIoutput[addres-100];
-     }
     return val;
+}
+
+void Global::setDIval(int addres, bool val)
+{
+    bool value = val;
+    if (addres >= 100  && addres < 100 + MAX_DIinput){
+       value = 0;
+    }
+    DIoutput[addres - 100] = value;
 }
 
 void Global::create_IN_OUT_list()
 {
-    for(int i = 0; i < 32; i++){
+    for(int i = 0; i < MAX_DIinput; i++){
         DIinput.append(0);
+    }
+
+    for(int i = 0; i < MAX_DIoutput; i++){
         DIoutput.append(0);
     }
-    for(int i = 0; i < 16; i++){
+
+
+    for(int i = 0; i < MAX_ANinput4_20; i++){
         ANinput4_20.append(0);
     }
+
     scaleVal = 0;
     // for testing only
     DIoutput[0] = 1;
@@ -249,8 +263,8 @@ void Global::creatWidgList()
     // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr, int sensAdr1, int sensAdr2
     addWidgList(WidgetType::Mix,        "Mix",     424,        468,   96, 0, 0,        0,  0,0,0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0,  0,0,0);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  0,1,2);
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  0,3,4);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 1",  225,     50,   50, 0,  0,        0,  1,201,2);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  375,     50,   50, 0,  0,        0,  3,202,4);
     addWidgList(WidgetType::Tvertne,     "Tvertne 3",  525,     50,   50, 0,  0,        0,  0,5,6);
     addWidgList(WidgetType::Tvertne,     "Tvertne 4",  650,     50,   50, 0,  0,        0,  0,7,8);
 

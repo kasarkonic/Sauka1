@@ -65,7 +65,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     initTimer = true;
     timerIdUpd = startTimer(500);
-
+    timerTest = startTimer(200);
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
     //    connect(
@@ -128,30 +128,24 @@ void MainWindow::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
 
-    currentTime = QTime::currentTime().toString("hh:mm:ss");
-    setWindowTitle(currentTime);
+    if(event->timerId() == timerIdUpd){
+        currentTime = QTime::currentTime().toString("hh:mm:ss");
+        setWindowTitle(currentTime);
 
-    ui->statusbar->showMessage (statusStr + currentTime);
-    //att++;
+        ui->statusbar->showMessage (statusStr + currentTime);
 
-
-    qDebug() <<  "-------------------";
-
-
-    //att = att*2;
-    // modbusServer.coilChanged(att,true);
-    //if (att & 0x80000000)
-    //    att = 1;
-
-    //modbus485.readData();
-
-  //  modbus485.rd24DIB32(4,0xc0);
-
-   // modbus485.rd23IOD32(4,0xc0);
+        qDebug() <<  "-------------------";
 
 
-    // digital output
-  /*  if (att < 0xffff)
+        //modbus485.readData();
+
+        //  modbus485.rd24DIB32(4,0xc0);
+
+        // modbus485.rd23IOD32(4,0xc0);
+
+
+        // digital output
+        /*  if (att < 0xffff)
         modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
     else
         modbus485.wr23IOD32(4,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
@@ -161,15 +155,28 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 
 
-    // ok digital out
-    //   modbus485.updateDIOut();  // ok digital out
+        // ok digital out
+        //   modbus485.updateDIOut();  // ok digital out
 
-    // analog input, next DI input, next update DI output
-     modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+        // analog input, next DI input, next update DI output
+        modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+    }
 
 
+    if(event->timerId() == timerTest){
+        att++;
+        att1++;
+
+        if(att > 100)
+            att = 0;
+        if(att1 > 200)
+            att1 = 0;
+
+        global.ANinput4_20[1] = att;       // only for testing
+       // global.ANinput4_20[2] = (int)att1/2;
+        qDebug() << "att" << att << att1/2;
+    }
 }
-
 
 void MainWindow::loadSettings()
 {

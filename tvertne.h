@@ -13,6 +13,7 @@ public:
 
 protected:
     void    paintEvent(QPaintEvent *event) override;
+    void    timerEvent(QTimerEvent *event) override;
     //   void    mousePressEvent(QMouseEvent *event) override;
     //   void    mouseMoveEvent (QMouseEvent *event) override;
     //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
@@ -20,6 +21,7 @@ protected:
     void updateSettings() override;
 private:
     QImage *imgBackground;
+    int timerIdUpd = 0;
     int fill;
     int full;
 

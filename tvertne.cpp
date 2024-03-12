@@ -17,8 +17,11 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     settings.startSize = global.widHash[settings.name].startSize;
     qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);
+
     fill = 0;
     full = 0;
+
 }
 
 void Tvertne::updateSettings()
@@ -35,12 +38,26 @@ void Tvertne::updateSettings()
 
     //fill = (int)global.sensList[an1SensAdr].analog;
     fill = global.getANval(an1SensAdr);
+
+    int res = 10 * qRound((24-(0.15 + fill))/fill);
+    qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
+
+    fill = res * 10 ;
+
+
     //full = global.sensList[dSensAdr].digital;
     full = global.getDIval(dSensAdr);
-    qDebug() << "Tvertne::updateSettings()" <<widName<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
+    //qDebug() << "Tvertne::updateSettings()" <<widName<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
 
     update();
 }
+
+void Tvertne::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED (event);
+    updateSettings();
+}
+
 
 /*
 void Tvertne::setNewPosition(float koef)
@@ -78,7 +95,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-   // qDebug()<<"full:fill" <<full<<":" << fill;
+    // qDebug()<<"full:fill" <<full<<":" << fill;
     if (full){
         painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
     }
@@ -103,12 +120,12 @@ void Tvertne::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.setBrush(QColor(0, 32, 255, 50));
 
-    int tf = fill * (settings.currSize - b)/100;
+    int tf = fill * (settings.currSize - 2*b)/100;
 
     points[0] = QPoint(b,b + tf);
     points[1] = QPoint(settings.currSize - b, b + tf);
-    points[2] = QPoint(settings.currSize - b ,settings.currSize - b);
-    points[3] = QPoint(b,settings.currSize -b);
+    points[2] = QPoint(settings.currSize - b ,settings.currSize - 2*b);
+    points[3] = QPoint(b,settings.currSize - 2*b);
 
     painter.drawPolygon(points,4);
 

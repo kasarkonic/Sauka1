@@ -16,6 +16,11 @@
 #define DI_OUT_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIoutput
 #define AN_IN_START_ADDRESS 1 // modbuss address 2  ANinput 1-15
 
+#define MAX_DIinput     32      // addres [0 , MAX_DIinp]
+#define MAX_DIoutput    32  // addres [100 , MAX_DIoutput + 100]
+#define MAX_ANinput4_20 16    // addres [200 , MAX_ANinput4_20 + 200]   200+MAX_ANinput4_20  a/d input  0-30V
+
+
 class WidgetService;
 class WidgetDiagramElement;
 namespace ActuatorType
@@ -105,6 +110,7 @@ public:
 
     int getANval(int addres);
     bool getDIval(int addres);
+    void setDIval(int addres, bool val);
 
     QString settingsFileName;
     QString appSwVers;

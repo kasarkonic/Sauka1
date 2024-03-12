@@ -104,7 +104,9 @@ private:
     void updateSettingForAll();
     void initUI();
     int  timerIdUpd = 0;
+    int  timerTest = 0;
     int att = 0;
+    int att1 = 0;
 
     QString currentTime; // HH:mm:ss
 
