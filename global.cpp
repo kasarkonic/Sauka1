@@ -56,7 +56,7 @@ int Global::getANval(int addres)
     int val = 0;
     int addr = addres - 200;
     if(addr >= 0 && addr < MAX_ANinput4_20 ){
-        val = ANinput4_20[addr];
+        val = ANinput4_20[addr].An;
     }
     return val;
 }
@@ -66,7 +66,7 @@ bool Global::getDIval(int addres)
     bool val = 0;
 
     if (addres >= 0  && addres < MAX_DIinput){
-       val = DIinput[addres];
+       val = DIinput[addres].Di;
     }
     return val;
 }
@@ -77,32 +77,33 @@ void Global::setDIval(int addres, bool val)
     if (addres >= 100  && addres < 100 + MAX_DIinput){
        value = 0;
     }
-    DIoutput[addres - 100] = value;
+    DIoutput[addres - 100].Di = value;
 }
 
 void Global::create_IN_OUT_list()
 {
+    inOut io;
     for(int i = 0; i < MAX_DIinput; i++){
-        DIinput.append(0);
+        DIinput.append(io);
     }
 
     for(int i = 0; i < MAX_DIoutput; i++){
-        DIoutput.append(0);
+        DIoutput.append(io);
     }
 
 
     for(int i = 0; i < MAX_ANinput4_20; i++){
-        ANinput4_20.append(0);
+        ANinput4_20.append(io);
     }
 
     scaleVal = 0;
     // for testing only
-    DIoutput[0] = 1;
-    DIoutput[1] = 1;
-    DIoutput[2] = 1;
-    DIoutput[29] = 1;
-    DIoutput[30] = 1;
-    DIoutput[31] = 1;
+    DIoutput[0].Di = 1;
+    DIoutput[1].Di = 1;
+    DIoutput[2].Di = 1;
+    DIoutput[29].Di = 1;
+    DIoutput[30].Di = 1;
+    DIoutput[31].Di = 1;
 }
 
 

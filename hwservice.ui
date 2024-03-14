@@ -96,7 +96,7 @@
           <item>
            <widget class="QPushButton" name="pushButton_actuator">
             <property name="text">
-             <string>Piedziņa</string>
+             <string>Aktuātori</string>
             </property>
            </widget>
           </item>

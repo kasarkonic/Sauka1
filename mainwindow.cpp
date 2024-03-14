@@ -172,7 +172,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         if(att1 > 200)
             att1 = 0;
 
-        global.ANinput4_20[1] = att;       // only for testing
+        global.ANinput4_20[1].An = att;       // only for testing
        // global.ANinput4_20[2] = (int)att1/2;
         qDebug() << "att" << att << att1/2;
     }

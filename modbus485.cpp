@@ -211,9 +211,9 @@ bool Modbus485::updateDIOut()
     quint16 val2 = 0;
     for(int i = 15; i >= 0;i--){
         val1 <<= 1;
-        val1 += (global.DIoutput[i] & 1);
+        val1 += (global.DIoutput[i].Di & 1);
         val2 <<= 1;
-        val2 += (global.DIoutput[i+16] & 1);
+        val2 += (global.DIoutput[i+16].Di & 1);
     }
     // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2;
     wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
@@ -295,7 +295,7 @@ void Modbus485::onReadReady()
                 qDebug() << reply->result().values();
 
                 for(int i = 0; i < (datalen)/2; i++){
-                    global.ANinput4_20[i] = reply->result().value(i);
+                    global.ANinput4_20[i].An = reply->result().value(i);
                 }
 
 
@@ -306,7 +306,7 @@ void Modbus485::onReadReady()
 
             //qDebug() << "processTime " << timer.elapsed();
             for(int i = 0; i < 16; i++){
-                qDebug() << i << global.ANinput4_20[i]/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+                qDebug() << i << global.ANinput4_20[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
             }
 
             rd23IOD32(4,0xc0);  // 2
@@ -324,8 +324,8 @@ void Modbus485::onReadReady()
                 qDebug() << QString::number(reply->result().value(0), 16);
                 qDebug() << QString::number(reply->result().value(1), 16);
                 for(int i = 0; i < 16; i++){
-                    global.DIinput[i] = (bool)(reply->result().value(0) & (1 << i));
-                    global.DIinput[i + 16] = (bool)(reply->result().value(1) & (1 << i));
+                    global.DIinput[i].Di = (bool)(reply->result().value(0) & (1 << i));
+                    global.DIinput[i + 16].Di = (bool)(reply->result().value(1) & (1 << i));
                 }
 
                 //for(int i = 0; i < 32 ; i++){

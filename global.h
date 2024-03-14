@@ -98,14 +98,20 @@ public:
 
     };
 
+    struct  inOut{
+        bool Di = false;
+        float An = 0.0;
+        QString name = "IN/OUT";
+    } ;
+
     QList<act> actList;
     QList<sens> sensList;
     QHash<QString,wdataStruct> widHash;
 
     //board input output;
-    QList<bool>DIinput;
-    QList<bool>DIoutput;
-    QList<int>ANinput4_20; // value/100 = x,xx(mA)
+    QList<inOut>DIinput;
+    QList<inOut>DIoutput;
+    QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;
 
     int getANval(int addres);

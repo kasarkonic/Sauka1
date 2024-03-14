@@ -15,7 +15,7 @@ int ActTableModel::rowCount(const QModelIndex &parent) const
 int ActTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 6;
+    return MAX_DIoutput;
 }
 
 QVariant ActTableModel::data(const QModelIndex &index, int role) const
@@ -30,15 +30,15 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
         switch (col) {
         case SensAddress:
             qDebug()<<"SensAddress "  << row << global.actList[row].address;
-            return global.actList[row].address;
+            return row;
         case SensName:
-            return global.actList[row].name;
+            return global.DIoutput[row].name;
         case DIvalue:
             qDebug()<<"DIvalue "  << row << global.actList[row].digital;
-            return global.actList[row].digital;
+            return global.DIoutput[row].Di;
         case ANvalue:
             qDebug()<<"ANvalue "  << row << global.actList[row].analog;
-            return global.actList[row].analog;
+            return global.DIoutput[row].An;
 
         default:
             return QVariant();
