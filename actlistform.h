@@ -20,6 +20,7 @@ public:
 
     Global &global;
     ~ActListForm();
+         void updateData(int row);
 
 signals:
 
@@ -27,6 +28,7 @@ signals:
 private slots:
     void handleButton();
     void handleEditFinish();
+
 
 private:
     Ui::ActListForm *ui;

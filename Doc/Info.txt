@@ -1,0 +1,36 @@
+MODBUS 
+ātrums 115200
+8 biti,
+parity no
+stop 1
+
+modbus poll 4.3.4 Registration code 9876543210ABCDEFGHIJ9813
+
+
+N4AIB16
+iestāda Baud rate 115200:
+FF 06 00 FE 00 07 Bc 26
+
+nolasa pasreizējo adresi:
+FF 03 00 FD 00 01 00 24；
+
+iestāda adresi 02:
+FF 06 00 FD 00 02 8C 25
+
+lietoju plates adresi 02   dati glabājas:
+QList<int>ANinput4_20; // value/100 = x,xx(mA)   [0 - MAX_ANinput4_20]
+
+
+
+23IOD32_PNP
+iestāda Baud rate 115200:  // 04 pašreizēja adrese
+04,06,00,FE,00,07		// pēc tam izslēgt / ieslēgt barošnu platei !!!
+
+
+lietoju plates adresi 04   dati glabājas:
+QList<bool>DIinput;	[0 - MAX_DIinput]
+QList<bool>DIoutput	[0 - MAX_DIoutput]
+
+
+U-(0.15 + Ux)/Ux
+qRound()

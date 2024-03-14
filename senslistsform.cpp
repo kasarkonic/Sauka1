@@ -52,6 +52,13 @@ SensListsForm::~SensListsForm()
     delete ui;
 }
 
+void SensListsForm::updateData(int row)
+{
+    sensorTableModel->updateData(row);
+    qDebug() << "SensListsForm::updateData(row); " << row ;
+
+}
+
 
 void SensListsForm::handleButton()
 {

@@ -9,7 +9,7 @@ SensorTableModel::SensorTableModel(Global &global, QObject *parent)
 int SensorTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 20;
+    return (MAX_DIinput + MAX_ANinput4_20);
 }
 
 int SensorTableModel::columnCount(const QModelIndex &parent) const
@@ -27,13 +27,28 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         switch (col) {
         case SensAddress:
-            return global.sensList[row].address;
+            return row;
         case SensName:
-            return global.sensList[row].name;
+            if (row < MAX_DIinput){
+                return global.DIinput[row].name;
+            }
+            else{
+                return global.ANinput4_20[row - MAX_DIinput].name;
+            }
         case DIvalue:
-            return global.sensList[row].digital;
+            if (row < MAX_DIinput){
+                return global.DIinput[row].Di;
+            }
+            else{
+                return global.ANinput4_20[row - MAX_DIinput].An;
+            }
         case ANvalue:
-            return global.sensList[row].analog;
+            if (row < MAX_DIinput){
+                return global.DIinput[row].Di;
+            }
+            else{
+                return global.ANinput4_20[row - MAX_DIinput].An;
+            }
         default:
             return QVariant();
         }
@@ -103,5 +118,12 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
     }
 
     return QVariant ();
+}
+void SensorTableModel::updateData(int row)
+{
+    qDebug() << "SensorTableModel::updateData " << row ;
+    QModelIndex idx1 = createIndex(row,0);
+    QModelIndex idx2 = createIndex(row,5);
+    emit dataChanged(idx1, idx2, { Qt::DisplayRole });
 }
 

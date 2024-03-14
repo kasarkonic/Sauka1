@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pictures/mixeris3.jpg</file>
+        <file>pictures/mixeris3.png</file>
+        <file>pictures/dynomill.png</file>
+        <file>pictures/mixeris148.png</file>
+        <file>pictures/fxup.png</file>
+        <file>pictures/logo2.png</file>
+        <file>pictures/dynomill-eco.png</file>
+        <file>pictures/dyno-eco.png</file>
+        <file>pictures/dino_mili.png</file>
+        <file>pictures/icons-scales-weightl.png</file>
+        <file>pictures/kettlebell.png</file>
+        <file>pictures/fxup1.png</file>
+        <file>pictures/kettlebell1.png</file>
+        <file>pictures/mixeris31.png</file>
+    </qresource>
+</RCC>

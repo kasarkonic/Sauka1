@@ -77,6 +77,10 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //                this, &MainWindow::openServiceFormPump
     //                );
 
+    connect(&modbus485,&Modbus485::valChangeAn,
+            &hwService, &HWService::updateData);
+    connect(&modbus485,&Modbus485::valChangeAn,
+            &hwService, &HWService::updateData);
 
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
@@ -172,7 +176,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         if(att1 > 200)
             att1 = 0;
 
-        global.ANinput4_20[1].An = att;       // only for testing
+       // global.ANinput4_20[10].An = att;       // only for testing
        // global.ANinput4_20[2] = (int)att1/2;
         qDebug() << "att" << att << att1/2;
     }

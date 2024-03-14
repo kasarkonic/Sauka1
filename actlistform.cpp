@@ -17,7 +17,7 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
     acttablemodel = new ActTableModel(global,this);
     ui->tableView->setModel(acttablemodel);
     int maxRow = global.actList.size();
-/*
+    /*
     for(int row = 0; row < maxRow; row++)
     {
         butt = new QPushButton();
@@ -59,6 +59,7 @@ void ActListForm::handleButton()
             }
             global.actList[row].digital = val;
             acttablemodel->updateData(row);
+
         }
     }
 }
@@ -76,7 +77,7 @@ void ActListForm::handleEditFinish()
     int val;
     for(int row = 0; row < maxRow; row++)
     {
-/*
+        /*
         if(global.actList[row].ptrLineEditDI == obj){
             val = lEdit->text().toInt(&ok);
             qDebug() <<"DI " <<row<< val << ok;
@@ -95,6 +96,13 @@ void ActListForm::handleEditFinish()
         }
     }
     // qDebug() << "lEdit " << lEdit->text() ;
+}
+
+void ActListForm::updateData(int row)
+{
+    acttablemodel->updateData(row);
+    qDebug() << "ActListForm::updateRow(int row) " << row ;
+
 }
 
 

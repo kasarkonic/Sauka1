@@ -22,6 +22,9 @@ public:
 
     Global &global;
     ~SensListsForm();
+
+void updateData(int row);
+
 private slots:
     void handleButton();
     void handleEditFinish();

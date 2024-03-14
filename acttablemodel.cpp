@@ -9,13 +9,13 @@ ActTableModel::ActTableModel(Global &global, QObject *parent)
 int ActTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 2;
+    return MAX_DIoutput;
 }
 
 int ActTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return MAX_DIoutput;
+    return 6;
 }
 
 QVariant ActTableModel::data(const QModelIndex &index, int role) const
@@ -29,7 +29,6 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
         // qDebug() << "Update Display role" << row << col << global.actList[row].digital;
         switch (col) {
         case SensAddress:
-            qDebug()<<"SensAddress "  << row << global.actList[row].address;
             return row;
         case SensName:
             return global.DIoutput[row].name;
@@ -110,7 +109,9 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
 
 void ActTableModel::updateData(int row)
 {
+    qDebug() << "ActTableModel::updateData " << row ;
     QModelIndex idx1 = createIndex(row,0);
     QModelIndex idx2 = createIndex(row,5);
     emit dataChanged(idx1, idx2, { Qt::DisplayRole });
 }
+

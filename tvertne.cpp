@@ -40,7 +40,7 @@ void Tvertne::updateSettings()
     fill = global.getANval(an1SensAdr);
 
     int res = 10 * qRound((24-(0.15 + fill))/fill);
-    qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
+  //  qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
 
     fill = res * 10 ;
 

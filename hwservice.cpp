@@ -2,8 +2,8 @@
 #include "ui_hwservice.h"
 #include <Qdebug>
 //#include "global.h"
-#include "senslistsform.h"
-#include "actlistform.h"
+//#include "senslistsform.h"
+//#include "actlistform.h"
 #include "scale.h"
 #include "hwports.h"
 
@@ -12,6 +12,8 @@ HWService::HWService(Global &global, QWidget *parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::HWService)
+    , actListForm(global,this)
+    , sensListsForm(global,this)
 
 
 {
@@ -32,6 +34,13 @@ HWService::~HWService()
     delete ui;
 }
 
+void HWService::updateData(int row)
+{
+    qDebug() << " REC HWService::updateData(int row) " << row;
+    sensListsForm.updateData(row);
+    actListForm.updateData(row);
+}
+
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
@@ -46,16 +55,16 @@ void HWService::timerEvent(QTimerEvent *event)
 void HWService::on_pushButton_actuator_clicked()
 {
     qDebug() << "on_pushButton_actuator_clicked";
-    ActListForm *actListForm = new ActListForm(global,this);
-    actListForm->show();
+    //ActListForm *actListForm = new ActListForm(global,this);
+    actListForm.show();
 }
 
 
 void HWService::on_pushButton_sensor_clicked()
 {
  qDebug() << "on_pushButton_sensor_clicked";
-    SensListsForm *sensListsForm = new SensListsForm(global,this);
-    sensListsForm->show();
+   // SensListsForm *sensListsForm = new SensListsForm(global,this);
+    sensListsForm.show();
 }
 
 void HWService::on_pushButton_Scales_clicked()

@@ -83,16 +83,25 @@ void Global::setDIval(int addres, bool val)
 void Global::create_IN_OUT_list()
 {
     inOut io;
+    io.An = 0.0;
+    io.Di = false;
     for(int i = 0; i < MAX_DIinput; i++){
+        io.name = (QString::number(i));
+        io.name.append(". Di input");
         DIinput.append(io);
     }
 
     for(int i = 0; i < MAX_DIoutput; i++){
+        io.name = (QString::number(i));
+        io.name.append(". Di output");
         DIoutput.append(io);
     }
 
-
+    io.An = 0.0;
+    io.Di = false;
     for(int i = 0; i < MAX_ANinput4_20; i++){
+        io.name = (QString::number(i));
+        io.name.append(". An input");
         ANinput4_20.append(io);
     }
 
