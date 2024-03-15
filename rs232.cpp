@@ -238,7 +238,7 @@ void Rs232::closeEvent(QCloseEvent *event)
 
 void Rs232::mouseDoubleClickEvent(QMouseEvent *event)
 {
-
+Q_UNUSED(event);
 }
 
 

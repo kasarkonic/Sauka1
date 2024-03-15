@@ -23,6 +23,9 @@ public:
     bool rdN4AIB16(int boardAdr,int regAdr,int len);
     bool updateDIOut();
 
+protected:
+    void    timerEvent(QTimerEvent *event) override;
+
 public slots:
     void errorHandler(QModbusDevice::Error error);
     bool setBaudrate(int address);
@@ -44,6 +47,7 @@ private:
     QElapsedTimer timer;
     int dataChangeDi = -1;
     int dataChangeAn = -1;
+    int timerTest;
 
 };
 

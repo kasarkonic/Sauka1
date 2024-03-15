@@ -15,8 +15,6 @@
 #include "scalesbase.h"
 #include "scalesmass.h"
 #include "hwservice.h"
-#include "rs232.h"
-#include "parmani.h"
 #include "procui1.h"
 #include "procui2.h"
 #include "modbus485.h"

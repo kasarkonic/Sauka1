@@ -34,13 +34,13 @@ void Tvertne::updateSettings()
         dSensAdr -= 300;
     }
     int an1SensAdr = global.widHash[widName].sensAddres1;
-    int an2SensAdr = global.widHash[widName].sensAddres2;
+    //int an2SensAdr = global.widHash[widName].sensAddres2;
 
     //fill = (int)global.sensList[an1SensAdr].analog;
     fill = global.getANval(an1SensAdr);
 
     int res = 10 * qRound((24-(0.15 + fill))/fill);
-  //  qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
+    qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
 
     fill = res * 10 ;
 

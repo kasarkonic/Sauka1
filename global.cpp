@@ -49,7 +49,7 @@ Global::Global()
 
 //QList<bool>DIinput;
 //QList<bool>DIoutput;
-//QList<int>ANinput4_20; // value/100 = x,xx(mA)
+//QList<int>ANinput4_20;   mA  // value/100 = x,xx(A)
 
 int Global::getANval(int addres)
 {
@@ -104,6 +104,11 @@ void Global::create_IN_OUT_list()
         io.name.append(". An input");
         ANinput4_20.append(io);
     }
+
+    io.name = (QString::number(MAX_ANinput4_20-1));
+    io.name.append(". 24V barošana");
+    ANinput4_20.append(io);
+
 
     scaleVal = 0;
     // for testing only

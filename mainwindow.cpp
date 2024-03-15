@@ -7,7 +7,8 @@
 
 #include <QFile>
 
-
+#include "rs232.h"
+#include "parmani.h"
 
 #include <QMouseEvent>
 #include "global.h"
@@ -20,12 +21,12 @@
 MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
     , global(global)
+    , scale(global,this)
     , ui(new Ui::MainWindow)
     , procUI1(global,this)
     , procUI2(global,this)
     , modbus485(global,this)
     , hwService(global,this)
-    , scale(global,this)
 
 {
     ui->setupUi(this);

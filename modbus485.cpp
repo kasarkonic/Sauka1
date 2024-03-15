@@ -17,8 +17,8 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     //  QLoggingCategory::setFilterRules("qt.modbus* = true");
     // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
-    QElapsedTimer timer;
-
+    // QElapsedTimer timer;
+    timerTest = startTimer(1000, Qt::CoarseTimer);
 }
 
 bool Modbus485::init()
@@ -220,6 +220,21 @@ bool Modbus485::updateDIOut()
     wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
 }
 
+void Modbus485::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED (event);
+
+    int i = 1;
+    global.ANinput4_20[i].An += 10;
+
+    if(global.ANinput4_20[i].An > 110)
+        global.ANinput4_20[i].An = 0;
+
+    qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An;
+    emit valChangeAn(i + MAX_DIinput);
+
+}
+
 void Modbus485::errorHandler(QModbusDevice::Error error)
 {
     qDebug() << "ERROR !!!" << error;
@@ -301,10 +316,10 @@ void Modbus485::onReadReady()
                     if(global.ANinput4_20[i].An != reply->result().value(i)){
                         global.ANinput4_20[i].An = reply->result().value(i);
                         qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An;
-                        emit valChangeAn(i);
-                        }
+                        emit valChangeAn(i+ MAX_DIinput);
                     }
                 }
+            }
 
 
             else{
@@ -313,7 +328,7 @@ void Modbus485::onReadReady()
 
             //qDebug() << "processTime " << timer.elapsed();
             for(int i = 0; i < MAX_ANinput4_20; i++){
-           //     qDebug() << i << global.ANinput4_20[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+                //     qDebug() << i << global.ANinput4_20[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
             }
 
             rd23IOD32(4,0xc0);  // 2
@@ -336,14 +351,14 @@ void Modbus485::onReadReady()
                         global.DIinput[i].Di = (bool)(reply->result().value(0) & (1 << i));
                         qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
                         emit valChangeDi(i);
-                        }
+                    }
                 }
                 for(int i = MAX_DIinput/2; i < MAX_DIinput; i++){
                     if(global.DIinput[i].Di != (bool)(reply->result().value(1) & (1 << i))){
                         global.DIinput[i].Di = (bool)(reply->result().value(1) & (1 << i));
                         qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
                         emit valChangeDi(i);
-                        }
+                    }
                 }
 
 
