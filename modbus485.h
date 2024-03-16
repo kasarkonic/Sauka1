@@ -45,8 +45,6 @@ private:
     void writeDat(QModbusDataUnit writeUnit, int boardAdr);
     void writeDat();
     QElapsedTimer timer;
-    int dataChangeDi = -1;
-    int dataChangeAn = -1;
     int timerTest;
 
 };

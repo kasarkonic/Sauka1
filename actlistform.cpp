@@ -101,7 +101,7 @@ void ActListForm::handleEditFinish()
 void ActListForm::updateData(int row)
 {
     acttablemodel->updateData(row);
-    qDebug() << "ActListForm::updateRow(int row) " << row ;
+    //qDebug() << "ActListForm::updateRow(int row) " << row ;
 
 }
 

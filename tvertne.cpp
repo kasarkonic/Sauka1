@@ -37,12 +37,18 @@ void Tvertne::updateSettings()
     //int an2SensAdr = global.widHash[widName].sensAddres2;
 
     //fill = (int)global.sensList[an1SensAdr].analog;
-    fill = global.getANval(an1SensAdr);
+    //fill = global.getANval(an1SensAdr);
+    //qDebug() << "fill"  << fill << an1SensAdr;
 
-    int res = 10 * qRound((24-(0.15 + fill))/fill);
-    qDebug() << "fill" << (24-(0.15 + fill))/fill << res;
+    //int res;
+    float fval = global.getANval(an1SensAdr);
+    if(fval > 100){
+    fill = 10 * qRound(24*100.0/fval);
+    qDebug() << "fill"  << fval << an1SensAdr << (24*100.0/fval);
+    //fill = res;
+    }
 
-    fill = res * 10 ;
+
 
 
     //full = global.sensList[dSensAdr].digital;

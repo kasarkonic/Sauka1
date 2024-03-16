@@ -25,7 +25,7 @@ HWService::HWService(Global &global, QWidget *parent)
    this->setPalette(pal);
    ui->setupUi(this);
    ui->lineEdit_Input_address->setText("0");
-   timerId = startTimer(1000, Qt::CoarseTimer);
+   timerId = startTimer(500, Qt::CoarseTimer);
 
 }
 
@@ -36,7 +36,7 @@ HWService::~HWService()
 
 void HWService::updateData(int row)
 {
-    qDebug() << " REC HWService::updateData(int row) " << row;
+   // qDebug() << " REC HWService::updateData(int row) " << row;
     sensListsForm.updateData(row);
     actListForm.updateData(row);
 }
@@ -44,8 +44,8 @@ void HWService::updateData(int row)
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    float volt24 = global.ANinput4_20[15].An;// * 0.020797;  voltage input
-    qDebug() << "HWService::timerEvent " << volt24;
+    float volt24 = global.ANinput4_20[15].An/100;// * 0.020797;  voltage input
+    //qDebug() << "HWService::timerEvent " << volt24;
     QString str = "24V Barošanas bloka spriegums = ";
     str.append(QString::number(volt24));
     str.append("V");
