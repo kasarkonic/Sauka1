@@ -30,7 +30,8 @@ signals:
      void setBaudrate(int address);
      bool factoryReset(int address);
 public slots:
-    void updateData(int row);
+    void updateDataAn(int row, int val);
+    void updateDataDi(int row, bool val);
 
 protected:
          void    timerEvent(QTimerEvent *event) override;

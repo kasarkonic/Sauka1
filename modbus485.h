@@ -32,8 +32,8 @@ public slots:
     bool factoryReset(int address);
 
 signals:
-    void valChangeAn(int sensAddr);
-    void valChangeDi(int sensAddr);
+    void valChangeAn(int sensAddr, int val);
+    void valChangeDi(int sensAddr, bool val);
 
 private slots:
     void onReadReady();

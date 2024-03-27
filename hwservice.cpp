@@ -34,9 +34,15 @@ HWService::~HWService()
     delete ui;
 }
 
-void HWService::updateData(int row)
+void HWService::updateDataAn(int row, int val)
 {
-    qDebug() << " REC HWService::updateData(int row) " << row;
+    qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
+    sensListsForm.updateData(row);
+    actListForm.updateData(row);
+}
+void HWService::updateDataDi(int row, bool val)
+{
+    qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     sensListsForm.updateData(row);
     actListForm.updateData(row);
 }

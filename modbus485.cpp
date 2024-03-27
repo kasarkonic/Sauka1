@@ -230,8 +230,8 @@ void Modbus485::timerEvent(QTimerEvent *event)
     if(global.ANinput4_20[i].An > 110)
         global.ANinput4_20[i].An = 0;
 
-    qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An;
-    emit valChangeAn(i + MAX_DIinput);
+    qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An; // level meter
+    emit valChangeAn(i + MAX_DIinput,global.ANinput4_20[i].An);
 
 }
 
@@ -316,7 +316,7 @@ void Modbus485::onReadReady()
                     if(global.ANinput4_20[i].An != reply->result().value(i)){
                         global.ANinput4_20[i].An = reply->result().value(i);
                         qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An;
-                        emit valChangeAn(i+ MAX_DIinput);
+                        emit valChangeAn(i+ MAX_DIinput,global.ANinput4_20[i].An);
                     }
                 }
             }
@@ -350,14 +350,14 @@ void Modbus485::onReadReady()
                     if(global.DIinput[i].Di != (bool)(reply->result().value(0) & (1 << i))){
                         global.DIinput[i].Di = (bool)(reply->result().value(0) & (1 << i));
                         qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
-                        emit valChangeDi(i);
+                        emit valChangeDi(i,(bool)global.DIinput[i].Di);
                     }
                 }
                 for(int i = MAX_DIinput/2; i < MAX_DIinput; i++){
                     if(global.DIinput[i].Di != (bool)(reply->result().value(1) & (1 << i))){
                         global.DIinput[i].Di = (bool)(reply->result().value(1) & (1 << i));
                         qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
-                        emit valChangeDi(i);
+                        emit valChangeDi(i, global.DIinput[i].Di);
                     }
                 }
 

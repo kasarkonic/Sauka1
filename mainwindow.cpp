@@ -79,9 +79,9 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //                );
 
     connect(&modbus485,&Modbus485::valChangeAn,
-            &hwService, &HWService::updateData);
-    connect(&modbus485,&Modbus485::valChangeAn,
-            &hwService, &HWService::updateData);
+            &hwService, &HWService::updateDataAn);
+    connect(&modbus485,&Modbus485::valChangeDi,
+            &hwService, &HWService::updateDataDi);
 
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
