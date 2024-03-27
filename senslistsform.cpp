@@ -55,7 +55,7 @@ SensListsForm::~SensListsForm()
 void SensListsForm::updateData(int row)
 {
     sensorTableModel->updateData(row);
-    qDebug() << "SensListsForm::updateData(row); " << row ;
+   // qDebug() << "SensListsForm::updateData(row); " << row ;
 
 }
 

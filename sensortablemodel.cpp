@@ -40,11 +40,13 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
                 return global.DIinput[row].Di;
             }
             else{
-                return global.ANinput4_20[row - MAX_DIinput].An;
+                //return global.ANinput4_20[row - MAX_DIinput].An;
+                return "";
             }
         case ANvalue:
             if (row < MAX_DIinput){
-                return global.DIinput[row].Di;
+                //return global.DIinput[row].Di;
+                return "";
             }
             else{
                 return global.ANinput4_20[row - MAX_DIinput].An;
@@ -121,7 +123,7 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
 }
 void SensorTableModel::updateData(int row)
 {
-    qDebug() << "SensorTableModel::updateData " << row ;
+   // qDebug() << "SensorTableModel::updateData " << row ;
     QModelIndex idx1 = createIndex(row,0);
     QModelIndex idx2 = createIndex(row,5);
     emit dataChanged(idx1, idx2, { Qt::DisplayRole });
