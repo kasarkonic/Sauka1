@@ -3,7 +3,7 @@
 ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
-
+    global.widHash[settings.name].ptrCurrWidget = this;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;

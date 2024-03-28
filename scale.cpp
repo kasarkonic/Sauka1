@@ -9,6 +9,7 @@ Scale::Scale(Global &global, QWidget *parent) :
   , global(global)
   , ui(new Ui::Scale)
 {
+
     timerRead = startTimer(500, Qt::CoarseTimer);
     timer1sId  = startTimer(1000, Qt::CoarseTimer);
     ui->setupUi(this);

@@ -231,7 +231,7 @@ void Modbus485::timerEvent(QTimerEvent *event)
         global.ANinput4_20[i].An = 0;
 
     qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An; // level meter
-    emit valChangeAn(i + MAX_DIinput,global.ANinput4_20[i].An);
+    emit valChangeAn(i + MAX_DIinput, global.ANinput4_20[i].An);
 
 }
 
@@ -296,8 +296,8 @@ void Modbus485::onReadReady()
     if (!reply)
         return;
 
-    dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
-    dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
+    //dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
+   // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
     qDebug() << "onReadReady from addres" << reply->serverAddress();
     if (reply->error() == QModbusDevice::NoError) {
@@ -316,7 +316,7 @@ void Modbus485::onReadReady()
                     if(global.ANinput4_20[i].An != reply->result().value(i)){
                         global.ANinput4_20[i].An = reply->result().value(i);
                         qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An;
-                        emit valChangeAn(i+ MAX_DIinput,global.ANinput4_20[i].An);
+                        emit valChangeAn(i+ MAX_DIinput, global.ANinput4_20[i].An);
                     }
                 }
             }

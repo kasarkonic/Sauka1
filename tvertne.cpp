@@ -5,6 +5,7 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 
 {
+    global.widHash[settings.name].ptrCurrWidget = this;
     widName = name;
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)

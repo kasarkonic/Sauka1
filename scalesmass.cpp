@@ -4,6 +4,7 @@
 ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
+    global.widHash[settings.name].ptrCurrWidget = this;
     widName = name;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;

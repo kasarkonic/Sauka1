@@ -38,11 +38,10 @@ public:
 
     Global &global;
 
-protected:
-    Scale scale;
+public slots:
+    void changeInputVal(int row, int val);
 
 private slots:
-
 
     // void openServiceForm();
 
@@ -55,6 +54,8 @@ private slots:
     void on_pushButton_Mix_clicked();
 
 protected:
+    Scale scale;
+
     void    resizeEvent(QResizeEvent* event) override;
     void    mousePressEvent(QMouseEvent *event) override;
     void    mouseMoveEvent (QMouseEvent *event) override;

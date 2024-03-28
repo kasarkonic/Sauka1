@@ -10,6 +10,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 
 {
+    global.widHash[settings.name].ptrCurrWidget = this;
     /*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::white);

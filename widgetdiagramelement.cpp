@@ -9,7 +9,7 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
 
 {
     settings.name = name;
-    global.widHash[settings.name].ptrCurrWidget = this;
+ //   global.widHash[settings.name].ptrCurrWidget = this;
 }
 
 void WidgetDiagramElement::setNewPosition(float koef)

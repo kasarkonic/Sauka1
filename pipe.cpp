@@ -9,6 +9,7 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global,name, parent)
 
 {
+    global.widHash[settings.name].ptrCurrWidget = this;
     /*
     qDebug() << "Pipe::Pipe";
     QPalette pal = QPalette();

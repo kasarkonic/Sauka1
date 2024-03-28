@@ -83,6 +83,10 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     connect(&modbus485,&Modbus485::valChangeDi,
             &hwService, &HWService::updateDataDi);
 
+    connect(&modbus485,&Modbus485::valChangeDi,
+            this, &MainWindow::changeInputVal);
+
+
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
 
@@ -99,6 +103,22 @@ MainWindow::~MainWindow()
 {
     saveSettings();
     delete ui;
+}
+
+void MainWindow::changeInputVal(int row, int val)
+{
+    Q_UNUSED(val);
+
+    foreach (Global::wdataStruct widData, global.widHash){
+
+
+        if( (widData.act_sensAddres == row) |
+            (widData.sensAddres1 == row) |
+            (widData.sensAddres2 == row)){
+            qDebug() << "hange inputs, update "  << widData.name;
+            widData.ptrCurrWidget->updateSettings();
+        }
+    }
 }
 
 

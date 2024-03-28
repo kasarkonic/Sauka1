@@ -7,6 +7,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
 
 
 {
+    global.widHash[settings.name].ptrCurrWidget = this;
     /*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 50));
