@@ -51,7 +51,7 @@ void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     float volt24 = global.ANinput4_20[15].An * 0.020797;//  voltage input
-    qDebug() << "HWService::timerEvent " << volt24;
+    //qDebug() << "HWService::timerEvent " << volt24;
     QString str = "24V Barošanas bloka spriegums = ";
     str.append(QString::number(volt24));
     str.append("V");
@@ -151,5 +151,16 @@ void HWService::on_pushButton_FactoryReset_clicked()
         Send data(address 1):FF 06 00 FB 00 00 ED E5
             Return data :FF 06 00 FB 00 00 ED E5
 */
+}
+
+
+void HWService::on_pushButton_Disable_clicked()
+{
+    global.disableRS485 = !global.disableRS485;
+    QString str = "Eabled RS485";
+    if(global.disableRS485){
+        str = "Disabled RS485";
+    }
+    ui->pushButton_Disable->setText(str);
 }
 

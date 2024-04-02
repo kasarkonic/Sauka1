@@ -44,6 +44,7 @@ Global::Global()
     //foreach(sens item,  sensList){
     //    qDebug() << item.name << item.type ;
     //}
+    disableRS485 = false;   // for testing
     create_IN_OUT_list();
 }
 

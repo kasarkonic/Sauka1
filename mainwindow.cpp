@@ -151,15 +151,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::timerEvent(QTimerEvent *event)
 {
-    Q_UNUSED(event)
+   // Q_UNUSED(event)
 
     if(event->timerId() == timerIdUpd){
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
-
         ui->statusbar->showMessage (statusStr + currentTime);
 
-        qDebug() <<  "-------------------";
+       // qDebug() <<  "-------------------";
 
 
         //modbus485.readData();
@@ -178,14 +177,15 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 
 
-
+        if(!global.disableRS485){
 
         // ok digital out
         //   modbus485.updateDIOut();  // ok digital out
 
         // analog input, next DI input, next update DI output
         modbus485.rdN4AIB16(2, 0,15);   // ok analog input
-    }
+         }
+       }
 
 
     if(event->timerId() == timerTest){
@@ -199,7 +199,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
        // global.ANinput4_20[10].An = att;       // only for testing
        // global.ANinput4_20[2] = (int)att1/2;
-        qDebug() << "att" << att << att1/2;
+     //   qDebug() << "att" << att << att1/2;
     }
 }
 

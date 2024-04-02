@@ -114,6 +114,7 @@ public:
     QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;
 
+    bool disableRS485; // for testing
     int getANval(int addres);
     bool getDIval(int addres);
     void setDIval(int addres, bool val);

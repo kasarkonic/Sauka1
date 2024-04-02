@@ -224,7 +224,7 @@ void Modbus485::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
 
-    int i = 1;
+ /*   int i = 1;    // only for testing level meter
     global.ANinput4_20[i].An += 10;
 
     if(global.ANinput4_20[i].An > 110)
@@ -232,6 +232,7 @@ void Modbus485::timerEvent(QTimerEvent *event)
 
     qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].An; // level meter
     emit valChangeAn(i + MAX_DIinput, global.ANinput4_20[i].An);
+    */
 
 }
 

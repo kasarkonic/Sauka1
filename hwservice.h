@@ -54,6 +54,8 @@ private slots:
 
     void on_pushButton_FactoryReset_clicked();
 
+    void on_pushButton_Disable_clicked();
+
 private:
 
 

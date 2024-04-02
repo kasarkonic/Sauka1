@@ -83,15 +83,17 @@ void SensListsForm::handleEditFinish()
             val = lEdit->text().toInt(&ok);
             qDebug() <<"DI " <<row<< val << ok;
             if(ok){
-                global.sensList[row].digital = val;
+                global.sensList[row].digital = (val > 0);
+                sensorTableModel->updateData(row);
             }
 
         }
         if(global.sensList[row].ptrLineEditAN == obj){
-            val = lEdit->text().toInt();
+            val = lEdit->text().toInt(&ok);
             qDebug() <<"AN " <<row<< val << ok;
             if(ok){
                 global.sensList[row].analog = val;
+                sensorTableModel->updateData(row);
             }
         }
     }
