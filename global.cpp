@@ -56,7 +56,7 @@ int Global::getANval(int addres)
 {
     int val = 0;
     int addr = addres - 200;
-    if(addr >= 0 && addr < MAX_ANinput4_20 ){
+    if(addr >= 0 && addr < MAX_AN_INPUT4_20 ){
         val = ANinput4_20[addr].An;
     }
     return val;
@@ -67,7 +67,8 @@ bool Global::getDIval(int addres)
     bool val = 0;
 
     if (addres >= 0  && addres < MAX_DIinput){
-       val = DIinput[addres].Di;
+       //val = DIinput[addres].Di;
+        val = sensList[addres].digital;
     }
     return val;
 }
@@ -86,10 +87,24 @@ void Global::create_IN_OUT_list()
     inOut io;
     io.An = 0.0;
     io.Di = false;
+
+    sens sen;
+
+    sen.type = SensorType::sensT::Digital;  // digital 0 -> MAX_DIinput  tad analog MAX_DIinput ->MAX_DIinput + MAX_AN_VIRUAL_INPUT
+    //sen.name = "DI in";
+    //int address = 0;
+    sen.digital =0; //VALUE
+    sen.analog = 0; //VALUE
+    sen.ptrLineEditDI = nullptr;
+    sen.ptrLineEditAN = nullptr;
+
+
     for(int i = 0; i < MAX_DIinput; i++){
-        io.name = (QString::number(i));
-        io.name.append(". Di input");
-        DIinput.append(io);
+        sen.name = (QString::number(i));
+        io.name.append(". DI in");
+        sen.address = i;
+        //DIinput.append(io);
+        sensList.append(sen);
     }
 
     for(int i = 0; i < MAX_DIoutput; i++){
@@ -98,15 +113,21 @@ void Global::create_IN_OUT_list()
         DIoutput.append(io);
     }
 
-    io.An = 0.0;
-    io.Di = false;
-    for(int i = 0; i < MAX_ANinput4_20; i++){
+   // io.An = 0.0;
+    //io.Di = false;
+    sen.type = SensorType::sensT::Analog;  // digital 0 -> MAX_DIinput  tad analog MAX_DIinput ->MAX_DIinput + MAX_AN_VIRUAL_INPUT
+
+
+    for(int i = 0; i < MAX_AN_INPUT4_20; i++){
+        //io.name = (QString::number(i));
+        //io.name.append(". An input");
+        //ANinput4_20.append(io);
         io.name = (QString::number(i));
-        io.name.append(". An input");
-        ANinput4_20.append(io);
+        io.name.append(". An output");
+        sensList.append(sen);
     }
 
-    io.name = (QString::number(MAX_ANinput4_20-1));
+    io.name = (QString::number(MAX_AN_INPUT4_20-1));
     io.name.append(". 24V barošana");
     ANinput4_20.append(io);
 

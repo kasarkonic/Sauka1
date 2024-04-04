@@ -12,14 +12,15 @@
 
 
 //#include <QTimer>
-#define DI_IN_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIinput
-#define DI_OUT_START_ADDRESS 1   // MODBUSS ADDRESS 4  DIoutput
-#define AN_IN_START_ADDRESS 1 // modbuss address 2  ANinput 1-15
+#define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
+#define DI_OUT_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIoutput
+#define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
+#define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
 #define MAX_DIinput     32      // addres [0 , MAX_DIinp]
 #define MAX_DIoutput    32  // addres [100 , MAX_DIoutput + 100]
-#define MAX_ANinput4_20 16    // addres [200 , MAX_ANinput4_20 + 200]   200+MAX_ANinput4_20  a/d input  0-30V
-
+#define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
+#define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
 
 class WidgetService;
 class WidgetDiagramElement;
@@ -70,7 +71,7 @@ public:
     } ;
 
     struct  sens{
-        SensorType::sensT type = SensorType::sensT::Digital;  //
+        SensorType::sensT type = SensorType::sensT::Digital;  // digital 0 -> MAX_DIinput  tad analog MAX_DIinput ->MAX_DIinput + MAX_AN_VIRUAL_INPUT
         QString name = "Sens";
         int address = 0;
         int digital = 2; //VALUE
@@ -109,7 +110,7 @@ public:
     QHash<QString,wdataStruct> widHash;
 
     //board input output;
-    QList<inOut>DIinput;
+   // QList<inOut>DIinput;
     QList<inOut>DIoutput;
     QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;

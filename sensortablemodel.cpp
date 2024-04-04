@@ -9,7 +9,7 @@ SensorTableModel::SensorTableModel(Global &global, QObject *parent)
 int SensorTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return (MAX_DIinput + MAX_ANinput4_20);
+    return (MAX_DIinput + MAX_AN_VIRUAL_INPUT);
 }
 
 int SensorTableModel::columnCount(const QModelIndex &parent) const
@@ -30,14 +30,16 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
             return row;
         case SensName:
             if (row < MAX_DIinput){
-                return global.DIinput[row].name;
+               // return global.DIinput[row].name;
+                return global.sensList[row].name;
             }
             else{
                 return global.ANinput4_20[row - MAX_DIinput].name;
             }
         case DIvalue:
             if (row < MAX_DIinput){
-                return global.DIinput[row].Di;
+                //return global.DIinput[row].Di;
+                return global.sensList[row].digital;
             }
             else{
                 //return global.ANinput4_20[row - MAX_DIinput].An;
@@ -53,7 +55,8 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
             }
         case DIChange:
             if (row < MAX_DIinput){
-                return global.DIinput[row].Di;
+                //return global.DIinput[row].Di;
+                return global.sensList[row].digital;
             }
             else{
                 //return global.ANinput4_20[row - MAX_DIinput].An;

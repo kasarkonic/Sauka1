@@ -207,6 +207,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 
 bool Modbus485::updateDIOut()
 {
+    int res;
     quint16 val1 = 0;
     quint16 val2 = 0;
     for(int i = 15; i >= 0;i--){
@@ -216,8 +217,9 @@ bool Modbus485::updateDIOut()
         val2 += (global.DIoutput[i+16].Di & 1);
     }
     // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2;
-    wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
-    wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
+   res =  wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
+   res +=  wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
+   return (res == 2);
 }
 
 void Modbus485::timerEvent(QTimerEvent *event)
@@ -328,7 +330,7 @@ void Modbus485::onReadReady()
             }
 
             //qDebug() << "processTime " << timer.elapsed();
-            for(int i = 0; i < MAX_ANinput4_20; i++){
+            for(int i = 0; i < MAX_AN_VIRUAL_INPUT; i++){
                 //     qDebug() << i << global.ANinput4_20[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
             }
 
@@ -348,17 +350,23 @@ void Modbus485::onReadReady()
                 qDebug() << QString::number(reply->result().value(1), 16);
 
                 for(int i = 0; i < MAX_DIinput/2; i++){
-                    if(global.DIinput[i].Di != (bool)(reply->result().value(0) & (1 << i))){
-                        global.DIinput[i].Di = (bool)(reply->result().value(0) & (1 << i));
-                        qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
-                        emit valChangeDi(i,(bool)global.DIinput[i].Di);
+                    //if(global.DIinput[i].Di != (bool)(reply->result().value(0) & (1 << i))){
+                    if(global.sensList[i].digital != (bool)(reply->result().value(0) & (1 << i))){
+                        //global.DIinput[i].Di = (bool)(reply->result().value(0) & (1 << i));
+                        global.sensList[i].digital = (bool)(reply->result().value(0) & (1 << i));
+                        qDebug() << "emit valChangeDi(i)" << i << global.sensList[i].digital;
+                        //emit valChangeDi(i,(bool)global.DIinput[i].Di);
+                        emit valChangeDi(i,(bool)global.sensList[i].digital);
                     }
                 }
                 for(int i = MAX_DIinput/2; i < MAX_DIinput; i++){
-                    if(global.DIinput[i].Di != (bool)(reply->result().value(1) & (1 << i))){
-                        global.DIinput[i].Di = (bool)(reply->result().value(1) & (1 << i));
-                        qDebug() << "emit valChangeDi(i)" << i << global.DIinput[i].Di;
-                        emit valChangeDi(i, global.DIinput[i].Di);
+                    //if(global.DIinput[i].Di != (bool)(reply->result().value(1) & (1 << i))){
+                        if(global.sensList[i].digital != (bool)(reply->result().value(1) & (1 << i))){
+                        //global.DIinput[i].Di = (bool)(reply->result().value(1) & (1 << i));
+                            global.sensList[i].digital = (bool)(reply->result().value(1) & (1 << i));
+                        qDebug() << "emit valChangeDi(i)" << i << global.sensList[i].digital;
+                        //emit valChangeDi(i, global.DIinput[i].Di);
+                        emit valChangeDi(i, global.sensList[i].digital);
                     }
                 }
 
