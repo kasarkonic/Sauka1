@@ -29,13 +29,14 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
         case SensAddress:
             return row;
         case SensName:
-            if (row < MAX_DIinput){
+           // if (row < MAX_DIinput){
                // return global.DIinput[row].name;
                 return global.sensList[row].name;
-            }
-            else{
-                return global.ANinput4_20[row - MAX_DIinput].name;
-            }
+           // }
+           // else{
+           //     return global.ANinput4_20[row - MAX_DIinput].name;
+
+          //  }
         case DIvalue:
             if (row < MAX_DIinput){
                 //return global.DIinput[row].Di;
@@ -51,7 +52,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
                 return "";
             }
             else{
-                return global.ANinput4_20[row - MAX_DIinput].An;
+                return global.sensList[row].analog;
             }
         case DIChange:
             if (row < MAX_DIinput){
@@ -68,7 +69,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
                 return "";
             }
             else{
-                return global.ANinput4_20[row - MAX_DIinput].An;
+                return global.sensList[row ].analog;
             }
 
 

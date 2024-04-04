@@ -157,9 +157,9 @@ void HWService::on_pushButton_FactoryReset_clicked()
 void HWService::on_pushButton_Disable_clicked()
 {
     global.disableRS485 = !global.disableRS485;
-    QString str = "Eabled RS485";
+    QString str = "Eable RS485";
     if(global.disableRS485){
-        str = "Disabled RS485";
+        str = "Disable RS485";
     }
     ui->pushButton_Disable->setText(str);
 }

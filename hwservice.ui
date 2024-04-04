@@ -275,7 +275,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_Disable">
           <property name="text">
-           <string>Disable MODBUS</string>
+           <string>Disable RS485</string>
           </property>
          </widget>
         </item>
