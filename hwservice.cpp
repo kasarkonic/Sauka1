@@ -44,13 +44,20 @@ void HWService::updateDataDi(int row, bool val)
 {
     qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     sensListsForm.updateData(row);
-    actListForm.updateData(row);
+    //actListForm.updateData(row);
+}
+
+void HWService::updateDIoutput(int row, int val)
+{
+      qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
+  //  actListForm.updateDIoutput(row,val);
+    //modbuss
 }
 
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    float volt24 = global.ANinput4_20[15].An * 0.020797;//  voltage input
+   float volt24 = global.sensList[15].analog * 0.020797;//  voltage input   BBBBBBBB   wrong addres
     //qDebug() << "HWService::timerEvent " << volt24;
     QString str = "24V Barošanas bloka spriegums = ";
     str.append(QString::number(volt24));

@@ -18,7 +18,7 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
     settings.startSize = global.widHash[settings.name].startSize;
     qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 
-    timerIdUpd = startTimer(200, Qt::CoarseTimer);
+   // timerIdUpd = startTimer(200, Qt::CoarseTimer);
 
     fill = 0;
     full = 0;
@@ -62,6 +62,7 @@ void Tvertne::updateSettings()
 void Tvertne::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
+    qDebug() << "Tvertne::timerEvent";
     updateSettings();
 }
 

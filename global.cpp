@@ -27,9 +27,9 @@ Global::Global()
     sens sdata;
     act  sact;
 
-    for(int i=0 ;i<255;i++){    // 255= max sensor, max activator
+    for(int i=0 ; i<64;i++){    // 255= max sensor, max activator
         sensList.append(sdata);
-        actList.append(sact);
+    //    actList.append(sact);
     }
     qDebug()  << sensList.size()<<actList.size();
 
@@ -46,6 +46,8 @@ Global::Global()
     //}
     disableRS485 = false;   // for testing
     create_IN_OUT_list();
+
+
 }
 
 //QList<bool>DIinput;
@@ -57,7 +59,7 @@ int Global::getANval(int addres)
     int val = 0;
     int addr = addres - 200;
     if(addr >= 0 && addr < MAX_AN_INPUT4_20 ){
-        val = ANinput4_20[addr].An;
+        val = sensList[addr].analog;
     }
     return val;
 }
@@ -73,6 +75,7 @@ bool Global::getDIval(int addres)
     return val;
 }
 
+/*
 void Global::setDIval(int addres, bool val)
 {
     bool value = val;
@@ -81,12 +84,13 @@ void Global::setDIval(int addres, bool val)
     }
     DIoutput[addres - 100].Di = value;
 }
-
+*/
 void Global::create_IN_OUT_list()
 {
-    inOut io;
-    io.An = 0.0;
-    io.Di = false;
+    act actuat;
+    actuat.analog = 0;
+    actuat.digital = false;
+
 
     sens sen;
 
@@ -101,16 +105,16 @@ void Global::create_IN_OUT_list()
 
     for(int i = 0; i < MAX_DIinput; i++){
         sen.name = (QString::number(i));
-        io.name.append(". DI in");
+        sen.name.append(". DI in");
         sen.address = i;
         //DIinput.append(io);
         sensList.append(sen);
     }
 
-    for(int i = 0; i < MAX_DIoutput; i++){
-        io.name = (QString::number(i));
-        io.name.append(". Di output");
-        DIoutput.append(io);
+    for(int i = 0; i < MAX_ACTUATOR; i++){
+        actuat.name = (QString::number(i));
+        actuat.name.append(". Act. output");
+        actList.append(actuat);
     }
 
    // io.An = 0.0;
@@ -122,40 +126,46 @@ void Global::create_IN_OUT_list()
         //io.name = (QString::number(i));
         //io.name.append(". An input");
         //ANinput4_20.append(io);
-        io.name = (QString::number(i));
-        io.name.append(". An output");
+        sen.name = (QString::number(i));
+        sen.name.append(". An output");
         sensList.append(sen);
     }
 
-    io.name = (QString::number(MAX_AN_INPUT4_20-1));
-    io.name.append(". 24V barošana");
-    ANinput4_20.append(io);
+    sen.name = (QString::number(MAX_AN_INPUT4_20-1));
+    sen.name.append(". 24V barošana");
+    sensList.append(sen);
 
 
     scaleVal = 0;
     // for testing only
-    DIoutput[0].Di = 1;
-    DIoutput[1].Di = 1;
-    DIoutput[2].Di = 1;
-    DIoutput[29].Di = 1;
-    DIoutput[30].Di = 1;
-    DIoutput[31].Di = 1;
+   // actList[0].digital = 1;
+   // actList[1].digital = 1;
+    //actList[2].digital = 1;
+   // actList[29].digital = 1;
+   // actList[30].digital = 1;
+   // actList[31].digital = 1;
 }
 
 
 void Global::creatActList()
 {
-    // 300->  DI izejas
-    addActList("Valve 1",ActuatorType::Relay,301);
-    addActList("Valve 2",ActuatorType::Relay,302);
-    addActList("Valve 3",ActuatorType::Relay,303);
-    addActList("Valve 4",ActuatorType::Relay,304);
-    addActList("Pump 1",ActuatorType::Relay,305);
-    addActList("Pump 2",ActuatorType::Relay,306);
-    addActList("Pump 3",ActuatorType::Relay,307);
-    addActList("Pump 4",ActuatorType::Relay,308);
 
-    addActList("Mix invertor 1",ActuatorType::Invertor,325);
+    act  sact;
+
+    for(int i=0 ; i<64;i++){    // 255= max sensor, max activator
+        actList.append(sact);
+    }
+
+    addActList("Valve 1",ActuatorType::Relay,1);
+    addActList("Valve 2",ActuatorType::Relay,2);
+    addActList("Valve 3",ActuatorType::Relay,3);
+    addActList("Valve 4",ActuatorType::Relay,4);
+    addActList("Pump 1",ActuatorType::Relay,5);
+    addActList("Pump 2",ActuatorType::Relay,6);
+    addActList("Pump 3",ActuatorType::Relay,7);
+    addActList("Pump 4",ActuatorType::Relay,8);
+
+    addActList("Mix invertor 1",ActuatorType::Invertor,15);
 
     qDebug() << "create " << actList.size() << "actuators";
 }
@@ -164,25 +174,14 @@ void Global::addActList(QString name, ActuatorType::actT tp, int addres)
 {
     // Act adreses apzīmē adr + 300;
     act data;
-    int addr;
-    if(addres < 300){
-        qDebug() << "ERROR !!!!!!!!!!!!  act number < 300";
-        addr = 0;
-    }
-    else{
-        addr = addres - 300;
-    }
-
-    data.type = tp;  //
-    data.address = addr;
+    data.type = tp;
+    data.address = addres;
     data.name = name;
     // data.analog = 0; VALUE
     // data.digital = 0; VALUE
     //actList.append(data);
-    actList[addr] = (data);
+    actList[addres] = (data);
 }
-//*************************************************************
-
 
 
 //addSensList(QString name, SensorType::sensT tp, int addres)
@@ -221,6 +220,21 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres)
     sensList.append(data);
     sensList[addres] = data;
 }
+
+void Global::needUpdateDIoutputs(int row, int val)
+{
+    updateDataIn.need = true;
+    updateDataIn.row = row;
+    updateDataIn.val = val;
+}
+
+void Global::needUpdateSensorIn(int row, int val)
+{
+    updateDataOut.need = true;
+    updateDataOut.row = row;
+    updateDataOut.val = val;
+}
+
 //*************************************************************
 //in out number:
 

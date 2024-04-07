@@ -92,6 +92,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
 void ScalesBase::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
+    qDebug() << "ScalesBase::timerEvent";
     if(event->timerId() == timerIdUpd){
         update();
     }

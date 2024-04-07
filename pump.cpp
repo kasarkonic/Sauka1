@@ -91,7 +91,7 @@ void Pump::paintEvent(QPaintEvent *event)
 void Pump::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
-
+    //qDebug() << "Pump::timerEvent";
     // qDebug() << "Pump timerEvent" <<timerId << att;
 
     if(event->timerId() == timerIdUpd){

@@ -85,6 +85,7 @@ void SensListsForm::handleEditFinish()
             if(ok){
                 global.sensList[row].digital = (val > 0);
                 sensorTableModel->updateData(row);
+                global.needUpdateSensorIn(row, val);
             }
 
         }
@@ -94,6 +95,7 @@ void SensListsForm::handleEditFinish()
             if(ok){
                 global.sensList[row].analog = val;
                 sensorTableModel->updateData(row);
+                global.needUpdateSensorIn(row, val);
             }
         }
     }

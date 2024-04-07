@@ -74,6 +74,7 @@ void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
 void WidgetDiagramElement::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
+    qDebug() << "WidgetDiagramElement::timerEvent";
 }
 
 void WidgetDiagramElement::resizeEvent(QResizeEvent *event)

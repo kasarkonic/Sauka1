@@ -101,8 +101,6 @@ void Pipe::paintEvent(QPaintEvent *event)
     int hi = settings.currSize;        //Hi
     int wi = settings.currSizeWi;
 
-
-
     settings.options %=360;
     float an = settings.options * M_PI /180;
 

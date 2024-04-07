@@ -67,6 +67,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     initTimer = true;
     timerIdUpd = startTimer(500);
     timerTest = startTimer(200);
+    timerUpdateOutput = startTimer(200);
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
     //    connect(
@@ -80,6 +81,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     connect(&modbus485,&Modbus485::valChangeAn,
             &hwService, &HWService::updateDataAn);
+
     connect(&modbus485,&Modbus485::valChangeDi,
             &hwService, &HWService::updateDataDi);
 
@@ -89,6 +91,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
+
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
@@ -159,15 +162,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
         ui->statusbar->showMessage (statusStr + currentTime);
 
        // qDebug() <<  "-------------------";
-
-
         //modbus485.readData();
-
         //  modbus485.rd24DIB32(4,0xc0);
-
         // modbus485.rd23IOD32(4,0xc0);
-
-
         // digital output
         /*  if (att < 0xffff)
         modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
@@ -179,11 +176,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
         if(!global.disableRS485){
 
-        // ok digital out
-        //   modbus485.updateDIOut();  // ok digital out
-
         // analog input, next DI input, next update DI output
-        modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+       // modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+        modbus485.rd23IOD32(4,0xc0);  // ok digital input
          }
        }
 
@@ -197,9 +192,22 @@ void MainWindow::timerEvent(QTimerEvent *event)
         if(att1 > 200)
             att1 = 0;
 
-       // global.ANinput4_20[10].An = att;       // only for testing
-       // global.ANinput4_20[2] = (int)att1/2;
+       //  ???? global.sensList[10].An = att;       // only for testing
+       // ???global.sensList[2] = (int)att1/2;
      //   qDebug() << "att" << att << att1/2;
+    }
+    if(event->timerId() == timerUpdateOutput){
+        if(global.updateDataOut.need){
+            global.updateDataOut.need = false;
+          bool ok = modbus485.updateDIOut();
+        }
+        if(global.updateDataIn.need){
+            global.updateDataIn.need = false;
+          //???????????????????????????????????
+        }
+
+
+
     }
 }
 

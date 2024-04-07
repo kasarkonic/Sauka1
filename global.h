@@ -18,7 +18,7 @@
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
 #define MAX_DIinput     32      // addres [0 , MAX_DIinp]
-#define MAX_DIoutput    32  // addres [100 , MAX_DIoutput + 100]
+#define MAX_ACTUATOR    64  // addres [100 , MAX_DIoutput + 100]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
 #define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
 
@@ -56,7 +56,6 @@ enum widgT{
 
 class Global
 {
-
 public:
     Global();
 
@@ -66,8 +65,8 @@ public:
         int address = 0;
         int digital = 0;
         int analog = 0;
-        QPushButton * ptrLineEditDI = nullptr;
-        QLineEdit * ptrLineEditAN = nullptr;
+        QPushButton * ptrButton = nullptr;
+        QLineEdit * ptrLineEdit = nullptr;
     } ;
 
     struct  sens{
@@ -99,11 +98,13 @@ public:
 
     };
 
-    struct  inOut{
-        bool Di = false;
-        int An = 0.0;
-        QString name = "IN/OUT";
+    struct  updateData{
+        bool need = false;
+        int row = 0;
+        int val = 0;
     } ;
+    updateData updateDataIn;
+    updateData updateDataOut;
 
     QList<act> actList;
     QList<sens> sensList;
@@ -111,14 +112,15 @@ public:
 
     //board input output;
    // QList<inOut>DIinput;
-    QList<inOut>DIoutput;
-    QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
+   // QList<inOut>DIoutput;
+   // QList<sens>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;
 
     bool disableRS485; // for testing
     int getANval(int addres);
     bool getDIval(int addres);
-    void setDIval(int addres, bool val);
+
+   // void setDIval(int addres, bool val);
 
     QString settingsFileName;
     QString appSwVers;
@@ -145,6 +147,11 @@ public:
 
 
     QColor  backgroundColor = QColor(250, 250, 250, 175);   // 255 transparent
+
+
+    void needUpdateDIoutputs(int row, int val);
+    void needUpdateSensorIn(int row, int val);
+
 
 private:
 

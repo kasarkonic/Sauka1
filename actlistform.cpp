@@ -17,14 +17,14 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
     acttablemodel = new ActTableModel(global,this);
     ui->tableView->setModel(acttablemodel);
     int maxRow = global.actList.size();
-    /*
+
     for(int row = 0; row < maxRow; row++)
     {
         butt = new QPushButton();
         lineEditAn = new QLineEdit();
 
-        global.actList[row].ptrLineEditDI = butt;
-        global.actList[row].ptrLineEditAN = lineEditAn;
+        global.actList[row].ptrButton = butt;
+        global.actList[row].ptrLineEdit = lineEditAn;
 
         ui->tableView->setIndexWidget(acttablemodel->index(row,4),butt);
         ui->tableView->setIndexWidget(acttablemodel->index(row,5),lineEditAn);
@@ -32,22 +32,23 @@ ActListForm::ActListForm(Global &global, QWidget *parent)
         connect(butt, &QPushButton::clicked, this, &ActListForm::handleButton);
         connect(lineEditAn, &QLineEdit::editingFinished, this, &ActListForm::handleEditFinish);
     }
-*/
+
 }
 
 
 void ActListForm::handleButton()
 {
-    qDebug() << "SensListsForm::handleButton ";
+   // qDebug() << "actListsForm::handleButton ";
     QObject* obj = sender();
     QPushButton* buttA = qobject_cast<QPushButton*>(sender());
     int maxRow = global.actList.size();
     //bool ok = true;
     int val;
+    qDebug() << "actListsForm::handleButton " <<maxRow ;
     for(int row = 0; row < maxRow; row++)
     {
-
-        if(global.actList[row].ptrLineEditDI == obj){
+        //qDebug() << row << global.actList[row].ptrButton <<obj ;
+        if(global.actList[row].ptrButton == obj){
 
             if(global.actList[row].digital){
                 val = 0;
@@ -57,9 +58,10 @@ void ActListForm::handleButton()
                 val = 1;
                 buttA->setText("ON");
             }
+            qDebug() << row << val << buttA->text();
             global.actList[row].digital = val;
             acttablemodel->updateData(row);
-
+            global.needUpdateDIoutputs(row,val);
         }
     }
 }
@@ -77,8 +79,8 @@ void ActListForm::handleEditFinish()
     int val;
     for(int row = 0; row < maxRow; row++)
     {
-        /*
-        if(global.actList[row].ptrLineEditDI == obj){
+   // qDebug() << row << global.actList[row].ptrLineEdit <<obj ;
+  /*      if(global.actList[row].ptrLineEdit == obj){
             val = lEdit->text().toInt(&ok);
             qDebug() <<"DI " <<row<< val << ok;
             if(ok){
@@ -87,11 +89,13 @@ void ActListForm::handleEditFinish()
 
         }
 */
-        if(global.actList[row].ptrLineEditAN == obj){
-            val = lEdit->text().toInt();
+        if(global.actList[row].ptrLineEdit == obj){
+            val = lEdit->text().toInt(&ok);
             qDebug() <<"AN " <<row<< val << ok;
             if(ok){
                 global.actList[row].analog = val;
+                acttablemodel->updateData(row);
+                global.needUpdateDIoutputs(row,val);
             }
         }
     }

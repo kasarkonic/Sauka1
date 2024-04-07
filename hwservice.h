@@ -21,10 +21,9 @@ public:
 
     Global &global;
     Ui::HWService *ui;
-
-    ~HWService();
-    SensListsForm sensListsForm;
     ActListForm actListForm;
+    SensListsForm sensListsForm;
+    ~HWService();
 
 signals:
      void setBaudrate(int address);
@@ -32,6 +31,7 @@ signals:
 public slots:
     void updateDataAn(int row, int val);
     void updateDataDi(int row, bool val);
+    void updateDIoutput(int row, int val);
 
 protected:
          void    timerEvent(QTimerEvent *event) override;

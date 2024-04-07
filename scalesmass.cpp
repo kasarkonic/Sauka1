@@ -51,6 +51,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
 void ScalesMass::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
+    //qDebug() << "ScalesMass::timerEvent";
     if(event->timerId() == timerIdUpd){
         updateSettings();
     }

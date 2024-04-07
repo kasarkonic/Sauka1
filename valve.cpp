@@ -148,6 +148,7 @@ void Valve::paintEvent(QPaintEvent *event)
 
 void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
+    qDebug() << "Valve::timerEvent";
     settings.options -= 5;
     att +=1;
     // qDebug()<< "att" << att << settings.status;

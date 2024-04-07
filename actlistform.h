@@ -23,7 +23,7 @@ public:
          void updateData(int row);
 
 signals:
-
+   // void updateDIoutput(int row, int val);
     void updateDataTable();
 private slots:
     void handleButton();

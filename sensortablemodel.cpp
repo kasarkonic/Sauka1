@@ -147,7 +147,7 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
 }
 void SensorTableModel::updateData(int row)
 {
-    // qDebug() << "SensorTableModel::updateData " << row ;
+     qDebug() << "SensorTableModel::updateData " << row ;
     QModelIndex idx1 = createIndex(row,0);
     QModelIndex idx2 = createIndex(row,5);
     emit dataChanged(idx1, idx2, { Qt::DisplayRole });

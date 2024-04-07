@@ -36,8 +36,9 @@ void ParMani::on_pushButtonExit_clicked()
 void ParMani::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
+    qDebug() << "ParMani::timerEvent";
 
-    qDebug() << "Mani::att "<< att ;
+    //qDebug() << "Mani::att "<< att ;
 
 }
 
