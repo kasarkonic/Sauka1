@@ -5,6 +5,7 @@
 
 
 
+
 Modbus485::Modbus485(Global &global, QWidget *parent)
     //: QMainWindow(parent)
      : QThread(parent)
@@ -19,21 +20,26 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
     // QElapsedTimer timer;
-    qDebug() << "Modbus485 set name ";
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()),
+          this, SLOT(MyTimerSlot()));
 
+    //startTimer(500);
+
+    //timerReadIn = startTimer(500);
+    //timerWriteOut = startTimer(200);
+
+
+    qDebug() << "Modbus485 set name ";
     name = "Modbus485";
-   // run();
 }
 
 void Modbus485::run()
 {
-    for(int i = 1; i >0; i++)
-    {
-        float res = sqrt(i);
-        qDebug() << this->name << " " << i << res;
-
-
-    }
+    qDebug() << "Modbus485 Run ";
+   // timerReadIn =
+            startTimer(500);
+    //timerWriteOut = startTimer(200);
 }
 
 
@@ -185,7 +191,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
 bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 {
     // processTimeStart = QTime::msecsSinceStartOfDay();
-    timer.start();
+   // timer.start();
     //01,04,00,00,00,10,crc
     if (!modbusDevice){
         qDebug() << "readDat RET";
@@ -241,9 +247,35 @@ bool Modbus485::updateDIOut()
    return (res == 2);
 }
 
-void Modbus485::timerEvent(QTimerEvent *event)
+void Modbus485::MyTimerSlot()
 {
-    Q_UNUSED (event);
+    qDebug() << "MyTimerSlot()" ;
+   // Q_UNUSED (event);
+   // if(event->timerId() == timerReadIn){
+        if(!global.disableRS485){
+
+        //analog input, next DI input, next update DI output
+        rdN4AIB16(2, 0,15);   // ok analog input
+        rd23IOD32(4,0xc0);  // ok digital input
+         }
+
+   // }
+/*
+    if(event->timerId() == timerWriteOut){
+        if(!global.disableRS485){
+            if(global.updateDataOut.need){
+                global.updateDataOut.need = false;
+                updateDIOut();
+            }
+
+         }
+    }
+
+*/
+
+
+
+
 
  /*   int i = 1;    // only for testing level meter
     global.sensList[i].An += 10;
@@ -405,7 +437,7 @@ void Modbus485::onReadReady()
             }
 
             //***     updateDIOut();  // 3
-            qDebug() << "processTime " << timer.elapsed();
+           // qDebug() << "processTime " << timer.elapsed();
 
             break;
 

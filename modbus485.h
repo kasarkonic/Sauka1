@@ -7,6 +7,7 @@
 #    include <QSerialPortInfo>
 #include <QElapsedTimer>
 #include <QThread>
+#include <QTimer>
 
 
 class Modbus485  :  public QThread //  public QMainWindow
@@ -19,6 +20,7 @@ public:
     void run() override;
 
     Global &global;
+    QTimer *timer;
     bool init();
     void test(int address, int value);
     bool wr23IOD32(int boardAdr,int regAdr, quint16 value);
@@ -28,12 +30,13 @@ public:
     bool updateDIOut();
 
 protected:
-    void    timerEvent(QTimerEvent *event) override;
+  //  void    timerEvent(QTimerEvent *event) override;
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
     bool setBaudrate(int address);
     bool factoryReset(int address);
+    void MyTimerSlot();
 
 signals:
     void valChangeAn(int sensAddr, int val);
@@ -48,9 +51,11 @@ private:
     void readData();
     void writeDat(QModbusDataUnit writeUnit, int boardAdr);
     void writeDat();
-    QElapsedTimer timer;
+    //QElapsedTimer timer;
     int timerTest;
     QString name;
+    int timerReadIn;
+    int timerWriteOut;
 
 };
 
