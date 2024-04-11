@@ -29,6 +29,10 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , hwService(global,this)
 
 {
+
+
+    modbus485.start();
+     modbus485.run();
     ui->setupUi(this);
     procUI2.show();
     procUI1.show();

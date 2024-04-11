@@ -6,7 +6,8 @@
 
 
 Modbus485::Modbus485(Global &global, QWidget *parent)
-    : QMainWindow(parent)
+    //: QMainWindow(parent)
+     : QThread(parent)
     , global(global)
 
 {
@@ -18,8 +19,24 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
     // QElapsedTimer timer;
-    timerTest = startTimer(1000, Qt::CoarseTimer);
+    qDebug() << "Modbus485 set name ";
+
+    name = "Modbus485";
+   // run();
 }
+
+void Modbus485::run()
+{
+    for(int i = 1; i >0; i++)
+    {
+        float res = sqrt(i);
+        qDebug() << this->name << " " << i << res;
+
+
+    }
+}
+
+
 
 bool Modbus485::init()
 {

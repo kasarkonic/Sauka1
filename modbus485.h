@@ -6,13 +6,17 @@
 #    include <QModbusRtuSerialClient>
 #    include <QSerialPortInfo>
 #include <QElapsedTimer>
+#include <QThread>
 
 
-class Modbus485  : public QMainWindow
+class Modbus485  :  public QThread //  public QMainWindow
 {
     Q_OBJECT
 public:
     explicit Modbus485(Global &global, QWidget *parent = nullptr);
+
+    // overriding the QThread's run() method
+    void run() override;
 
     Global &global;
     bool init();
@@ -46,6 +50,7 @@ private:
     void writeDat();
     QElapsedTimer timer;
     int timerTest;
+    QString name;
 
 };
 
