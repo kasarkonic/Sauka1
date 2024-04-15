@@ -20,14 +20,16 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     // QLoggingCategory::setFilterRules("qt* = true");
     modbusDevice = new QModbusRtuSerialClient(this);
     // QElapsedTimer timer;
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()),
-          this, SLOT(MyTimerSlot()));
+    timerReadIn = new QTimer(this);
+    timerWriteOut = new QTimer(this);
+    connect(timerReadIn, SIGNAL(timeout()),
+          this, SLOT(timerReadSlot()));
+    connect(timerWriteOut, SIGNAL(timeout()),
+          this, SLOT(timerWriteSlot()));
 
-    //startTimer(500);
+    //timerReadIn->start(500);
+    //timerWriteOut->start(250);
 
-    //timerReadIn = startTimer(500);
-    //timerWriteOut = startTimer(200);
 
 
     qDebug() << "Modbus485 set name ";
@@ -37,9 +39,8 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 void Modbus485::run()
 {
     qDebug() << "Modbus485 Run ";
-   // timerReadIn =
-            startTimer(500);
-    //timerWriteOut = startTimer(200);
+    timerReadIn->start(500);
+    timerWriteOut->start(250);
 }
 
 
@@ -247,21 +248,27 @@ bool Modbus485::updateDIOut()
    return (res == 2);
 }
 
-void Modbus485::MyTimerSlot()
+void Modbus485::timerEvent(QTimerEvent *event)
 {
-    qDebug() << "MyTimerSlot()" ;
-   // Q_UNUSED (event);
-   // if(event->timerId() == timerReadIn){
-        if(!global.disableRS485){
+    Q_UNUSED (*event)
+qDebug() << "timerEvent()";
+//qDebug() <<  event->timerId();
 
-        //analog input, next DI input, next update DI output
-        rdN4AIB16(2, 0,15);   // ok analog input
-        rd23IOD32(4,0xc0);  // ok digital input
-         }
 
-   // }
-/*
-    if(event->timerId() == timerWriteOut){
+}
+
+void Modbus485::timerReadSlot()
+{
+    if(!global.disableRS485){
+        qDebug() << "Read An Di Inputs";
+    //analog input, next DI input, next update DI output
+    rdN4AIB16(2, 0,15);   // ok analog input
+    rd23IOD32(4,0xc0);  // ok digital input
+     }
+}
+void Modbus485::timerWriteSlot()
+{
+        qDebug() << "Change  Outputs" << global.disableRS485 << global.updateDataOut.need;
         if(!global.disableRS485){
             if(global.updateDataOut.need){
                 global.updateDataOut.need = false;
@@ -269,24 +276,6 @@ void Modbus485::MyTimerSlot()
             }
 
          }
-    }
-
-*/
-
-
-
-
-
- /*   int i = 1;    // only for testing level meter
-    global.sensList[i].An += 10;
-
-    if(global.sensList[i].An > 110)
-        global.sensList[i].An = 0;
-
-    qDebug() << "emit valChangeAn(i)" << i << global.sensList[i].An; // level meter
-    emit valChangeAn(i + MAX_DIinput, global.sensList[i].An);
-    */
-
 }
 
 void Modbus485::errorHandler(QModbusDevice::Error error)

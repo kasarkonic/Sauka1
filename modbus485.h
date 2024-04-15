@@ -20,7 +20,9 @@ public:
     void run() override;
 
     Global &global;
-    QTimer *timer;
+    QTimer *timerReadIn;
+    QTimer *timerWriteOut;
+
     bool init();
     void test(int address, int value);
     bool wr23IOD32(int boardAdr,int regAdr, quint16 value);
@@ -30,13 +32,14 @@ public:
     bool updateDIOut();
 
 protected:
-  //  void    timerEvent(QTimerEvent *event) override;
+    void    timerEvent(QTimerEvent *event) override;
 
 public slots:
     void errorHandler(QModbusDevice::Error error);
     bool setBaudrate(int address);
     bool factoryReset(int address);
-    void MyTimerSlot();
+    void timerReadSlot();
+    void timerWriteSlot();
 
 signals:
     void valChangeAn(int sensAddr, int val);
@@ -54,8 +57,7 @@ private:
     //QElapsedTimer timer;
     int timerTest;
     QString name;
-    int timerReadIn;
-    int timerWriteOut;
+
 
 };
 
