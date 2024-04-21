@@ -84,7 +84,7 @@ void Pump::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawPolygon(points,3);
 
-  //  resize(settings.currSize,settings.currSize);
+    resize(settings.currSize,settings.currSize);
   //  move(settings.currX,settings.currY);
 }
 

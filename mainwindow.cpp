@@ -120,7 +120,8 @@ void MainWindow::changeInputVal(int row, int val)
     foreach (Global::wdataStruct widData, global.widHash){
 
 
-        if( (widData.act_sensAddres == row) |
+        if( (widData.act_Addres1 == row) |
+            (widData.act_Addres2 == row) |
             (widData.sensAddres1 == row) |
             (widData.sensAddres2 == row)){
             qDebug() << "hange inputs, update "  << widData.name;
@@ -133,9 +134,33 @@ void MainWindow::changeInputVal(int row, int val)
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED (event);
-    //qDebug() << "MainWindow::resizeEvent"  << size().height() << size().width();
+
+    float koefx = 1.0;
+    float koefy = 1.0;
+    float koef = 1.0;
+
+    qDebug() << "MainWindow::resizeEvent"  << size().height() << size().width();
     global.UIXresizeSize = size().width();
     global.UIYresizeSize = size().height() ;
+
+    if(size().width() > 0 && size().height() > 0){
+        koefx =  (float)global.UIXsize/global.UIXresizeSize;
+        koefy = (float)global.UIYsize/global.UIYresizeSize;
+    }
+
+    if(koefx >= koefy){
+        koef = koefx;
+    }
+    else{
+        koef = koefy;
+    }
+
+    if(koef == 0){
+        koef = 1;
+    }
+     qDebug() << "resizeEvent UIsize Main"  << global.UIXsize << global.UIYsize <<size().width()<<size().height()<<koefx <<koefy<<koef;
+    global.zoomKoef = koef;
+
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){

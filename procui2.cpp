@@ -22,6 +22,7 @@ void ProcUI2::initUI()
 {
     this->move(50,25);
     this->resize(1000,900);
+
 QPixmap pixmap(":/pictures/logo2.png");
 ui->label_Logo->setPixmap(pixmap);
 ui->label_Logo->setMask(pixmap.mask());
@@ -39,7 +40,42 @@ ui->pushButton_Stop->setStyleSheet(qss);
 
 pal.setColor(QPalette::Base,Qt::yellow);
 ui->textEdit_Info->setPalette(pal);
+ ui->statusbar->showMessage("Process flow 2");
+}
 
+void ProcUI2::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED (event);
+    float koefx = 1.0;
+    float koefy = 1.0;
+    float koef = 1.0;
+    qDebug() << "ProcUI1::resizeEvent"  << size().height() << size().width();
+    global.UIXresizeSizePf2 = size().width();
+    global.UIYresizeSizePf2 = size().height();
+
+    if(size().width() > 0 && size().height() > 0){
+        koefx =  (float)global.UIXsizePf2/global.UIXresizeSizePf2;
+        koefy = (float)global.UIYsizePf2/global.UIYresizeSizePf2;
+    }
+
+    if(koefx >= koefy){
+        koef = koefx;
+    }
+    else{
+        koef = koefy;
+    }
+
+    if(koef == 0){
+        koef = 1;
+    }
+     qDebug() << "resizeEvent UIsize 2"  << global.UIXsizePf2 << global.UIYsizePf2 <<size().width()<<size().height()<<koefx <<koefy<<koef;
+    global.zoomKoefPf2 = koef;
+
+}
+
+void ProcUI2::timerEvent(QTimerEvent *event)
+{
+   // Q_UNUSED(event)
 }
 
 void ProcUI2::drawWidgets()

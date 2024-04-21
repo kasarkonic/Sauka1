@@ -30,11 +30,9 @@ void Tvertne::updateSettings()
 {
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int dSensAdr = global.widHash[widName].act_sensAddres;
-    if(dSensAdr >= 300){
-        dSensAdr -= 300;
-    }
-    int an1SensAdr = global.widHash[widName].sensAddres1;
+    int diSensAdr = global.widHash[widName].sensAddres1;
+    int an1SensAdr = global.widHash[widName].sensAddres2;
+
     //int an2SensAdr = global.widHash[widName].sensAddres2;
 
     //fill = (int)global.sensList[an1SensAdr].analog;
@@ -53,7 +51,7 @@ void Tvertne::updateSettings()
 
 
     //full = global.sensList[dSensAdr].digital;
-    full = global.getDIval(dSensAdr);
+    full = global.getDIval(diSensAdr);
     //qDebug() << "Tvertne::updateSettings()" <<widName<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
 
     update();
@@ -137,7 +135,7 @@ void Tvertne::paintEvent(QPaintEvent *event)
 
     painter.drawPolygon(points,4);
 
-
+resize(settings.currSize,settings.currSize);
 }
 
 /*

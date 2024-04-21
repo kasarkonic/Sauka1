@@ -20,18 +20,25 @@ void WidgetDiagramElement::setNewPosition(float koef)
     settings.currY = int((float)settings.startY / koef);
     settings.currSize = int ((float)settings.startSize/koef);
     settings.options = global.widHash[settings.name].options;
-    //qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-    //    settings.currX<<settings.currY  ;
-    updateSettings();
+    qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
+        settings.currX<<settings.currY << koef ;
+    move(settings.currX,settings.currY);
+  //  resize(settings.currSize,settings.currSize);
+
+    //updateSettings();
 }
 
 void WidgetDiagramElement::updateSettings()
 {
 
     float koef = global.zoomKoef;
-    int addresAct = global.widHash[settings.name].act_sensAddres;
-    if(addresAct >= 300){
-        addresAct -= 300;
+    addresAct1 = global.widHash[settings.name].act_Addres1;
+    if(addresAct1 >= 300){
+        addresAct1 -= 300;
+    }
+    addresAct2 = global.widHash[settings.name].act_Addres2;
+    if(addresAct2 >= 300){
+        addresAct2 -= 300;
     }
    // int addresAN1 = global.widHash[settings.name].sensAddres1;
    // int addresAN2 = global.widHash[settings.name].sensAddres2;
@@ -48,8 +55,8 @@ void WidgetDiagramElement::updateSettings()
     settings.currSize = global.widHash[settings.name].startSize/koef;
     settings.options = global.widHash[settings.name].options;
 
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
+    //move(settings.currX,settings.currY);
+    //resize(settings.currSize,settings.currSize);
 }
 
 void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
@@ -79,9 +86,10 @@ void WidgetDiagramElement::timerEvent(QTimerEvent *event)
 
 void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
 {
-    // qDebug() << "WidgetDiagramElement::resizeEvent";
+     qDebug() << "WidgetDiagramElement::resizeEvent";
     Q_UNUSED (event);
 
+/*
     float koefx = 1.0;
     float koefy = 1.0;
     float koef = 1.0;
@@ -101,8 +109,21 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     if(koef == 0){
         koef = 1;
     }
-    // qDebug() << "resizeEvent UIsize"  << global.UIXsize << global.UIYsize <<size().width()<<size().height()<<koefx <<koefy<<koef;
+     qDebug() << "resizeEvent UIsize"  << global.UIXsize << global.UIYsize <<size().width()<<size().height()<<koefx <<koefy<<koef;
     global.zoomKoef = koef;
-    setNewPosition(koef);
+    */
+
+
+    if(global.widHash[settings.name].page == 0){
+        qDebug() << "setNewPosition 1 " << global.widHash[settings.name].name <<global.zoomKoefPf1;
+       setNewPosition(global.zoomKoefPf1);
+
+    }
+    if(global.widHash[settings.name].page == 1){
+        qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
+       setNewPosition(global.zoomKoefPf2);
+    }
+
 }
+
 

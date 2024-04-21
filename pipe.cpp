@@ -1,4 +1,5 @@
 #include "pipe.h"
+#include <QDateTime>
 
 //#include <QPainter>
 //#include <QtMath>
@@ -10,20 +11,27 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
 
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    /*
+    /**/
     qDebug() << "Pipe::Pipe";
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray);
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-*/
+/**/
         widName = name;
+
+    settings.type = global.widHash[settings.name].type;
+    settings.name = global.widHash[settings.name].name;
+
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
-
     settings.startSizeWi = global.widHash[settings.name].startSizeWi;
+
+    //valve |- angle
+    // pipe angle
     settings.options = global.widHash[settings.name].options;
+
     angle = settings.options;
     settings.currSize = settings.startSize;        //Hi
     settings.currSizeWi = settings.startSizeWi;
@@ -42,12 +50,12 @@ void Pipe::setNewPosition(float koef)
     WidgetDiagramElement::setNewPosition(koef); // call base class
     settings.currSize = int(settings.startSize /koef);        //Hi
     settings.currSizeWi = int(settings.startSizeWi /koef);
-    //   qDebug() << "Pipe::setNewPosition";
+       qDebug() << "Pipe::setNewPosition";
 }
 
 void Pipe::updateSettings()
 {
-    //qDebug() << "Pipe updateSettings" << settings.options;
+    qDebug() << "Pipe updateSettings" << settings.name << settings.options;
     WidgetDiagramElement::updateSettings();
     update();
 
@@ -69,18 +77,13 @@ void Pipe::updateSettings()
 }
 
 
-/*
-
-*/
-
-
-
 
 
 void Pipe::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-    //qDebug() << "Pipe::paintEvent" << settings.currX << settings.currY;
+    QString currentTime = QTime::currentTime().toString("ms");
+    qDebug() << "Pipe::paintEvent" << settings.name <<settings.currX << settings.currY << currentTime ;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
@@ -92,6 +95,7 @@ void Pipe::paintEvent(QPaintEvent *event)
     pen.setColor(Qt::red);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(pen);
+
 
     // arrow points
 
@@ -133,9 +137,9 @@ void Pipe::paintEvent(QPaintEvent *event)
     pipePoints[1].setY(stY - wi * sin(an));
 
     pipePoints[2].setX(stX  + hi * sin(an) + wi * cos(an));
-    pipePoints[2].setY(stY + hi * cos(an)- wi * sin(an)) ;
+    pipePoints[2].setY(stY + hi * cos(an) - wi * sin(an)) ;//  max size Y
 
-    pipePoints[3].setX(stX  + hi * sin(an) );
+    pipePoints[3].setX(stX  + hi * sin(an));
     pipePoints[3].setY(stY  + hi * cos(an));
 
     painter.drawPolygon(pipePoints,4);
@@ -184,9 +188,10 @@ void Pipe::paintEvent(QPaintEvent *event)
 
 
     //painter.drawText(10,10,"hello");
+        qDebug() << "Pipe resize,move  "<< settings.currSize << settings.currX << settings.currY;
 
-    //    resize(settings.currSize,settings.currSize);
-    //    move(settings.currX,settings.currY);
+        resize(settings.currSize,stY  + hi * cos(an));
+       // move(settings.currX,settings.currY);
     //painter.drawText(10,10,"hello");
 
 }

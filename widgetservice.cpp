@@ -67,7 +67,7 @@ void WidgetService::updateFormData()        // read data from global and display
 
     // sensor data
 
-    addresAct = widgetElement->global.widHash[currentWid].act_sensAddres;
+    addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
     bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
 
     if(addresAct >= 300 && !isValve){   // actuator
@@ -115,7 +115,7 @@ void WidgetService::updateFormData()        // read data from global and display
     if(isValve){
 
 
-        addresAct = widgetElement->global.widHash[currentWid].act_sensAddres;
+        addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
         ui->label_AddressDI->setText("act DI " + QString::number(addresAct));
         ui->lineEdit_AddresDI->setText(QString::number(global.actList[addresAct-300].digital));
 
@@ -284,7 +284,7 @@ void WidgetService::updateSensorVal()  // take data from UI and update global. .
 
 
 
-    addresAct = widgetElement->global.widHash[currentWid].act_sensAddres;
+    addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
 
     bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
     if(addresAct >= 300 && !isValve){   // actuator

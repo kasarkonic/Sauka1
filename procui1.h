@@ -25,6 +25,12 @@ public:
     explicit ProcUI1(Global &global, QWidget *parent = nullptr);
     ~ProcUI1();
 
+protected:
+
+    void    resizeEvent(QResizeEvent* event) override;
+    void    timerEvent(QTimerEvent *event) override;
+
+
 private slots:
     void on_pushButton_Stop_clicked();
 

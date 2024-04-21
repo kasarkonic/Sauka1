@@ -86,7 +86,7 @@ void ScalesBase::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 */
-
+resize(settings.currSize,settings.currSize);
 }
 
 void ScalesBase::timerEvent(QTimerEvent *event)

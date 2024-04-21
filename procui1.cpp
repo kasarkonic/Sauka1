@@ -42,11 +42,49 @@ void ProcUI1::initUI()
     pal.setColor(QPalette::Base,Qt::yellow);
     ui->textEdit_Info->setPalette(pal);
 
-
+    ui->statusbar->showMessage("Process flow 1");
 
 
 }
 
+void ProcUI1::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED (event);
+
+    float koefx = 1.0;
+    float koefy = 1.0;
+    float koef = 1.0;
+    qDebug() << "ProcUI1::resizeEvent"  << size().height() << size().width();
+    global.UIXresizeSizePf1 = size().width();
+    global.UIYresizeSizePf1 = size().height();
+
+    if(size().width() > 0 && size().height() > 0){
+        koefx =  (float)global.UIXsizePf1/global.UIXresizeSizePf1;
+        koefy = (float)global.UIYsizePf1/global.UIYresizeSizePf1;
+    }
+
+    if(koefx >= koefy){
+        koef = koefx;
+    }
+    else{
+        koef = koefy;
+    }
+
+    if(koef == 0){
+        koef = 1;
+    }
+     qDebug() << "resizeEvent UIsize 1"  << global.UIXsizePf1 << global.UIYsizePf1 <<size().width()<<size().height()<<koefx <<koefy<<koef;
+    global.zoomKoefPf1 = koef;
+
+
+}
+
+
+
+void ProcUI1::timerEvent(QTimerEvent *event)
+{
+   // Q_UNUSED(event)
+}
 void ProcUI1::drawWidgets()
 {
     qDebug() << "widData draw  " << global.widHash.size() << "elements";

@@ -82,17 +82,18 @@ public:
     struct wdataStruct {
         WidgetType::widgT type;
         QString name ;
-        int startX = 100;
-        int startY = 100;
-        int startSize = 50;
-        int startSizeWi = 10;
+        int startX = 100;   // left upp corner
+        int startY = 100;   // left upp corner
+        int startSize = 50; // dimensions
+        int startSizeWi = 10; // pipe len
         int options = 0;   //valve |- and pipe angle
         int windowNr = 0;
         bool formExist = false;
         WidgetDiagramElement * ptrCurrWidget = nullptr;
         WidgetService * ptrCurrWidgetService = nullptr;
         int page = 0;
-        int act_sensAddres = 0;
+        int act_Addres1 = 0;
+        int act_Addres2 = 0;
         int sensAddres1 = 0;
         int sensAddres2 = 0;
 
@@ -130,6 +131,19 @@ public:
     int UIXresizeSize;
     int UIYresizeSize;
 
+    float zoomKoefPf1;
+    int UIXsizePf1;
+    int UIYsizePf1;
+    int UIXresizeSizePf1;
+    int UIYresizeSizePf1;
+
+    float zoomKoefPf2;
+    int UIXsizePf2;
+    int UIYsizePf2;
+    int UIXresizeSizePf2;
+    int UIYresizeSizePf2;
+
+
 
     // attach Com. port
     QString dev1;   // rs232 for temperature sensor
@@ -157,7 +171,7 @@ private:
 
     void create_IN_OUT_list();
     void creatWidgList();
-    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr, int sensAdr1, int sensAdr2);
+    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2);
 
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);

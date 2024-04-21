@@ -54,6 +54,11 @@ protected:
     void setNewPosition(float koef);
    //virtual void updateSettings();
     QString widName;
+
+    int addresAct1;
+    int addresAct2;
+
+
 private:
 
     int timerId = 0;

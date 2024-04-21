@@ -53,7 +53,7 @@ void Mix::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     QPen pen;
-    pen.setWidth(4);    //draw pipe
+    pen.setWidth(4);    //draw mix
     pen.setColor(Qt::red);
     painter.setBrush(Qt::red);
     painter.setPen(pen);
@@ -101,7 +101,7 @@ void Mix::paintEvent(QPaintEvent *event)
   //  *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
   //  painter.drawImage(QPoint(), *imgBackground);
 
-
+resize(settings.currSize,settings.currSize);
 }
 
 void Mix::timerEvent(QTimerEvent *event)

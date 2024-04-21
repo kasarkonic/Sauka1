@@ -71,7 +71,7 @@ void Dyno::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
- //   resize(settings.currSize,settings.currSize);
+    resize(settings.currSize,settings.currSize);
  //   move(settings.currX,settings.currY);
 
 }

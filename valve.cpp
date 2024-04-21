@@ -33,11 +33,9 @@ void Valve::updateSettings()
     //int dSensAdr1 = global.widHash[widName].sensAddres1;
    // int dSensAdr2 = global.widHash[widName].sensAddres2;
 
-    int actAdr = global.widHash[widName].act_sensAddres;
-    if( actAdr >= 300){actAdr -= 300;}
     int di1SensAdr = global.widHash[widName].sensAddres1;
     int di2SensAdr = global.widHash[widName].sensAddres2;
-
+    int actAdr1  = global.widHash[widName].act_Addres1;
 
     // options Angle fron vertical CCW  options
     // startSizeWi  not used
@@ -76,7 +74,7 @@ void Valve::updateSettings()
         settings.status = 2 ;    // error
     }
 
-    global.actList[actAdr].digital = settings.status;
+    global.actList[actAdr1].digital = settings.status;
     qDebug() << widName<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
     update();
 }
@@ -115,7 +113,7 @@ void Valve::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    qDebug() << "Valve::paintEvent" <<settings.status <<settings.options ;
+    //qDebug() << "Valve::paintEvent" <<settings.status <<settings.options ;
     // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     calcPoints(settings.options);
@@ -141,7 +139,7 @@ void Valve::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawPolygon(points,4,Qt::WindingFill);
 
-    //  resize(settings.currSize,settings.currSize);
+      resize(settings.currSize,settings.currSize);
     //  move(settings.currX,settings.currY);
 }
 
