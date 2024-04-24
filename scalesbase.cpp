@@ -4,21 +4,33 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
+    /*
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
     settings.startSizeWi = global.widHash[settings.name].startSizeWi;
     settings.currSize = settings.startSize;        //Hi
     settings.currSizeWi = settings.startSizeWi;
-  //  timerId = startTimer(200, Qt::CoarseTimer);
+    */
+
+/*
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+    pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+*/
+    widName = name;
+    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+
 }
 
 void ScalesBase::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-
+    repaint();
 }
-
+/*
 void ScalesBase::setNewPosition(float koef)
 {
     WidgetDiagramElement::setNewPosition(koef); // call base class
@@ -26,7 +38,7 @@ void ScalesBase::setNewPosition(float koef)
     settings.currSizeWi = int(settings.startSizeWi /koef);
     //   qDebug() << "Pipe::setNewPosition";
 }
-
+*/
 void ScalesBase::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
@@ -86,14 +98,16 @@ void ScalesBase::paintEvent(QPaintEvent *event)
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 */
-resize(settings.currSize,settings.currSize);
+resize(settings.currSize,3 * wi);
 }
 
 void ScalesBase::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
     qDebug() << "ScalesBase::timerEvent";
-    if(event->timerId() == timerIdUpd){
-        update();
-    }
+   // if(event->timerId() == timerIdUpd){
+    //    update();
+    //}
+  //  WidgetDiagramElement::updateSettings();
+   //     updateSettings();
 }

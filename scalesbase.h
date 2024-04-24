@@ -13,7 +13,7 @@ public:
     explicit ScalesBase(Global &global,QString name, QWidget *parent = nullptr);
 
     void updateSettings() override;
-    void setNewPosition(float koef);
+   // void setNewPosition(float koef);
 
 protected:
     void    paintEvent(QPaintEvent *event) override;
@@ -22,7 +22,7 @@ protected:
 private:
  QImage *imgBackground;
     int att = 360;
-    int timerIdUpd = 0;
+    //int timerIdUpd = 0;
     QColor  triangColor = Qt::blue;
 };
 

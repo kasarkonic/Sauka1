@@ -71,7 +71,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     initTimer = true;
     timerIdUpd = startTimer(500);
-   // timerTest = startTimer(200);
+    timerTick = startTimer(1);
     timerUpdateOutput = startTimer(200);
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -213,7 +213,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
        }
 
 
-    if(event->timerId() == timerTest){
+    if(event->timerId() == timerTick){
+        global.tick++;
+/*
         att++;
         att1++;
 
@@ -221,18 +223,8 @@ void MainWindow::timerEvent(QTimerEvent *event)
             att = 0;
         if(att1 > 200)
             att1 = 0;
-
-       //  ???? global.sensList[10].An = att;       // only for testing
-       // ???global.sensList[2] = (int)att1/2;
-     //   qDebug() << "att" << att << att1/2;
+*/
     }
-    //if(event->timerId() == timerUpdateOutput){
-    //    if(global.updateDataOut.need){
-    //        global.updateDataOut.need = false;
-     //     bool ok = modbus485.updateDIOut();
-     //   }
-
-    //}
 }
 
 void MainWindow::loadSettings()

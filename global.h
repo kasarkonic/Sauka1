@@ -10,8 +10,6 @@
 #include <QList>
 
 
-
-//#include <QTimer>
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
 #define DI_OUT_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIoutput
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
@@ -56,6 +54,7 @@ enum widgT{
 
 class Global
 {
+
 public:
     Global();
 
@@ -165,6 +164,7 @@ public:
 
     void needUpdateDIoutputs(int row, int val);
     void needUpdateSensorIn(int row, int val);
+    int tick;
 
 
 private:
@@ -178,7 +178,6 @@ private:
 
     void creatSensList();
     void addSensList(QString name, SensorType::sensT tp, int addres);
-
 
 };
 

@@ -1,10 +1,5 @@
 #include "pipe.h"
-#include <QDateTime>
-
-//#include <QPainter>
-//#include <QtMath>
-//#include<QMouseEvent>
-//#include <QSettings>
+//#include <QDateTime>
 
 Pipe::Pipe(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global,name, parent)
@@ -20,21 +15,23 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
 /**/
         widName = name;
 
-    settings.type = global.widHash[settings.name].type;
-    settings.name = global.widHash[settings.name].name;
+   // settings.type = global.widHash[settings.name].type;
+   // settings.name = global.widHash[settings.name].name;
 
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
-    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
+   // settings.startX = global.widHash[settings.name].startX;
+   // settings.startY = global.widHash[settings.name].startY;
+    //settings.startSize = global.widHash[settings.name].startSize;
+    //settings.startSizeWi = global.widHash[settings.name].startSizeWi;
 
     //valve |- angle
     // pipe angle
-    settings.options = global.widHash[settings.name].options;
+    //settings.options = global.widHash[settings.name].options;
 
     angle = settings.options;
-    settings.currSize = settings.startSize;        //Hi
-    settings.currSizeWi = settings.startSizeWi;
+   // settings.currSize = settings.startSize;        //Hi
+    //settings.currSizeWi = settings.startSizeWi;
+
+    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
@@ -44,7 +41,7 @@ void Pipe::get(int *pnt)
     *pnt = po;
 }
 
-
+/*
 void Pipe::setNewPosition(float koef)
 {
     WidgetDiagramElement::setNewPosition(koef); // call base class
@@ -52,38 +49,20 @@ void Pipe::setNewPosition(float koef)
     settings.currSizeWi = int(settings.startSizeWi /koef);
        qDebug() << "Pipe::setNewPosition";
 }
-
+*/
 void Pipe::updateSettings()
 {
-    qDebug() << "Pipe updateSettings" << settings.name << settings.options;
+   // qDebug() << "Pipe updateSettings" << settings.name << settings.options << global.tick;
     WidgetDiagramElement::updateSettings();
-    update();
-
-
-    // settings.wi = settings.starwi;
-    // settings.hi = settings.starhi;
-
-    //settings.currX = settings.startX;
-    //settings.currY = settings.startY;
-
-    // move(settings.startX,settings.startY);
-
-    // if(settings.flow == 0){        // 0 stop, 1 ->, 2<-)
-    //     killTimer(timerIdUpd);
-    // }
-    // else{
-    //      timerIdUpd = startTimer(200, Qt::CoarseTimer);
-    // }
-}
-
-
+    repaint();
+  }
 
 
 void Pipe::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
-    QString currentTime = QTime::currentTime().toString("ms");
-    qDebug() << "Pipe::paintEvent" << settings.name <<settings.currX << settings.currY << currentTime ;
+    //QString currentTime = QTime::currentTime().toString("ms");
+    //qDebug() << "Pipe::paintEvent" << settings.name <<settings.currX << settings.currY << currentTime ;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
@@ -96,7 +75,7 @@ void Pipe::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(pen);
 
-
+   // updateSettings();
     // arrow points
 
     int stX ;
@@ -186,62 +165,21 @@ void Pipe::paintEvent(QPaintEvent *event)
         painter.drawLines(arrowPoints,2);
     }
 
-
-    //painter.drawText(10,10,"hello");
-        qDebug() << "Pipe resize,move  "<< settings.currSize << settings.currX << settings.currY;
-
+        //qDebug() << "Pipe resize,move  "<< settings.currSize << settings.currX << settings.currY;
         resize(settings.currSize,stY  + hi * cos(an));
        // move(settings.currX,settings.currY);
-    //painter.drawText(10,10,"hello");
-
 }
 void Pipe::timerEvent(QTimerEvent *event){
 
     Q_UNUSED (event);
-    int step = 3;
-    //qDebug() << "timerEvent" << att;
-
-    att = att + step;
-    //  if (att > currHi - arrTop)
-    //      att = 0;
-
-   // qDebug() << "Pipe::att "<< att ;
+ //   qDebug() << "Pipe::timerEvent " << global.tick;
+//WidgetDiagramElement::updateSettings();
+   // updateSettings();
 }
 /*
 void Pipe::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
          qDebug() << "mousePressEvent" ;
     }
-}
-
-void Pipe::mouseMoveEvent(QMouseEvent *event)
-{
-    event->accept();
-
-    // get the cursor position of this event
-    const QPoint& pos = event->pos();
-
-    int pointX = pos.x();
-    int pointY = pos.y();
-
-    settings.startX += pointX;
-    settings.startY += pointY;
-    //?   updateSettings();
-    emit updateServiceUI();
-    qDebug() << "Pump mouseMoveEvent dx:dy" << pointX - mouseStartPointX << pointY - mouseStartPointY ;
-}
-
-void Pipe::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton) {
-        qDebug() << "Pipe mouseDoubleClickEvent" ;
-       // emit openServicePump();
-        //emit openServicePipe();
-
-    //    WidgetService *serviceForm = new WidgetService();
-     //   serviceForm->show();
-
-    }
-
 }
 */

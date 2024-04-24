@@ -104,6 +104,7 @@ private:
     void initUI();
     int  timerIdUpd = 0;
     int  timerTest = 0;
+    int  timerTick = 0;
     int timerUpdateOutput = 0;
     int att = 0;
     int att1 = 0;

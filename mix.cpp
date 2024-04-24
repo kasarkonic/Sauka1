@@ -15,9 +15,11 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     this->setPalette(pal);
  */
         widName = name;
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
+    //settings.startX = global.widHash[settings.name].startX;
+    //settings.startY = global.widHash[settings.name].startY;
+    //settings.startSize = global.widHash[settings.name].startSize;
+        timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+
 }
 
 void Mix::updateSettings()
@@ -28,13 +30,16 @@ void Mix::updateSettings()
     int dSensAdr = global.widHash[widName].sensAddres1;
     speed = (int)global.sensList[dSensAdr].analog /3;
 
-
+    killTimer(timerIdUpd);
     if(global.sensList[dSensAdr].digital){
-         timerIdUpd = startTimer(150, Qt::CoarseTimer);
+        //killTimer(timerIdUpd);
+         timerIdUpd = startTimer(150, Qt::CoarseTimer); //rotate
     }
     else{
-        killTimer(timerIdUpd);
+        //killTimer(timerIdUpd);
+        timerIdUpd = startTimer(500, Qt::CoarseTimer);
     }
+     repaint();
 }
 /*
 void Mix::setNewPosition(float koef)
@@ -116,7 +121,8 @@ void Mix::timerEvent(QTimerEvent *event)
             att = 0;
         }
        // qDebug() << att;
-        update();
+        //update();
+      //  updateSettings();
     }
 }
 

@@ -17,7 +17,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
 
     //  QLoggingCategory::setFilterRules("qt.modbus* = true");
-    // QLoggingCategory::setFilterRules("qt* = true");
+    // QLoggingCategory::setFilterRul
     modbusDevice = new QModbusRtuSerialClient(this);
     // QElapsedTimer timer;
     timerReadIn = new QTimer(this);

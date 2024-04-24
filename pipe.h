@@ -49,7 +49,7 @@ protected:
 
          //     pipe hi
 
-    int timerIdUpd = 0;
+    //int timerIdUpd = 0;
     int att = 100;
 
 

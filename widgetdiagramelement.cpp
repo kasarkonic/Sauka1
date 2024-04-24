@@ -25,7 +25,7 @@ void WidgetDiagramElement::setNewPosition(float koef)
     move(settings.currX,settings.currY);
   //  resize(settings.currSize,settings.currSize);
 
-    //updateSettings();
+  //  updateSettings();
 }
 
 void WidgetDiagramElement::updateSettings()
