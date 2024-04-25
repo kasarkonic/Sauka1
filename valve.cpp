@@ -10,6 +10,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 
 {
+
     global.widHash[settings.name].ptrCurrWidget = this;
     /*
     QPalette pal = QPalette();
@@ -18,11 +19,11 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     this->setPalette(pal);
  */
     widName = name;
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
-    settings.options = global.widHash[settings.name].options;
-    //  timerIdUpd = startTimer(100, Qt::CoarseTimer);
+    //settings.startX = global.widHash[settings.name].startX;
+   // settings.startY = global.widHash[settings.name].startY;
+   // settings.startSize = global.widHash[settings.name].startSize;
+   // settings.options = global.widHash[settings.name].options;
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);
 }
 
 void Valve::updateSettings()
@@ -76,7 +77,8 @@ void Valve::updateSettings()
 
     global.actList[actAdr1].digital = settings.status;
     qDebug() << widName<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
-    update();
+    //update();
+    repaint();
 }
 
 void Valve::calcPoints(int angle)
@@ -146,7 +148,7 @@ void Valve::paintEvent(QPaintEvent *event)
 
 void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
-    qDebug() << "Valve::timerEvent";
+   // qDebug() << "Valve::timerEvent";
     settings.options -= 5;
     att +=1;
     // qDebug()<< "att" << att << settings.status;
@@ -159,5 +161,6 @@ void Valve::timerEvent(QTimerEvent *event){
         }
     }
 
-    update();
+    //update();
+    updateSettings();
 }

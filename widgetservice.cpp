@@ -114,7 +114,7 @@ void WidgetService::updateFormData()        // read data from global and display
 
     if(isValve){
 
-
+/*
         addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
         ui->label_AddressDI->setText("act DI " + QString::number(addresAct));
         ui->lineEdit_AddresDI->setText(QString::number(global.actList[addresAct-300].digital));
@@ -136,6 +136,7 @@ void WidgetService::updateFormData()        // read data from global and display
         actValueDi = global.actList[addresAct-300].digital;
         actValueAn1 = global.sensList[addresSens1].digital;
         actValueAn2 = global.sensList[addresSens2].digital;
+        */
     }
 
 

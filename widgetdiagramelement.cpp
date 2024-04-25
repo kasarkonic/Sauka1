@@ -9,19 +9,28 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
 
 {
     settings.name = name;
- //   global.widHash[settings.name].ptrCurrWidget = this;
+    settings.type = global.widHash[settings.name].type;
+    settings.name = global.widHash[settings.name].name;
+
+    settings.startX = global.widHash[settings.name].startX;
+    settings.startY = global.widHash[settings.name].startY;
+    settings.startSize = global.widHash[settings.name].startSize;
+    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
+    settings.options = global.widHash[settings.name].options;
+    settings.currSize = settings.startSize;        //Hi
+    settings.currSizeWi = settings.startSizeWi;
 }
 
 void WidgetDiagramElement::setNewPosition(float koef)
 {
     // qDebug() << "WidgetDiagramElement 1::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
     // settings.currX<<settings.currY  ;
-    settings.currX = int((float)settings.startX /koef);
-    settings.currY = int((float)settings.startY / koef);
-    settings.currSize = int ((float)settings.startSize/koef);
+    settings.currX = global.widHash[settings.name].startX/koef;
+    settings.currY = global.widHash[settings.name].startY/koef;
+    settings.currSize = global.widHash[settings.name].startSize/koef;
     settings.options = global.widHash[settings.name].options;
     qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-        settings.currX<<settings.currY << koef ;
+    settings.currX<<settings.currY << koef ;
     move(settings.currX,settings.currY);
   //  resize(settings.currSize,settings.currSize);
 

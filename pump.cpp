@@ -100,7 +100,7 @@ void Pump::timerEvent(QTimerEvent *event)
 
    //  qDebug() << "Pump::att " << att ;
     //update();
-  //  updateSettings();
+    updateSettings();
     }
 }
 /*

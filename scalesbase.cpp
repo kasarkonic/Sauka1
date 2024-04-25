@@ -3,6 +3,7 @@
 ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
+
     global.widHash[settings.name].ptrCurrWidget = this;
     /*
     settings.startX = global.widHash[settings.name].startX;
@@ -104,10 +105,10 @@ resize(settings.currSize,3 * wi);
 void ScalesBase::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-    qDebug() << "ScalesBase::timerEvent";
+   // qDebug() << "ScalesBase::timerEvent";
    // if(event->timerId() == timerIdUpd){
     //    update();
     //}
   //  WidgetDiagramElement::updateSettings();
-   //     updateSettings();
+        updateSettings();
 }

@@ -21,7 +21,7 @@ protected:
     void updateSettings() override;
 private:
     QImage *imgBackground;
-    int timerIdUpd = 0;
+    //int timerIdUpd = 0;
     int fill;
     int full;
 

@@ -4,7 +4,6 @@
 ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
-     settings.name = name;
     global.widHash[settings.name].ptrCurrWidget = this;
     widName = name;
     //settings.startX = global.widHash[settings.name].startX;
@@ -19,8 +18,8 @@ void ScalesMass::updateSettings()
     WidgetDiagramElement::updateSettings(); // base class
     int an1SensAdr = global.widHash[widName].sensAddres1;
     massValue = global.sensList[an1SensAdr].analog /10.0;
-    //qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
-     //update();
+    qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
+    //update();
       repaint();
 }
 
@@ -48,6 +47,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
 
     QFont font("times", settings.currSize/6);
     painter.setFont(font);
+    qDebug() << "scalesM = " << widName <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
     painter.drawText(QRect(0, settings.currSize/6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
     resize(settings.currSize,settings.currSize);
 }
@@ -58,6 +58,6 @@ void ScalesMass::timerEvent(QTimerEvent *event)
    // WidgetDiagramElement::updateSettings();
     //qDebug() << "ScalesMass::timerEvent";
     //if(event->timerId() == timerIdUpd){
- //       updateSettings();
+        updateSettings();
    // }
 }

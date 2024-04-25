@@ -28,7 +28,7 @@ protected:
 
     int att = 360;
     int speed = 0;
-    int timerIdUpd = 0;
+    //int timerIdUpd = 0;
     int mouseStartPointX;
     int mouseStartPointY;
 

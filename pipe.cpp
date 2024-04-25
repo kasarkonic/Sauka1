@@ -1,5 +1,5 @@
 #include "pipe.h"
-//#include <QDateTime>
+
 
 Pipe::Pipe(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global,name, parent)
@@ -7,7 +7,7 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
     /**/
-    qDebug() << "Pipe::Pipe";
+   // qDebug() << "Pipe::Pipe";
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray);
     this->setAutoFillBackground(true);
@@ -174,7 +174,7 @@ void Pipe::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
  //   qDebug() << "Pipe::timerEvent " << global.tick;
 //WidgetDiagramElement::updateSettings();
-   // updateSettings();
+    updateSettings();
 }
 /*
 void Pipe::mousePressEvent(QMouseEvent *event){

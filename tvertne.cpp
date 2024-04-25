@@ -7,21 +7,23 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
     widName = name;
-    QPalette pal = QPalette();
-    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+    //QPalette pal = QPalette();
+    //pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     // pal.setColor(QPalette::Window, QColor(100, 100, 100, 255));
-    pal.setColor(QPalette::Window, QColor(Qt::red));
-    this->setAutoFillBackground(true);
+    //pal.setColor(QPalette::Window, QColor(Qt::red));
+    //this->setAutoFillBackground(true);
 
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
-    qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
+    //settings.startX = global.widHash[settings.name].startX;
+    //settings.startY = global.widHash[settings.name].startY;
+    //settings.startSize = global.widHash[settings.name].startSize;
+    //qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
 
    // timerIdUpd = startTimer(200, Qt::CoarseTimer);
 
     fill = 0;
     full = 0;
+
+    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
@@ -30,8 +32,8 @@ void Tvertne::updateSettings()
 {
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int diSensAdr = global.widHash[widName].sensAddres1;
-    int an1SensAdr = global.widHash[widName].sensAddres2;
+    int diSensAdr = global.widHash[widName].sensAddres1;    // max level
+    int an1SensAdr = global.widHash[widName].sensAddres2;   // level
 
     //int an2SensAdr = global.widHash[widName].sensAddres2;
 
@@ -60,7 +62,7 @@ void Tvertne::updateSettings()
 void Tvertne::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
-    qDebug() << "Tvertne::timerEvent";
+   // qDebug() << "Tvertne::timerEvent";
     updateSettings();
 }
 

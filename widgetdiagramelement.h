@@ -58,6 +58,7 @@ protected:
     int addresAct1;
     int addresAct2;
 
+    int timerIdUpd = 0;
 
 private:
 

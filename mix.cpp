@@ -18,7 +18,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     //settings.startX = global.widHash[settings.name].startX;
     //settings.startY = global.widHash[settings.name].startY;
     //settings.startSize = global.widHash[settings.name].startSize;
-        timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+        timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
@@ -122,7 +122,7 @@ void Mix::timerEvent(QTimerEvent *event)
         }
        // qDebug() << att;
         //update();
-      //  updateSettings();
+        updateSettings();
     }
 }
 
