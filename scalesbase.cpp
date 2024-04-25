@@ -29,7 +29,8 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
 void ScalesBase::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-    repaint();
+    //repaint();
+    update();
 }
 /*
 void ScalesBase::setNewPosition(float koef)

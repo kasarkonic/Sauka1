@@ -319,14 +319,14 @@ void Global::creatWidgList()
     // page  Mix
     // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr1, int actAdr2, int sensAdr1, int sensAdr2
     addWidgList(WidgetType::Mix,        "Mix",     240,        24,   96, 0, 0,        0, 0,  0,0,0);
-    //addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0, 0,  0,0,0);
+    addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0, 0,  0,0,0);
 
-    //addWidgList(WidgetType::Tvertne,     "Tvertne 2",  650,     50,   50, 0,  0,       0,  0,  0,0,0);
-    //addWidgList(WidgetType::Pump,       "Pump1",  440,        496,    35, 0,  0,        0, 0,  305,0,0);
+    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  650,     50,   50, 0,  0,       0,  0,  0,0,0);
+    addWidgList(WidgetType::Pump,       "Pump1",  440,        496,    35, 0,  0,        0, 0,  305,0,0);
     addWidgList(WidgetType::Valve,      "Valve 1",  240,       145,   30, 0,  90,       0, 0,  0,0,0);
-    //addWidgList(WidgetType::Pipe,     "Pipe 1",   250,        110,    35,  10,  0,      0, 0,  0,0,0);
-    //addWidgList(WidgetType::ScalesBase,    "Scales Base",    235,        100,    250,   15, 0,   0, 0,  0,0,0);
-    //addWidgList(WidgetType::ScalesMass,    "Scales Mass",    431,       40,     62,   0,  0,   0, 0,  0,11,0);
+    addWidgList(WidgetType::Pipe,     "Pipe 1",   250,        110,    35,  10,  0,      0, 0,  0,0,0);
+    addWidgList(WidgetType::ScalesBase,    "Scales Base",    235,        100,    250,   15, 0,   0, 0,  0,0,0);
+    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    431,       40,     62,   0,  0,   0, 0,  0,11,0);
 
 
     /*

@@ -19,8 +19,8 @@ void ScalesMass::updateSettings()
     int an1SensAdr = global.widHash[widName].sensAddres1;
     massValue = global.sensList[an1SensAdr].analog /10.0;
     qDebug() << "scales val = " << widName <<an1SensAdr << massValue;
-    //update();
-      repaint();
+    update();
+      //repaint();
 }
 
 void ScalesMass::paintEvent(QPaintEvent *event)

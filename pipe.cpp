@@ -54,7 +54,8 @@ void Pipe::updateSettings()
 {
    // qDebug() << "Pipe updateSettings" << settings.name << settings.options << global.tick;
     WidgetDiagramElement::updateSettings();
-    repaint();
+    //repaint();
+    update();
   }
 
 

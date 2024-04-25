@@ -77,8 +77,8 @@ void Valve::updateSettings()
 
     global.actList[actAdr1].digital = settings.status;
     qDebug() << widName<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
-    //update();
-    repaint();
+    update();
+    //repaint();
 }
 
 void Valve::calcPoints(int angle)

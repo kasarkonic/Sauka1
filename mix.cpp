@@ -39,7 +39,8 @@ void Mix::updateSettings()
         //killTimer(timerIdUpd);
         timerIdUpd = startTimer(500, Qt::CoarseTimer);
     }
-     repaint();
+     //repaint();
+    update();
 }
 /*
 void Mix::setNewPosition(float koef)

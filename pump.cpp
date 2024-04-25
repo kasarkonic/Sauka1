@@ -47,7 +47,8 @@ void Pump::updateSettings()
         killTimer(timerIdUpd);
         timerIdUpd = startTimer(500, Qt::CoarseTimer);
     }
-    repaint();
+    //repaint();
+    update();
 }
 
 void Pump::paintEvent(QPaintEvent *event)
