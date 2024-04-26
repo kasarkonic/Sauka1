@@ -16,6 +16,7 @@ CONFIG += c++17
 SOURCES += \
     actlistform.cpp \
     acttablemodel.cpp \
+    componentcard.cpp \
     dyno.cpp \
     global.cpp \
     hwports.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
 HEADERS += \
     actlistform.h \
     acttablemodel.h \
+    componentcard.h \
     dyno.h \
     global.h \
     hwports.h \
@@ -68,6 +70,7 @@ HEADERS += \
 
 FORMS += \
     actlistform.ui \
+    componentcard.ui \
     hwports.ui \
     hwservice.ui \
     mainwindow.ui \

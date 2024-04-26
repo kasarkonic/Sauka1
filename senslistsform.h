@@ -20,7 +20,6 @@ class SensListsForm : public QMainWindow//, public QDialog
 public:
     explicit SensListsForm(Global &global, QWidget *parent = nullptr);
 
-    Global &global;
     ~SensListsForm();
 
 void updateData(int row);
@@ -32,6 +31,7 @@ private slots:
 private:
     Ui::SensListsForm *ui;
     void initUI();
+    Global &global;
 
     SensorTableModel *sensorTableModel;
 

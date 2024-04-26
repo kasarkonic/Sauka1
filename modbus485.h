@@ -19,7 +19,6 @@ public:
     // overriding the QThread's run() method
     void run() override;
 
-    Global &global;
     QTimer *timerReadIn;
     QTimer *timerWriteOut;
 
@@ -48,6 +47,7 @@ signals:
 private slots:
     void onReadReady();
 private:
+    Global &global;
     QModbusRtuSerialClient*  modbusDevice;
     QModbusDataUnit readRequest() const;
     QModbusDataUnit writeRequest() const;

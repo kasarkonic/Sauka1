@@ -1,8 +1,8 @@
 #ifndef PARMANI_H
 #define PARMANI_H
 
-#include "dyno.h"
 #include <QMainWindow>
+#include"global.h"
 
 namespace Ui {
 class ParMani;
@@ -14,7 +14,6 @@ class ParMani : public QMainWindow
 
 public:
     explicit ParMani(Global &global, QWidget *parent = nullptr);
-    Global &global;
     ~ParMani();
 
 private slots:
@@ -23,6 +22,7 @@ protected:
     void    timerEvent(QTimerEvent *event) override;
 private:
     Ui::ParMani *ui;
+    Global &global;
     int att;
    /* Dyno *dynoA;
     int timerIdUpd;

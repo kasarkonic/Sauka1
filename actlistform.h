@@ -18,7 +18,6 @@ class ActListForm : public QMainWindow
 public:
     explicit ActListForm(Global &global, QWidget *parent = nullptr);
 
-    Global &global;
     ~ActListForm();
          void updateData(int row);
 
@@ -31,6 +30,7 @@ private slots:
 
 
 private:
+    Global &global;
     Ui::ActListForm *ui;
     ActTableModel *acttablemodel;
     QPushButton *butt;

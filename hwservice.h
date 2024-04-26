@@ -19,7 +19,6 @@ class HWService  : public QMainWindow
 public:
     explicit HWService(Global &global, QWidget *parent = nullptr );
 
-    Global &global;
     Ui::HWService *ui;
     ActListForm actListForm;
     SensListsForm sensListsForm;
@@ -58,7 +57,7 @@ private slots:
 
 private:
 
-
+    Global &global;
     int modbusAddress = 0;
     int timerId;
 

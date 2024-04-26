@@ -9,6 +9,7 @@
 
 #include "rs232.h"
 #include "parmani.h"
+#include "componentcard.h"
 
 #include <QMouseEvent>
 #include "global.h"
@@ -20,13 +21,15 @@
 
 MainWindow::MainWindow(Global &global,  QWidget *parent)
     : QMainWindow(parent)
-    , global(global)
+    //, global(global)
     , scale(global,this)
+    , global(global)
     , ui(new Ui::MainWindow)
     , procUI1(global,this)
     , procUI2(global,this)
     , modbus485(global,this)
     , hwService(global,this)
+
 
 {
 
@@ -461,8 +464,12 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         break;
 
     case 1:
-        break;
+    {
+        ComponentCard *componentCard = new ComponentCard(global,this);
+        componentCard->show();
 
+        break;
+    }
     case 2:
     {
         Rs232 *rs232 = new Rs232(global,this);
@@ -505,3 +512,11 @@ void MainWindow::on_pushButton_Mix_clicked()
     procUI1.show();
     procUI1.raise();
 }
+
+void MainWindow::on_pushButton_Recipes_clicked()
+{
+    ComponentCard *componentCard = new ComponentCard(global,this);
+    componentCard->show();
+
+}
+

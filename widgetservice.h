@@ -18,13 +18,12 @@ class WidgetService :  public  QWidget
 {
     Q_OBJECT
 public:
-    explicit WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
-
-    ~WidgetService();
-    void openWidgetServiceForm();
-    Ui::WidgetService *ui;
-    void updateSettings();
     Global &global;
+    Ui::WidgetService *ui;
+    explicit WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
+    void openWidgetServiceForm();
+    void updateSettings();
+     ~WidgetService();
 
 protected:
     void    closeEvent (QCloseEvent *event) override;
@@ -71,7 +70,7 @@ private slots:
 private:
          // WidgetDiagramElement::widDataStruct &wsettings;
     WidgetDiagramElement *widgetElement;
-    // Global &global;
+    //Global &global;
     QObject obj;
     //Ui::WidgetService *ui;
     // Pipe pipe;

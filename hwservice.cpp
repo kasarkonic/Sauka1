@@ -10,10 +10,10 @@
 
 HWService::HWService(Global &global, QWidget *parent)
     : QMainWindow(parent)
-    , global(global)
     , ui(new Ui::HWService)
     , actListForm(global,this)
     , sensListsForm(global,this)
+    , global(global)
 
 
 {

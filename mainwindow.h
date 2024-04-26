@@ -20,7 +20,7 @@
 #include "modbus485.h"
 #include "scale.h"
 
-
+#include "componentcard.h"
 
 
 
@@ -35,8 +35,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(Global &global, QWidget *parent = nullptr);
     ~MainWindow();
-
-    Global &global;
 
 public slots:
     void changeInputVal(int row, int val);
@@ -53,6 +51,8 @@ private slots:
 
     void on_pushButton_Mix_clicked();
 
+    void on_pushButton_Recipes_clicked();
+
 protected:
     Scale scale;
 
@@ -65,7 +65,7 @@ protected:
 
 private:
 
-    //Global &global;
+    Global &global;
 
     Ui::MainWindow *ui;
 
@@ -87,6 +87,8 @@ private:
     HWService hwService;
    // Rs232 *rs232;
    // ParMani *parmani;
+   // ComponentCard componentCard;
+
 
 
     int valveStyleAngle;

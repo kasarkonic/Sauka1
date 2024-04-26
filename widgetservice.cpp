@@ -9,8 +9,8 @@
 WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent)
 
     : QWidget(parent)
-    , ui(new Ui::WidgetService)
     , global(global)
+    , ui(new Ui::WidgetService)
     , widgetElement(widgetElement)
 {
     QPalette pal = QPalette();

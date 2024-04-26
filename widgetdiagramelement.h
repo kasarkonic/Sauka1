@@ -13,9 +13,8 @@ class WidgetDiagramElement : public QWidget
     Q_OBJECT
 public:
     explicit WidgetDiagramElement( Global &global, QString name, QWidget *parent = nullptr);
-    Global &global;
     virtual void updateSettings();
-
+    Global &global;
 
     struct  widDataStruct{
         int type = 4; // Dyno
@@ -61,7 +60,7 @@ protected:
     int timerIdUpd = 0;
 
 private:
-
+   // Global &global;
     int timerId = 0;
     int att = 100;
 

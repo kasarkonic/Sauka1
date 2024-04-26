@@ -1,11 +1,11 @@
 #include "parmani.h"
 #include "ui_parmani.h"
-#include "global.h"
+//#include "global.h"
 
 ParMani::ParMani(Global &global, QWidget *parent)
     : QMainWindow(parent)
-    , global(global)
     , ui(new Ui::ParMani)
+    , global(global)
 {
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
