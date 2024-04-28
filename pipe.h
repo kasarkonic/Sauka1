@@ -13,7 +13,7 @@ public:
     void get(int *pnt);
 
 
-    void setNewPosition(float koef);
+ //   void setNewPosition(float koef);
 
 
     //int starwi = 50;    //int options = 0;

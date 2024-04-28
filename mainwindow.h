@@ -101,8 +101,6 @@ private:
     void saveSettings();
     QString settingsFile;
 
-    void resizeAllKoef(float koef);
-    void updateSettingForAll();
     void initUI();
     int  timerIdUpd = 0;
     int  timerTest = 0;

@@ -24,10 +24,8 @@ class ProcUI2 : public QMainWindow
 public:
     explicit ProcUI2(Global &global, QWidget *parent = nullptr);
     ~ProcUI2();
-    float zoomKoefPf2;
 
 protected:
-
     void    resizeEvent(QResizeEvent* event) override;
     void    timerEvent(QTimerEvent *event) override;
 

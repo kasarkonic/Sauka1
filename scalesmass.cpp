@@ -10,6 +10,15 @@ ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     //settings.startY = global.widHash[settings.name].startY;
     //settings.startSize = global.widHash[settings.name].startSize;
    // timerIdUpd = startTimer(200, Qt::CoarseTimer);
+
+    //*
+        QPalette pal = QPalette();
+        pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+        pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
+        this->setAutoFillBackground(true);
+        this->setPalette(pal);
+    //*/
+
     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 }
 

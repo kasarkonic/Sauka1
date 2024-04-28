@@ -131,12 +131,13 @@ public:
     int UIYresizeSize;
 
     float zoomKoefPf1;
+    float zoomKoefPf2;
     int UIXsizePf1;
     int UIYsizePf1;
     int UIXresizeSizePf1;
     int UIYresizeSizePf1;
 
-    float zoomKoefPf2;
+
     int UIXsizePf2;
     int UIYsizePf2;
     int UIXresizeSizePf2;

@@ -35,7 +35,7 @@ public:
 
 
 
-    void setNewPosition(float koef);
+    //void setNewPosition(float koef);
     void updateSettings() override;
 
 signals:

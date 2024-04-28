@@ -63,7 +63,8 @@ private:
    // Global &global;
     int timerId = 0;
     int att = 100;
-
+    float zoomKoefPf1old = 0;
+    float zoomKoefPf2old = 0;
 
 };
 

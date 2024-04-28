@@ -8,12 +8,12 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
 
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    /*
+    //*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 50));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
- */
+ //*/
         widName = name;
     //settings.startX = global.widHash[settings.name].startX;
     //settings.startY = global.widHash[settings.name].startY;
@@ -25,7 +25,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
 void Mix::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-    //qDebug() << "Mix updateSettings" << settings.options;
+  //  qDebug() << "Mix updateSettings" << settings.currX << settings.currY << global.tick;
 
     int dSensAdr = global.widHash[widName].sensAddres1;
     speed = (int)global.sensList[dSensAdr].analog /3;

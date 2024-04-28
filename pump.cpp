@@ -4,13 +4,13 @@ Pump::Pump(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global, name,parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    /*
+    //*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
- */
+ //*/
         widName = name;
     //settings.startX = global.widHash[settings.name].startX;
     //settings.startY = global.widHash[settings.name].startY;

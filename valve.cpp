@@ -12,12 +12,12 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
 {
 
     global.widHash[settings.name].ptrCurrWidget = this;
-    /*
+    //*
     QPalette pal = QPalette();
-    pal.setColor(QPalette::Window, Qt::white);
+    pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
- */
+ //*/
     widName = name;
     //settings.startX = global.widHash[settings.name].startX;
    // settings.startY = global.widHash[settings.name].startY;
@@ -149,10 +149,10 @@ void Valve::paintEvent(QPaintEvent *event)
 void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
    // qDebug() << "Valve::timerEvent";
-    settings.options -= 5;
-    att +=1;
+   // settings.options -= 5;
+   // att +=1;
     // qDebug()<< "att" << att << settings.status;
-    if (att > 100)
+  /*  if (att > 100)
     {
         att = 0;
         settings.status +=1;
@@ -160,7 +160,7 @@ void Valve::timerEvent(QTimerEvent *event){
             settings.status = 0;
         }
     }
-
+*/
     //update();
     updateSettings();
 }

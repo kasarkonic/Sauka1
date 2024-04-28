@@ -271,22 +271,7 @@ void MainWindow::saveSettings()
 }
 
 
-void MainWindow::resizeAllKoef(float koef)
-{
-    Q_UNUSED (koef)
-    // tvertne.setNewPosition(koef);
-    // tvertne1.setNewPosition(koef);
 
-    // mix.setNewPosition(koef);
-    //
-}
-
-void MainWindow::updateSettingForAll()
-{
-
-
-
-}
 
 void MainWindow::initUI()
 {

@@ -14,13 +14,13 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     settings.currSizeWi = settings.startSizeWi;
     */
 
-/*
+//*
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-*/
+//*/
     widName = name;
     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
