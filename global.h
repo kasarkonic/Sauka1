@@ -161,7 +161,7 @@ public:
 
 
     QColor  backgroundColor = QColor(250, 250, 250, 175);   // 255 transparent
-
+    QStringList cardFileName;
 
     void needUpdateDIoutputs(int row, int val);
     void needUpdateSensorIn(int row, int val);

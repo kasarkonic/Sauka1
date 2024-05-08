@@ -467,7 +467,7 @@ hr { height: 1px; border-width: 0; }
        <item>
         <widget class="QLabel" name="label_14">
          <property name="text">
-          <string>Rediģet kartiņu:</string>
+          <string>Izvēlēties kartiņu:</string>
          </property>
         </widget>
        </item>

@@ -20,8 +20,10 @@ ComponentCard::ComponentCard(Global &global,QWidget *parent)
    // this->setPalette(pal);
     ui->setupUi(this);
 
-    cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
-    ui->comboBox_loadCard->addItems(cmbList);
+    updateCardFileName();
+    //cmbList = global.cardFileName;
+    //cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
+   // ui->comboBox_loadCard->addItems(cmbList);
     ui->comboBox_loadCard->setCurrentIndex(0);
 
 
@@ -77,6 +79,7 @@ void ComponentCard::on_pushButton_save_clicked()
         settings.setValue("Piezimes", notesTXT);
         QString str = "Kartiņa saglabāta failā:  " + settingsFile;
         ui->label_info->setText(str);
+        updateCardFileName();
     }
     else{
         ui->label_info->setText("Lūdzu ievadiet komponentes nosaukumu !");
@@ -120,9 +123,18 @@ QString text = "  Vai tiešām vēlaties\nneatgriezeniski dzēst\n        karti�
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, " ", text, QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes){
+        qDebug() << " del file: " << settingsFile;
+
+        QString str = "Nodzēsta kartiņa " + cardName;
+        ui->label_info->setText(str);
+
         QDir dir(settingsFile);
         dir.remove(settingsFile);
+
+        ui->comboBox_loadCard->removeItem(cmbListIndex);
+        updateCardFileName();
     }
+
 }
 
 
@@ -364,13 +376,43 @@ ui->label_info->setText(info);
 
 }
 
+void ComponentCard::updateCardFileName()
+{
+    QString strDir =  QApplication::applicationDirPath() + "/receptes/kartinas";
+    QDir directory(strDir);
+
+    global.cardFileName = directory.entryList(QStringList() << "*.ini",QDir::Files);
+    qDebug() << directory;
+    ui->comboBox_loadCard->clear();
+    cmbList.clear();
+    foreach(QString filename, global.cardFileName) {
+        int l = filename.length();
+        QString str = filename.remove(l-4,l);
+        str.remove(0,2);
+        cmbList.append(str);
+        qDebug()<< str;
+    }
+    ui->comboBox_loadCard->addItems(cmbList);
+
+    //cmbList = global.cardFileName;
+      //updateUI();
+}
+
 
 void ComponentCard::on_comboBox_loadCard_currentIndexChanged(int index)
 {
   qDebug() << " Combo box index" << index << cmbList[index];
+  cmbListIndex = index;
+  settingsFile = QApplication::applicationDirPath() + "/receptes/kartinas/k_";
+  settingsFile.append(cmbList[index]);
+  settingsFile.append(".ini");
+
+
 
   cardName = cmbList[index];
-  updateUI();
+
+  qDebug() << " Actual card name: " << cardName << "  index: "<< cmbListIndex<<"  file:  " <<settingsFile;
+ // updateUI();
 
 
 

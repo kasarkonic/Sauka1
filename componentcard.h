@@ -121,6 +121,8 @@ private:
     QString info;
 
     QStringList cmbList;
+    int cmbListIndex;
+    void updateCardFileName();
 };
 
 #endif // COMPONENTCARD_H
