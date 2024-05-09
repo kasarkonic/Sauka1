@@ -382,16 +382,20 @@ void ComponentCard::updateCardFileName()
     QDir directory(strDir);
 
     global.cardFileName = directory.entryList(QStringList() << "*.ini",QDir::Files);
-    qDebug() << directory;
+    qDebug() << "directory" << strDir << global.cardFileName;
     ui->comboBox_loadCard->clear();
     cmbList.clear();
+     int i = 0;
     foreach(QString filename, global.cardFileName) {
         int l = filename.length();
         QString str = filename.remove(l-4,l);
         str.remove(0,2);
         cmbList.append(str);
-        qDebug()<< str;
+        //ui->comboBox_loadCard->addItem(str);
+        qDebug()<< i <<str;
+        i++;
     }
+    qDebug()<< cmbList;
     ui->comboBox_loadCard->addItems(cmbList);
 
     //cmbList = global.cardFileName;
