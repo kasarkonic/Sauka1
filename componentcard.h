@@ -88,6 +88,10 @@ private slots:
 
     void on_comboBox_loadCard_currentIndexChanged(int index);
 
+
+
+    void on_comboBox_loadCard_highlighted(int index);
+
 private:
     Ui::ComponentCard *ui;
     Global &global;

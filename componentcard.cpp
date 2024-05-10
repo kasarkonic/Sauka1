@@ -131,7 +131,8 @@ QString text = "  Vai tiešām vēlaties\nneatgriezeniski dzēst\n        karti�
         QDir dir(settingsFile);
         dir.remove(settingsFile);
 
-        ui->comboBox_loadCard->removeItem(cmbListIndex);
+       // ui->comboBox_loadCard->removeItem(cmbListIndex);
+
         updateCardFileName();
     }
 
@@ -382,22 +383,35 @@ void ComponentCard::updateCardFileName()
     QDir directory(strDir);
 
     global.cardFileName = directory.entryList(QStringList() << "*.ini",QDir::Files);
-    qDebug() << "directory" << strDir << global.cardFileName;
+    qDebug() << "directory: " << strDir << global.cardFileName;
+    qDebug() << "files : "  << global.cardFileName;
     ui->comboBox_loadCard->clear();
     cmbList.clear();
+
+
+
+
      int i = 0;
     foreach(QString filename, global.cardFileName) {
         int l = filename.length();
         QString str = filename.remove(l-4,l);
         str.remove(0,2);
         cmbList.append(str);
-        //ui->comboBox_loadCard->addItem(str);
+
+
+       // ui->comboBox_loadCard->addItem(str);
+        cmbList.append(filename);   // for testing
+
+
         qDebug()<< i <<str;
         i++;
     }
-    qDebug()<< cmbList;
-    ui->comboBox_loadCard->addItems(cmbList);
 
+    qDebug()<< "cmbList len"<<  cmbList.length() << "   " << cmbList;
+   // on_comboBox_loadCard_currentIndexChanged(0);
+    if(cmbList.length()){
+    ui->comboBox_loadCard->addItems(cmbList);
+    }
     //cmbList = global.cardFileName;
       //updateUI();
 }
@@ -421,5 +435,11 @@ void ComponentCard::on_comboBox_loadCard_currentIndexChanged(int index)
 
 
 
+}
+
+
+void ComponentCard::on_comboBox_loadCard_highlighted(int index)
+{
+    qDebug() <<  "  on_comboBox_loadCard_highlighted   " << index ;
 }
 
