@@ -10,6 +10,7 @@
 #include "rs232.h"
 #include "parmani.h"
 #include "componentcard.h"
+#include "recipet.h"
 
 #include <QMouseEvent>
 #include "global.h"
@@ -306,7 +307,7 @@ void MainWindow::initUI()
     str.append("10.11:53 BRĪDINĀJUMS ! vārsta V4 aizversanas laiks 20s morma 12s\n");
     ui->textEdit_Field->setText(str);
 
-    cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
+    cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Par_mani";
     ui->comboBox->addItems(cmbList);
     ui->comboBox->setCurrentIndex(0);
 
@@ -442,7 +443,7 @@ void MainWindow::on_pushButton_Stop_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     qDebug() << " Combo box index" << index << cmbList[index];
-    // cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
+    // cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Par_mani";
 
     switch (index) {
     case 0:
@@ -450,26 +451,33 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
     case 1:
     {
+        Recipet *recipet = new Recipet(global,this);
+        recipet->show();
+
+        break;
+    }
+    case 2:
+    {
         ComponentCard *componentCard = new ComponentCard(global,this);
         componentCard->show();
 
         break;
     }
-    case 2:
+    case 3:
     {
         Rs232 *rs232 = new Rs232(global,this);
         //rs232 = new Rs232(global,this);
         rs232->show();
         break;
     }
-    case 3:
+    case 4:
     {
         //HWService *hwService = new HWService(global,this);
         //hwService = new HWService(global,this);
         hwService.show();
         break;
     }
-    case 4:
+    case 5:
     {
         ParMani *parmani = new ParMani(global,this);
         //parmani = new ParMani(global,this);

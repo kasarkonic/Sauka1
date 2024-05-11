@@ -30,7 +30,7 @@ SOURCES += \
     procui1.cpp \
     procui2.cpp \
     pump.cpp \
-    recipe.cpp \
+    recipet.cpp \
     rs232.cpp \
     scale.cpp \
     scalesbase.cpp \
@@ -58,7 +58,7 @@ HEADERS += \
     procui1.h \
     procui2.h \
     pump.h \
-    recipe.h \
+    recipet.h \
     rs232.h \
     scale.h \
     scalesbase.h \
@@ -79,7 +79,7 @@ FORMS += \
     parmani.ui \
     procui1.ui \
     procui2.ui \
-    recipe.ui \
+    recipet.ui \
     rs232.ui \
     scale.ui \
     scalesbase.ui \

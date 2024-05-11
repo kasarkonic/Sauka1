@@ -21,6 +21,7 @@
 #include "scale.h"
 
 #include "componentcard.h"
+#include "recipet.h"
 
 
 
@@ -87,7 +88,6 @@ private:
     HWService hwService;
    // Rs232 *rs232;
    // ParMani *parmani;
-   // ComponentCard componentCard;
 
 
 

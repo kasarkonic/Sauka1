@@ -116,6 +116,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_moisture">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Mitrums</string>
          </property>
@@ -148,6 +151,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_dray">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Sausna</string>
          </property>
@@ -180,6 +186,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_organic">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Organiska viela</string>
          </property>
@@ -212,6 +221,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_humin">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Humīnskābes</string>
          </property>
@@ -244,6 +256,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_sarms">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Sārms</string>
          </property>
@@ -276,6 +291,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_KO">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Kālija Oksīds</string>
          </property>

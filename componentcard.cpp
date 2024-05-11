@@ -18,7 +18,22 @@ ComponentCard::ComponentCard(Global &global,QWidget *parent)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
    // this->setAutoFillBackground(true);
    // this->setPalette(pal);
+
+
+
+
+
     ui->setupUi(this);
+
+    ui->lineEdit_moisture->setReadOnly(true);
+    ui->lineEdit_dray->setReadOnly(true);
+    ui->lineEdit_organic->setReadOnly(true);
+    ui->lineEdit_humin->setReadOnly(true);
+    ui->lineEdit_sarms->setReadOnly(true);
+    ui->lineEdit_KO->setReadOnly(true);
+
+
+
 
     updateCardFileName();
     //cmbList = global.cardFileName;
@@ -51,7 +66,18 @@ void ComponentCard::on_pushButton_save_clicked()
 {
 
     if(cardName.length() > 0){
-        settingsFile = QApplication::applicationDirPath() + "/receptes/kartinas/k_" + cardName + ".ini";
+        readAllUIFields();
+
+        QDateTime date = QDateTime::currentDateTime();
+
+        QString currentTime = "Kartiņa saglabata ";
+        currentTime.append(date.toString("dd.MM.yyyy hh:mm:ss"));
+        currentTime.append("\n");
+
+        notesTXT = currentTime.append(notesTXT);
+
+        settingsFile = itemTofileName(cardName);
+       // settingsFile = QApplication::applicationDirPath() + "/receptes/kartinas/k_" + cardName + ".ini";
         qDebug() << "settingsFile" << settingsFile;
         QSettings settings(settingsFile, QSettings::IniFormat);
 
@@ -78,8 +104,9 @@ void ComponentCard::on_pushButton_save_clicked()
 
         settings.setValue("Piezimes", notesTXT);
         QString str = "Kartiņa saglabāta failā:  " + settingsFile;
+
         ui->label_info->setText(str);
-        updateCardFileName();
+       // updateCardFileName();
     }
     else{
         ui->label_info->setText("Lūdzu ievadiet komponentes nosaukumu !");
@@ -90,7 +117,7 @@ void ComponentCard::on_pushButton_save_clicked()
 void ComponentCard::on_pushButton_clear_clicked()
 {
     ok = false;
-    cardName = "";
+    //cardName = "";
     moisture = "Mitrums";
     moistureVal = 0;
     dray = "Sausna";
@@ -155,6 +182,7 @@ void ComponentCard::on_lineEdit_moistureVol_editingFinished()
         else{
             ui->lineEdit_moistureVol->setText("moistureVol");
         }
+        qDebug() << "moistureVal: " << moistureVal;
 }
 
 
@@ -337,26 +365,26 @@ void ComponentCard::on_textEdit_notes_textChanged()
 
 void ComponentCard::on_pushButton_exit_clicked()
 {
-
+   // updateCardFileName();   // for testing
 }
 
 void ComponentCard::updateUI()
 {
 ui->lineEdit_comp_name->setText(cardName);
-ui->lineEdit_moisture->setText(moisture);
+//ui->lineEdit_moisture->setText(moisture);
 ui->lineEdit_moistureVol->setText(QString::number(moistureVal));
-ui->lineEdit_dray->setText(dray);
+//ui->lineEdit_dray->setText(dray);
 ui->lineEdit_drayVol->setText(QString::number(drayVal));
-ui->lineEdit_organic->setText(organic);
+//ui->lineEdit_organic->setText(organic);
 ui->lineEdit_organicVol->setText(QString::number(organicVal));
 
-ui->lineEdit_humin->setText(humin);
+//ui->lineEdit_humin->setText(humin);
 ui->lineEdit_huminVol->setText(QString::number(huminVal));
 
-ui->lineEdit_sarms->setText(sarms);
+//ui->lineEdit_sarms->setText(sarms);
 ui->lineEdit_sarmsVol->setText(QString::number(sarmsVal));
 
-ui->lineEdit_KO->setText(KO);
+//ui->lineEdit_KO->setText(KO);
 ui->lineEdit_KOVol->setText(QString::number(KOVal));
 
 ui->lineEdit_param7->setText(param7);
@@ -383,57 +411,134 @@ void ComponentCard::updateCardFileName()
     QDir directory(strDir);
 
     global.cardFileName = directory.entryList(QStringList() << "*.ini",QDir::Files);
-    qDebug() << "directory: " << strDir << global.cardFileName;
+   // qDebug() << "directory: " << strDir;
     qDebug() << "files : "  << global.cardFileName;
     ui->comboBox_loadCard->clear();
     cmbList.clear();
 
-
-
-
-     int i = 0;
+    qDebug() << "-----------------------";
+    int i = 0;
     foreach(QString filename, global.cardFileName) {
-        int l = filename.length();
-        QString str = filename.remove(l-4,l);
-        str.remove(0,2);
-        cmbList.append(str);
 
-
-       // ui->comboBox_loadCard->addItem(str);
-        cmbList.append(filename);   // for testing
-
-
-        qDebug()<< i <<str;
+        qDebug()<< "filename.resize(2) == " << filename[0] << filename[1];
+      if(filename[0] == 'k' && filename[1] == '_' ){
+        cmbList.append(fileNameToItem(filename));
+        qDebug() << "filename " << filename << cmbList[i];
         i++;
+      }
     }
 
-    qDebug()<< "cmbList len"<<  cmbList.length() << "   " << cmbList;
+    qDebug()<< "cmbList len = "<<  cmbList.length() << "   " << cmbList;
    // on_comboBox_loadCard_currentIndexChanged(0);
     if(cmbList.length()){
-    ui->comboBox_loadCard->addItems(cmbList);
+        ui->comboBox_loadCard->addItems(cmbList);
     }
     //cmbList = global.cardFileName;
-      //updateUI();
+    //updateUI();
+}
+
+QString ComponentCard::fileNameToItem(QString fname)
+{
+    int len = fname.length();
+   // QString str = "";
+
+    if(len > 5){
+        fname.resize(len - 4);
+    }
+    if(fname.length() > 3){
+        fname.remove(0,2);
+    }
+    qDebug() << "fileNameToItem:  " << fname;
+    return fname;
+
+}
+
+QString ComponentCard::itemTofileName(QString item)
+{
+    QString fName = QApplication::applicationDirPath() + "/receptes/kartinas/k_";
+    fName.append(item);
+    fName.append(".ini");
+    qDebug() << "fName: " << fName;
+    return fName;
+}
+
+void ComponentCard::updateCardData(QString fname)
+{
+
+    qDebug() << "update settingsFile" << fname;
+    QSettings settings(fname, QSettings::IniFormat);
+
+    cardName = settings.value("Komponentes_nosaukums", "").toString();
+
+    moistureVal = settings.value("Mitrums", "").toInt();
+    drayVal = settings.value("Sausne",  "").toInt();
+    organicVal = settings.value("Organiskas_vielas",  "").toInt();
+    huminVal = settings.value("Humini",  "").toInt();
+    sarmsVal = settings.value("Sarms",  "").toInt();
+    KOVal = settings.value("K2O",  "").toInt();;
+
+    param7 = settings.value("param_7",  "").toString();
+    param7Val = settings.value("parametrs_7", "").toInt();
+
+    param8 = settings.value("param_8",  "").toString();
+    param8Val = settings.value("parametrs_8", "").toInt();
+
+    param9 = settings.value("param_9",  "").toString();
+    param9Val = settings.value("parametrs_9", "").toInt();
+
+    param10 = settings.value("param_10",  "").toString();
+    param10Val = settings.value("parametrs_10", "").toInt();
+
+    notesTXT = settings.value("Piezimes", "").toString();
+    QString str = "Nolasīts kartiņas fails:  " + settingsFile;
+    ui->label_info->setText(str);
+    updateUI();
+}
+
+void ComponentCard::readAllUIFields()
+{
+    on_lineEdit_moisture_editingFinished();
+    on_lineEdit_moistureVol_editingFinished();
+    on_lineEdit_dray_editingFinished();
+    on_lineEdit_drayVol_editingFinished();
+    on_lineEdit_organic_editingFinished();
+    on_lineEdit_organicVol_editingFinished();
+    on_lineEdit_humin_editingFinished();
+    on_lineEdit_huminVol_editingFinished();
+    on_lineEdit_sarms_editingFinished();
+    on_lineEdit_sarmsVol_editingFinished();
+    on_lineEdit_KO_editingFinished();
+    on_lineEdit_KOVol_editingFinished();
+    on_lineEdit_param7_editingFinished();
+    on_lineEdit_param7_Vol_editingFinished();
+    on_lineEdit_param8_editingFinished();
+    on_lineEdit_param8_Vol_editingFinished();
+    on_lineEdit_param9_editingFinished();
+    on_lineEdit_param9_Vol_editingFinished();
+    on_lineEdit_param10_editingFinished();
+    on_lineEdit_param10Vol_editingFinished();
+    on_textEdit_notes_textChanged();
 }
 
 
 void ComponentCard::on_comboBox_loadCard_currentIndexChanged(int index)
 {
-  qDebug() << " Combo box index" << index << cmbList[index];
-  cmbListIndex = index;
-  settingsFile = QApplication::applicationDirPath() + "/receptes/kartinas/k_";
-  settingsFile.append(cmbList[index]);
-  settingsFile.append(".ini");
+     qDebug() << " ComponentCard::on_comboBox_loadCard_currentIndexChanged" << index ;
+    if(index < 0){
+        index = 0;
+    }
 
-
-
-  cardName = cmbList[index];
-
-  qDebug() << " Actual card name: " << cardName << "  index: "<< cmbListIndex<<"  file:  " <<settingsFile;
- // updateUI();
-
-
-
+        cmbListIndex = index;
+        settingsFile = "";
+        if(cmbList.length() >= index){
+            settingsFile = itemTofileName(cmbList[index]);
+        }
+  else{
+      cardName = " ????????????????";
+  }
+  qDebug() << " Actual card name: " << cmbList[index] << "  index: "<< cmbListIndex<<"  file:  " <<settingsFile;
+  updateCardData(settingsFile);
+  updateUI();
 
 }
 
@@ -441,5 +546,6 @@ void ComponentCard::on_comboBox_loadCard_currentIndexChanged(int index)
 void ComponentCard::on_comboBox_loadCard_highlighted(int index)
 {
     qDebug() <<  "  on_comboBox_loadCard_highlighted   " << index ;
+    on_comboBox_loadCard_currentIndexChanged(index);
 }
 

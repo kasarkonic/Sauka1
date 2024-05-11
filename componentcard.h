@@ -8,7 +8,7 @@ namespace Ui {
 class ComponentCard;
 }
 
-class ComponentCard : public QWidget //QMainWindow
+class ComponentCard : public QWidget
 {
     Q_OBJECT
 
@@ -127,6 +127,10 @@ private:
     QStringList cmbList;
     int cmbListIndex;
     void updateCardFileName();
+    QString fileNameToItem(QString fname);
+    QString itemTofileName(QString item);
+    void updateCardData(QString fname);
+    void readAllUIFields();
 };
 
 #endif // COMPONENTCARD_H
