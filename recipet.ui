@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>650</height>
+    <width>565</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,1,10,10,10,10,10,10,3,10,1">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,1,10,10,10,10,10,10,0,0,0,0,3,10,1">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -45,7 +45,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="lineEdit_Rec_name"/>
        </item>
       </layout>
      </item>
@@ -92,12 +92,12 @@
        <item>
         <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>1.</string>
+          <string>1. </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="comboBox_1_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_2">
@@ -113,7 +113,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="lineEdit_1_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -122,12 +122,12 @@
        <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>2.</string>
+          <string>2. </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_2"/>
+        <widget class="QComboBox" name="comboBox_2_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_3">
@@ -143,7 +143,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_3"/>
+        <widget class="QLineEdit" name="lineEdit_2_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -152,12 +152,12 @@
        <item>
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>3.</string>
+          <string>3. </string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_3"/>
+        <widget class="QComboBox" name="comboBox_3_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_4">
@@ -173,7 +173,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_4"/>
+        <widget class="QLineEdit" name="lineEdit_3_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -182,7 +182,7 @@
        <item>
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>4.</string>
+          <string>4. </string>
          </property>
         </widget>
        </item>
@@ -212,7 +212,7 @@
        <item>
         <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>5.</string>
+          <string>5. </string>
          </property>
         </widget>
        </item>
@@ -242,7 +242,7 @@
        <item>
         <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>6.</string>
+          <string>6. </string>
          </property>
         </widget>
        </item>
@@ -264,6 +264,126 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_7"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,20,1,3">
+       <item>
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>7. </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_11"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_8"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,20,1,3">
+       <item>
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>8. </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_10"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_9"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="0,20,1,3">
+       <item>
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>9. </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_9"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_10"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,20,1,3">
+       <item>
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>10.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_8"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_11"/>
        </item>
       </layout>
      </item>
