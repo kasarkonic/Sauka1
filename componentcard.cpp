@@ -103,10 +103,11 @@ void ComponentCard::on_pushButton_save_clicked()
         settings.setValue("parametrs_10", QString::number(param10Val));
 
         settings.setValue("Piezimes", notesTXT);
+        settings.sync();
         QString str = "Kartiņa saglabāta failā:  " + settingsFile;
 
         ui->label_info->setText(str);
-       // updateCardFileName();
+        updateCardFileName();
     }
     else{
         ui->label_info->setText("Lūdzu ievadiet komponentes nosaukumu !");
