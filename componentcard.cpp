@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QMessageBox>
-#include <QComboBox>
+//#include <QComboBox>
 
 ComponentCard::ComponentCard(Global &global,QWidget *parent)
     //: QMainWindow(parent)
@@ -70,7 +70,7 @@ void ComponentCard::on_pushButton_save_clicked()
 
         QDateTime date = QDateTime::currentDateTime();
 
-        QString currentTime = "Kartiņa saglabata ";
+        QString currentTime = "Kartiņa izveidota ";
         currentTime.append(date.toString("dd.MM.yyyy hh:mm:ss"));
         currentTime.append("\n");
 
@@ -372,34 +372,20 @@ void ComponentCard::on_pushButton_exit_clicked()
 void ComponentCard::updateUI()
 {
 ui->lineEdit_comp_name->setText(cardName);
-//ui->lineEdit_moisture->setText(moisture);
 ui->lineEdit_moistureVol->setText(QString::number(moistureVal));
-//ui->lineEdit_dray->setText(dray);
 ui->lineEdit_drayVol->setText(QString::number(drayVal));
-//ui->lineEdit_organic->setText(organic);
 ui->lineEdit_organicVol->setText(QString::number(organicVal));
-
-//ui->lineEdit_humin->setText(humin);
 ui->lineEdit_huminVol->setText(QString::number(huminVal));
-
-//ui->lineEdit_sarms->setText(sarms);
 ui->lineEdit_sarmsVol->setText(QString::number(sarmsVal));
-
-//ui->lineEdit_KO->setText(KO);
 ui->lineEdit_KOVol->setText(QString::number(KOVal));
-
 ui->lineEdit_param7->setText(param7);
 ui->lineEdit_param7_Vol->setText(QString::number(param7Val));
-
 ui->lineEdit_param8->setText(param8);
 ui->lineEdit_param8_Vol->setText(QString::number(param8Val));
-
 ui->lineEdit_param9->setText(param9);
 ui->lineEdit_param9_Vol->setText(QString::number(param9Val));
-
 ui->lineEdit_param10->setText(param10);
 ui->lineEdit_param10Vol->setText(QString::number(param10Val));
-
 ui->textEdit_notes->setText(notesTXT);
 ui->label_info->setText(info);
 

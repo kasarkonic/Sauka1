@@ -187,7 +187,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_4"/>
+        <widget class="QComboBox" name="comboBox_4_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_5">
@@ -203,7 +203,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_5"/>
+        <widget class="QLineEdit" name="lineEdit_4_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -217,7 +217,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_5"/>
+        <widget class="QComboBox" name="comboBox_5_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_6">
@@ -233,7 +233,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_6"/>
+        <widget class="QLineEdit" name="lineEdit_5_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -247,7 +247,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_6"/>
+        <widget class="QComboBox" name="comboBox_6_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_7">
@@ -263,7 +263,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_7"/>
+        <widget class="QLineEdit" name="lineEdit_6_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -277,7 +277,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_11"/>
+        <widget class="QComboBox" name="comboBox_7_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_8">
@@ -293,7 +293,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_8"/>
+        <widget class="QLineEdit" name="lineEdit_7_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -307,7 +307,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_10"/>
+        <widget class="QComboBox" name="comboBox_8_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_9">
@@ -323,7 +323,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_9"/>
+        <widget class="QLineEdit" name="lineEdit_8_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -337,7 +337,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_9"/>
+        <widget class="QComboBox" name="comboBox_9_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_10">
@@ -353,7 +353,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_10"/>
+        <widget class="QLineEdit" name="lineEdit_9_ingr_val"/>
        </item>
       </layout>
      </item>
@@ -367,7 +367,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_8"/>
+        <widget class="QComboBox" name="comboBox_10_ingr"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_11">
@@ -383,21 +383,21 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_11"/>
+        <widget class="QLineEdit" name="lineEdit_10_ingr_val"/>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_12">
        <item>
-        <widget class="QTextEdit" name="textEdit"/>
+        <widget class="QTextEdit" name="textEdit_notes"/>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="pushButton_exit">
          <property name="text">
           <string>Iziet bez izmaiņām</string>
          </property>
@@ -411,24 +411,24 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_7"/>
+        <widget class="QComboBox" name="comboBox_reciep"/>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="pushButton_save">
          <property name="text">
           <string>Saglabāt</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="pushButton_clear">
          <property name="text">
           <string>Notīrīt laukus</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pushButton_delet">
          <property name="text">
           <string>Nodzēst recepti</string>
          </property>
@@ -439,7 +439,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="label_notes">
          <property name="text">
           <string>TextLabel</string>
          </property>
