@@ -189,14 +189,15 @@ void Recipet::updateCardFileName()
 
     cmbList.clear();
 
-    qDebug() << "-----------------------";
+    qDebug() << "-----------------------" << cardFileName;
     int i = 0;
+
     foreach(QString filename, cardFileName) {
 
         //qDebug()<< "filename.resize(2) == " << filename[0] << filename[1];
       if(filename[0] == 'k' && filename[1] == '_' ){
         cmbList.append(fileNameToItem(filename));
-        qDebug() << "filename " << filename << cmbList[i];
+        qDebug() << "filename " << cmbList.length() << filename << cmbList[i];
         i++;
       }
 
@@ -204,13 +205,15 @@ void Recipet::updateCardFileName()
 
     qDebug()<< "cmbList len = "<<  cmbList.length() << "   " << cmbList;
     if(cmbList.length()){
-        ui->comboBox_1_ingr->addItems(cmbList);
-        ui->comboBox_2_ingr->addItems(cmbList);
-        ui->comboBox_3_ingr->addItems(cmbList);
-        ui->comboBox_4_ingr->addItems(cmbList);
-        ui->comboBox_5_ingr->addItems(cmbList);
-        ui->comboBox_6_ingr->addItems(cmbList);
-        ui->comboBox_7_ingr->addItems(cmbList);
+        qDebug()<< "cmbList.len = ";
+        //ui->comboBox_1_ingr->addItem("filename ");
+        //ui->comboBox_1_ingr->addItems(cmbList);
+        //ui->comboBox_2_ingr->addItems(cmbList);
+        //ui->comboBox_3_ingr->addItems(cmbList);
+        //ui->comboBox_4_ingr->addItems(cmbList);
+        //ui->comboBox_5_ingr->addItems(cmbList);
+        //ui->comboBox_6_ingr->addItems(cmbList);
+        //ui->comboBox_7_ingr->addItems(cmbList);
 
     }
 
