@@ -16,7 +16,9 @@ Recipet::Recipet(Global &global,QWidget *parent)
     ui->comboBox_8_ingr->addItems(cmbList);
     ui->comboBox_9_ingr->addItems(cmbList);
     ui->comboBox_10_ingr->addItems(cmbList);
-   updateCardFileName();
+    clearFilds();
+    updateCardFileName();
+
 }
 
 Recipet::~Recipet()
@@ -40,7 +42,7 @@ void Recipet::on_pushButton_save_clicked()
 {
 
     recName = ui->lineEdit_Rec_name->text();
-    if(ui->lineEdit_Rec_name){
+    if(recName.length() >0){
 
         QDateTime date = QDateTime::currentDateTime();
         QString currentTime = "Recepte izveidota ";
@@ -57,9 +59,41 @@ void Recipet::on_pushButton_save_clicked()
         settings.setValue("Receptes_nosaukums", recName);
 
         settings.setValue("1.komponente", ui->comboBox_1_ingr->currentText());
- ////////       int ui->lineEdit_1_ingr_val->text()
- ///////       settings.setValue("1.komponente_val", QString::number(ui->lineEdit_1_ingr_val->text()));
+        settings.setValue("1.komponente_vol", QString::number(ingr1_vol));
 
+        settings.setValue("2.komponente", ui->comboBox_2_ingr->currentText());
+        settings.setValue("2.komponente_vol", QString::number(ingr2_vol));
+
+        settings.setValue("3.komponente", ui->comboBox_3_ingr->currentText());
+        settings.setValue("3.komponente_vol", QString::number(ingr3_vol));
+
+        settings.setValue("4.komponente", ui->comboBox_4_ingr->currentText());
+        settings.setValue("4.komponente_vol", QString::number(ingr4_vol));
+
+        settings.setValue("5.komponente", ui->comboBox_5_ingr->currentText());
+        settings.setValue("5.komponente_vol", QString::number(ingr5_vol));
+
+        settings.setValue("6.komponente", ui->comboBox_6_ingr->currentText());
+        settings.setValue("6.komponente_vol", QString::number(ingr6_vol));
+
+        settings.setValue("7.komponente", ui->comboBox_7_ingr->currentText());
+        settings.setValue("7.komponente_vol", QString::number(ingr7_vol));
+
+        settings.setValue("1.process", ui->comboBox_8_ingr->currentText());
+        settings.setValue("1.process_vol", QString::number(process1_vol));
+
+        settings.setValue("2.process", ui->comboBox_9_ingr->currentText());
+        settings.setValue("2.process_vol", QString::number(process2_vol));
+
+        settings.setValue("3.process", ui->comboBox_10_ingr->currentText());
+        settings.setValue("3.process_vol", QString::number(process3_vol));
+
+        settings.setValue("Piezimes", notesTXT);
+        settings.sync();
+
+        QString str = "Recepte saglabāta failā:  " + settingsFile;
+        ui->label_notes->setText(str);
+     //   updateCardFileName();
 
 
     }
@@ -94,7 +128,7 @@ QString Recipet::fileNameToItem(QString fname)
     if(len > 5){
         fname.resize(len - 4);
     }
-    if(fname.length() > 3){
+    if(fname.length() >= 3){
         fname.remove(0,2);
     }
     qDebug() << "fileNameToItem:  " << fname;
@@ -118,7 +152,7 @@ QString Recipet::fileNameToItemR(QString fname)
     if(len > 5){
         fname.resize(len - 4);
     }
-    if(fname.length() > 3){
+    if(fname.length() >= 3){
         fname.remove(0,2);
     }
     qDebug() << "RfileNameToItem:  " << fname;
@@ -127,7 +161,7 @@ QString Recipet::fileNameToItemR(QString fname)
 
 QString Recipet::itemTofileNameR(QString item)
 {
-    QString fName = QApplication::applicationDirPath() + "/receptes/kartinas/r_";
+    QString fName = QApplication::applicationDirPath() + "/receptes/r_";
     fName.append(item);
     fName.append(".ini");
     qDebug() << "RfName: " << fName;
@@ -180,5 +214,149 @@ void Recipet::updateCardFileName()
 
     }
 
+}
+
+void Recipet::clearFilds()
+{
+    ingr1_vol = 0;
+    ingr2_vol = 0;
+    ingr3_vol = 0;
+    ingr4_vol = 0;
+    ingr5_vol = 0;
+    ingr6_vol = 0;
+    ingr7_vol = 0;
+    process1_vol = 0;
+    process2_vol = 0;
+    process3_vol = 0;
+}
+
+
+void Recipet::on_lineEdit_1_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_1_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr1_vol = val;
+    }
+    else{
+        ui->lineEdit_1_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr1_vol: " << ingr1_vol;
+}
+
+
+void Recipet::on_lineEdit_2_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_2_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr2_vol = val;
+    }
+    else{
+        ui->lineEdit_2_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr2_vol: " << ingr2_vol;
+}
+
+
+void Recipet::on_lineEdit_3_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_3_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr3_vol = val;
+    }
+    else{
+        ui->lineEdit_3_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr3_vol: " << ingr3_vol;
+}
+
+
+void Recipet::on_lineEdit_4_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_4_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr4_vol = val;
+    }
+    else{
+        ui->lineEdit_4_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr4_vol: " << ingr4_vol;
+}
+
+
+void Recipet::on_lineEdit_5_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_5_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr5_vol = val;
+    }
+    else{
+        ui->lineEdit_5_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr5_vol: " << ingr5_vol;
+}
+
+
+void Recipet::on_lineEdit_6_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_6_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr6_vol = val;
+    }
+    else{
+        ui->lineEdit_6_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr6_vol: " << ingr6_vol;
+}
+
+
+void Recipet::on_lineEdit_7_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_7_ingr_val->text().toInt(&ok);
+    if(ok){
+        ingr7_vol = val;
+    }
+    else{
+        ui->lineEdit_7_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "ingr7_vol: " << ingr7_vol;
+}
+
+
+void Recipet::on_lineEdit_8_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_8_ingr_val->text().toInt(&ok);
+    if(ok){
+        process1_vol = val;
+    }
+    else{
+        ui->lineEdit_8_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "process1_vol: " << process1_vol;
+}
+
+
+void Recipet::on_lineEdit_9_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_9_ingr_val->text().toInt(&ok);
+    if(ok){
+        process2_vol = val;
+    }
+    else{
+        ui->lineEdit_9_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "process2_vol: " << process2_vol;
+}
+
+
+void Recipet::on_lineEdit_10_ingr_val_editingFinished()
+{
+    int val = ui->lineEdit_10_ingr_val->text().toInt(&ok);
+    if(ok){
+        process3_vol = val;
+    }
+    else{
+        ui->lineEdit_10_ingr_val->setText("kļūda ievadot");
+    }
+    qDebug() << "process3_vol: " << process3_vol;
 }
 

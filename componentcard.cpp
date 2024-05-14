@@ -432,7 +432,7 @@ QString ComponentCard::fileNameToItem(QString fname)
     if(len > 5){
         fname.resize(len - 4);
     }
-    if(fname.length() > 3){
+    if(fname.length() >= 3){
         fname.remove(0,2);
     }
     qDebug() << "fileNameToItem:  " << fname;
