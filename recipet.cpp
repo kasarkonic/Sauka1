@@ -236,18 +236,20 @@ void Recipet::updateRecFileName()
 
     qDebug() << "-----------------------" << rcardFileName;
     int i = 0;
-
+/*
     foreach(QString filename, rcardFileName) {
 
-        //qDebug()<< "filename.resize(2) == " << filename[0] << filename[1];
-        qDebug() << "rfilename " << rcmbList.length() << filename << rcmbList[i];
-        if(filename[0] == 'r' && filename[1] == '_' ){
-            rcmbList.append(fileNameToItemR(filename));
-            i++;
+        qDebug()<< "filename " << filename;
+            if(filename.length() >= 7){
+           // if(filename[0] == 'r' && filename[1] == '_' ){
+                rcmbList.append(fileNameToItemR(filename));
+                qDebug() << "rfilename " << rcmbList.length() << filename << rcmbList[i];
+                i++;
+          //  }
         }
     }
-
-    qDebug()<< "cmbList len = "<<  rcmbList.length() << "   " << rcmbList;
+*/
+    qDebug()<< "rcmbList len = "<<  rcmbList.length() << "   " << rcmbList;
     if(rcmbList.length()){
         ui->comboBox_reciep->addItems(rcmbList);
     }
