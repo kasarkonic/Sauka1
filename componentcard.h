@@ -22,11 +22,6 @@ private slots:
     void on_lineEdit_comp_name_editingFinished();
 
 
-
-
-
-
-
     void on_pushButton_edit_clicked();
 
     void on_pushButton_save_clicked();

@@ -15,6 +15,8 @@ public:
     explicit Recipet(Global &global, QWidget *parent = nullptr);
     ~Recipet();
 
+  //  void setUpdateUI(const void &newUpdateUI);
+
 private slots:
     void on_pushButton_delet_clicked();
 
@@ -53,6 +55,10 @@ private:
     Global &global;
     QStringList cmbList;
     QStringList cardFileName;
+    QStringList rcmbList;
+    QStringList rcardFileName;
+    void updateUI();
+    void updateRecdData(QString fname);
     QString recName;
     QString fileNameToItem(QString fname);
     QString itemTofileName(QString item);
@@ -60,6 +66,7 @@ private:
     QString fileNameToItemR(QString fname);
     QString itemTofileNameR(QString item);
     void updateCardFileName();
+    void updateRecFileName();
     void clearFilds();
     bool ok;
     int ingr1_vol;

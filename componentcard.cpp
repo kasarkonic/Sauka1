@@ -388,8 +388,6 @@ ui->lineEdit_param10->setText(param10);
 ui->lineEdit_param10Vol->setText(QString::number(param10Val));
 ui->textEdit_notes->setText(notesTXT);
 ui->label_info->setText(info);
-
-
 }
 
 void ComponentCard::updateCardFileName()

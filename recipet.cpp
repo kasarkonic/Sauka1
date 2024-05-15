@@ -18,6 +18,7 @@ Recipet::Recipet(Global &global,QWidget *parent)
     ui->comboBox_10_ingr->addItems(cmbList);
     clearFilds();
     updateCardFileName();
+    updateRecFileName();
 
 }
 
@@ -93,7 +94,7 @@ void Recipet::on_pushButton_save_clicked()
 
         QString str = "Recepte saglabāta failā:  " + settingsFile;
         ui->label_notes->setText(str);
-     //   updateCardFileName();
+        updateRecFileName();
 
 
     }
@@ -111,12 +112,16 @@ void Recipet::on_pushButton_exit_clicked()
 
 void Recipet::on_comboBox_reciep_highlighted(int index)
 {
-
+    //updateRecdData(rcardFileName[index]);
 }
 
 
 void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
 {
+
+    qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
+     //       updateRecdData(rcardFileName[index]);
+
 
 }
 
@@ -155,7 +160,7 @@ QString Recipet::fileNameToItemR(QString fname)
     if(fname.length() >= 3){
         fname.remove(0,2);
     }
-    qDebug() << "RfileNameToItem:  " << fname;
+    qDebug() << "RfileNameToItem:  " << fname << fname.length();
     return fname;
 }
 
@@ -205,17 +210,48 @@ void Recipet::updateCardFileName()
 
     qDebug()<< "cmbList len = "<<  cmbList.length() << "   " << cmbList;
     if(cmbList.length()){
-        qDebug()<< "cmbList.len = ";
-        //ui->comboBox_1_ingr->addItem("filename ");
-        //ui->comboBox_1_ingr->addItems(cmbList);
-        //ui->comboBox_2_ingr->addItems(cmbList);
-        //ui->comboBox_3_ingr->addItems(cmbList);
-        //ui->comboBox_4_ingr->addItems(cmbList);
-        //ui->comboBox_5_ingr->addItems(cmbList);
-        //ui->comboBox_6_ingr->addItems(cmbList);
-        //ui->comboBox_7_ingr->addItems(cmbList);
-
+        ui->comboBox_1_ingr->addItems(cmbList);
+        ui->comboBox_2_ingr->addItems(cmbList);
+        ui->comboBox_3_ingr->addItems(cmbList);
+        ui->comboBox_4_ingr->addItems(cmbList);
+        ui->comboBox_5_ingr->addItems(cmbList);
+        ui->comboBox_6_ingr->addItems(cmbList);
+        ui->comboBox_7_ingr->addItems(cmbList);
     }
+
+}
+
+void Recipet::updateRecFileName()
+{
+
+    qDebug() << "updateRecFileName " ;
+    QString strDir =  QApplication::applicationDirPath() + "/receptes";
+    QDir directory(strDir);
+
+    rcardFileName = directory.entryList(QStringList() << "*.ini",QDir::Files);
+
+
+    ui->comboBox_reciep->clear();
+    rcmbList.clear();
+
+    qDebug() << "-----------------------" << rcardFileName;
+    int i = 0;
+
+    foreach(QString filename, rcardFileName) {
+
+        //qDebug()<< "filename.resize(2) == " << filename[0] << filename[1];
+        qDebug() << "rfilename " << rcmbList.length() << filename << rcmbList[i];
+        if(filename[0] == 'r' && filename[1] == '_' ){
+            rcmbList.append(fileNameToItemR(filename));
+            i++;
+        }
+    }
+
+    qDebug()<< "cmbList len = "<<  rcmbList.length() << "   " << rcmbList;
+    if(rcmbList.length()){
+        ui->comboBox_reciep->addItems(rcmbList);
+    }
+
 
 }
 
@@ -361,5 +397,98 @@ void Recipet::on_lineEdit_10_ingr_val_editingFinished()
         ui->lineEdit_10_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "process3_vol: " << process3_vol;
+}
+
+void Recipet::updateUI()
+{
+
+    /*
+
+
+
+
+        QString notesTXT = ui->textEdit_notes->toPlainText();
+        notesTXT = currentTime.append(notesTXT);
+
+        QString settingsFile = itemTofileNameR(recName);
+        qDebug() << "settingsFile" << settingsFile;
+        QSettings settings(settingsFile, QSettings::IniFormat);
+
+
+
+        settings.setValue("1.komponente", ui->comboBox_1_ingr->currentText());
+        settings.setValue("1.komponente_vol", QString::number(ingr1_vol));
+
+        settings.setValue("2.komponente", ui->comboBox_2_ingr->currentText());
+        settings.setValue("2.komponente_vol", QString::number(ingr2_vol));
+
+        settings.setValue("3.komponente", ui->comboBox_3_ingr->currentText());
+        settings.setValue("3.komponente_vol", QString::number(ingr3_vol));
+
+        settings.setValue("4.komponente", ui->comboBox_4_ingr->currentText());
+        settings.setValue("4.komponente_vol", QString::number(ingr4_vol));
+
+        settings.setValue("5.komponente", ui->comboBox_5_ingr->currentText());
+        settings.setValue("5.komponente_vol", QString::number(ingr5_vol));
+
+        settings.setValue("6.komponente", ui->comboBox_6_ingr->currentText());
+        settings.setValue("6.komponente_vol", QString::number(ingr6_vol));
+
+        settings.setValue("7.komponente", ui->comboBox_7_ingr->currentText());
+        settings.setValue("7.komponente_vol", QString::number(ingr7_vol));
+
+        settings.setValue("1.process", ui->comboBox_8_ingr->currentText());
+        settings.setValue("1.process_vol", QString::number(process1_vol));
+
+        settings.setValue("2.process", ui->comboBox_9_ingr->currentText());
+        settings.setValue("2.process_vol", QString::number(process2_vol));
+
+        settings.setValue("3.process", ui->comboBox_10_ingr->currentText());
+        settings.setValue("3.process_vol", QString::number(process3_vol));
+
+        settings.setValue("Piezimes", notesTXT);
+        settings.sync();
+
+    */
+}
+
+void Recipet::updateRecdData(QString fname)
+{
+    QString str;
+    QStringList strlist;
+    qDebug() << "update settingsFile" << fname;
+    QSettings settings(fname, QSettings::IniFormat);
+
+    recName = settings.value("Komponentes_nosaukums", "").toString();
+    ui->lineEdit_Rec_name->setText(recName);
+
+    str = settings.value("1.komponente","").toString();
+
+    int index = rcardFileName.indexOf(str);
+    qDebug() << "index" << index << str << "<|||||||>" << rcardFileName;
+    if (index >= 0){
+
+      //  ui->comboBox_1_ingr->setCurrentIndex(index);
+    }
+
+    else{
+
+       // ui->comboBox_1_ingr->clear();
+       // ui->comboBox_1_ingr->addItem("Ingradienta kartiņa nav atrasta !");
+    }
+
+
+  //  strlist = ui->comboBox_1_ingr->get
+
+ //ui->comboBox_1_ingr->
+
+
+
+    //settings.setValue("1.komponente", ui->comboBox_1_ingr->currentText());
+   // settings.setValue("1.komponente_vol", QString::number(ingr1_vol));
+
+
+
+
 }
 
