@@ -113,14 +113,23 @@ void Recipet::on_pushButton_exit_clicked()
 void Recipet::on_comboBox_reciep_highlighted(int index)
 {
     //updateRecdData(rcardFileName[index]);
+
+    qDebug() << "updareciep_highlighted )" << index ;
+    if(index >=0){
+         qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
+        updateRecdData(rcardFileName[index]);
+    }
+
 }
 
 
 void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
 {
-
-    qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
-     //       updateRecdData(rcardFileName[index]);
+     qDebug() << "updateRecdData(rcardFileName[index])" << index ;
+    if(index >=0){
+   // qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
+            updateRecdData(rcardFileName[index]);
+    }
 
 
 }
@@ -128,7 +137,6 @@ void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
 QString Recipet::fileNameToItem(QString fname)
 {
     int len = fname.length();
-   // QString str = "";
 
     if(len > 5){
         fname.resize(len - 4);
@@ -136,7 +144,6 @@ QString Recipet::fileNameToItem(QString fname)
     if(fname.length() >= 3){
         fname.remove(0,2);
     }
-    qDebug() << "fileNameToItem:  " << fname;
     return fname;
 }
 
@@ -152,15 +159,14 @@ QString Recipet::itemTofileName(QString item)
 QString Recipet::fileNameToItemR(QString fname)
 {
     int len = fname.length();
-   // QString str = "";
-
     if(len > 5){
         fname.resize(len - 4);
     }
     if(fname.length() >= 3){
-        fname.remove(0,2);
+       fname.remove(0,2);
     }
-    qDebug() << "RfileNameToItem:  " << fname << fname.length();
+
+    qDebug() << "RfileNameToItem: res  " << fname << fname.length();
     return fname;
 }
 
@@ -236,25 +242,24 @@ void Recipet::updateRecFileName()
 
     qDebug() << "-----------------------" << rcardFileName;
     int i = 0;
-/*
+
     foreach(QString filename, rcardFileName) {
 
-        qDebug()<< "filename " << filename;
-            if(filename.length() >= 7){
-           // if(filename[0] == 'r' && filename[1] == '_' ){
-                rcmbList.append(fileNameToItemR(filename));
+        qDebug()<< "filename " << i <<filename;
+        if(filename.length() >= 7){
+           if(filename[0] == 'r' && filename[1] == '_' ){
+                QString str  = fileNameToItemR(filename);
+                rcmbList.append({str});
                 qDebug() << "rfilename " << rcmbList.length() << filename << rcmbList[i];
                 i++;
-          //  }
+            }
         }
     }
-*/
+
     qDebug()<< "rcmbList len = "<<  rcmbList.length() << "   " << rcmbList;
     if(rcmbList.length()){
         ui->comboBox_reciep->addItems(rcmbList);
     }
-
-
 }
 
 void Recipet::clearFilds()
@@ -404,11 +409,11 @@ void Recipet::on_lineEdit_10_ingr_val_editingFinished()
 void Recipet::updateUI()
 {
 
-    /*
 
 
+        ui->lineEdit_Rec_name->setText(recName);
 
-
+/*
         QString notesTXT = ui->textEdit_notes->toPlainText();
         notesTXT = currentTime.append(notesTXT);
 
@@ -458,16 +463,24 @@ void Recipet::updateRecdData(QString fname)
 {
     QString str;
     QStringList strlist;
-    qDebug() << "update settingsFile" << fname;
-    QSettings settings(fname, QSettings::IniFormat);
 
-    recName = settings.value("Komponentes_nosaukums", "").toString();
+    QString kfName = QApplication::applicationDirPath() + "/receptes/kartinas/";
+    kfName.append(fname);
+
+    qDebug() << "kfName: " << fname << kfName;
+
+    //qDebug() << "update settingsFile" << fname;
+    QSettings settings(kfName, QSettings::IniFormat);
+
+    recName = settings.value("Receptes_nosaukums", "???").toString();
+    qDebug() << "recName" << recName;
+
     ui->lineEdit_Rec_name->setText(recName);
 
     str = settings.value("1.komponente","").toString();
 
-    int index = rcardFileName.indexOf(str);
-    qDebug() << "index" << index << str << "<|||||||>" << rcardFileName;
+    int index = cardFileName.indexOf(str);
+    qDebug() << "index" << index << str << "<|||||||>" << cardFileName;
     if (index >= 0){
 
       //  ui->comboBox_1_ingr->setCurrentIndex(index);
