@@ -58,8 +58,7 @@ private:
     QStringList rcmbList;
     QStringList rcardFileName;
     void updateUI();
-    void updateRecdData(QString fname);
-    QString recName;
+    void updateRecdData();
     QString fileNameToItem(QString fname);
     QString itemTofileName(QString item);
 
@@ -69,6 +68,20 @@ private:
     void updateRecFileName();
     void clearFilds();
     bool ok;
+
+    QString notesTXT;
+
+    QString ingr1;
+    QString ingr2;
+    QString ingr3;
+    QString ingr4;
+    QString ingr5;
+    QString ingr6;
+    QString ingr7;
+    QString process1;
+    QString process2;
+    QString process3;
+
     int ingr1_vol;
     int ingr2_vol;
     int ingr3_vol;
@@ -79,6 +92,8 @@ private:
     int process1_vol;
     int process2_vol;
     int process3_vol;
+
+    QString recName;
 };
 
 #endif // RECIPET_H

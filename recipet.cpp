@@ -50,7 +50,7 @@ void Recipet::on_pushButton_save_clicked()
         currentTime.append(date.toString("dd.MM.yyyy hh:mm:ss"));
         currentTime.append("\n");
 
-        QString notesTXT = ui->textEdit_notes->toPlainText();
+        notesTXT = ui->textEdit_notes->toPlainText();
         notesTXT = currentTime.append(notesTXT);
 
         QString settingsFile = itemTofileNameR(recName);
@@ -115,9 +115,9 @@ void Recipet::on_comboBox_reciep_highlighted(int index)
     //updateRecdData(rcardFileName[index]);
 
     qDebug() << "updareciep_highlighted )" << index ;
-    if(index >=0){
+    if(index >=0 && rcardFileName.length()){
          qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
-        updateRecdData(rcardFileName[index]);
+     //   updateRecdData(rcardFileName[index]);
     }
 
 }
@@ -126,9 +126,45 @@ void Recipet::on_comboBox_reciep_highlighted(int index)
 void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
 {
      qDebug() << "updateRecdData(rcardFileName[index])" << index ;
-    if(index >=0){
-   // qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
-            updateRecdData(rcardFileName[index]);
+    if(index >=0 ){
+
+
+   QString str;
+   QStringList strlist;
+
+   QString rName = rcmbList[index];
+
+   QString kfName = itemTofileNameR(rName);
+
+
+
+   qDebug() << "kfName: " << rName << kfName;
+
+   //qDebug() << "update settingsFile" << fname;
+   QSettings settings(kfName, QSettings::IniFormat);
+
+   recName = settings.value("Receptes_nosaukums", "???").toString();
+   qDebug() << "recName:" << recName;
+
+   ui->lineEdit_Rec_name->setText(recName);
+
+   ingr1 = settings.value("1.komponente","").toString();
+   ingr2 = settings.value("2.komponente","").toString();
+   ingr3 = settings.value("3.komponente","").toString();
+   ingr4 = settings.value("4.komponente","").toString();
+   ingr5 = settings.value("5.komponente","").toString();
+   ingr6 = settings.value("6.komponente","").toString();
+   ingr7 = settings.value("7.komponente","").toString();
+
+   process1 = settings.value("1.process","").toString();
+   process2 = settings.value("2.process","").toString();
+   process3 = settings.value("3.process","").toString();
+
+   notesTXT = settings.value("3.process","").toString();
+
+   updateRecdData();
+
+
     }
 
 
@@ -459,50 +495,22 @@ void Recipet::updateUI()
     */
 }
 
-void Recipet::updateRecdData(QString fname)
+void Recipet::updateRecdData()
 {
-    QString str;
-    QStringList strlist;
-
-    QString kfName = QApplication::applicationDirPath() + "/receptes/kartinas/";
-    kfName.append(fname);
-
-    qDebug() << "kfName: " << fname << kfName;
-
-    //qDebug() << "update settingsFile" << fname;
-    QSettings settings(kfName, QSettings::IniFormat);
-
-    recName = settings.value("Receptes_nosaukums", "???").toString();
-    qDebug() << "recName" << recName;
-
     ui->lineEdit_Rec_name->setText(recName);
+ //   ingr1 = settings.value("1.komponente","").toString();
+ //   ingr2 = settings.value("2.komponente","").toString();
+//    ingr3 = settings.value("3.komponente","").toString();
+ //   ingr4 = settings.value("4.komponente","").toString();
+ //   ingr5 = settings.value("5.komponente","").toString();
+//    ingr6 = settings.value("6.komponente","").toString();
+//    ingr7 = settings.value("7.komponente","").toString();
 
-    str = settings.value("1.komponente","").toString();
+ //   process1 = settings.value("1.process","").toString();
+ //   process2 = settings.value("2.process","").toString();
+ //   process3 = settings.value("3.process","").toString();
 
-    int index = cardFileName.indexOf(str);
-    qDebug() << "index" << index << str << "<|||||||>" << cardFileName;
-    if (index >= 0){
-
-      //  ui->comboBox_1_ingr->setCurrentIndex(index);
-    }
-
-    else{
-
-       // ui->comboBox_1_ingr->clear();
-       // ui->comboBox_1_ingr->addItem("Ingradienta kartiņa nav atrasta !");
-    }
-
-
-  //  strlist = ui->comboBox_1_ingr->get
-
- //ui->comboBox_1_ingr->
-
-
-
-    //settings.setValue("1.komponente", ui->comboBox_1_ingr->currentText());
-   // settings.setValue("1.komponente_vol", QString::number(ingr1_vol));
-
-
+    ui->textEdit_notes->setText(notesTXT);
 
 
 }
