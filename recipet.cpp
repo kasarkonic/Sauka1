@@ -3,6 +3,8 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QSettings>
+#include "componentcard.h"
+#include <QMessageBox>
 
 Recipet::Recipet(Global &global,QWidget *parent)
    : QWidget(parent, Qt::Window)
@@ -11,14 +13,15 @@ Recipet::Recipet(Global &global,QWidget *parent)
 {
     ui->setupUi(this);
 
-    cmbList.clear();
-    cmbList << "Process no 1." << "Process no 2." << "Process no 3." ;
-    ui->comboBox_8_ingr->addItems(cmbList);
-    ui->comboBox_9_ingr->addItems(cmbList);
-    ui->comboBox_10_ingr->addItems(cmbList);
-    clearFilds();
+    pcmbList.clear();
+    pcmbList << "Process no 1." << "Process no 2." << "Process no 3." ;
+    ui->comboBox_8_ingr->addItems(pcmbList);
+    ui->comboBox_9_ingr->addItems(pcmbList);
+    ui->comboBox_10_ingr->addItems(pcmbList);
     updateCardFileName();
     updateRecFileName();
+   // clearFilds();
+    calculateSumm();
 
 }
 
@@ -26,16 +29,43 @@ Recipet::~Recipet()
 {
     delete ui;
 }
-
+/*
+bool Recipet::event(QEvent *e)
+{
+    Q_UNUSED(e)
+    qDebug() <<  "-------Recipet::event-------------" << e->type();
+    if(e->type() == QEvent::Leave){
+    }
+}
+*/
 void Recipet::on_pushButton_delet_clicked()
 {
+    QString text = "  Vai tiešām vēlaties\nneatgriezeniski dzēst\n        recepti ?";
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, " ", text, QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes){
+        qDebug() << " del file: " << recName;
 
+        QString str = "Nodzēsta recepte " + recName;
+        ui->label_notes->setText(str);
+
+        QString settingsFile = itemTofileNameR(recName);
+        qDebug() << "settingsFile" << settingsFile;
+
+        QDir dir(settingsFile);
+        dir.remove(settingsFile);
+
+        // ui->comboBox_loadCard->removeItem(cmbListIndex);
+
+        updateRecFileName();
+    }
 }
 
 
 void Recipet::on_pushButton_clear_clicked(bool checked)
 {
-
+    clearFilds();
+    updateRecdData();
 }
 
 
@@ -106,20 +136,13 @@ void Recipet::on_pushButton_save_clicked()
 
 void Recipet::on_pushButton_exit_clicked()
 {
-
+    close();
 }
 
 
 void Recipet::on_comboBox_reciep_highlighted(int index)
 {
-    //updateRecdData(rcardFileName[index]);
-
-    qDebug() << "updareciep_highlighted )" << index ;
-    if(index >=0 && rcardFileName.length()){
-         qDebug() << "updateRecdData(rcardFileName[index])" << index << rcardFileName[index];
-     //   updateRecdData(rcardFileName[index]);
-    }
-
+    on_comboBox_reciep_currentIndexChanged(index);
 }
 
 
@@ -136,7 +159,7 @@ void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
 
    QString kfName = itemTofileNameR(rName);
 
-
+   bool ok ;
 
    qDebug() << "kfName: " << rName << kfName;
 
@@ -147,18 +170,94 @@ void Recipet::on_comboBox_reciep_currentIndexChanged(int index)
    qDebug() << "recName:" << recName;
 
    ui->lineEdit_Rec_name->setText(recName);
-
+//
    ingr1 = settings.value("1.komponente","").toString();
-   ingr2 = settings.value("2.komponente","").toString();
-   ingr3 = settings.value("3.komponente","").toString();
-   ingr4 = settings.value("4.komponente","").toString();
-   ingr5 = settings.value("5.komponente","").toString();
-   ingr6 = settings.value("6.komponente","").toString();
-   ingr7 = settings.value("7.komponente","").toString();
+   ingr1_vol = settings.value("1.komponente_vol","").toInt(&ok);
+    if(!ok){
+       str = QString("Kļūda 1. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr1_vol);
+       ui->label_notes->setText(str);
+       ingr1_vol = 0;
+    }
+    //
+    ingr2 = settings.value("2.komponente","").toString();
+    ingr2_vol = settings.value("2.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 2. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr2_vol);
+        ui->label_notes->setText(str);
+        ingr2_vol = 0;
+    }
 
-   process1 = settings.value("1.process","").toString();
-   process2 = settings.value("2.process","").toString();
-   process3 = settings.value("3.process","").toString();
+    //
+    ingr3 = settings.value("3.komponente","").toString();
+    ingr3_vol = settings.value("3.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 3. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr3_vol);
+        ui->label_notes->setText(str);
+        ingr3_vol = 0;
+    }
+
+    //
+    ingr4 = settings.value("4.komponente","").toString();
+    ingr4_vol = settings.value("4.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 4. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr4_vol);
+        ui->label_notes->setText(str);
+        ingr4_vol = 0;
+    }
+
+    //
+    ingr5 = settings.value("5.komponente","").toString();
+    ingr5_vol = settings.value("5.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 5. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr5_vol);
+        ui->label_notes->setText(str);
+        ingr5_vol = 0;
+    }
+
+    //
+    ingr6 = settings.value("6.komponente","").toString();
+    ingr6_vol = settings.value("6.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 6. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr6_vol);
+        ui->label_notes->setText(str);
+        ingr6_vol = 0;
+    }
+
+    //
+    ingr7 = settings.value("7.komponente","").toString();
+    ingr7_vol = settings.value("7.komponente_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 7. ingradientam daudzumam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr7_vol);
+        ui->label_notes->setText(str);
+        ingr7_vol = 0;
+    }
+
+    //
+    process1 = settings.value("1.process","").toString();
+    process1_vol = settings.value("1.process_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 8. procesa parametrā: \" %1 \" nav komponentes kartiņas !!!").arg(process1_vol);
+        ui->label_notes->setText(str);
+        process1_vol = 0;
+    }
+
+    //
+    process2 = settings.value("2.process","").toString();
+    process2_vol = settings.value("1.process_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 1. procesa parametrā: \" %1 \" nav komponentes kartiņas !!!").arg(process2_vol);
+        ui->label_notes->setText(str);
+        process2_vol = 0;
+    }
+
+    //
+    process3 = settings.value("3.process","").toString();
+    process3_vol = settings.value("1.process_vol","").toInt(&ok);
+    if(!ok){
+        str = QString("Kļūda 1. procesa parametrā: \" %1 \" nav komponentes kartiņas !!!").arg(process3_vol);
+        ui->label_notes->setText(str);
+        process3_vol = 0;
+    }
 
    notesTXT = settings.value("3.process","").toString();
 
@@ -310,7 +409,35 @@ void Recipet::clearFilds()
     process1_vol = 0;
     process2_vol = 0;
     process3_vol = 0;
+    notesTXT.clear();
+    recName = rcmbList[0];
+
+    ingr1 = cmbList[0];
+    ingr2 = cmbList[0];
+    ingr3 = cmbList[0];
+    ingr4 = cmbList[0];
+    ingr5 = cmbList[0];
+    ingr6 = cmbList[0];
+    ingr7 = cmbList[0];
+    process1 = pcmbList[0];
+    process2 = pcmbList[0];
+    process3 = pcmbList[0];
+    calculateSumm();
+
 }
+
+void Recipet::calculateSumm()
+{
+    int sum = ingr1_vol + ingr2_vol + ingr3_vol + ingr4_vol + ingr5_vol + ingr6_vol + ingr7_vol;
+    ui->label_sum->setText(QString::number(sum) + "    kg/T");
+    if(sum > 1000){
+        ui->label_sum->setStyleSheet("QLabel { background-color : red; color : black; }");
+    }
+    else{
+         ui->label_sum->setStyleSheet("QLabel { background-color : white; color : black; }");
+    }
+}
+
 
 
 void Recipet::on_lineEdit_1_ingr_val_editingFinished()
@@ -323,6 +450,7 @@ void Recipet::on_lineEdit_1_ingr_val_editingFinished()
         ui->lineEdit_1_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr1_vol: " << ingr1_vol;
+    calculateSumm();
 }
 
 
@@ -336,6 +464,7 @@ void Recipet::on_lineEdit_2_ingr_val_editingFinished()
         ui->lineEdit_2_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr2_vol: " << ingr2_vol;
+    calculateSumm();
 }
 
 
@@ -349,6 +478,7 @@ void Recipet::on_lineEdit_3_ingr_val_editingFinished()
         ui->lineEdit_3_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr3_vol: " << ingr3_vol;
+    calculateSumm();
 }
 
 
@@ -362,6 +492,7 @@ void Recipet::on_lineEdit_4_ingr_val_editingFinished()
         ui->lineEdit_4_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr4_vol: " << ingr4_vol;
+    calculateSumm();
 }
 
 
@@ -375,6 +506,7 @@ void Recipet::on_lineEdit_5_ingr_val_editingFinished()
         ui->lineEdit_5_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr5_vol: " << ingr5_vol;
+    calculateSumm();
 }
 
 
@@ -388,6 +520,7 @@ void Recipet::on_lineEdit_6_ingr_val_editingFinished()
         ui->lineEdit_6_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr6_vol: " << ingr6_vol;
+    calculateSumm();
 }
 
 
@@ -401,6 +534,7 @@ void Recipet::on_lineEdit_7_ingr_val_editingFinished()
         ui->lineEdit_7_ingr_val->setText("kļūda ievadot");
     }
     qDebug() << "ingr7_vol: " << ingr7_vol;
+    calculateSumm();
 }
 
 
@@ -497,21 +631,120 @@ void Recipet::updateUI()
 
 void Recipet::updateRecdData()
 {
+    QString str;
+    int index;
     ui->lineEdit_Rec_name->setText(recName);
- //   ingr1 = settings.value("1.komponente","").toString();
- //   ingr2 = settings.value("2.komponente","").toString();
-//    ingr3 = settings.value("3.komponente","").toString();
- //   ingr4 = settings.value("4.komponente","").toString();
- //   ingr5 = settings.value("5.komponente","").toString();
-//    ingr6 = settings.value("6.komponente","").toString();
-//    ingr7 = settings.value("7.komponente","").toString();
+//
+    index = cmbList.indexOf(ingr1);
+    if(index >= 0){
+        ui->comboBox_1_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("1 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr1);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_1_ingr_val->setText(QString::number(ingr1_vol));
+ //
+    index = cmbList.indexOf(ingr2);
+    if(index >= 0){
+        ui->comboBox_2_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("2 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr2);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_2_ingr_val->setText(QString::number(ingr2_vol));
+//
+    index = cmbList.indexOf(ingr3);
+    if(index >= 0){
+        ui->comboBox_3_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("3 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr3);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_3_ingr_val->setText(QString::number(ingr3_vol));
+    //
+    index = cmbList.indexOf(ingr4);
+    if(index >= 0){
+        ui->comboBox_4_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("4 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr4);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_4_ingr_val->setText(QString::number(ingr4_vol));
+    //
+    index = cmbList.indexOf(ingr5);
+    if(index >= 0){
+        ui->comboBox_5_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("5 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr5);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_5_ingr_val->setText(QString::number(ingr5_vol));
+    //
+    index = cmbList.indexOf(ingr6);
+    if(index >= 0){
+        ui->comboBox_6_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("6 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr6);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_6_ingr_val->setText(QString::number(ingr7_vol));
+    //
+    index = cmbList.indexOf(ingr7);
+    if(index >= 0){
+        ui->comboBox_7_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("7 ingradientam: \" %1 \" nav komponentes kartiņas !!!").arg(ingr7);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_7_ingr_val->setText(QString::number(ingr7_vol));
+    //
+    index = pcmbList.indexOf(process1);
+    if(index >= 0){
+        ui->comboBox_8_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("1 procesam: \" %1 \" nav komponentes kartiņas !!!").arg(process1);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_8_ingr_val->setText(QString::number(process1_vol));
 
- //   process1 = settings.value("1.process","").toString();
- //   process2 = settings.value("2.process","").toString();
- //   process3 = settings.value("3.process","").toString();
+    //
+    index = pcmbList.indexOf(process2);
+    if(index >= 0){
+        ui->comboBox_9_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("2 procesam: \" %1 \" nav komponentes kartiņas !!!").arg(process2);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_9_ingr_val->setText(QString::number(process2_vol));
+
+    //
+    index = pcmbList.indexOf(process3);
+    if(index >= 0){
+        ui->comboBox_10_ingr->setCurrentIndex(index);
+    }
+    else{
+        str = QString("3 procesam: \" %1 \" nav komponentes kartiņas !!!").arg(process3);
+        ui->label_notes->setText(str);
+    }
+    ui->lineEdit_10_ingr_val->setText(QString::number(process3_vol));
 
     ui->textEdit_notes->setText(notesTXT);
+    calculateSumm();
+}
 
 
+void Recipet::on_pushButton_components_Card_clicked(bool checked)
+{
+    ComponentCard *componentCard = new ComponentCard(global,this);
+    componentCard->show();
 }
 

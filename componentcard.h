@@ -56,11 +56,7 @@ private slots:
 
     void on_lineEdit_param7_editingFinished();
 
-
-
     void on_lineEdit_param8_editingFinished();
-
-
 
     void on_lineEdit_param9_editingFinished();
 
@@ -74,7 +70,6 @@ private slots:
     void on_lineEdit_param7_Vol_editingFinished();
 
     void on_lineEdit_param8_Vol_editingFinished();
-
 
 
     void on_lineEdit_param9_Vol_editingFinished();

@@ -508,8 +508,10 @@ void MainWindow::on_pushButton_Mix_clicked()
 
 void MainWindow::on_pushButton_Recipes_clicked()
 {
-    ComponentCard *componentCard = new ComponentCard(global,this);
-    componentCard->show();
+   // ComponentCard *componentCard = new ComponentCard(global,this);
+   // componentCard->show();
+    Recipet *recipet = new Recipet(global,this);
+    recipet->show();
 
 }
 

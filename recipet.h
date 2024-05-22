@@ -17,6 +17,10 @@ public:
 
   //  void setUpdateUI(const void &newUpdateUI);
 
+protected:
+ //   bool event(QEvent *e) override;
+
+
 private slots:
     void on_pushButton_delet_clicked();
 
@@ -50,6 +54,8 @@ private slots:
 
     void on_lineEdit_10_ingr_val_editingFinished();
 
+    void on_pushButton_components_Card_clicked(bool checked);
+
 private:
     Ui::Recipet *ui;
     Global &global;
@@ -57,6 +63,7 @@ private:
     QStringList cardFileName;
     QStringList rcmbList;
     QStringList rcardFileName;
+    QStringList pcmbList;
     void updateUI();
     void updateRecdData();
     QString fileNameToItem(QString fname);
@@ -68,6 +75,7 @@ private:
     void updateRecFileName();
     void clearFilds();
     bool ok;
+    void calculateSumm();
 
     QString notesTXT;
 

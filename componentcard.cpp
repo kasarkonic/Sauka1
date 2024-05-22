@@ -366,7 +366,7 @@ void ComponentCard::on_textEdit_notes_textChanged()
 
 void ComponentCard::on_pushButton_exit_clicked()
 {
-   // updateCardFileName();   // for testing
+   close();
 }
 
 void ComponentCard::updateUI()

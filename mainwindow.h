@@ -20,8 +20,8 @@
 #include "modbus485.h"
 #include "scale.h"
 
-#include "componentcard.h"
-#include "recipet.h"
+//#include "componentcard.h"
+//#include "recipet.h"
 
 
 
