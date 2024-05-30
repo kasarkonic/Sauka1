@@ -17,6 +17,7 @@
 #include <QDateTime>
 #include <QRandomGenerator>
 #include "modbus485.h"
+#include "runprocess.h"
 
 
 
@@ -29,6 +30,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     , procUI1(global,this)
     , procUI2(global,this)
     , modbus485(global,this)
+    , runprocess(global,this)
     , hwService(global,this)
 
 
@@ -307,7 +309,7 @@ void MainWindow::initUI()
     str.append("10.11:53 BRĪDINĀJUMS ! vārsta V4 aizversanas laiks 20s morma 12s\n");
     ui->textEdit_Field->setText(str);
 
-    cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Par_mani";
+    cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Ražošana"<< "Par_mani";
     ui->comboBox->addItems(cmbList);
     ui->comboBox->setCurrentIndex(0);
 
@@ -443,7 +445,7 @@ void MainWindow::on_pushButton_Stop_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     qDebug() << " Combo box index" << index << cmbList[index];
-    // cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Par_mani";
+    // cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Ražošana"<< "Par_mani";
 
     switch (index) {
     case 0:
@@ -477,7 +479,18 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         hwService.show();
         break;
     }
-    case 5:
+        case 5:
+    {
+      //  Runprocess *runprocess = new Runprocess(global.this);
+            runprocess.show();
+
+       // ParMani *parmani = new ParMani(global,this);
+        //parmani = new ParMani(global,this);
+       // parmani->show();
+        break;
+    }
+
+    case 6:
     {
         ParMani *parmani = new ParMani(global,this);
         //parmani = new ParMani(global,this);

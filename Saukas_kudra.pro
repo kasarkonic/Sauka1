@@ -32,6 +32,7 @@ SOURCES += \
     pump.cpp \
     recipet.cpp \
     rs232.cpp \
+    runprocess.cpp \
     scale.cpp \
     scalesbase.cpp \
     scalesmass.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     pump.h \
     recipet.h \
     rs232.h \
+    runprocess.h \
     scale.h \
     scalesbase.h \
     scalesmass.h \
@@ -81,6 +83,7 @@ FORMS += \
     procui2.ui \
     recipet.ui \
     rs232.ui \
+    runprocess.ui \
     scale.ui \
     scalesbase.ui \
     scalesmass.ui \

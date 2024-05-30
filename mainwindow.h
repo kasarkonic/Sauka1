@@ -19,6 +19,7 @@
 #include "procui2.h"
 #include "modbus485.h"
 #include "scale.h"
+#include "runprocess.h"
 
 //#include "componentcard.h"
 //#include "recipet.h"
@@ -83,6 +84,7 @@ private:
     ProcUI1 procUI1;
     ProcUI2 procUI2;
     Modbus485 modbus485;
+    Runprocess runprocess;
    // Scale scale;
 
     HWService hwService;
