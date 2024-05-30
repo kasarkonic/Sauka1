@@ -220,7 +220,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 
     if(event->timerId() == timerTick){
-        global.tick++;
+        global.addTick();
 /*
         att++;
         att1++;

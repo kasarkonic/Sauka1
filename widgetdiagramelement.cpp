@@ -100,7 +100,7 @@ void WidgetDiagramElement::timerEvent(QTimerEvent *event)
 
 void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
 {
-     qDebug() << "WidgetDiagramElement::resizeEvent" << global.tick;
+    qDebug() << "WidgetDiagramElement::resizeEvent" << global.getTick();
     Q_UNUSED (event);
 
 /*

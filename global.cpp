@@ -238,6 +238,16 @@ void Global::needUpdateSensorIn(int row, int val)
     updateDataOut.val = val;
 }
 
+int Global::getTick()
+{
+return tick;
+}
+
+void Global::addTick()
+{
+    tick++;
+}
+
 //*************************************************************
 //in out number:
 

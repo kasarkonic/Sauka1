@@ -7,12 +7,145 @@ Runprocess::Runprocess(Global &global,QWidget *parent)
     , global(global)
 {
     ui->setupUi(this);
+    init();
 }
 
 Runprocess::~Runprocess()
 {
     delete ui;
 }
+
+void Runprocess::timerEvent(QTimerEvent *event)
+{
+    qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
+    if(event->timerId() == taskTimer){
+        runTaskCycle();
+    }
+}
+
+void Runprocess::stateIdle()
+{
+changeState(StateReset);
+}
+
+void Runprocess::stateReset()
+{
+    switch (getState())
+    {
+    case StateReset:
+        qDebug() << "stateReset " << global.getTick();
+        changeState(StateReset1);
+  break;
+
+    case StateReset1:
+
+        if (isTimerTimeout())
+        {
+            qDebug() << "stateReset1 timeout " << global.getTick();
+            changeState(StateIdle);
+        }
+        break;
+    }
+}
+
+void Runprocess::stateInit()
+{
+    switch (getState())
+    {
+    case StateInit:
+        qDebug() << "StateInit " << global.getTick();
+        changeState(StateIdle);
+        break;
+    }
+}
+
+void Runprocess::stateRunning()
+{
+    switch (getState())
+    {
+    case StateRunning:
+        qDebug() << "StateRunning " << global.getTick();
+        changeState(StateIdle);
+        break;
+    }
+}
+
+void Runprocess::stateError()
+{
+    switch (getState())
+    {
+    case StateError:
+        qDebug() << "StateError " << global.getTick();
+        changeState(StateIdle);
+        break;
+    }
+}
+
+void Runprocess::init()
+{
+    task_state = 0;
+    taskTimer = startTimer(100);
+}
+
+void Runprocess::runTaskCycle()
+{
+    qDebug() << " runTaskCycle()  "<< getState() ;
+    // Goto master state in state machine (state groups)
+    // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
+    //
+    switch (getMasterState())
+    {
+    case StateInit:
+        stateInit();
+        break;
+    case StateReset:
+         stateReset();
+        break;
+    case StateRunning:
+        stateRunning();
+        break;
+    case StateError:
+        stateError();
+        break;
+
+    default:
+        // check for the single states that not grouped together
+        switch (getState())
+        {
+        case StateIdle:
+            stateIdle();
+            break;
+        }
+        break;
+    }
+}
+
+int Runprocess::getMasterState()
+{
+    return task_state & 0xff;
+}
+
+int Runprocess::getState()
+{
+    return task_state;
+}
+
+void Runprocess::changeState(int newState, int timeout)
+{
+    qDebug() << "New State: " << getState() << " -> " << newState << global.getTick();
+    task_state = newState;
+    stateStartTime = global.getTick();
+    if (timeout > -1) {
+      //  int_timer.start(timeout);
+    }
+}
+
+bool Runprocess::isTimerTimeout()
+{
+
+}
+
+
 /*
 
 
@@ -153,33 +286,6 @@ void PafTask::changeState(uint16_t newState, int timeout)
 
 
 
-bool PafTask::getStateName(int state, const char **str)
-{
-    const StateNameMapItem* pTaskNames = getStateNameMap();
-    *str = "undef";
-    if (pTaskNames == 0)
-        return false;
-    int stateInList = pTaskNames->state;
-    while (stateInList != -1) {
-        if (state == stateInList) {
-            *str = pTaskNames->name;
-            return true;
-        }
-        pTaskNames++;
-        stateInList = pTaskNames->state;
-    }
-    return false;
-}
-
-
-
-uint32_t PafTask::getCurrentTick(void)
-{
-    return PafTimer::getTick32();
-}
-
-
-
 uint32_t PafTask::getStateRunTime()
 {
     return PafTimer::getTick32() - stateChangeTimeMark;
@@ -239,10 +345,6 @@ private:
     };
 
 
-    void statePowerOn(void);
-    void stateIdle(void);
-    void stateReset(void);
-    void statePurge(void);
-    void stateInit(void);
+c
 
  */

@@ -165,11 +165,13 @@ public:
 
     void needUpdateDIoutputs(int row, int val);
     void needUpdateSensorIn(int row, int val);
-    int tick;
+    int getTick();
+    void addTick();
 
 
 private:
 
+    int tick;
     void create_IN_OUT_list();
     void creatWidgList();
     void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2);
