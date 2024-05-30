@@ -17,7 +17,7 @@ Global::Global()
     UIXresizeSize = UIXresizeSizePf1 = UIXresizeSizePf2 = 1000;
     UIYresizeSize = UIYresizeSizePf1 = UIYresizeSizePf2 = 1000;
 
-    dev1 = "";
+            dev1 = "";
     dev2 = "";
     dev3 = "";
     dev4 = "";
