@@ -52,7 +52,7 @@ void Pipe::setNewPosition(float koef)
 */
 void Pipe::updateSettings()
 {
-   // qDebug() << "Pipe updateSettings" << settings.name << settings.options << global.tick;
+   // qDebug() << "Pipe updateSettings" << settings.name << settings.options <<  global.getTick();
     WidgetDiagramElement::updateSettings();
     //repaint();
     update();
@@ -173,7 +173,7 @@ void Pipe::paintEvent(QPaintEvent *event)
 void Pipe::timerEvent(QTimerEvent *event){
 
     Q_UNUSED (event);
- //   qDebug() << "Pipe::timerEvent " << global.tick;
+ //   qDebug() << "Pipe::timerEvent " <<  global.getTick();
 //WidgetDiagramElement::updateSettings();
     updateSettings();
 }

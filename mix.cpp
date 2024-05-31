@@ -25,7 +25,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
 void Mix::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-  //  qDebug() << "Mix updateSettings" << settings.currX << settings.currY << global.tick;
+  //  qDebug() << "Mix updateSettings" << settings.currX << settings.currY <<  global.getTick();
 
     int dSensAdr = global.widHash[widName].sensAddres1;
     speed = (int)global.sensList[dSensAdr].analog /3;
