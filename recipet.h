@@ -24,8 +24,6 @@ protected:
 private slots:
     void on_pushButton_delet_clicked();
 
-    void on_pushButton_clear_clicked(bool checked);
-
     void on_pushButton_save_clicked();
 
     void on_pushButton_exit_clicked();
@@ -54,7 +52,9 @@ private slots:
 
     void on_lineEdit_10_ingr_val_editingFinished();
 
-    void on_pushButton_components_Card_clicked(bool checked);
+    void on_pushButton_components_Card_clicked();
+
+    void on_pushButton_clear_clicked();
 
 private:
     Ui::Recipet *ui;

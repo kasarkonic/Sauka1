@@ -62,13 +62,6 @@ void Recipet::on_pushButton_delet_clicked()
 }
 
 
-void Recipet::on_pushButton_clear_clicked(bool checked)
-{
-    clearFilds();
-    updateRecdData();
-}
-
-
 void Recipet::on_pushButton_save_clicked()
 {
 
@@ -576,6 +569,12 @@ void Recipet::on_lineEdit_10_ingr_val_editingFinished()
     qDebug() << "process3_vol: " << process3_vol;
 }
 
+void Recipet::on_pushButton_components_Card_clicked()
+{
+    ComponentCard *componentCard = new ComponentCard(global,this);
+    componentCard->show();
+}
+
 void Recipet::updateUI()
 {
 
@@ -741,10 +740,9 @@ void Recipet::updateRecdData()
     calculateSumm();
 }
 
-
-void Recipet::on_pushButton_components_Card_clicked(bool checked)
+void Recipet::on_pushButton_clear_clicked()
 {
-    ComponentCard *componentCard = new ComponentCard(global,this);
-    componentCard->show();
+    clearFilds();
+    updateRecdData();
 }
 
