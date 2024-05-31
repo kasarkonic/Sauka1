@@ -17,8 +17,9 @@ Runprocess::~Runprocess()
 
 void Runprocess::timerEvent(QTimerEvent *event)
 {
-    qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
+   // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
     if(event->timerId() == taskTimer){
+       // qDebug() << "timerEvent " ;
         runTaskCycle();
     }
 }
@@ -33,15 +34,12 @@ void Runprocess::stateReset()
     switch (getState())
     {
     case StateReset:
-        qDebug() << "stateReset " << global.getTick();
-        changeState(StateReset1);
+        changeState(StateReset1,500);
   break;
 
     case StateReset1:
-
         if (isTimerTimeout())
         {
-            qDebug() << "stateReset1 timeout " << global.getTick();
             changeState(StateIdle);
         }
         break;
@@ -85,11 +83,12 @@ void Runprocess::init()
 {
     task_state = 0;
     taskTimer = startTimer(100);
+
 }
 
 void Runprocess::runTaskCycle()
 {
-    qDebug() << " runTaskCycle()  "<< getState() ;
+    //qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
     // Goto master state in state machine (state groups)
     // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
     //
@@ -122,7 +121,7 @@ void Runprocess::runTaskCycle()
 
 int Runprocess::getMasterState()
 {
-    return task_state & 0xff;
+    return task_state & 0xf00;
 }
 
 int Runprocess::getState()
@@ -132,219 +131,22 @@ int Runprocess::getState()
 
 void Runprocess::changeState(int newState, int timeout)
 {
-    qDebug() << "New State: " << getState() << " -> " << newState << global.getTick();
+    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = global.getTick();
+    stateTimerInterval = timeout;
     if (timeout > -1) {
-      //  int_timer.start(timeout);
+        stateTimerInterval = timeout;
     }
 }
+
 
 bool Runprocess::isTimerTimeout()
 {
-
+    return((global.getTick() - stateStartTime) > stateTimerInterval);
 }
 
-
-/*
-
-
-
-///
-/// \brief Task runner function. Called by framework
-///
-void MachineController::runTaskCycle(void)
+int Runprocess::getStateRunTime()
 {
-    if (receivedInternalMess())
-        onInternalMessage();
-
-    // Goto master state in state machine (state groups)
-    // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
-    //
-    switch (getMasterState())
-    {
-    case StateRunning:
-        stateRunning();
-        break;
-    case StateCycleup:
-        stateCycleup();
-        break;
-    case StateCycledown:
-        stateCycledown();
-        break;
-    case StateReset:
-        stateReset();
-        break;
-    case StatePurge:
-        statePurge();
-        break;
-    case StateInit:
-        stateInit();
-        break;
-    case StateError:
-        stateError();
-        break;
-    default:
-        // check for the single states that not grouped together
-        switch (getState())
-        {
-        case StatePowerOn:
-            statePowerOn();
-            break;
-        case StateIdle:
-            stateIdle();
-            break;
-        }
-        break;
-    }
+    return (global.getTick() - stateStartTime);
 }
-
-
-
-
-
-void MachineController::stateCycledown()
-{
-    switch (getState())
-    {
-    case StateCycledown:
-        // Cycle down has been received. Wait until there are no more active sets in machine before cycling down
-        sdebug("--- MACHINE CYCLEDOWN ---MC\n");
-        DynamicParams::setCycleUpStatus(0);
-
-        pendingCycleUp = 0;
-
-        Controller::command(AppCommands::CmdCycleDown, DynamicParams::getCycleDownStatus());
-
-        // int tmp = DynamicParams::getCycleDownStatus(); //??????????????????????
-        backjoggerCntrl->command(AppCommands::CmdCycleDown, pendingCycledown);
-        paperTransportCntrl->command(AppCommands::CmdCycleDown, pendingCycledown);
-        staplerCtrl->command(AppCommands::CmdCycleDown, pendingCycledown);
-        pendingCycledown = 0;
-        changeState(StateCycledown_CheckError, 1000); // must be 1000  only for testing !!!
-        break;
-
-    case StateCycledown_CheckError:
-
-        if (isTimerTimeout())
-        {
-
-            data.value32 = 2;
-            signal.emitSignal(AppSignals::CycleDownDownstream, &data);
-            sdebug("MS send CycleDown 2 to down\n");
-
-            if (!isPaperPathFree())
-            {
-                PafMachineStatus::clearStatusBits(PafMachineStatus::ControlDisabled | PafMachineStatus::Running);
-                PafMachineStatus::setStatusBits(PafMachineStatus::PaperError);
-                PafMachineStatus::sendStatus(25);
-                sdebug("UpCanCom::Closed 1\n");
-                upstream->currentInputState(UpCanCom::Closed);
-            }
-            {
-                PafMachineStatus::clearStatusBits(PafMachineStatus::Running);
-                PafMachineStatus::sendStatus(26);
-                changeState(StateIdle);
-            }
-        }
-        break;
-    }
-}
-
-
-
-
-
-
-
-
-void PafTask::changeState(uint16_t newState, int timeout)
-{
-    if (bPrintTaskChange) {
-        const char* str;
-        sdebug("TCS: ");
-        sdebug_mode_normal();
-        sdebug(taskName);
-        sdebug(" ");
-        #ifdef INCLUDE_PRINT_FROM_TASK
-        sdebug(getStateName(task_state,&str) ? str : "s%X",task_state);
-        sdebug(" -> ");
-        #endif
-        sdebug(getStateName(newState,&str) ? str : "s%X",newState);
-        //getStateName(newState,&str);
-        //sdebug(str);
-        sdebug("\n");
-        sdebug_mode_restore();
-    }
-    task_state = newState;
-    stateChangeTimeMark = PafTimer::getTick32();
-    if (timeout > -1) {
-        int_timer.start(timeout);
-    }
-}
-
-
-
-
-uint32_t PafTask::getStateRunTime()
-{
-    return PafTimer::getTick32() - stateChangeTimeMark;
-}
-
-
-void PafTask::setPeriodTimeout(int period)
-{
-    lastPeriodTimeMark = PafTimer::getTick32();
-    periodTimeout = (period < 1) ? 0 : (uint32_t)period;
-}
-
-
-.h
-
-
-
-
-private:
-    // Typedefs & Enums
-    enum States
-    {
-        StatePowerOn = 0,
-        StateIdle,
-        StateReset = 0x100,//100
-        StateResetWaitpaperpathClearPause1,//101
-        StateResetWaitpaperpathClear, // 102
-        StateResetWaitpaperpathClearPause2,//103
-        StateWaitOnReset,   //0x104
-        StatePurge = 0x200,
-        StatePurge_WaitOnReadyToPurge,
-        StatePurge_Purging,
-        StateInit = 0x400,  // 0x400
-        StateInit_WaitOnInitDone,  // 0x401
-
-        StateCycleup = 0x500,
-        StateCycleupWait,
-
-        StateRunning = 0x600,                // 0x600
-        StateWaitRearEdge,                   // 0x601
-        StateWaitSideBackJogFinished,        // 0x602
-        StateWaitSideBackJogStaple,          // 0x603
-
-        StateWaitStaplerFinished,            // 0x604
-
-        StateWaitStaplerAngleMoveToPurgePos, // 0x605
-        StateWaitStaplerMoveToPurgePos,      // 0x606
-        StateRestoreStaplerposition,              // 0x607
-        StateCheckPaperPathClear,              // 0x608
-        StateWaitOpenBJAfterPurge,          // 0x609
-        StateWaitStaplerToPosAfterPurge,      // 0x610
-
-        StateCycledown = 0x700,              // 0x700
-        StateCycledown_CheckError,  // 0x701
-        StateError = 0x900, // 0x900`
-
-    };
-
-
-c
-
- */

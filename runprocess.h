@@ -48,11 +48,16 @@ private:
     int getState();
     void changeState(int newState, int timeout = -1);
     bool isTimerTimeout();
+    int getStateRunTime();
 
     int task_state;
     int stateStartTime;
     int  taskTimer = 0;
-    int timeout = -1;
+
+    int stateTimerInterval = 0;
+    bool stateTimerTimeout = false;
+
+
 };
 
 #endif // RUNPROCESS_H
