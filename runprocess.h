@@ -26,6 +26,7 @@ private:
 
             StateIdle,
             StateReset = 0x100,//100
+            StateReset0,
             StateReset1,
             StateInit = 0x200,  // 0x200
             StateRunning = 0x300,// 0x300

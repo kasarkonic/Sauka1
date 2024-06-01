@@ -28,7 +28,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
           this, SLOT(timerWriteSlot()));
 
     //timerReadIn->start(500);
-    //timerWriteOut->start(250);
+    timerWriteOut->start(1000);
 
 
 

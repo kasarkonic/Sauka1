@@ -34,13 +34,20 @@ void Runprocess::stateReset()
     switch (getState())
     {
     case StateReset:
-        changeState(StateReset1,500);
+        changeState(StateReset0,500);
   break;
+
+    case StateReset0:
+        if (isTimerTimeout())
+        {
+            changeState(StateReset1,500);
+        }
+        break;
 
     case StateReset1:
         if (isTimerTimeout())
         {
-            changeState(StateIdle);
+            changeState(StateReset);
         }
         break;
     }

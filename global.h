@@ -99,9 +99,9 @@ public:
     };
 
     struct  updateData{
-        bool need = false;
+        bool need = false;  // need uptate
         int row = 0;
-        int val = 0;
+        int val = 0;    // data value
     } ;
     updateData updateDataIn;
     updateData updateDataOut;
