@@ -138,7 +138,7 @@ int Runprocess::getState()
 
 void Runprocess::changeState(int newState, int timeout)
 {
-    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+ //   qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = global.getTick();
     stateTimerInterval = timeout;

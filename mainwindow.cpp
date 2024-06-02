@@ -38,7 +38,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
 
     modbus485.start();
-     //modbus485.run();
+     modbus485.run();
 
     ui->setupUi(this);
     procUI2.show();
