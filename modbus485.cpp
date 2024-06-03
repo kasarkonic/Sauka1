@@ -378,7 +378,7 @@ void Modbus485::onReadReady()
             //rd23IOD32(4,0xc0);  // 2
             break;
 
-        case 4:     // rd23IOD32
+        case 4:     // rd23IOD32 read data !!!!!!!!!!!!!!!!!!!!
             if(unit.registerType() == 4 && replayDataArray.length() == datalen){
                 qDebug() << "rd23IOD32" << reply->serverAddress() << reply->result().values();
                 //int hex = replayDataArray.toInt(&ok, 16);
