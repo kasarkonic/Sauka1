@@ -17,7 +17,7 @@ public:
     explicit Modbus485(Global &global, QWidget *parent = nullptr);
 
     // overriding the QThread's run() method
-    void run() override;
+   // void run() override;
 
     QTimer *timerReadIn;
     QTimer *timerWriteOut;

@@ -35,14 +35,14 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     qDebug() << "Modbus485 set name ";
     name = "Modbus485";
 }
-
+/*
 void Modbus485::run()
 {
     qDebug() << "Modbus485 Run ";
     timerReadIn->start(500);
     timerWriteOut->start(250);
 }
-
+*/
 
 
 bool Modbus485::init()
