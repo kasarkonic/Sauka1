@@ -27,6 +27,8 @@ public:
 signals:
      void setBaudrate(int address);
      bool factoryReset(int address);
+     void outputChange(int id, int address, int data);
+
 public slots:
     void updateDataAn(int row, int val);
     void updateDataDi(int row, bool val);
@@ -55,11 +57,20 @@ private slots:
 
     void on_pushButton_Disable_clicked();
 
+    void on_pushButton_Out_write_clicked();
+
+    void on_lineEdit_Out_address_editingFinished();
+
+    void on_lineEdit_Out_value_editingFinished();
+
 private:
 
     Global &global;
     int modbusAddress = 0;
     int timerId;
+    bool ok;
+    int out_address;
+    int out_value;
 
 
 };

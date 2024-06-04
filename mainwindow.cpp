@@ -38,7 +38,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
 
     modbus485.start();
-   //  modbus485.run();
+    //modbus485.run();
 
     ui->setupUi(this);
     procUI2.show();
@@ -102,6 +102,9 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
 
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
+
+    connect (&hwService, &HWService::outputChange,
+             &modbus485,&Modbus485::wr23IOD32);
 
 
     // sender, &Sender::valueChanged,
@@ -526,5 +529,11 @@ void MainWindow::on_pushButton_Recipes_clicked()
     Recipet *recipet = new Recipet(global,this);
     recipet->show();
 
+}
+
+
+void MainWindow::on_pushButton_Service_clicked()
+{
+    hwService.show();
 }
 

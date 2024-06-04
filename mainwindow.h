@@ -55,6 +55,8 @@ private slots:
 
     void on_pushButton_Recipes_clicked();
 
+    void on_pushButton_Service_clicked();
+
 protected:
     Scale scale;
 

@@ -34,6 +34,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
     qDebug() << "Modbus485 set name ";
     name = "Modbus485";
+
 }
 /*
 void Modbus485::run()
@@ -92,7 +93,7 @@ Q_UNUSED (address);
 
 bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 0xffff
 {
-
+qDebug() << "Modbus485::wr23IOD32 " << boardAdr<< regAdr << value;
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
@@ -242,7 +243,7 @@ bool Modbus485::updateDIOut()
         val2 <<= 1;
         val2 += (global.actList[i+16].digital & 1);
     }
-    // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2;
+     qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2;
    res =  wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
    res +=  wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
    return (res == 2);

@@ -39,12 +39,51 @@ void HWService::updateDataAn(int row, int val)
     qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
     sensListsForm.updateData(row);
     actListForm.updateData(row);
+
+    QString str;
+    QString str1;
+    for(int i = 0;i < 8; i++){
+       str.append(QString::number(global.sensList[i].analog));
+       str1.append(QString::number(global.sensList[i + 8 ].analog));
+
+       str.append(", ");
+       str1.append(", ");
+    }
+    ui->label_row5->setText(str);
+    ui->label_row6->setText(str1);
+
+
+
 }
 void HWService::updateDataDi(int row, bool val)
 {
     qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     sensListsForm.updateData(row);
     //actListForm.updateData(row);
+
+    QString str;
+    QString str1;
+    QString str2;
+    QString str3;
+
+    for(int i = 0;i < 16; i++){
+       str.append(QString::number(global.sensList[i].digital));
+       str1.append(QString::number(global.sensList[i + 16 ].digital));
+       str2.append(QString::number(global.sensList[i + 32].digital));
+       str3.append(QString::number(global.sensList[i + 48 ].digital));
+       str.append(", ");
+       str1.append(", ");
+       str2.append(", ");
+       str3.append(", ");
+    }
+    ui->label_row1->setText(str);
+    ui->label_row2->setText(str1);
+    ui->label_row3->setText(str2);
+    ui->label_row4->setText(str3);
+
+
+
+
 }
 
 void HWService::updateDIoutput(int row, int val)
@@ -169,5 +208,41 @@ void HWService::on_pushButton_Disable_clicked()
         str = "Disable RS485";
     }
     ui->pushButton_Disable->setText(str);
+}
+
+
+void HWService::on_pushButton_Out_write_clicked()
+{
+    //int out_address;
+    //int out_value;
+    int id = 4;
+    qDebug() << "emit 1outputChange " << id << out_address << out_value;
+
+    global.actList[out_address].digital= (bool)out_value;
+    global.updateDataOut.need = true;
+   // emit outputChange(id, out_address,out_value);
+}
+
+
+void HWService::on_lineEdit_Out_address_editingFinished()
+{
+
+    out_address = ui->lineEdit_Out_address->text().toInt(&ok);
+    //qDebug() << "out_address " << out_address << ok;
+    if(!ok){
+        ui->lineEdit_Out_address->setText("ERROR!");
+        out_address = 0;
+    }
+}
+
+
+void HWService::on_lineEdit_Out_value_editingFinished()
+{
+    out_value = ui->lineEdit_Out_value->text().toInt(&ok);
+    //qDebug() << "out_value " << out_value << ok;
+    if(!ok){
+        ui->lineEdit_Out_value->setText("ERROR!");
+        out_value = 0;
+    }
 }
 
