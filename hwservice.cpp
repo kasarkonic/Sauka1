@@ -218,9 +218,14 @@ void HWService::on_pushButton_Out_write_clicked()
     int id = 4;
     qDebug() << "emit 1outputChange " << id << out_address << out_value;
 
-    global.actList[out_address].digital= (bool)out_value;
-    global.updateDataOut.need = true;
-   // emit outputChange(id, out_address,out_value);
+    out_value = 0x200;
+    if(out_value >= 1)
+        out_value = 0x100;
+
+     global.actList[out_address].digital= (bool)out_value;
+     global.updateDataOut.need = true;
+
+    emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32
 }
 
 

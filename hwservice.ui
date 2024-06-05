@@ -362,7 +362,7 @@
           <item>
            <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>Address</string>
+             <string>Address:  0-32</string>
             </property>
            </widget>
           </item>
@@ -376,7 +376,7 @@
           <item>
            <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>Value </string>
+             <string>Value:  0,   &gt;0 </string>
             </property>
            </widget>
           </item>
@@ -388,7 +388,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_Out_write">
           <property name="text">
-           <string>Write</string>
+           <string>Send</string>
           </property>
          </widget>
         </item>
@@ -438,7 +438,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

@@ -202,7 +202,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
        // qDebug() <<  "-------------------";
         //modbus485.readData();
-        //  modbus485.rd24DIB32(4,0xc0);
+        // modbus485.rd24DIB32(4,0xc0);
         // modbus485.rd23IOD32(4,0xc0);
         // digital output
         /*  if (att < 0xffff)
