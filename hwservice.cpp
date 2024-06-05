@@ -216,15 +216,15 @@ void HWService::on_pushButton_Out_write_clicked()
     //int out_address;
     //int out_value;
     int id = 4;
-    qDebug() << "emit 1outputChange " << id << out_address << out_value;
 
     out_value = 0x200;
-    if(out_value >= 1)
+    if(out_value >= 1){
         out_value = 0x100;
-
+    }
      global.actList[out_address].digital= (bool)out_value;
      global.updateDataOut.need = true;
 
+    qDebug() << "---------------------------------emit 1outputChange " << id << out_address << out_value;
     emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32
 }
 
@@ -233,7 +233,7 @@ void HWService::on_lineEdit_Out_address_editingFinished()
 {
 
     out_address = ui->lineEdit_Out_address->text().toInt(&ok);
-    //qDebug() << "out_address " << out_address << ok;
+    qDebug() << "out_address " << out_address << ok;
     if(!ok){
         ui->lineEdit_Out_address->setText("ERROR!");
         out_address = 0;
@@ -244,7 +244,7 @@ void HWService::on_lineEdit_Out_address_editingFinished()
 void HWService::on_lineEdit_Out_value_editingFinished()
 {
     out_value = ui->lineEdit_Out_value->text().toInt(&ok);
-    //qDebug() << "out_value " << out_value << ok;
+    qDebug() << "out_value " << out_value << ok;
     if(!ok){
         ui->lineEdit_Out_value->setText("ERROR!");
         out_value = 0;
