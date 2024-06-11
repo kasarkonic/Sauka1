@@ -30,6 +30,37 @@ Global::Global()
     sens sdata;
     act  sact;
 
+
+//#define MAX_DIinput     32      // addres [0 , MAX_DIinp]
+//#define MAX_ACTUATOR    64  // addres [100 , MAX_DIoutput + 100]
+//#define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
+//#define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
+    inOut io;
+    io.value = 0;
+    io.update = false;
+    QString nam = " Ain";
+
+   for(int iter = 0; iter < MAX_AN_INPUT4_20; iter++){
+
+        io.name = QString::number(iter);
+        io.name.append(nam);
+        ANinput4_20.append(io);
+    }
+    nam = " Din";
+    for(int iter = 0; iter < MAX_DIinput; iter++){
+        io.name = QString::number(iter);
+        io.name.append(nam);
+        DIinput.append(io);
+    }
+    nam = " Dout";
+    for(int iter = 0; iter < MAX_DIoutput; iter++){
+        io.name = QString::number(iter);
+        io.name.append(nam);
+        DIoutput.append(io);
+    }
+
+
+
     for(int i=0 ; i<64;i++){    // 255= max sensor, max activator
         sensList.append(sdata);
     //    actList.append(sact);
@@ -105,14 +136,6 @@ void Global::create_IN_OUT_list()
     sen.ptrLineEditDI = nullptr;
     sen.ptrLineEditAN = nullptr;
 
-
-    for(int i = 0; i < MAX_DIinput; i++){
-        sen.name = (QString::number(i));
-        sen.name.append(". DI in");
-        sen.address = i;
-        //DIinput.append(io);
-        sensList.append(sen);
-    }
 
     for(int i = 0; i < MAX_ACTUATOR; i++){
         actuat.name = (QString::number(i));

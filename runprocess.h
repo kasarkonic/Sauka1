@@ -57,6 +57,7 @@ private:
 
     int stateTimerInterval = 0;
     bool stateTimerTimeout = false;
+    int tempInt = 16;
 
 
 };

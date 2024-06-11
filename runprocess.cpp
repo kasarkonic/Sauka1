@@ -34,12 +34,20 @@ void Runprocess::stateReset()
     switch (getState())
     {
     case StateReset:
-        changeState(StateReset0,500);
+        global.DIoutput[tempInt].value = 0;
+        tempInt++;
+        global.DIoutput[tempInt].value = 1;
+        if(tempInt > 64)
+            tempInt = 0;
+        changeState(StateReset0,500);       
   break;
 
     case StateReset0:
         if (isTimerTimeout())
         {
+            global.DIoutput[tempInt].value = 0;
+            tempInt++;
+            global.DIoutput[tempInt].value = 1;
             changeState(StateReset1,500);
         }
         break;
@@ -47,6 +55,9 @@ void Runprocess::stateReset()
     case StateReset1:
         if (isTimerTimeout())
         {
+            global.DIoutput[tempInt].value = 0;
+            tempInt++;
+            global.DIoutput[tempInt].value = 1;
             changeState(StateReset);
         }
         break;
@@ -99,6 +110,7 @@ void Runprocess::runTaskCycle()
     // Goto master state in state machine (state groups)
     // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
     //
+
     switch (getMasterState())
     {
     case StateInit:
@@ -138,7 +150,7 @@ int Runprocess::getState()
 
 void Runprocess::changeState(int newState, int timeout)
 {
- //   qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+//    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = global.getTick();
     stateTimerInterval = timeout;

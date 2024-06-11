@@ -96,11 +96,16 @@ void HWService::updateDIoutput(int row, int val)
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-   float volt24 = global.sensList[15].analog * 0.020797;//  voltage input   BBBBBBBB   wrong addres
-    //qDebug() << "HWService::timerEvent " << volt24;
+  // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
+  // float volt24 = SUPLAY_24V/100.0;//  power supplay input
+
+    int volt24 =  SUPLAY_24V ;
+    QString v24 = QString::number(volt24/100.0, 'g', 4);
+
     QString str = "24V Barošanas bloka spriegums = ";
-    str.append(QString::number(volt24));
-    str.append("V");
+
+    str.append(v24);
+    str.append(" V");
     ui->textEdit->setText(str);
 }
 

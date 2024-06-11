@@ -58,6 +58,10 @@ private:
     int timerTest;
     QString name;
 
+    quint16 val1,val2,val3,val4;
+    quint16 val1old,val2old,val3old,val4old;
+    void printDIinput();
+    void printDIinput1(int start, int finish);
 
 };
 

@@ -47,6 +47,7 @@ HEADERS += \
     actlistform.h \
     acttablemodel.h \
     componentcard.h \
+    def.h \
     dyno.h \
     global.h \
     hwports.h \

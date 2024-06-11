@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QHash>
 #include <QList>
+#include "def.h"
 
 
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
@@ -15,8 +16,9 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define MAX_DIinput     32      // addres [0 , MAX_DIinp]
-#define MAX_ACTUATOR    64  // addres [100 , MAX_DIoutput + 100]
+#define MAX_DIinput     32*2      // addres [0 , MAX_DIinp]
+#define MAX_DIoutput     32*2      // addres [0 , MAX_DIinp]
+#define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
 #define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
 
@@ -103,6 +105,11 @@ public:
         int row = 0;
         int val = 0;    // data value
     } ;
+    struct inOut{
+      int value;
+      QString name;
+      bool update;
+    };
     updateData updateDataIn;
     updateData updateDataOut;
 
@@ -111,9 +118,9 @@ public:
     QHash<QString,wdataStruct> widHash;
 
     //board input output;
-   // QList<inOut>DIinput;
-   // QList<inOut>DIoutput;
-   // QList<sens>ANinput4_20; // value/100 = x,xx(mA)
+    QList<inOut>DIinput;
+    QList<inOut>DIoutput;
+    QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
     int scaleVal;
 
     bool disableRS485; // for testing
