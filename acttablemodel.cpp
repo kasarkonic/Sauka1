@@ -109,9 +109,10 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
 
 void ActTableModel::updateData(int row)
 {
+
     qDebug() << "ActTableModel::updateData " << row ;
-    QModelIndex idx1 = createIndex(row,0);
-    QModelIndex idx2 = createIndex(row,5);
-    emit dataChanged(idx1, idx2, { Qt::DisplayRole });
+ //   QModelIndex idx1 = createIndex(row,0);    // for testing !!!
+ //   QModelIndex idx2 = createIndex(row,5);
+ //   emit dataChanged(idx1, idx2, { Qt::DisplayRole });
 }
 

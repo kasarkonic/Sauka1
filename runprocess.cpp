@@ -17,16 +17,16 @@ Runprocess::~Runprocess()
 
 void Runprocess::timerEvent(QTimerEvent *event)
 {
-   // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
+    // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
     if(event->timerId() == taskTimer){
-       // qDebug() << "timerEvent " ;
+        // qDebug() << "timerEvent " ;
         runTaskCycle();
     }
 }
 
 void Runprocess::stateIdle()
 {
-changeState(StateReset);
+    changeState(StateReset);
 }
 
 void Runprocess::stateReset()
@@ -34,30 +34,27 @@ void Runprocess::stateReset()
     switch (getState())
     {
     case StateReset:
-        global.DIoutput[tempInt].value = 0;
         tempInt++;
-        global.DIoutput[tempInt].value = 1;
-        if(tempInt > 64)
+        if(tempInt > 63 ){
             tempInt = 0;
-        changeState(StateReset0,500);       
-  break;
+        }
+        global.DIoutput[tempInt].value = 1;
+        qDebug() << " DIoutput[" << tempInt << "] = 1";
+        changeState(StateReset0,400);
+        break;
 
     case StateReset0:
         if (isTimerTimeout())
         {
             global.DIoutput[tempInt].value = 0;
-            tempInt++;
-            global.DIoutput[tempInt].value = 1;
-            changeState(StateReset1,500);
+            qDebug() << " DIoutput[" << tempInt << "] = 0";
+            changeState(StateReset1,100);
         }
         break;
 
     case StateReset1:
         if (isTimerTimeout())
         {
-            global.DIoutput[tempInt].value = 0;
-            tempInt++;
-            global.DIoutput[tempInt].value = 1;
             changeState(StateReset);
         }
         break;
@@ -101,6 +98,7 @@ void Runprocess::init()
 {
     task_state = 0;
     taskTimer = startTimer(100);
+    tempInt = 0;
 
 }
 
@@ -117,7 +115,7 @@ void Runprocess::runTaskCycle()
         stateInit();
         break;
     case StateReset:
-         stateReset();
+        stateReset();
         break;
     case StateRunning:
         stateRunning();
@@ -150,7 +148,7 @@ int Runprocess::getState()
 
 void Runprocess::changeState(int newState, int timeout)
 {
-//    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+    //    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = global.getTick();
     stateTimerInterval = timeout;

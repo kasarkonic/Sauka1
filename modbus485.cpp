@@ -192,6 +192,8 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
 
 bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 {
+
+
     // processTimeStart = QTime::msecsSinceStartOfDay();
    // timer.start();
     //01,04,00,00,00,10,crc
@@ -234,7 +236,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 bool Modbus485::updateDIOut()
 {
     int tmpTime = global.getTick();
-    qDebug() << "Modbus485::updateDIOut()" << tmpTime ;
+    //qDebug() << "Modbus485::updateDIOut()" << tmpTime ;
 
     int res;
     quint16 val1,val2,val3,val4;
@@ -274,8 +276,10 @@ void Modbus485::timerReadSlot()
         qDebug() << "Read An Di Inputs";
     //analog input, next DI input, next update DI output
     rdN4AIB16(2, 0,16);   // ok analog input
-   // rd23IOD32(4,0xc0);  // ok digital input
-   // rd23IOD32(5,0xc0);  // ok digital input
+    rd23IOD32(4,0xc0);  // ok digital input
+    rd23IOD32(5,0xc0);  // ok digital input
+    updateDIOut();
+
      }
 }
 void Modbus485::timerWriteSlot()
@@ -354,6 +358,7 @@ void Modbus485::onReadReady()
     if (!reply)
         return;
 
+
     //dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
    // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
@@ -368,13 +373,13 @@ void Modbus485::onReadReady()
         switch (reply->serverAddress()) {
         case 2:     // rdN4AIB16
             if(unit.registerType() == 3 && replayDataArray.length() == datalen){
-                qDebug() << "rdN4AIB16" << reply->serverAddress() <<  reply->result().values();
+                qDebug() << "rdN4AIB16" << reply->serverAddress() << datalen  << reply->result().values();
                 for(int i = 0; i <=15; i++){    // in0 - in14 0-20mA input  in15 30v input
                     if(global.ANinput4_20[i].value != reply->result().value(i)){
+                        qDebug() << "emit valChangeAn(i)"<< i  << global.ANinput4_20[i].value << reply->result().value(i);
                         global.ANinput4_20[i].value = reply->result().value(i);
                         global.ANinput4_20[i].update = true;
-                        qDebug() << "emit valChangeAn(i)" << i << global.ANinput4_20[i].value;
-                        emit valChangeAn(i, global.ANinput4_20[i].value);
+                        emit valChangeAn(i, global.ANinput4_20[i].value);// for testing
                     }
                 }
             }
@@ -451,7 +456,7 @@ void Modbus485::onReadReady()
                 }
 
 
-                printDIinput();
+              //  printDIinput();
             }
             else{
                 qDebug() << "error";

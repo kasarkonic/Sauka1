@@ -107,6 +107,8 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
              &modbus485,&Modbus485::wr23IOD32);
 
 
+
+
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
