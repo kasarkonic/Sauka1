@@ -7,8 +7,8 @@
 
 
 Modbus485::Modbus485(Global &global, QWidget *parent)
-    //: QMainWindow(parent)
-     : QThread(parent)
+//: QMainWindow(parent)
+    : QThread(parent)
     , global(global)
 
 {
@@ -23,12 +23,12 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     timerReadIn = new QTimer(this);
     timerWriteOut = new QTimer(this);
     connect(timerReadIn, SIGNAL(timeout()),
-          this, SLOT(timerReadSlot()));
+            this, SLOT(timerReadSlot()));
     connect(timerWriteOut, SIGNAL(timeout()),
-          this, SLOT(timerWriteSlot()));
+            this, SLOT(timerWriteSlot()));
 
     timerReadIn->start(500);
- //   timerWriteOut->start(250);
+    //   timerWriteOut->start(250);
 
 
 
@@ -81,7 +81,7 @@ bool Modbus485::init()
 
 void Modbus485::test(int address, int value)
 {
-Q_UNUSED (address);
+    Q_UNUSED (address);
     Q_UNUSED ( value);
     //onReadReady();
 
@@ -93,7 +93,7 @@ Q_UNUSED (address);
 
 bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 0xffff
 {
-qDebug() << "Modbus485::wr23IOD32 " << boardAdr<< regAdr << value;
+    qDebug() << "Modbus485::wr23IOD32 " << boardAdr<< regAdr << value;
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
@@ -143,7 +143,7 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr)
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
             //qDebug()<<"rd23IOD32"<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
-             //   readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+            //   readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -178,7 +178,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
             qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
-                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+                       readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -195,7 +195,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 
 
     // processTimeStart = QTime::msecsSinceStartOfDay();
-   // timer.start();
+    // timer.start();
     //01,04,00,00,00,10,crc
     if (!modbusDevice){
         qDebug() << "readDat RET";
@@ -221,7 +221,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
             qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
-                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+                       readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -235,12 +235,47 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
 
 bool Modbus485::updateDIOut()
 {
-    int tmpTime = global.getTick();
-    //qDebug() << "Modbus485::updateDIOut()" << tmpTime ;
+    int res = 0;
+    res =  updateDIOut(0);
+    res =+ updateDIOut(16);
+    res =+ updateDIOut(32);
+    res =+ updateDIOut(48);
+    /*
+            int tmpTime = global.getTick();
+            //qDebug() << "Modbus485::updateDIOut()" << tmpTime ;
 
+            int res;
+            quint16 val1,val2,val3,val4;
+            val1 = val2 = val3 = val4 = 0;
+            for(int i = 15; i >= 0;i--){
+                val1 <<= 1;
+                val1 += (global.DIoutput[i].value & 1);
+                val2 <<= 1;
+                val2 += (global.DIoutput[i+16].value & 1);
+                val3 <<= 1;
+                val3 += (global.DIoutput[i+32].value & 1);
+                val4 <<= 1;
+                val4 += (global.DIoutput[i+48].value & 1);
+            }
+            // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2 << (void *)val3 << (void *)val4;
+            qDebug() << "wr23IOD32 = " << Qt::hex<<val1 << val2 << val3 << val4;
+            res =  wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
+            res +=  wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
+            res +=  wr23IOD32(5,0x70,val3);  // wr23IOD32(7,0x70, 0xff);
+            res +=  wr23IOD32(5,0x71,val4);  // wr23IOD32(7,0x70, 0xff)
+            qDebug() << "Modbus485::update finish " << global.getTick() << global.getTick() - tmpTime ;
+            return (res == 4);
+          */
+    return (res == 4);
+}
+
+bool Modbus485::updateDIOut(int i)
+{
     int res;
     quint16 val1,val2,val3,val4;
     val1 = val2 = val3 = val4 = 0;
+
+
     for(int i = 15; i >= 0;i--){
         val1 <<= 1;
         val1 += (global.DIoutput[i].value & 1);
@@ -252,20 +287,31 @@ bool Modbus485::updateDIOut()
         val4 += (global.DIoutput[i+48].value & 1);
     }
     // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2 << (void *)val3 << (void *)val4;
-     qDebug() << "wr23IOD32 = " << Qt::hex<<val1 << val2 << val3 << val4;
-   res =  wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
-   res +=  wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
-   res +=  wr23IOD32(5,0x70,val3);  // wr23IOD32(7,0x70, 0xff);
-   res +=  wr23IOD32(5,0x71,val4);  // wr23IOD32(7,0x70, 0xff)
-   qDebug() << "Modbus485::update finish " << global.getTick() << global.getTick() - tmpTime ;
-   return (res == 4);
+    qDebug() << "wr23IOD32 = " << i << global.DIoutput[i].value << Qt::hex<<val1 << val2 << val3 << val4;
+
+
+    if(i >= 0 && i < 16){
+        res =  wr23IOD32(4,0x70,val1);  // wr23IOD32(7,0x70, 0xff);
+    }
+    if(i >= 16 && i < 32){
+        res +=  wr23IOD32(4,0x71,val2);  // wr23IOD32(7,0x70, 0xff)
+    }
+    if(i >= 32 && i < 48){
+        res +=  wr23IOD32(5,0x70,val3);  // wr23IOD32(7,0x70, 0xff);
+    }
+    if(i >= 48 && i < 64){
+        res +=  wr23IOD32(5,0x71,val4);  // wr23IOD32(7,0x70, 0xff)
+    }
+    return (res == 4);
 }
+
+
 
 void Modbus485::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (*event)
-qDebug() << "timerEvent()";
-//qDebug() <<  event->timerId();
+    qDebug() << "timerEvent()";
+    //qDebug() <<  event->timerId();
 
 
 }
@@ -274,24 +320,31 @@ void Modbus485::timerReadSlot()
 {
     if(!global.disableRS485){
         qDebug() << "Read An Di Inputs";
-    //analog input, next DI input, next update DI output
-    rdN4AIB16(2, 0,16);   // ok analog input
-    rd23IOD32(4,0xc0);  // ok digital input
-    rd23IOD32(5,0xc0);  // ok digital input
-    updateDIOut();
+        //analog input, next DI input, next update DI output
+        rdN4AIB16(2, 0,16);   // ok analog input
+        rd23IOD32(4,0xc0);  // ok digital input
+        rd23IOD32(5,0xc0);  // ok digital input
+        updateDIOut();
 
-     }
+    }
 }
 void Modbus485::timerWriteSlot()
 {
-        qDebug() << "Change  Outputs" << global.disableRS485 << global.updateDataOut.need;
-       // if(!global.disableRS485){
-           // if(global.updateDataOut.need){
-            //    global.updateDataOut.need = false;
-                updateDIOut();
-           // }
+    qDebug() << "Change  Outputs" << global.disableRS485 << global.updateDataOut.need;
+    // if(!global.disableRS485){
+    // if(global.updateDataOut.need){
+    //    global.updateDataOut.need = false;
+    updateDIOut();
+    // }
 
-        // }
+    // }
+}
+
+void Modbus485::diOutputChangeSl(int i, int value)
+{
+    qDebug() << "Modbus485::diOutputChangeSl !!!" << i << value;
+    updateDIOut(i);
+
 }
 
 void Modbus485::errorHandler(QModbusDevice::Error error)
@@ -360,7 +413,7 @@ void Modbus485::onReadReady()
 
 
     //dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
-   // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
+    // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
     //qDebug() << "onReadReady from addres" << reply->serverAddress();
     if (reply->error() == QModbusDevice::NoError) {
@@ -390,7 +443,7 @@ void Modbus485::onReadReady()
 
             //qDebug() << "processTime " << timer.elapsed();
             //for(int i = 0; i < MAX_AN_VIRUAL_INPUT; i++){
-                //     qDebug() << i << global.sensList[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+            //     qDebug() << i << global.sensList[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
             //}
 
             //rd23IOD32(4,0xc0);  // 2
@@ -414,7 +467,7 @@ void Modbus485::onReadReady()
                     }
                 }
                 for(int i = 0; i < MAX_DIinput/2; i++){
-                        if((bool)global.DIinput[i + MAX_DIinput/2].value != (bool)(reply->result().value(1) & (1 << i))){
+                    if((bool)global.DIinput[i + MAX_DIinput/2].value != (bool)(reply->result().value(1) & (1 << i))){
                         global.DIinput[i + MAX_DIinput/2].value = (bool)(reply->result().value(1) & (1 << i));
                         global.DIinput[i + MAX_DIinput/2].update = true;
                         qDebug() << "emit valChangeDi(" << i << ")" << global.DIinput[i + MAX_DIinput/2].value;
@@ -434,9 +487,9 @@ void Modbus485::onReadReady()
 
         case 5:     // rd23IOD32 read data address5
             if(unit.registerType() == 4 && replayDataArray.length() == datalen){
-                 qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
-                          <<  QString::number(reply->result().value(0), 16)
-                           << QString::number(reply->result().value(1), 16);
+                qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
+                         <<  QString::number(reply->result().value(0), 16)
+                          << QString::number(reply->result().value(1), 16);
 
                 for(int i = 0; i < 16; i++){
                     if((bool)global.DIinput[i + 32].value != (bool)(reply->result().value(0) & (1 << i))){
@@ -447,7 +500,7 @@ void Modbus485::onReadReady()
                     }
                 }
                 for(int i = 0; i < 16; i++){
-                        if((bool)global.DIinput[i + 32 + 16].value != (bool)(reply->result().value(1) & (1 << i))){
+                    if((bool)global.DIinput[i + 32 + 16].value != (bool)(reply->result().value(1) & (1 << i))){
                         global.DIinput[i + 32 + 16].value = (bool)(reply->result().value(1) & (1 << i));
                         global.DIinput[i + 32 + 16].update = true;
                         qDebug() << "emit valChangeDi(" << i + 32 + 16  << ")" << global.DIinput[i + 32 + 16].value;
@@ -456,7 +509,7 @@ void Modbus485::onReadReady()
                 }
 
 
-              //  printDIinput();
+                //  printDIinput();
             }
             else{
                 qDebug() << "error";
@@ -468,7 +521,7 @@ void Modbus485::onReadReady()
 
         default:
             break;
-        }      
+        }
 
         // qDebug() << "reply->serverAddress()is: " << reply->serverAddress();//QModbusDataUnit::
         // qDebug() << "unit.registerType()is: " << unit.registerType();// int
@@ -607,7 +660,7 @@ void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr)
                     //  statusBar()->showMessage(tr("Write response error: %1 (Modbus exception: 0x%2)")
                     //      .arg(reply->errorString()).arg(reply->rawResult().exceptionCode(), -1, 16),
                     //       5000);
-                qDebug() << "Write response error::  (code:)"<< reply->errorString()<<reply->rawResult().exceptionCode();
+                    qDebug() << "Write response error::  (code:)"<< reply->errorString()<<reply->rawResult().exceptionCode();
 
                 } else if (error != QModbusDevice::NoError) {
                     // statusBar()->showMessage(tr("Write response error: %1 (code: 0x%2)").
@@ -642,9 +695,9 @@ void Modbus485::writeDat()
 
     qDebug() << "writeUnit? " << writeUnit.isValid() << writeUnit.registerType() << writeUnit.startAddress() << writeUnit.values();
 
-   // QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
+    // QModbusDataUnit::RegisterType table = QModbusDataUnit::HoldingRegisters;
     for (qsizetype i = 0, total = 1 ; i < total; ++i) {
-       // const auto addr = i + 0x70; //writeUnit.startAddress();
+        // const auto addr = i + 0x70; //writeUnit.startAddress();
         writeUnit.setValue(i, 0xcc ); // writeModel->m_coils[addr]);
     }
 
@@ -697,9 +750,9 @@ void Modbus485::printDIinput1(int start, int finish){
 
 void Modbus485::printDIinput()
 {
-   printDIinput1(0,15);
-   printDIinput1(16,31);
-   printDIinput1(32,47);
-   printDIinput1(48,63);
+    printDIinput1(0,15);
+    printDIinput1(16,31);
+    printDIinput1(32,47);
+    printDIinput1(48,63);
 }
 

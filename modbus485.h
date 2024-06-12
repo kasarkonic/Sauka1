@@ -29,6 +29,7 @@ public:
     bool rd24DIB32(int boardAdr,int regAdr);
     bool rdN4AIB16(int boardAdr,int regAdr,int len);
     bool updateDIOut();
+    bool updateDIOut(int i);
 
 protected:
     void    timerEvent(QTimerEvent *event) override;
@@ -39,6 +40,7 @@ public slots:
     bool factoryReset(int address);
     void timerReadSlot();
     void timerWriteSlot();
+    void diOutputChangeSl(int i, int value);
 
 signals:
     void valChangeAn(int sensAddr, int val);

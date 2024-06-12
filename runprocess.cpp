@@ -39,6 +39,7 @@ void Runprocess::stateReset()
             tempInt = 0;
         }
         global.DIoutput[tempInt].value = 1;
+        emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
         qDebug() << " DIoutput[" << tempInt << "] = 1";
         changeState(StateReset0,400);
         break;
@@ -47,6 +48,7 @@ void Runprocess::stateReset()
         if (isTimerTimeout())
         {
             global.DIoutput[tempInt].value = 0;
+            emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
             qDebug() << " DIoutput[" << tempInt << "] = 0";
             changeState(StateReset1,100);
         }

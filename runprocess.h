@@ -59,7 +59,8 @@ private:
     bool stateTimerTimeout = false;
     int tempInt = 0;
 
-
+signals:
+    void diOutputChangeSi(int i, int value);
 };
 
 #endif // RUNPROCESS_H
