@@ -271,7 +271,7 @@ bool Modbus485::updateDIOut()
 
 bool Modbus485::updateDIOut(int i)
 {
-    int res;
+    int res = 0;
     quint16 val1,val2,val3,val4;
     val1 = val2 = val3 = val4 = 0;
 
