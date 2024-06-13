@@ -35,13 +35,13 @@ void Runprocess::stateReset()
     {
     case StateReset:
         tempInt++;
-        if(tempInt > 63 ){
+        if(tempInt > 32 ){
             tempInt = 0;
         }
         global.DIoutput[tempInt].value = 1;
         emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
         qDebug() << " DIoutput[" << tempInt << "] = 1";
-        changeState(StateReset0,400);
+        changeState(StateReset0,1000);
         break;
 
     case StateReset0:
@@ -49,8 +49,8 @@ void Runprocess::stateReset()
         {
             global.DIoutput[tempInt].value = 0;
             emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-            qDebug() << " DIoutput[" << tempInt << "] = 0";
-            changeState(StateReset1,100);
+            qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick() - stateStartTime;
+            changeState(StateReset1,1000);
         }
         break;
 
@@ -106,7 +106,7 @@ void Runprocess::init()
 
 void Runprocess::runTaskCycle()
 {
-    //qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
+    qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
     // Goto master state in state machine (state groups)
     // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
     //
@@ -153,7 +153,7 @@ void Runprocess::changeState(int newState, int timeout)
     //    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = global.getTick();
-    stateTimerInterval = timeout;
+    stateTimerInterval = 0;
     if (timeout > -1) {
         stateTimerInterval = timeout;
     }

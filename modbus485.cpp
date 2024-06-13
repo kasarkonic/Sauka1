@@ -27,7 +27,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
     connect(timerWriteOut, SIGNAL(timeout()),
             this, SLOT(timerWriteSlot()));
 
-    timerReadIn->start(500);
+    timerReadIn->start(3000);
     //   timerWriteOut->start(250);
 
 
@@ -93,7 +93,7 @@ void Modbus485::test(int address, int value)
 
 bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 0xffff
 {
-    qDebug() << "Modbus485::wr23IOD32 " << boardAdr<< regAdr << value;
+    qDebug() << "Modbus485::wr23IOD32 " << boardAdr<< regAdr << Qt::hex << value;
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
@@ -324,7 +324,7 @@ void Modbus485::timerReadSlot()
         rdN4AIB16(2, 0,16);   // ok analog input
         rd23IOD32(4,0xc0);  // ok digital input
         rd23IOD32(5,0xc0);  // ok digital input
-        updateDIOut();
+        //updateDIOut();
 
     }
 }
@@ -342,7 +342,7 @@ void Modbus485::timerWriteSlot()
 
 void Modbus485::diOutputChangeSl(int i, int value)
 {
-    qDebug() << "Modbus485::diOutputChangeSl !!!" << i << value;
+    qDebug() << "Modbus485::diOutputChangeSl !!!!!!!!!!!!!!!!" << i << value <<global.getTick();
     updateDIOut(i);
 
 }
