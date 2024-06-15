@@ -174,6 +174,8 @@ public:
     void needUpdateSensorIn(int row, int val);
     int getTick();
     void addTick();
+    int getwaitTx();
+    void setwaitTx(int val);
 
 
 private:
@@ -188,6 +190,7 @@ private:
 
     void creatSensList();
     void addSensList(QString name, SensorType::sensT tp, int addres);
+    int waitTx;
 
 };
 

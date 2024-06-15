@@ -83,6 +83,7 @@ Global::Global()
     create_IN_OUT_list();
 
     tick = 0;
+    waitTx = 0;
 }
 
 //QList<bool>DIinput;
@@ -270,6 +271,16 @@ return tick;
 void Global::addTick()
 {
     tick++;
+}
+
+int Global::getwaitTx()
+{
+    return waitTx;
+}
+
+void Global::setwaitTx(int val)
+{
+    waitTx = val;
 }
 
 //*************************************************************

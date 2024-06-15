@@ -8,6 +8,7 @@
 #include <QElapsedTimer>
 #include <QThread>
 #include <QTimer>
+#include <QElapsedTimer>
 
 
 class Modbus485  :  public QThread //  public QMainWindow
@@ -17,10 +18,10 @@ public:
     explicit Modbus485(Global &global, QWidget *parent = nullptr);
 
     // overriding the QThread's run() method
-   // void run() override;
+    // void run() override;
 
-    QTimer *timerReadIn;
-    QTimer *timerWriteOut;
+    //QTimer *timerReadIn;
+    //QTimer *timerWriteOut;
 
     bool init();
     void test(int address, int value);
@@ -42,12 +43,15 @@ public slots:
     void timerWriteSlot();
     void diOutputChangeSl(int i, int value);
 
+
 signals:
     void valChangeAn(int sensAddr, int val);
     void valChangeDi(int sensAddr, bool val);
 
 private slots:
     void onReadReady();
+    void runTaskCycle();
+
 private:
     Global &global;
     QModbusRtuSerialClient*  modbusDevice;
@@ -58,12 +62,39 @@ private:
     void writeDat();
     //QElapsedTimer timer;
     int timerTest;
+    QElapsedTimer *intervalTimer;
     QString name;
 
     quint16 val1,val2,val3,val4;
     quint16 val1old,val2old,val3old,val4old;
     void printDIinput();
     void printDIinput1(int start, int finish);
+
+
+    enum States
+    {
+
+        State_rd23IOD32_0 ,
+        State_rd23IOD32_1 ,
+        State_rd24DIB32 ,
+        State_rdN4AIB16 ,
+
+        State_wd23IOD32_0 ,
+        State_wd23IOD32_1 ,
+        State_inverter1 ,
+        State_inverter2 ,
+        State_inverter3
+
+    };
+
+   // void runTaskCycle();
+    void changeState(int newState, int timeout = -1);
+    int task_state;
+    int stateStartTime;
+    QTimer *taskTimer;
+    bool isTimerTimeout();
+    int stateTimerInterval = 0;
+   // bool stateTimerTimeout = false;
 
 };
 

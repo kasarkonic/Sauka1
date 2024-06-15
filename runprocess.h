@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include"global.h"
+#include <QElapsedTimer>
 
 namespace Ui {
 class Runprocess;
@@ -43,6 +44,9 @@ private:
 
     Ui::Runprocess *ui;
     Global &global;
+
+    QElapsedTimer *intervalTimer;
+
     void init();
     void runTaskCycle();
     int getMasterState();

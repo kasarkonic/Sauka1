@@ -25,7 +25,7 @@ QList<int>ANinput4_20; // value/100 = x,xx(mA)   [0 - MAX_ANinput4_20]
 23IOD32_PNP
 iestāda Baud rate 115200:  // 04 pašreizēja adrese
 04,06,00,FE,00,07		// pēc tam izslēgt / ieslēgt barošnu platei !!!
-
+requestus sūtīt ne ātrāk kā pēc 50 ms
 
 lietoju plates adresi 04   dati glabājas:
 QList<bool>DIinput;	[0 - MAX_DIinput]

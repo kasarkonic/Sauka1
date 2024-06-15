@@ -1,6 +1,7 @@
 #include "runprocess.h"
 #include "ui_runprocess.h"
 
+
 Runprocess::Runprocess(Global &global,QWidget *parent)
     : QWidget(parent, Qt::Window)
     , ui(new Ui::Runprocess)
@@ -19,7 +20,7 @@ void Runprocess::timerEvent(QTimerEvent *event)
 {
     // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
     if(event->timerId() == taskTimer){
-        // qDebug() << "timerEvent " ;
+        //qDebug() << "timerEvent " ;
         runTaskCycle();
     }
 }
@@ -35,22 +36,23 @@ void Runprocess::stateReset()
     {
     case StateReset:
         tempInt++;
-        if(tempInt > 32 ){
+        if(tempInt > 31 ){
             tempInt = 0;
         }
         global.DIoutput[tempInt].value = 1;
+        qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
         emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-        qDebug() << " DIoutput[" << tempInt << "] = 1";
-        changeState(StateReset0,1000);
+
+        changeState(StateReset0,150);
         break;
 
     case StateReset0:
         if (isTimerTimeout())
         {
             global.DIoutput[tempInt].value = 0;
+            qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
             emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-            qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick() - stateStartTime;
-            changeState(StateReset1,1000);
+            changeState(StateReset1,50);
         }
         break;
 
@@ -99,14 +101,16 @@ void Runprocess::stateError()
 void Runprocess::init()
 {
     task_state = 0;
-    taskTimer = startTimer(100);
+    taskTimer = startTimer(5);
     tempInt = 0;
-
+    intervalTimer = new QElapsedTimer();
+    intervalTimer->start();
+    task_state = StateInit;
 }
 
 void Runprocess::runTaskCycle()
 {
-    qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
+   // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
     // Goto master state in state machine (state groups)
     // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
     //
@@ -152,7 +156,7 @@ void Runprocess::changeState(int newState, int timeout)
 {
     //    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
-    stateStartTime = global.getTick();
+    stateStartTime = intervalTimer->elapsed();//  global.getTick();
     stateTimerInterval = 0;
     if (timeout > -1) {
         stateTimerInterval = timeout;
@@ -162,10 +166,10 @@ void Runprocess::changeState(int newState, int timeout)
 
 bool Runprocess::isTimerTimeout()
 {
-    return((global.getTick() - stateStartTime) > stateTimerInterval);
+    return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
 }
 
 int Runprocess::getStateRunTime()
 {
-    return (global.getTick() - stateStartTime);
+    return (intervalTimer->elapsed() - stateStartTime);
 }
