@@ -218,19 +218,29 @@ void HWService::on_pushButton_Disable_clicked()
 
 void HWService::on_pushButton_Out_write_clicked()
 {
-    //int out_address;
-    //int out_value;
     int id = 4;
-
-    out_value = 0x200;
     if(out_value >= 1){
-        out_value = 0x100;
+        out_value = 1;
     }
+    if(out_address >= MAX_DIinput){
+        ui->lineEdit_Out_address->setText("ERROR!");
+        out_address = 63;//
+    }
+
+
      global.actList[out_address].digital= (bool)out_value;
      global.updateDataOut.need = true;
 
     qDebug() << "---------------------------------emit 1outputChange " << id << out_address << out_value;
-    emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32
+    //emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32
+
+
+
+    global.DIoutput[out_address].value = out_value;
+    //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
+    emit diOutputChangeSi(out_address,global.DIoutput[out_address].value);
+
+
 }
 
 

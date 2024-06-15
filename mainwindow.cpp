@@ -103,11 +103,14 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     connect (&hwService, &HWService::factoryReset,
              &modbus485, &Modbus485::factoryReset);
 
-    connect (&hwService, &HWService::outputChange,
-             &modbus485,&Modbus485::wr23IOD32);
+    //connect (&hwService, &HWService::outputChange,
+    //         &modbus485,&Modbus485::wr23IOD32);
 
     connect (&runprocess,&Runprocess::diOutputChangeSi,
                 &modbus485,&Modbus485::diOutputChangeSl);
+
+    connect (&hwService,&HWService::diOutputChangeSi,
+            &modbus485,&Modbus485::diOutputChangeSl);
 
 
     // sender, &Sender::valueChanged,

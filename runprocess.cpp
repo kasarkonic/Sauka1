@@ -36,14 +36,15 @@ void Runprocess::stateReset()
     {
     case StateReset:
         tempInt++;
-        if(tempInt > 31 ){
+
+        if(tempInt > 8 ){
             tempInt = 0;
         }
         global.DIoutput[tempInt].value = 1;
         qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
         emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
 
-        changeState(StateReset0,150);
+      changeState(StateReset0,1000);
         break;
 
     case StateReset0:
@@ -52,7 +53,7 @@ void Runprocess::stateReset()
             global.DIoutput[tempInt].value = 0;
             qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
             emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-            changeState(StateReset1,50);
+            changeState(StateReset1,100);
         }
         break;
 
@@ -101,7 +102,7 @@ void Runprocess::stateError()
 void Runprocess::init()
 {
     task_state = 0;
-    taskTimer = startTimer(5);
+ //   taskTimer = startTimer(10);--------------------------------------------------------------------------------
     tempInt = 0;
     intervalTimer = new QElapsedTimer();
     intervalTimer->start();

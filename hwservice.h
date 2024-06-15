@@ -28,6 +28,7 @@ signals:
      void setBaudrate(int address);
      bool factoryReset(int address);
      void outputChange(int id, int address, int data);
+     void diOutputChangeSi(int i, int value);
 
 public slots:
     void updateDataAn(int row, int val);

@@ -34,7 +34,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
     task_state = State_rd23IOD32_0;
     taskTimer = new QTimer(this);
-    //   taskTimer->start(10);  for testing  ???????????????????????????????????????????????????????????????????????????????????????????????????
+       taskTimer->start(10);//  for testing  ???????????????????????????????????????????????????????????????????????????????????????????????????
 
     connect(taskTimer, SIGNAL(timeout()),
             this, SLOT(runTaskCycle()));
@@ -352,10 +352,10 @@ void Modbus485::diOutputChangeSl(int i, int value)
 {
     qDebug() << "Modbus485::diOutputChangeSl !!!!!!!!!!!!!!!!" << i << value <<global.getTick();
     if(i<31){
-        global.setwaitTx(1);
+        global.setwaitTx(0x1);
     }
     else{
-        global.setwaitTx(2);
+        global.setwaitTx(0x2);
     }
       updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -772,14 +772,10 @@ void Modbus485::runTaskCycle()
     case State_rd23IOD32_0:
         if (isTimerTimeout())
         {
-            qDebug() << "State_rd23IOD32_0";
             rd23IOD32(4,0xc0);  // ok digital input
 
-            if( global.getwaitTx() ==1){
+            if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
-            }
-            else if( global.getwaitTx() > 1){
-                changeState(State_wd23IOD32_1,interval);
             }
             else {
                 changeState(State_rd23IOD32_1,interval);
@@ -789,12 +785,9 @@ void Modbus485::runTaskCycle()
     case State_rd23IOD32_1:
         if (isTimerTimeout())
         {
-            // rd23IOD32(5,0xc0);  // ok digital input
-            if( global.getwaitTx() ==1){
+             rd23IOD32(5,0xc0);  // ok digital input
+            if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
-            }
-            else if( global.getwaitTx() > 1){
-                changeState(State_wd23IOD32_1,interval);
             }
             else {
             changeState(State_rd24DIB32,1);
@@ -804,11 +797,9 @@ void Modbus485::runTaskCycle()
     case State_rd24DIB32:
         if (isTimerTimeout())
         {
-            if( global.getwaitTx() ==1){
+            //rd24DIB32
+            if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
-            }
-            else if( global.getwaitTx() > 1){
-                changeState(State_wd23IOD32_1,interval);
             }
             else {
             changeState(State_rdN4AIB16);
@@ -819,35 +810,42 @@ void Modbus485::runTaskCycle()
         if (isTimerTimeout())
         {
             rdN4AIB16(2, 0,16);
-            //changeState(State_rd23IOD32_0);
-            if( global.getwaitTx() ==1){
-                changeState(State_wd23IOD32_0,interval);
-            }
-            else if( global.getwaitTx() > 1){
-                changeState(State_wd23IOD32_1,interval);
-            }
-            else {
+
+           // if( global.getwaitTx()){
+           //     changeState(State_wd23IOD32_0,interval/2);
+           // }
+           // else {
             changeState(State_rd23IOD32_0,interval);
-            }
+           // }
         }
         break;
 
-    case State_wd23IOD32_0:
+    case State_wd23IOD32_0: // for write interval/2
+        if( !(global.getwaitTx() & 0x01)){
+            changeState(State_wd23IOD32_1,interval/2);
+        }
+
         if (isTimerTimeout())
         {
-            //updateDIOut(i);
-            int tx = global.getwaitTx() - 1;
+            updateDIOut(0);
+            int tx = global.getwaitTx() & ~0x1 ;  // remove d0
             global.setwaitTx(tx);
             changeState(State_rd23IOD32_1,interval);
         }
         break;
     case State_wd23IOD32_1:
+        if( !(global.getwaitTx() & 0x02)){
+            changeState(State_rd23IOD32_0,interval);
+        }
+
+
+
                 if (isTimerTimeout())
                 {
-              // updateDIOut(i);
-               int tx = global.getwaitTx() - 2;
+               updateDIOut(32);
+               int tx = global.getwaitTx() & ~ 0x2;    // remove d1
                global.setwaitTx(tx);
-               changeState(State_rd23IOD32_1,interval);
+               changeState(State_rd23IOD32_0,interval);
                 }
         break;
     case State_inverter1:

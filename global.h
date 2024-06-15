@@ -190,6 +190,9 @@ private:
 
     void creatSensList();
     void addSensList(QString name, SensorType::sensT tp, int addres);
+
+    // 0 bit 23DI 0 board address 4 , data adress 0-31
+    // 1 bit 23DI 1 board address 5 , data adress 32-63
     int waitTx;
 
 };
