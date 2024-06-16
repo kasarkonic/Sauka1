@@ -16,7 +16,7 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define MAX_DIinput     32*2      // addres [0 , MAX_DIinp]
+#define MAX_DIinput     100      // addres [0 , MAX_DIinp] 32*3
 #define MAX_DIoutput     32*2      // addres [0 , MAX_DIinp]
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
@@ -120,7 +120,13 @@ public:
     //board input output;
     QList<inOut>DIinput;
     QList<inOut>DIoutput;
-    QList<inOut>ANinput4_20; // value/100 = x,xx(mA)
+
+    /*[0-14] 4-20ma input N4AIB16 board
+    [15] voltage value/100 = x,xx(mA) input N4AIB16 board
+    [16-48] 4-20ma input N4AIB16 board input 24DIB32 board
+    */
+
+    QList<inOut>ANinput4_20; // value/100 = x,xx(mA) [0-14] 4-20ma input N4AIB16 board
     int scaleVal;
 
     bool disableRS485; // for testing

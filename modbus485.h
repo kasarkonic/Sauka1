@@ -95,6 +95,9 @@ private:
     bool isTimerTimeout();
     int stateTimerInterval = 0;
    // bool stateTimerTimeout = false;
+    int starttemp;
+    bool ismodbusFree = true;
+    int oldstateStartTime;
 
 };
 

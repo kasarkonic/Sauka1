@@ -4,6 +4,15 @@ MODBUS
 parity no
 stop 1
 
+Adreses:
+2	N4AIB16	// ANinput4_20[0 - 14] 4-20 ieejas, ANinput4_20[15] U ieeja
+4	23IOD32 
+5	23IOD32
+8 	24DIB32		// ANinput4_20[16 - ] 4-20 ieejas
+
+
+
+
 modbus poll 4.3.4 Registration code 9876543210ABCDEFGHIJ9813
 
 

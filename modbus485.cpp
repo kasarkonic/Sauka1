@@ -34,8 +34,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
     task_state = State_rd23IOD32_0;
     taskTimer = new QTimer(this);
-       taskTimer->start(10);//  for testing  ???????????????????????????????????????????????????????????????????????????????????????????????????
-
+    taskTimer->start(10);
     connect(taskTimer, SIGNAL(timeout()),
             this, SLOT(runTaskCycle()));
 
@@ -155,10 +154,13 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr)
         }
         else
             delete reply; // broadcast replies return immediately
+        qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
+
         return true;
     } else {
         // statusBar()->showMessage(tr("Read error: %1").arg(modbusDevice->errorString()), 5000);
-        qDebug() << "Read error:" << modbusDevice->errorString();
+        qDebug() << "Read error:" << modbusDevice->errorString() ;
+        //qDebug()  << "T=" << global.getTick() - starttemp ;
         return false;
     }
 }
@@ -179,7 +181,6 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
     QModbusDataUnit dataUnit =  QModbusDataUnit(table, startAddress, numberOfEntries);
 
 
-
     //! [read_data_1]
     if (auto *reply = modbusDevice->sendReadRequest(dataUnit, boardAdr)) {
         if (!reply->isFinished()){
@@ -190,6 +191,8 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
         }
         else
             delete reply; // broadcast replies return immediately
+
+
         return true;
     } else {
         // statusBar()->showMessage(tr("Read error: %1").arg(modbusDevice->errorString()), 5000);
@@ -295,7 +298,7 @@ bool Modbus485::updateDIOut(int i)
         val4 += (global.DIoutput[k+48].value & 1);
     }
     // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2 << (void *)val3 << (void *)val4;
-    //qDebug() << "wr23IOD32 = " << i << global.DIoutput[i].value << Qt::hex<<val1 << val2 << val3 << val4;
+    qDebug() << "wr23IOD32 = " << i << global.DIoutput[i].value << Qt::hex<<val1 << val2 << val3 << val4;
 
 
     if(i >= 0 && i < 16){
@@ -351,13 +354,24 @@ void Modbus485::timerWriteSlot()
 void Modbus485::diOutputChangeSl(int i, int value)
 {
     qDebug() << "Modbus485::diOutputChangeSl !!!!!!!!!!!!!!!!" << i << value <<global.getTick();
-    if(i<31){
+    if(i<16){
         global.setwaitTx(0x1);
     }
-    else{
+    if(1 > 15 && i<31){
         global.setwaitTx(0x2);
     }
-      updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if(1 > 30 && i< 48){
+        global.setwaitTx(0x4);
+    }
+    if(i<47 && i < 54){
+        global.setwaitTx(0x8);
+    }
+
+
+
+
+
+   // updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
 
@@ -454,13 +468,8 @@ void Modbus485::onReadReady()
             else{
                 qDebug() << "error";
             }
-
-            //qDebug() << "processTime " << timer.elapsed();
-            //for(int i = 0; i < MAX_AN_VIRUAL_INPUT; i++){
-            //     qDebug() << i << global.sensList[i].An/100.0 ;  //     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-            //}
-
-            //rd23IOD32(4,0xc0);  // 2
+            ismodbusFree = true;
+            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
 
@@ -495,7 +504,8 @@ void Modbus485::onReadReady()
                 qDebug() << "error";
             }
 
-
+            ismodbusFree = true;
+            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
 
@@ -529,32 +539,48 @@ void Modbus485::onReadReady()
                 qDebug() << "error";
             }
 
+            ismodbusFree = true;
+            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
+            break;
+
+        case 8:     // 24DIB32  DIinput[64-95]
+            if(unit.registerType() == 4 && replayDataArray.length() == datalen){
+                qDebug() << "Din 24DIB32 address:" << reply->serverAddress()
+                         <<  QString::number(reply->result().value(0), 16)
+                          << QString::number(reply->result().value(1), 16);
+
+                for(int i = 0; i < 16; i++){
+                    if((bool)global.DIinput[i + 64].value != (bool)(reply->result().value(0) & (1 << i))){
+                        global.DIinput[i + 64].value = (bool)(reply->result().value(0) & (1 << i));
+                        global.DIinput[i + 64].update = true;
+                        qDebug() << "emit valChangeDi(" << i + 64 << ")" << global.DIinput[i + 64].value;
+                        emit valChangeDi(i + 64,(bool)global.DIinput[i + 64].value);
+                    }
+                }
+                for(int i = 0; i < 16; i++){
+                    if((bool)global.DIinput[i + 64 + 16].value != (bool)(reply->result().value(1) & (1 << i))){
+                        global.DIinput[i + 64 + 16].value = (bool)(reply->result().value(1) & (1 << i));
+                        global.DIinput[i + 64 + 16].update = true;
+                        qDebug() << "emit valChangeDi(" << i + 64 + 16  << ")" << global.DIinput[i + 64 + 16].value;
+                        emit valChangeDi(i+ 64 + 16, (bool)global.DIinput[i+64+16].value);
+                    }
+                }
+                ismodbusFree = true;
+                printDIinput();
+            }
 
             break;
+
+            ismodbusFree = true;
+            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
 
 
         default:
+            qDebug() << "Receive Msg from uncnown Modbus addres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
             break;
         }
 
-        // qDebug() << "reply->serverAddress()is: " << reply->serverAddress();//QModbusDataUnit::
-        // qDebug() << "unit.registerType()is: " << unit.registerType();// int
-        // qDebug() << "reply->rawResult().data() " << reply->rawResult().data() ;
-        // qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data().length() ;
-        //qDebug() << "reply->rawResult().data().length() " << reply->rawResult().data();
-        // qDebug() << "reply->result().registerType() " << reply->result().registerType() ;
-        /*
-        for (qsizetype i = 0, total = unit.valueCount(); i < total; ++i) {
 
-
-            const QString entry = tr("Address: %1, Value: %2").arg(unit.startAddress() + i)
-                    .arg(QString::number(unit.value(i),
-                                         unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
-            qDebug() << "entry" <<unit.value(i) << entry;
-
-        }
-
-*/
 
     } else if (reply->error() == QModbusDevice::ProtocolError) {
         //statusBar()->showMessage(tr("Read response error: %1 (Modbus exception: 0x%2)").
@@ -756,7 +782,7 @@ void Modbus485::writeDat()
 
 void Modbus485::printDIinput1(int start, int finish){
     QDebug debug = qDebug();
-    debug << "DigitalIn" << start << "->";
+
     for(int i = start; i<= finish; i++){
         debug << global.DIinput[i].value;
     }
@@ -764,45 +790,49 @@ void Modbus485::printDIinput1(int start, int finish){
 
 void Modbus485::runTaskCycle()
 {
-    int interval = 50;
-
+    int interval = 50;  // 25 arI strādā
     //qDebug() << "runTaskCycle()" << task_state;
     switch (task_state)
     {
     case State_rd23IOD32_0:
         if (isTimerTimeout())
         {
+            //qDebug() << "starttemp" << ismodbusFree << global.getTick() - starttemp ;
+            starttemp =  global.getTick();
             rd23IOD32(4,0xc0);  // ok digital input
 
-            if( global.getwaitTx()){
-                changeState(State_wd23IOD32_0,interval);
-            }
-            else {
-                changeState(State_rd23IOD32_1,interval);
-            }
+            ismodbusFree = false;
+
+                        if( global.getwaitTx()){
+                            changeState(State_wd23IOD32_0,interval);
+                        }
+                        else {
+                            changeState(State_rd23IOD32_1,interval);
+                        }
+
         }
         break;
     case State_rd23IOD32_1:
         if (isTimerTimeout())
         {
-             rd23IOD32(5,0xc0);  // ok digital input
+         //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
             if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
             }
             else {
-            changeState(State_rd24DIB32,1);
+                changeState(State_rd24DIB32,1);
             }
         }
         break;
     case State_rd24DIB32:
         if (isTimerTimeout())
         {
-            //rd24DIB32
+            rd24DIB32(8,0xc0);
             if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
             }
             else {
-            changeState(State_rdN4AIB16);
+                changeState(State_rdN4AIB16);
             }
         }
         break;
@@ -811,42 +841,60 @@ void Modbus485::runTaskCycle()
         {
             rdN4AIB16(2, 0,16);
 
-           // if( global.getwaitTx()){
-           //     changeState(State_wd23IOD32_0,interval/2);
-           // }
-           // else {
-            changeState(State_rd23IOD32_0,interval);
-           // }
+             if( global.getwaitTx()){
+                 changeState(State_wd23IOD32_0,interval);
+             }
+             else {
+            changeState(State_wd23IOD32_0,interval);
+             }
         }
         break;
 
-    case State_wd23IOD32_0: // for write interval/2
-        if( !(global.getwaitTx() & 0x01)){
-            changeState(State_wd23IOD32_1,interval/2);
+    case State_wd23IOD32_0:
+        qDebug() << "getwaitTx" << global.getwaitTx() ;
+        if( !(global.getwaitTx() & 0x03)){
+            changeState(State_wd23IOD32_1,1);
         }
 
         if (isTimerTimeout())
         {
+          if(global.getwaitTx() & 0x01){
             updateDIOut(0);
             int tx = global.getwaitTx() & ~0x1 ;  // remove d0
             global.setwaitTx(tx);
-            changeState(State_rd23IOD32_1,interval);
-        }
+             }
+          if(global.getwaitTx() & 0x02){
+            updateDIOut(16);
+            int tx = global.getwaitTx() & ~0x2 ;  // remove d0
+            global.setwaitTx(tx);
+             }
+            changeState(State_wd23IOD32_1,interval);
+          }
+
+
         break;
     case State_wd23IOD32_1:
-        if( !(global.getwaitTx() & 0x02)){
+            qDebug() << "getwaitTx" << global.getwaitTx() ;
+        if( !(global.getwaitTx() & 0x0c)){
             changeState(State_rd23IOD32_0,interval);
         }
 
+        if (isTimerTimeout())
+        {
 
+            if(global.getwaitTx() & 0x04){
+             // updateDIOut(32);    // no board -----------------------------------------------
+              int tx = global.getwaitTx() & ~0x4 ;  // remove d0
+              global.setwaitTx(tx);
+               }
+            if(global.getwaitTx() & 0x08){
+            //  updateDIOut(48); // no board -----------------------------------------------
+              int tx = global.getwaitTx() & ~0x8 ;  // remove d0
+              global.setwaitTx(tx);
+               }
 
-                if (isTimerTimeout())
-                {
-               updateDIOut(32);
-               int tx = global.getwaitTx() & ~ 0x2;    // remove d1
-               global.setwaitTx(tx);
-               changeState(State_rd23IOD32_0,interval);
-                }
+            changeState(State_rd23IOD32_0,interval);
+        }
         break;
     case State_inverter1:
 
@@ -867,26 +915,33 @@ void Modbus485::runTaskCycle()
 
 void Modbus485::changeState(int newState, int timeout)
 {
-    qDebug() << "485: " << Qt::hex << task_state<< " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+    qDebug() << "485: " << Qt::hex << task_state<< "->" << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick() << global.getTick() - oldstateStartTime;
     task_state = newState;
     stateStartTime = intervalTimer->elapsed();//  global.getTick();
+    oldstateStartTime = global.getTick();
+
     stateTimerInterval = 0;
     if (timeout > -1) {
         stateTimerInterval = timeout;
     }
+    qDebug() << "Star: " << stateStartTime<< "Interval: " << stateTimerInterval ;
+
 }
 
 bool Modbus485::isTimerTimeout()
 {
+    // qDebug() << "Star: " << stateStartTime<< "Interval: " << stateTimerInterval  << "elaps - start: " << intervalTimer->elapsed() - stateStartTime ;
     return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
 }
 
 
 void Modbus485::printDIinput()
 {
-    printDIinput1(0,15);
-    printDIinput1(16,31);
-    printDIinput1(32,47);
-    printDIinput1(48,63);
+   // printDIinput1(0,15);
+   // printDIinput1(16,31);
+   // printDIinput1(32,47);
+   // printDIinput1(48,63);
+   printDIinput1(64,79);
+    printDIinput1(80,95);
 }
 

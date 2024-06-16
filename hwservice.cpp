@@ -43,8 +43,8 @@ void HWService::updateDataAn(int row, int val)
     QString str;
     QString str1;
     for(int i = 0;i < 8; i++){
-       str.append(QString::number(global.sensList[i].analog));
-       str1.append(QString::number(global.sensList[i + 8 ].analog));
+       str.append(QString::number(global.ANinput4_20[i].value));
+       str1.append(QString::number(global.ANinput4_20[i + 8 ].value));
 
        str.append(", ");
        str1.append(", ");
@@ -67,10 +67,10 @@ void HWService::updateDataDi(int row, bool val)
     QString str3;
 
     for(int i = 0;i < 16; i++){
-       str.append(QString::number(global.sensList[i].digital));
-       str1.append(QString::number(global.sensList[i + 16 ].digital));
-       str2.append(QString::number(global.sensList[i + 32].digital));
-       str3.append(QString::number(global.sensList[i + 48 ].digital));
+       str.append(QString::number(global.DIoutput[i].value));
+       str1.append(QString::number(global.DIoutput[i + 16 ].value));
+       str2.append(QString::number(global.DIoutput[i + 32 ].value));
+       str3.append(QString::number(global.DIoutput[i + 48 ].value));
        str.append(", ");
        str1.append(", ");
        str2.append(", ");
