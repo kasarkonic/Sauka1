@@ -1,0 +1,40 @@
+How do I make a QT file executable?
+Do these steps:
+
+
+start meklēt qt un palaist
+C:\Users\maris.dirveiks\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Qt\5.15.2\MinGW 8.1.0 (64-bit) C:\Qt\5.15.2\mingw81_64\bin\qtenv2.bat shortcut
+
+tas iestāda nepieciešamos path. un no tā direktorija pāriet uz direktoriju, kurā ir exe.
+Tad japalaiž C:\Qt\5.15.2\mingw81_64\bin\windeployqt.exe TrcToCanView.exe
+
+OK OK OK !!!
+
+
+Open qt command-line window.
+Go to the directory which .exe file exists (using cd command).
+Run windeployqt.exe --quick . command.
+Run your exe file and enjoy it!
+
+
+C:\SVN\TrcToCanView\build-TrcToCanView-Desktop_Qt_5_15_2_MinGW_64_bit-Release\release>C:\Qt\5.15.2\mingw81_64\bin\windeployqt.exe --quick TrcToCanView.exe
+
+
+C:\SVN\TrcToCanView\build-TrcToCanView-Desktop_Qt_5_15_2_MinGW_64_bit-Release\release>C:\Qt\5.15.2\mingw81_64\bin\windeployqt.exe  --quick TrcToCanView.exe
+
+
+
+jāizmanto šis CMD ar enviroment iestādījumiem 
+
+C:\Users\maris.dirveiks\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Qt\5.15.2\MinGW 8.1.0 (64-bit)
+
+
+
+
+cd\
+C:\>C:\Qt\6.6.2\mingw_64\bin\qtenv2.bat
+cd/
+C:\>e:
+E:\>
+cd E:\Qt\build-Saukas_kudra-Desktop_Qt_6_6_2_MinGW_64_bit-Release
+E:\Qt\build-Saukas_kudra-Desktop_Qt_6_6_2_MinGW_64_bit-Release\release Saukas_kudra.exe

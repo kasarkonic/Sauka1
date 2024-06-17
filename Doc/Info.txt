@@ -6,9 +6,9 @@ stop 1
 
 Adreses:
 2	N4AIB16	// ANinput4_20[0 - 14] 4-20 ieejas, ANinput4_20[15] U ieeja
-4	23IOD32 
-5	23IOD32
-8 	24DIB32		// ANinput4_20[16 - ] 4-20 ieejas
+4	23IOD32 //DIinput[0-31]
+5	23IOD32 //DIinput[32-63]
+8 	24DIB32 //DIinput[64-95] 
 
 
 

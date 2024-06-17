@@ -44,7 +44,7 @@ void Runprocess::stateReset()
         qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
         emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
 
-      changeState(StateReset0,500);
+      changeState(StateReset0,400);
         break;
 
     case StateReset0:
@@ -53,7 +53,7 @@ void Runprocess::stateReset()
             global.DIoutput[tempInt].value = 0;
             qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
             emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-            changeState(StateReset1,500);
+            changeState(StateReset1,100);
         }
         break;
 

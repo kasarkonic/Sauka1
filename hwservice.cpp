@@ -17,15 +17,15 @@ HWService::HWService(Global &global, QWidget *parent)
 
 
 {
-   qDebug() << "HWService::HWService";
-   QPalette pal = QPalette();
-   pal.setColor(QPalette::Window,global.backgroundColor); //QColor(255, 0, 0, 127)
-   //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
-   this->setAutoFillBackground(true);
-   this->setPalette(pal);
-   ui->setupUi(this);
-   ui->lineEdit_Input_address->setText("0");
-   timerId = startTimer(1000, Qt::CoarseTimer);
+    qDebug() << "HWService::HWService";
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window,global.backgroundColor); //QColor(255, 0, 0, 127)
+    //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
+    ui->setupUi(this);
+    ui->lineEdit_Input_address->setText("0");
+    timerId = startTimer(1000, Qt::CoarseTimer);
 
 }
 
@@ -40,17 +40,21 @@ void HWService::updateDataAn(int row, int val)
     sensListsForm.updateData(row);
     actListForm.updateData(row);
 
-    QString str;
-    QString str1;
-    for(int i = 0;i < 8; i++){
-       str.append(QString::number(global.ANinput4_20[i].value));
-       str1.append(QString::number(global.ANinput4_20[i + 8 ].value));
+    QString str = "An in 0-16   ";
 
-       str.append(", ");
-       str1.append(", ");
+    for(int i = 0;i < 8; i++){
+        str.append(QString::number(global.ANinput4_20[i].value));
+        str.append(", ");
     }
-    ui->label_row5->setText(str);
-    ui->label_row6->setText(str1);
+    str.append("  ");
+
+    for(int i = 8;i < 16; i++){
+        str.append(QString::number(global.ANinput4_20[i].value));
+        str.append(", ");
+    }
+
+    ui->label_row7->setText(str);
+    //ui->label_row8->setText(str1);
 
 
 
@@ -58,29 +62,109 @@ void HWService::updateDataAn(int row, int val)
 void HWService::updateDataDi(int row, bool val)
 {
     qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
-    sensListsForm.updateData(row);
+    //sensListsForm.updateData(row);
     //actListForm.updateData(row);
 
-    QString str;
-    QString str1;
-    QString str2;
-    QString str3;
+    QString str1 = "Di out 0-31   ";
+    QString str2 = "Di out 32-63  ";
+    QString str3 = "Di out 64-95  ";
+    QString str4 = "Di in 0-31    ";
+    QString str5 = "Di in 32-63   ";
+    QString str6 = "Di in 64-95   ";
 
-    for(int i = 0;i < 16; i++){
-       str.append(QString::number(global.DIoutput[i].value));
-       str1.append(QString::number(global.DIoutput[i + 16 ].value));
-       str2.append(QString::number(global.DIoutput[i + 32 ].value));
-       str3.append(QString::number(global.DIoutput[i + 48 ].value));
-       str.append(", ");
-       str1.append(", ");
-       str2.append(", ");
-       str3.append(", ");
+    for(int i = 0; i < 8; i++){
+        str1.append(QString::number(global.DIoutput[i].value));
+        str2.append(QString::number(global.DIoutput[i + 32 ].value));
+        str3.append(QString::number(global.DIoutput[i + 64 ].value));
+        str4.append(QString::number(global.DIinput[i].value));
+        str5.append(QString::number(global.DIinput[i + 32 ].value));
+        str6.append(QString::number(global.DIinput[i + 64 ].value));
+
+        str1.append(", ");
+        str2.append(", ");
+        str3.append(", ");
+        str4.append(", ");
+        str5.append(", ");
+        str6.append(", ");
     }
-    ui->label_row1->setText(str);
-    ui->label_row2->setText(str1);
-    ui->label_row3->setText(str2);
-    ui->label_row4->setText(str3);
 
+    str1.append("  ");
+    str2.append("  ");
+    str3.append("  ");
+    str4.append("  ");
+    str5.append("  ");
+    str6.append("  ");
+
+    for(int i = 9; i < 16; i++){
+        str1.append(QString::number(global.DIoutput[i].value));
+        str2.append(QString::number(global.DIoutput[i + 32 ].value));
+        str3.append(QString::number(global.DIoutput[i + 64 ].value));
+        str4.append(QString::number(global.DIinput[i].value));
+        str5.append(QString::number(global.DIinput[i + 32 ].value));
+        str6.append(QString::number(global.DIinput[i + 64 ].value));
+
+        str1.append(", ");
+        str2.append(", ");
+        str3.append(", ");
+        str4.append(", ");
+        str5.append(", ");
+        str6.append(", ");
+    }
+
+    str1.append("  ");
+    str2.append("  ");
+    str3.append("  ");
+    str4.append("  ");
+    str5.append("  ");
+    str6.append("  ");
+
+    for(int i = 16;i < 24; i++){
+        str1.append(QString::number(global.DIoutput[i].value));
+        str2.append(QString::number(global.DIoutput[i + 32 ].value));
+        str3.append(QString::number(global.DIoutput[i + 64 ].value));
+        str4.append(QString::number(global.DIinput[i].value));
+        str5.append(QString::number(global.DIinput[i + 32 ].value));
+        str6.append(QString::number(global.DIinput[i + 64 ].value));
+
+        str1.append(", ");
+        str2.append(", ");
+        str3.append(", ");
+        str4.append(", ");
+        str5.append(", ");
+        str6.append(", ");
+    }
+
+    str1.append("  ");
+    str2.append("  ");
+    str3.append("  ");
+    str4.append("  ");
+    str5.append("  ");
+    str6.append("  ");
+
+    for(int i = 24;i < 32; i++){
+        str1.append(QString::number(global.DIoutput[i].value));
+        str2.append(QString::number(global.DIoutput[i + 32 ].value));
+        str3.append(QString::number(global.DIoutput[i + 64 ].value));
+        str4.append(QString::number(global.DIinput[i].value));
+        str5.append(QString::number(global.DIinput[i + 32 ].value));
+        str6.append(QString::number(global.DIinput[i + 64 ].value));
+
+        str1.append(", ");
+        str2.append(", ");
+        str3.append(", ");
+        str4.append(", ");
+        str5.append(", ");
+        str6.append(", ");
+    }
+
+
+
+    ui->label_row1->setText(str1);
+    ui->label_row2->setText(str2);
+    ui->label_row3->setText(str3);
+    ui->label_row4->setText(str4);
+    ui->label_row5->setText(str5);
+    ui->label_row6->setText(str6);
 
 
 
@@ -88,16 +172,16 @@ void HWService::updateDataDi(int row, bool val)
 
 void HWService::updateDIoutput(int row, int val)
 {
-      qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
-  //  actListForm.updateDIoutput(row,val);
+    qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
+    //  actListForm.updateDIoutput(row,val);
     //modbuss
 }
 
 void HWService::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-  // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
-  // float volt24 = SUPLAY_24V/100.0;//  power supplay input
+    // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
+    // float volt24 = SUPLAY_24V/100.0;//  power supplay input
 
     int volt24 =  SUPLAY_24V ;
     QString v24 = QString::number(volt24/100.0, 'g', 4);
@@ -119,16 +203,16 @@ void HWService::on_pushButton_actuator_clicked()
 
 void HWService::on_pushButton_sensor_clicked()
 {
- qDebug() << "on_pushButton_sensor_clicked";
-   // SensListsForm *sensListsForm = new SensListsForm(global,this);
+    qDebug() << "on_pushButton_sensor_clicked";
+    // SensListsForm *sensListsForm = new SensListsForm(global,this);
     sensListsForm.show();
 }
 
 void HWService::on_pushButton_Scales_clicked()
 {
     qDebug() << "on_pushButton_scale_clicked";
-       Scale *scale = new Scale(global,this);
-       scale->show();
+    Scale *scale = new Scale(global,this);
+    scale->show();
 }
 
 
@@ -145,7 +229,7 @@ void HWService::on_pushButton_ReadBaudR_clicked()
 {
     emit setBaudrate(modbusAddress);
 
-/*
+    /*
  *
  *
  *
@@ -193,9 +277,9 @@ Return data : FF 06 00 FD 00 02 8C 25
 
 void HWService::on_pushButton_FactoryReset_clicked()
 {
-     emit factoryReset(modbusAddress);
+    emit factoryReset(modbusAddress);
 
-  /*  Modbus Address(PLC)：40252
+    /*  Modbus Address(PLC)：40252
         RS485 address : 0x01~0x3F
         Function code:Write 0x06;
     Register address:0x00FB(251)
@@ -228,8 +312,8 @@ void HWService::on_pushButton_Out_write_clicked()
     }
 
 
-     global.actList[out_address].digital= (bool)out_value;
-     global.updateDataOut.need = true;
+    global.actList[out_address].digital= (bool)out_value;
+    global.updateDataOut.need = true;
 
     qDebug() << "---------------------------------emit 1outputChange " << id << out_address << out_value;
     //emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32

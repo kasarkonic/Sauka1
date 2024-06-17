@@ -154,7 +154,7 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr)
         }
         else
             delete reply; // broadcast replies return immediately
-        qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
+       // qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
 
         return true;
     } else {
@@ -345,7 +345,7 @@ void Modbus485::timerWriteSlot()
     // if(!global.disableRS485){
     // if(global.updateDataOut.need){
     //    global.updateDataOut.need = false;
-    updateDIOut();
+    //updateDIOut();
     // }
 
     // }
@@ -357,10 +357,10 @@ void Modbus485::diOutputChangeSl(int i, int value)
     if(i<16){
         global.setwaitTx(0x1);
     }
-    if(i > 15 && i < 31){
+    if(i > 15 && i < 32){
         global.setwaitTx(0x2);
     }
-    if(i > 30 && i < 48){
+    if(i > 31 && i < 48){
         global.setwaitTx(0x4);
     }
     if(i > 47 && i < 54){
@@ -465,7 +465,7 @@ void Modbus485::onReadReady()
                 qDebug() << "error";
             }
             ismodbusFree = true;
-            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
+            //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
 
@@ -477,7 +477,7 @@ void Modbus485::onReadReady()
                          << QString::number(reply->result().value(1), 16);
 
 
-                for(int i = 0; i < MAX_DIinput/2; i++){
+                for(int i = 0; i < 16; i++){
                     if((bool)global.DIinput[i].value != (bool)(reply->result().value(0) & (1 << i))){
                         global.DIinput[i].value = (bool)(reply->result().value(0) & (1 << i));
                         global.DIinput[i].update = true;
@@ -485,12 +485,12 @@ void Modbus485::onReadReady()
                         emit valChangeDi(i,(bool)global.DIinput[i].value);
                     }
                 }
-                for(int i = 0; i < MAX_DIinput/2; i++){
-                    if((bool)global.DIinput[i + MAX_DIinput/2].value != (bool)(reply->result().value(1) & (1 << i))){
-                        global.DIinput[i + MAX_DIinput/2].value = (bool)(reply->result().value(1) & (1 << i));
-                        global.DIinput[i + MAX_DIinput/2].update = true;
-                        qDebug() << "emit valChangeDi(" << i << ")" << global.DIinput[i + MAX_DIinput/2].value;
-                        emit valChangeDi(i+MAX_DIinput/2, (bool)global.DIinput[i+MAX_DIinput/2].value);
+                for(int i = 0; i < 16; i++){
+                    if((bool)global.DIinput[i + 16].value != (bool)(reply->result().value(1) & (1 << i))){
+                        global.DIinput[i + 16].value = (bool)(reply->result().value(1) & (1 << i));
+                        global.DIinput[i + 16].update = true;
+                        qDebug() << "emit valChangeDi(" << i << ")" << global.DIinput[i + 16].value;
+                        emit valChangeDi(i + 16, (bool)global.DIinput[i+16].value);
                     }
                 }
                 // printDIinput();
@@ -501,7 +501,7 @@ void Modbus485::onReadReady()
             }
 
             ismodbusFree = true;
-            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
+            //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
 
@@ -516,7 +516,7 @@ void Modbus485::onReadReady()
                         global.DIinput[i + 32].value = (bool)(reply->result().value(0) & (1 << i));
                         global.DIinput[i + 32].update = true;
                         qDebug() << "emit valChangeDi(" << i + 32 << ")" << global.DIinput[i + 32].value;
-                        emit valChangeDi(i + MAX_DIinput/2,(bool)global.DIinput[i + MAX_DIinput/2].value);
+                        emit valChangeDi(i + 32,(bool)global.DIinput[i + 32].value);
                     }
                 }
                 for(int i = 0; i < 16; i++){
@@ -524,7 +524,7 @@ void Modbus485::onReadReady()
                         global.DIinput[i + 32 + 16].value = (bool)(reply->result().value(1) & (1 << i));
                         global.DIinput[i + 32 + 16].update = true;
                         qDebug() << "emit valChangeDi(" << i + 32 + 16  << ")" << global.DIinput[i + 32 + 16].value;
-                        emit valChangeDi(i+MAX_DIinput/2, (bool)global.DIinput[i+MAX_DIinput/2].value);
+                        emit valChangeDi(i+32 + 16, (bool)global.DIinput[i+32 + 16].value);
                     }
                 }
 
@@ -536,7 +536,7 @@ void Modbus485::onReadReady()
             }
 
             ismodbusFree = true;
-            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
+            //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
         case 8:     // 24DIB32  DIinput[64-95]
@@ -562,7 +562,7 @@ void Modbus485::onReadReady()
                     }
                 }
                 ismodbusFree = true;
-                printDIinput();
+               // printDIinput();
             }
 
             break;
@@ -572,7 +572,7 @@ void Modbus485::onReadReady()
             break;
 
             ismodbusFree = true;
-            qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
+            //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
 
 
         }
@@ -848,7 +848,6 @@ void Modbus485::runTaskCycle()
         break;
 
     case State_wd23IOD32_0:
-        qDebug() << "getwaitTx" << global.getwaitTx() ;
         if( !(global.getwaitTx() & 0x03)){
             changeState(State_wd23IOD32_1,1);
         }
@@ -871,7 +870,6 @@ void Modbus485::runTaskCycle()
 
         break;
     case State_wd23IOD32_1:
-        qDebug() << "getwaitTx" << global.getwaitTx() ;
         if( !(global.getwaitTx() & 0x0c)){
             changeState(State_rd23IOD32_0,interval);
         }
@@ -910,7 +908,7 @@ void Modbus485::runTaskCycle()
 
 void Modbus485::changeState(int newState, int timeout)
 {
-    qDebug() << "485: " << Qt::hex << task_state<< "->" << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick() << global.getTick() - oldstateStartTime;
+ //   qDebug() << "485: " << Qt::hex << task_state<< "->" << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick() << global.getTick() - oldstateStartTime;
     task_state = newState;
     stateStartTime = intervalTimer->elapsed();//  global.getTick();
     oldstateStartTime = global.getTick();
@@ -919,7 +917,7 @@ void Modbus485::changeState(int newState, int timeout)
     if (timeout > -1) {
         stateTimerInterval = timeout;
     }
-    qDebug() << "Star: " << stateStartTime<< "Interval: " << stateTimerInterval ;
+   // qDebug() << "Star: " << stateStartTime<< "Interval: " << stateTimerInterval ;
 
 }
 
@@ -936,7 +934,12 @@ void Modbus485::printDIinput()
     // printDIinput1(16,31);
     // printDIinput1(32,47);
     // printDIinput1(48,63);
-    printDIinput1(64,79);
-    printDIinput1(80,95);
+   // printDIinput1(64,79);
+   // printDIinput1(80,95);
+
+    printDIinput1(0,31);
+    printDIinput1(32,63);
+    printDIinput1(64,95);
+
 }
 

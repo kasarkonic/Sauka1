@@ -113,6 +113,10 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
             &modbus485,&Modbus485::diOutputChangeSl);
 
 
+    connect(&runprocess,&Runprocess::diOutputChangeSi,
+            &hwService, &HWService::updateDataDi);
+
+
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
