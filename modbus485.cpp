@@ -7,7 +7,7 @@
 
 
 Modbus485::Modbus485(Global &global, QWidget *parent)
-//: QMainWindow(parent)
+    //: QMainWindow(parent)
     : QThread(parent)
     , global(global)
 
@@ -187,7 +187,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr)
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
             qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
-                       readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -232,7 +232,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len)
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
             qDebug()<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
-                       readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
+                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         }
         else
             delete reply; // broadcast replies return immediately
@@ -248,9 +248,9 @@ bool Modbus485::updateDIOut()
 {
     int res = 0;
     res =  updateDIOut(0);
-    res =+ updateDIOut(16);
-    res =+ updateDIOut(32);
-    res =+ updateDIOut(48);
+    res += updateDIOut(16);
+    res += updateDIOut(32);
+    res += updateDIOut(48);
     /*
             int tmpTime = global.getTick();
             //qDebug() << "Modbus485::updateDIOut()" << tmpTime ;
@@ -367,7 +367,7 @@ void Modbus485::diOutputChangeSl(int i, int value)
         global.setwaitTx(0x8);
     }
 
-   // updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 }
 
@@ -474,7 +474,7 @@ void Modbus485::onReadReady()
             if(unit.registerType() == 4 && replayDataArray.length() == datalen){
                 qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
                          <<  QString::number(reply->result().value(0), 16)
-                          << QString::number(reply->result().value(1), 16);
+                         << QString::number(reply->result().value(1), 16);
 
 
                 for(int i = 0; i < MAX_DIinput/2; i++){
@@ -509,7 +509,7 @@ void Modbus485::onReadReady()
             if(unit.registerType() == 4 && replayDataArray.length() == datalen){
                 qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
                          <<  QString::number(reply->result().value(0), 16)
-                          << QString::number(reply->result().value(1), 16);
+                         << QString::number(reply->result().value(1), 16);
 
                 for(int i = 0; i < 16; i++){
                     if((bool)global.DIinput[i + 32].value != (bool)(reply->result().value(0) & (1 << i))){
@@ -543,7 +543,7 @@ void Modbus485::onReadReady()
             if(unit.registerType() == 4 && replayDataArray.length() == datalen){
                 qDebug() << "Din 24DIB32 address:" << reply->serverAddress()
                          <<  QString::number(reply->result().value(0), 16)
-                          << QString::number(reply->result().value(1), 16);
+                         << QString::number(reply->result().value(1), 16);
 
                 for(int i = 0; i < 16; i++){
                     if((bool)global.DIinput[i + 64].value != (bool)(reply->result().value(0) & (1 << i))){
@@ -567,13 +567,14 @@ void Modbus485::onReadReady()
 
             break;
 
+        default:
+            qDebug() << "Receive Msg from uncnown Modbus addres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+            break;
+
             ismodbusFree = true;
             qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
 
 
-        default:
-            qDebug() << "Receive Msg from uncnown Modbus addres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-            break;
         }
 
 
@@ -799,19 +800,19 @@ void Modbus485::runTaskCycle()
 
             ismodbusFree = false;
 
-                        if( global.getwaitTx()){
-                            changeState(State_wd23IOD32_0,interval);
-                        }
-                        else {
-                            changeState(State_rd23IOD32_1,interval);
-                        }
+            if( global.getwaitTx()){
+                changeState(State_wd23IOD32_0,interval);
+            }
+            else {
+                changeState(State_rd23IOD32_1,interval);
+            }
 
         }
         break;
     case State_rd23IOD32_1:
         if (isTimerTimeout())
         {
-         //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
+            //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
             if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
             }
@@ -837,12 +838,12 @@ void Modbus485::runTaskCycle()
         {
             rdN4AIB16(2, 0,16);
 
-             if( global.getwaitTx()){
-                 changeState(State_wd23IOD32_0,interval);
-             }
-             else {
-            changeState(State_wd23IOD32_0,interval);
-             }
+            if( global.getwaitTx()){
+                changeState(State_wd23IOD32_0,interval);
+            }
+            else {
+                changeState(State_wd23IOD32_0,interval);
+            }
         }
         break;
 
@@ -854,23 +855,23 @@ void Modbus485::runTaskCycle()
 
         if (isTimerTimeout())
         {
-          if(global.getwaitTx() & 0x01){
-            updateDIOut(0);
-            int tx = global.getwaitTx() & ~0x1 ;  // remove d0
-            global.setwaitTx(tx);
-             }
-          if(global.getwaitTx() & 0x02){
-            updateDIOut(16);
-            int tx = global.getwaitTx() & ~0x2 ;  // remove d0
-            global.setwaitTx(tx);
-             }
+            if(global.getwaitTx() & 0x01){
+                updateDIOut(0);
+                int tx = global.getwaitTx() & ~0x1 ;  // remove d0
+                global.setwaitTx(tx);
+            }
+            if(global.getwaitTx() & 0x02){
+                updateDIOut(16);
+                int tx = global.getwaitTx() & ~0x2 ;  // remove d1
+                global.setwaitTx(tx);
+            }
             changeState(State_wd23IOD32_1,interval);
-          }
+        }
 
 
         break;
     case State_wd23IOD32_1:
-            qDebug() << "getwaitTx" << global.getwaitTx() ;
+        qDebug() << "getwaitTx" << global.getwaitTx() ;
         if( !(global.getwaitTx() & 0x0c)){
             changeState(State_rd23IOD32_0,interval);
         }
@@ -879,15 +880,13 @@ void Modbus485::runTaskCycle()
         {
 
             if(global.getwaitTx() & 0x04){
-             // updateDIOut(32);    // no board -----------------------------------------------
-              int tx = global.getwaitTx() & ~0x4 ;  // remove d0
-              global.setwaitTx(tx);
-               }
+                int tx = global.getwaitTx() & ~0x4 ;  // remove d2
+                global.setwaitTx(tx);
+            }
             if(global.getwaitTx() & 0x08){
-            //  updateDIOut(48); // no board -----------------------------------------------
-              int tx = global.getwaitTx() & ~0x8 ;  // remove d0
-              global.setwaitTx(tx);
-               }
+                int tx = global.getwaitTx() & ~0x8 ;  // remove d3
+                global.setwaitTx(tx);
+            }
 
             changeState(State_rd23IOD32_0,interval);
         }
@@ -933,11 +932,11 @@ bool Modbus485::isTimerTimeout()
 
 void Modbus485::printDIinput()
 {
-   // printDIinput1(0,15);
-   // printDIinput1(16,31);
-   // printDIinput1(32,47);
-   // printDIinput1(48,63);
-   printDIinput1(64,79);
+    // printDIinput1(0,15);
+    // printDIinput1(16,31);
+    // printDIinput1(32,47);
+    // printDIinput1(48,63);
+    printDIinput1(64,79);
     printDIinput1(80,95);
 }
 
