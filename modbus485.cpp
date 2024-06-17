@@ -357,19 +357,15 @@ void Modbus485::diOutputChangeSl(int i, int value)
     if(i<16){
         global.setwaitTx(0x1);
     }
-    if(1 > 15 && i<31){
+    if(i > 15 && i < 31){
         global.setwaitTx(0x2);
     }
-    if(1 > 30 && i< 48){
+    if(i > 30 && i < 48){
         global.setwaitTx(0x4);
     }
-    if(i<47 && i < 54){
+    if(i > 47 && i < 54){
         global.setwaitTx(0x8);
     }
-
-
-
-
 
    // updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
