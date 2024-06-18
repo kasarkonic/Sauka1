@@ -360,7 +360,7 @@ void Global::creatWidgList()
 {
 //Global::addWidgList(WidgetType::widgT ty, QString name, int page,int X, int Y, int size,int options, int actAdr1, int sensAdr1, int sensAdr2)
 
-    addWidgList(WidgetType::Mix,        "Mix",     1,        200,   300, 100, 0,        MIXSPEED.value, 0,  0);
+    addWidgList(WidgetType::Mix,        "Mix",     1,        20,   30, 100, 0,        MIXSPEED, 0,  0);
 
  /*   addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0, 0,  0,0,0);
 

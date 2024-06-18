@@ -18,7 +18,7 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
 void WidgetDiagramElement::setNewPosition(float koef)
 {
      qDebug() << "WidgetDiagramElement 1::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-     settings.currX<<settings.currY  ;
+     settings.currX<<settings.currY << koef ;
     settings.currX = global.widHash[settings.name].startX/koef;
     settings.currY = global.widHash[settings.name].startY/koef;
     settings.currSize = global.widHash[settings.name].startSize/koef;
@@ -36,8 +36,9 @@ void WidgetDiagramElement::setNewPosition(float koef)
 
 void WidgetDiagramElement::updateSettings()
 {
+    qDebug() << "WidgetDiagramElement::updateSettings()";
 
-    float koef = global.zoomKoef;
+    float koef = global.zoomKoefPf1;
 
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
@@ -52,6 +53,8 @@ void WidgetDiagramElement::updateSettings()
     settings.currX = global.widHash[settings.name].startX/koef;
     settings.currY = global.widHash[settings.name].startY/koef;
     settings.currSize = global.widHash[settings.name].startSize/koef;
+
+        setNewPosition(koef);
 }
 
 void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
@@ -111,7 +114,7 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     */
 
 
-    if(global.widHash[settings.name].page == 0){
+    if(global.widHash[settings.name].page == 1){
         qDebug() << "setNewPosition 1 " << global.widHash[settings.name].name << zoomKoefPf1old <<global.zoomKoefPf1;
        if( (int)(1000 * zoomKoefPf1old ) != (int)(1000 * global.zoomKoefPf1) ){
             setNewPosition(global.zoomKoefPf1);
@@ -119,7 +122,7 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     }
 
     }
-    if(global.widHash[settings.name].page == 1){
+    if(global.widHash[settings.name].page == 2){
         qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
         if( (int)(1000 * zoomKoefPf2old) != (int)(1000 * global.zoomKoefPf2)){
             setNewPosition(global.zoomKoefPf2);

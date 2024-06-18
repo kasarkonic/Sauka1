@@ -12,6 +12,6 @@
 
 //defines analog inputs
 
-#define  SUPLAY_24V  ANinput4_20[15]
+#define  SUPLAY_24V  15 // ANinput4_20[SUPLAY_24V]
 
-#define  MIXSPEED   DIoutput[96]   // invertor 96,97,98
+#define  MIXSPEED   96//  DIoutput[MIXSPEED]   // invertor 96,97,98

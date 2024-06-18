@@ -105,7 +105,7 @@ void ProcUI1::drawWidgets()
             {
                 Mix *mixA = new Mix(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(mixA);
-               // ui->desktop
+
             }
                 break;
 

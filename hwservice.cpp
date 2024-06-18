@@ -26,6 +26,9 @@ HWService::HWService(Global &global, QWidget *parent)
     ui->setupUi(this);
     ui->lineEdit_Input_address->setText("0");
     timerId = startTimer(1000, Qt::CoarseTimer);
+    QString str = "Addres: 0-";
+    str.append(QString::number(MAX_DIoutput));
+    ui->label_6->setText(str);
 
 }
 
@@ -183,7 +186,7 @@ void HWService::timerEvent(QTimerEvent *event)
     // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
     // float volt24 = SUPLAY_24V/100.0;//  power supplay input
 
-    int volt24 =  global.SUPLAY_24V.value ;
+    int volt24 =  global.ANinput4_20[SUPLAY_24V].value ;
     QString v24 = QString::number(volt24/100.0, 'g', 4);
 
     QString str = "24V Barošanas bloka spriegums = ";
@@ -303,10 +306,10 @@ void HWService::on_pushButton_Disable_clicked()
 void HWService::on_pushButton_Out_write_clicked()
 {
     int id = 4;
-    if(out_value >= 1){
+    if(out_value >= 1 && out_address < 96){ // 96,97.. inverter
         out_value = 1;
     }
-    if(out_address >= MAX_DIinput){
+    if(out_address >= MAX_DIoutput){
         ui->lineEdit_Out_address->setText("ERROR!");
         out_address = 63;//
     }

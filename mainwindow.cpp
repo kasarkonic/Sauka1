@@ -323,7 +323,8 @@ void MainWindow::initUI()
 
 
     // default settings.
-    global.MIXSPEED.value = 50;
+
+    global.DIoutput[MIXSPEED].value = 50;
 
 }
 
