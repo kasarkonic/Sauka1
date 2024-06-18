@@ -9,16 +9,10 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
 
 {
     settings.name = name;
-    settings.type = global.widHash[settings.name].type;
-    settings.name = global.widHash[settings.name].name;
+    settings.type = global.widHash[name].type;
 
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
-    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
-    settings.options = global.widHash[settings.name].options;
-    settings.currSize = settings.startSize;        //Hi
-    settings.currSizeWi = settings.startSizeWi;
+    updateSettings();
+
 }
 
 void WidgetDiagramElement::setNewPosition(float koef)
@@ -44,31 +38,20 @@ void WidgetDiagramElement::updateSettings()
 {
 
     float koef = global.zoomKoef;
-    addresAct1 = global.widHash[settings.name].act_Addres1;
-    if(addresAct1 >= 300){
-        addresAct1 -= 300;
-    }
-    addresAct2 = global.widHash[settings.name].act_Addres2;
-    if(addresAct2 >= 300){
-        addresAct2 -= 300;
-    }
-   // int addresAN1 = global.widHash[settings.name].sensAddres1;
-   // int addresAN2 = global.widHash[settings.name].sensAddres2;
-   // int actValueDi = global.actList[addresAct].digital;
-    //int an1Value = global.sensList[addresAN1].analog;
-    //int an2Value = global.sensList[addresAN2].analog;
 
-    //qDebug() <<settings.name << ":updateSettings()" <<global.widHash[settings.name].startX << global.widHash[settings.name].startY ;
-   // qDebug() <<settings.name << ":" <<addresAct << actValueDi;
-   // qDebug() <<settings.name << ":" <<addresAN1 << global.sensList[addresAN1].analog  << ":" <<addresAN2 << global.sensList[addresAN2].analog << "\n";
+    settings.startX = global.widHash[settings.name].startX;
+    settings.startY = global.widHash[settings.name].startY;
+    settings.startSize = global.widHash[settings.name].startSize;
+    settings.options = global.widHash[settings.name].options;
+    settings.act_Addres1 = global.widHash[settings.name].act_Addres1;
+    settings.sensAddres1 = global.widHash[settings.name].sensAddres1;
+    settings.sensAddres2 = global.widHash[settings.name].sensAddres2;
+    settings.currSize = settings.startSize;        //Hi
+    settings.currSizeWi = settings.startSizeWi;
 
     settings.currX = global.widHash[settings.name].startX/koef;
     settings.currY = global.widHash[settings.name].startY/koef;
     settings.currSize = global.widHash[settings.name].startSize/koef;
-    settings.options = global.widHash[settings.name].options;
-
-    //move(settings.currX,settings.currY);
-    //resize(settings.currSize,settings.currSize);
 }
 
 void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)

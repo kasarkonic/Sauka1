@@ -18,7 +18,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
  //*/
-    widName = name;
+    //widName = name;
     //settings.startX = global.widHash[settings.name].startX;
    // settings.startY = global.widHash[settings.name].startY;
    // settings.startSize = global.widHash[settings.name].startSize;
@@ -31,12 +31,12 @@ void Valve::updateSettings()
     qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
-    //int dSensAdr1 = global.widHash[widName].sensAddres1;
-   // int dSensAdr2 = global.widHash[widName].sensAddres2;
+    //int dSensAdr1 = global.widHash[settings.name].sensAddres1;
+   // int dSensAdr2 = global.widHash[settings.name].sensAddres2;
 
-    int di1SensAdr = global.widHash[widName].sensAddres1;
-    int di2SensAdr = global.widHash[widName].sensAddres2;
-    int actAdr1  = global.widHash[widName].act_Addres1;
+    int di1SensAdr = global.widHash[settings.name].sensAddres1;
+    int di2SensAdr = global.widHash[settings.name].sensAddres2;
+    int actAdr1  = global.widHash[settings.name].act_Addres1;
 
     // options Angle fron vertical CCW  options
     // startSizeWi  not used
@@ -76,7 +76,7 @@ void Valve::updateSettings()
     }
 
     global.actList[actAdr1].digital = settings.status;
-    qDebug() << widName<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
+    qDebug() << settings.name<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
     update();
     //repaint();
 }

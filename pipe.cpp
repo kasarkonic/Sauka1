@@ -13,7 +13,7 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 /**/
-        widName = name;
+      //  widName = name;
 
    // settings.type = global.widHash[settings.name].type;
    // settings.name = global.widHash[settings.name].name;

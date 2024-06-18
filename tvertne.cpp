@@ -6,7 +6,7 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
 
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    widName = name;
+    //widName = name;
     //*
         QPalette pal = QPalette();
         pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
@@ -34,10 +34,10 @@ void Tvertne::updateSettings()
 {
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int diSensAdr = global.widHash[widName].sensAddres1;    // max level
-    int an1SensAdr = global.widHash[widName].sensAddres2;   // level
+    int diSensAdr = global.widHash[settings.name].sensAddres1;    // max level
+    int an1SensAdr = global.widHash[settings.name].sensAddres2;   // level
 
-    //int an2SensAdr = global.widHash[widName].sensAddres2;
+    //int an2SensAdr = global.widHash[settings.name].sensAddres2;
 
     //fill = (int)global.sensList[an1SensAdr].analog;
     //fill = global.getANval(an1SensAdr);
@@ -56,7 +56,7 @@ void Tvertne::updateSettings()
 
     //full = global.sensList[dSensAdr].digital;
     full = global.getDIval(diSensAdr);
-    //qDebug() << "Tvertne::updateSettings()" <<widName<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
+    //qDebug() << "Tvertne::updateSettings()" <<settings.name<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
 
     update();
 }

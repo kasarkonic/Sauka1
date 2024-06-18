@@ -40,8 +40,13 @@ public:
         int currY = 0;
         int currSize = 0;
         int currSizeWi = 0;
+        int act_Addres1 = 0;
+        int sensAddres1 = 0;
+        int sensAddres2 = 0;
+
 
     } settings;
+
 
 protected:
    // void    mousePressEvent(QMouseEvent *event) override;
@@ -52,7 +57,7 @@ protected:
    // Global &global;
     void setNewPosition(float koef);
    //virtual void updateSettings();
-    QString widName;
+   // QString widName;
 
     int addresAct1;
     int addresAct2;

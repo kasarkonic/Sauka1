@@ -84,7 +84,7 @@ void ProcUI2::drawWidgets()
 
     foreach (Global::wdataStruct widData, global.widHash){
 
-        if( widData.page == 1 || widData.page == 3 ){    // all pages
+        if( widData.page == 2){    // all pages
             // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:

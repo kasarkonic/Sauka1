@@ -14,10 +14,8 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
  //*/
-        widName = name;
-    //settings.startX = global.widHash[settings.name].startX;
-    //settings.startY = global.widHash[settings.name].startY;
-    //settings.startSize = global.widHash[settings.name].startSize;
+       // widName = name;
+
         timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
@@ -27,17 +25,14 @@ void Mix::updateSettings()
     WidgetDiagramElement::updateSettings(); // base class
   //  qDebug() << "Mix updateSettings" << settings.currX << settings.currY <<  global.getTick();
 
-    int dSensAdr = global.widHash[widName].sensAddres1;
-    speed = (int)global.sensList[dSensAdr].analog /3;
+    speed = (int)global.DIoutput[settings.act_Addres1].value /3;
 
     killTimer(timerIdUpd);
-    if(global.sensList[dSensAdr].digital){
-        //killTimer(timerIdUpd);
+    if(global.DIoutput[settings.act_Addres1].value){
          timerIdUpd = startTimer(150, Qt::CoarseTimer); //rotate
     }
     else{
-        //killTimer(timerIdUpd);
-        timerIdUpd = startTimer(500, Qt::CoarseTimer);
+        killTimer(timerIdUpd);
     }
      //repaint();
     update();
@@ -121,7 +116,7 @@ void Mix::timerEvent(QTimerEvent *event)
         if (att > 360){
             att = 0;
         }
-       // qDebug() << att;
+        qDebug() << att;
         //update();
         updateSettings();
     }

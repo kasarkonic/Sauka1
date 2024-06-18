@@ -17,7 +17,7 @@
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
 #define MAX_DIinput     32*3       // addres [0 , MAX_DIinp] 32*3
-#define MAX_DIoutput     32*3      // addres [0 , MAX_DIinp]
+#define MAX_DIoutput     32*3 + 3      // addres [0 , MAX_DIinp] + 3gab invertor
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
 #define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
@@ -83,18 +83,19 @@ public:
     struct wdataStruct {
         WidgetType::widgT type;
         QString name ;
+        int page = 0;
         int startX = 100;   // left upp corner
         int startY = 100;   // left upp corner
         int startSize = 50; // dimensions
-        int startSizeWi = 10; // pipe len
+       // int startSizeWi = 10; // pipe len
         int options = 0;   //valve |- and pipe angle
         int windowNr = 0;
         bool formExist = false;
         WidgetDiagramElement * ptrCurrWidget = nullptr;
         WidgetService * ptrCurrWidgetService = nullptr;
-        int page = 0;
+
         int act_Addres1 = 0;
-        int act_Addres2 = 0;
+       // int act_Addres2 = 0;
         int sensAddres1 = 0;
         int sensAddres2 = 0;
 
@@ -189,8 +190,7 @@ private:
     int tick;
     void create_IN_OUT_list();
     void creatWidgList();
-    void addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2);
-
+    void addWidgList(WidgetType::widgT ty, QString name, int page,int X, int Y, int size,int options, int actAdr1, int sensAdr1, int sensAdr2);
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);
 

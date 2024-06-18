@@ -118,7 +118,7 @@ private:
     void appendInfo(QString str, QColor col);
 
     QStringList  cmbList;
-    void drawWidgets();
+    //void drawWidgets();
     bool initTimer;
     void delAllWid();
 

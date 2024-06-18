@@ -11,7 +11,7 @@ Pump::Pump(Global &global,QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
  //*/
-        widName = name;
+       // widName = name;
     //settings.startX = global.widHash[settings.name].startX;
     //settings.startY = global.widHash[settings.name].startY;
     //settings.startSize = global.widHash[settings.name].startSize;
@@ -37,7 +37,7 @@ void Pump::updateSettings()
     //qDebug() << "Pump updateSettings" << settings.options;
 
 
-    int dSensAdr = global.widHash[widName].sensAddres1;
+    int dSensAdr = global.widHash[settings.name].sensAddres1;
     speed = (int)global.sensList[dSensAdr].analog /3;
     killTimer(timerIdUpd);
     if(global.sensList[dSensAdr].digital){

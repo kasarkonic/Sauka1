@@ -61,7 +61,6 @@ Global::Global()
     }
 
 
-
     for(int i=0 ; i<64;i++){    // 255= max sensor, max activator
         sensList.append(sdata);
         //    actList.append(sact);
@@ -359,15 +358,11 @@ page = 3   draw on all pages
 
 void Global::creatWidgList()
 {
-    //addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2)
+//Global::addWidgList(WidgetType::widgT ty, QString name, int page,int X, int Y, int size,int options, int actAdr1, int sensAdr1, int sensAdr2)
 
-    // page  Mix
-    // WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page,   int actAdr1, int actAdr2, int sensAdr1, int sensAdr2
+    addWidgList(WidgetType::Mix,        "Mix",     1,        200,   300, 100, 0,        MIXSPEED.value, 0,  0);
 
-   //void Global::addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2)
-
-    addWidgList(WidgetType::Mix,        "Mix",     240,        24,   96, 0, 0,        0, 0,  0,0,0);
-    addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0, 0,  0,0,0);
+ /*   addWidgList(WidgetType::Dyno,       "Dyno1",   161,         8,   70, 0,  0,        0, 0,  0,0,0);
 
     addWidgList(WidgetType::Tvertne,     "Tvertne 2",  650,     50,   50, 0,  0,       0,  0,  0,0,0);
     addWidgList(WidgetType::Pump,       "Pump1",  440,        496,    35, 0,  0,        0, 0,  305,0,0);
@@ -377,7 +372,7 @@ void Global::creatWidgList()
     addWidgList(WidgetType::ScalesMass,    "Scales Mass",    431,       40,     62,   0,  0,   0, 0,  0,11,0);
 
 
-/*
+
 
 
     addWidgList(WidgetType::Mix,        "Mix",     424,        468,   96, 0, 0,        0,  0,0,0,0);
@@ -467,23 +462,30 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pipe,    "Pipe 66",    665,        390,    60,  10,  0,     1, 0,0,0,0);
 */
 
+
+
     qDebug() << "create " << widHash.size() << "widgets";
 }
 
-void Global::addWidgList(WidgetType::widgT ty, QString na,int X, int Y, int size, int sizeW, int options, int page, int actAdr1, int actAdr2, int sensAdr1, int sensAdr2)
+
+
+
+
+
+
+void Global::addWidgList(WidgetType::widgT ty, QString name, int page,int X, int Y, int size,int options, int actAdr1, int sensAdr1, int sensAdr2)
 {
     wdataStruct data;
-    data.type = ty;
-    data.name = na;
-    data.startX = X;
-    data.startY = Y;
-    data.startSize = size;
-    data.startSizeWi = sizeW;
-    data.options = options;
-    data.page = page;
-    data.act_Addres1 = actAdr1; // mainly di
-    data.act_Addres2 = actAdr2; // mainly an
-    data.sensAddres1 = sensAdr1;
-    data.sensAddres2 = sensAdr2;
-    widHash.insert(na, data);
+    data.type = ty;     // widget type
+    data.name = name;   // neme
+    data.page = page;   // page Nr procUI1 = 1 procUI2 = 2
+
+    data.startX = X;    // coordinate X
+    data.startY = Y;    // coordinate Y
+    data.startSize = size;  // size zoom
+    data.options = options; // valve angle, pipe angle
+    data.act_Addres1 = actAdr1; // actuator address
+    data.sensAddres1 = sensAdr1; // sensor address1, for pipe angle, for valve angle / on off/
+    data.sensAddres2 = sensAdr2; // sensor address2
+    widHash.insert(name, data);
 }

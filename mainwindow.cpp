@@ -140,7 +140,7 @@ void MainWindow::changeInputVal(int row, int val)
 
 
         if( (widData.act_Addres1 == row) |
-            (widData.act_Addres2 == row) |
+           // (widData.act_Addres2 == row) |
             (widData.sensAddres1 == row) |
             (widData.sensAddres2 == row)){
             qDebug() << "hange inputs, update "  << widData.name;
@@ -319,6 +319,12 @@ void MainWindow::initUI()
 
 
 
+
+
+
+    // default settings.
+    global.MIXSPEED.value = 50;
+
 }
 
 
@@ -338,7 +344,7 @@ void MainWindow::appendInfo(QString str, QColor col)
 
 
 }
-
+/*
 void MainWindow::drawWidgets()
 {
     qDebug() << "widData draw  " << global.widHash.size() << "elements";
@@ -417,7 +423,7 @@ void MainWindow::drawWidgets()
         }
     }
 }
-
+*/
 void MainWindow::delAllWid()
 {
     foreach (Global::wdataStruct widData, global.widHash){

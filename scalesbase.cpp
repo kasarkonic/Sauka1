@@ -21,7 +21,7 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 //*/
-    widName = name;
+    //widName = name;
     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }

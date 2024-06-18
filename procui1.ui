@@ -76,7 +76,11 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_Process"/>
+       <layout class="QHBoxLayout" name="horizontalLayout_Process">
+        <item>
+         <widget class="QWidget" name="desktop" native="true"/>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="Line" name="line_2">
@@ -102,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

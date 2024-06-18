@@ -102,7 +102,7 @@ void Runprocess::stateError()
 void Runprocess::init()
 {
     task_state = 0;
-    taskTimer = startTimer(10);--------------------------------------------------------------------------------
+    //taskTimer = startTimer(10);--------------------------------------------------------------------------------
     tempInt = 0;
     intervalTimer = new QElapsedTimer();
     intervalTimer->start();

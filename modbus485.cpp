@@ -34,7 +34,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
     task_state = State_rd23IOD32_0;
     taskTimer = new QTimer(this);
-    taskTimer->start(10);
+    //taskTimer->start(10);//---------------------------------------------------------------------------------------------
     connect(taskTimer, SIGNAL(timeout()),
             this, SLOT(runTaskCycle()));
 

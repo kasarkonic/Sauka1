@@ -10,8 +10,9 @@ ProcUI1::ProcUI1(Global &global, QWidget *parent) :
 {
 
     ui->setupUi(this);
-    drawWidgets();
+
     initUI();
+     drawWidgets();
 }
 
 ProcUI1::~ProcUI1()
@@ -43,7 +44,6 @@ void ProcUI1::initUI()
     ui->textEdit_Info->setPalette(pal);
 
     ui->statusbar->showMessage("Process flow 1");
-
 
 }
 
@@ -91,7 +91,7 @@ void ProcUI1::drawWidgets()
 
     foreach (Global::wdataStruct widData, global.widHash){
 
-        if( widData.page == 0 || widData.page == 3 ){    // all pages
+        if( widData.page == 1 ){    // all pages
             // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
@@ -103,8 +103,9 @@ void ProcUI1::drawWidgets()
 
             case WidgetType::widgT::Mix:
             {
-                Mix *mixA = new Mix(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(mixA);
+                Mix *mixA = new Mix(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(mixA);
+               // ui->desktop
             }
                 break;
 
