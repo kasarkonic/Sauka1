@@ -1,7 +1,7 @@
 #include "widgetdiagramelement.h"
 #include<QMouseEvent>
 #include "widgetservice.h"
-#include "global.h"
+//#include "global.h"
 
 WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget *parent)
     : QWidget{parent}
@@ -14,17 +14,17 @@ WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget 
     updateSettings();
 
 }
-
+/*
 void WidgetDiagramElement::setNewPosition(float koef)
 {
-     qDebug() << "WidgetDiagramElement 1::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-     settings.currX<<settings.currY << koef ;
-    settings.currX = global.widHash[settings.name].startX/koef;
-    settings.currY = global.widHash[settings.name].startY/koef;
-    settings.currSize = global.widHash[settings.name].startSize/koef;
-    settings.options = global.widHash[settings.name].options;
-    qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-    settings.currX<<settings.currY << koef ;
+ //    qDebug() << "WidgetDiagramElement 1::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
+//    settings.currX<<settings.currY << koef ;
+//    settings.currX = global.widHash[settings.name].startX/koef;
+ //   settings.currY = global.widHash[settings.name].startY/koef;
+ //   settings.currSize = global.widHash[settings.name].startSize/koef;
+ //   settings.options = global.widHash[settings.name].options;
+ //   qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
+ //   settings.currX<<settings.currY << koef ;
 
     move(settings.currX,settings.currY);
     //repaint();
@@ -33,10 +33,10 @@ void WidgetDiagramElement::setNewPosition(float koef)
   //  updateSettings();
 
 }
-
+*/
 void WidgetDiagramElement::updateSettings()
 {
-    qDebug() << "WidgetDiagramElement::updateSettings()";
+   // qDebug() << "WidgetDiagramElement::updateSettings()";
 
     float koef = global.zoomKoefPf1;
 
@@ -54,7 +54,8 @@ void WidgetDiagramElement::updateSettings()
     settings.currY = global.widHash[settings.name].startY/koef;
     settings.currSize = global.widHash[settings.name].startSize/koef;
 
-        setNewPosition(koef);
+     // setNewPosition(koef);
+    move(settings.currX,settings.currY);
 }
 
 void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
@@ -89,35 +90,12 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     qDebug() << "WidgetDiagramElement::resizeEvent" << global.getTick();
     Q_UNUSED (event);
 
-/*
-    float koefx = 1.0;
-    float koefy = 1.0;
-    float koef = 1.0;
-
-    if(size().width() > 0 && size().height() > 0){
-        koefx =  (float)global.UIXsize/global.UIXresizeSize;
-        koefy = (float)global.UIYsize/global.UIYresizeSize;
-    }
-
-    if(koefx >= koefy){
-        koef = koefx;
-    }
-    else{
-        koef = koefy;
-    }
-
-    if(koef == 0){
-        koef = 1;
-    }
-     qDebug() << "resizeEvent UIsize"  << global.UIXsize << global.UIYsize <<size().width()<<size().height()<<koefx <<koefy<<koef;
-    global.zoomKoef = koef;
-    */
-
 
     if(global.widHash[settings.name].page == 1){
         qDebug() << "setNewPosition 1 " << global.widHash[settings.name].name << zoomKoefPf1old <<global.zoomKoefPf1;
        if( (int)(1000 * zoomKoefPf1old ) != (int)(1000 * global.zoomKoefPf1) ){
-            setNewPosition(global.zoomKoefPf1);
+            //setNewPosition(global.zoomKoefPf1);
+            move(settings.currX,settings.currY);
             zoomKoefPf1old = global.zoomKoefPf1;
     }
 
@@ -125,7 +103,8 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
     if(global.widHash[settings.name].page == 2){
         qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
         if( (int)(1000 * zoomKoefPf2old) != (int)(1000 * global.zoomKoefPf2)){
-            setNewPosition(global.zoomKoefPf2);
+           // setNewPosition(global.zoomKoefPf2);
+            move(settings.currX,settings.currY);
             zoomKoefPf2old = global.zoomKoefPf2;
         }
     }

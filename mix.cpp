@@ -14,20 +14,19 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     //*/
-    // widName = name;
 
-    //       timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
 void Mix::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-    qDebug() << "Mix updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
+    // qDebug() << "Mix updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
     speed = (int)global.DIoutput[settings.act_Addres1].value;
     killTimer(timerIdUpd);
-    if(global.DIoutput[settings.act_Addres1].value){
+    if(speed){
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
     }
     else{
@@ -36,20 +35,12 @@ void Mix::updateSettings()
     //repaint();
     update();
 }
-/*
-void Mix::setNewPosition(float koef)
-{ 
-    settings.currX = int((float)settings.startX /koef);
-    settings.currY = int((float)settings.startY / koef);
-    settings.currSize = int ((float)settings.startSize/koef);
-}
 
-*/
 void Mix::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
 
-    qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
     QPen pen;
@@ -66,7 +57,7 @@ void Mix::paintEvent(QPaintEvent *event)
 
 
     QPoint points[4];
-/*
+    /*
     points[0] = QPoint(0 + settings.currX,0 + settings.currY);
     points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
@@ -108,8 +99,6 @@ void Mix::timerEvent(QTimerEvent *event)
         if (att > 360){
             att = 0;
         }
-        //qDebug() << att;
-        //update();
         updateSettings();
     }
 }

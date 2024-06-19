@@ -55,12 +55,13 @@ protected:
     void    timerEvent(QTimerEvent *event) override;
     void    resizeEvent(QResizeEvent* event) override ;
    // Global &global;
-    void setNewPosition(float koef);
+   // void setNewPosition(float koef);
    //virtual void updateSettings();
    // QString widName;
 
-    int addresAct1;
-    int addresAct2;
+    int addresAct;  // global.widHash[].act_sensAddres  ok
+    int addresSens1;  // global.widHash[].act_sensAddres  ok
+    int addresSens2;  // global.widHash[].act_sensAddres  ok
 
     int timerIdUpd = 0;
 

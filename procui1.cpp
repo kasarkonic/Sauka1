@@ -96,8 +96,8 @@ void ProcUI1::drawWidgets()
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {
-                Dyno *dynoA = new Dyno(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(dynoA);
+                Dyno *dynoA = new Dyno(global,widData.name,ui->desktop);
+               // ui->horizontalLayout_Process->addWidget(dynoA);
             }
                 break;
 
@@ -105,53 +105,52 @@ void ProcUI1::drawWidgets()
             {
                 Mix *mixA = new Mix(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(mixA);
-
             }
                 break;
 
             case WidgetType::widgT::Pipe:
             {
-                Pipe *pipeA = new Pipe(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(pipeA);
+                Pipe *pipeA = new Pipe(global,widData.name,ui->desktop);
+               // ui->horizontalLayout_Process->addWidget(pipeA);
             }
                 break;
 
             case WidgetType::Pump:
             {
-                Pump *pumpA = new Pump(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(pumpA);
+                Pump *pumpA = new Pump(global,widData.name,ui->desktop);
+               // ui->horizontalLayout_Process->addWidget(pumpA);
 
             }
                 break;
 
             case WidgetType::Tvertne:
             {
-                Tvertne *tvertneA = new Tvertne(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(tvertneA);
+                Tvertne *tvertneA = new Tvertne(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(tvertneA);
 
             }
                 break;
 
             case WidgetType::Valve:
             {
-                Valve *valveA = new Valve(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(valveA);
+                Valve *valveA = new Valve(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(valveA);
 
             }
                 break;
 
             case WidgetType::ScalesBase:
             {
-                ScalesBase *scalesBase = new ScalesBase(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(scalesBase);
+                ScalesBase *scalesBase = new ScalesBase(global,widData.name,ui->desktop);
+               // ui->horizontalLayout_Process->addWidget(scalesBase);
 
             }
                 break;
 
             case WidgetType::ScalesMass:
             {
-                ScalesMass *scalesMass = new ScalesMass(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(scalesMass);
+                ScalesMass *scalesMass = new ScalesMass(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
 
             }
                 break;

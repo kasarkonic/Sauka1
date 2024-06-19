@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "dyno.h"
 #include "hwports.h"
 #include "qforeach.h"
 #include "ui_mainwindow.h"
@@ -324,7 +323,7 @@ void MainWindow::initUI()
 
     // default settings.
 
-    global.DIoutput[MIXSPEED].value = 50;
+    global.DIoutput[MIXSPEED].value = 20;
 
 }
 

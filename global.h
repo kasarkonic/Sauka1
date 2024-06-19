@@ -16,11 +16,12 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
+#define MAX_AN_VIRUAL_INPUT 16 // Virtual input copy invertor ON/OFF
 #define MAX_DIinput     32*3       // addres [0 , MAX_DIinp] 32*3
-#define MAX_DIoutput     32*3 + 3      // addres [0 , MAX_DIinp] + 3gab invertor
+#define MAX_DIoutput     32*3 + MAX_AN_VIRUAL_INPUT      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
-#define MAX_AN_VIRUAL_INPUT 16    // Virtual input copy actuator motor value
+
 
 class WidgetService;
 class WidgetDiagramElement;

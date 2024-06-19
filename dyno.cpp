@@ -7,42 +7,31 @@ Dyno::Dyno(Global &global,QString name, QWidget *parent)
     : WidgetDiagramElement(global, name, parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
- ///*
+    ///*
     QPalette pal = QPalette();
     //pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 50));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-//*/
-        //widName = name;
-   // settings.startX = global.widHash[settings.name].startX;
-   // settings.startY = global.widHash[settings.name].startY;
-   // settings.startSize = global.widHash[settings.name].startSize;
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
+
 }
-/*
+
 void Dyno::updateSettings()
 {
-    float koef = global.zoomKoef;
-    qDebug() << "Dyno::updateSettings()"<<koef <<global.widData[settings.name].startX << global.widData[settings.name].startY ;
-    settings.currX = global.widData[settings.name].startX/koef;
-    settings.currY = global.widData[settings.name].startY/koef;
-    settings.currSize = global.widData[settings.name].startSize/koef;
+    WidgetDiagramElement::updateSettings(); // base class
+    // qDebug() << "Dino updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
+    killTimer(timerIdUpd);
+    if(global.DIoutput[settings.act_Addres1].value){
+        timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
+    }
+    else{
+        timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+    }
+    //repaint();
+    update();
 }
-*/
-/*
-void Dyno::setNewPosition(float koef )
-{
-
-    settings.currX = int((float)settings.startX /koef);
-    settings.currY = int((float)settings.startY / koef);
-    settings.currSize = int ((float)settings.startSize/koef);
-
-    qDebug() << "Dyno::setNewPosition" << settings.currX << settings.currY<<settings.currSize<<koef;
-}
-*/
 
 void Dyno::paintEvent(QPaintEvent *event)
 {
@@ -72,8 +61,13 @@ void Dyno::paintEvent(QPaintEvent *event)
     painter.drawImage(QPoint(), *imgBackground);
 
     resize(settings.currSize,settings.currSize);
- //   move(settings.currX,settings.currY);
-
+}
+void Dyno::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+    if(event->timerId() == timerIdUpd){
+        updateSettings();
+    }
 }
 
 /*

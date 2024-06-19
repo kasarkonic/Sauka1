@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QSettings>
 #include "componentcard.h"
-#include <QMessageBox>
 
 Recipet::Recipet(Global &global,QWidget *parent)
    : QWidget(parent, Qt::Window)

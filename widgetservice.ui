@@ -124,14 +124,14 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0,0">
            <item>
-            <widget class="QPushButton" name="pushButton_ON">
-             <property name="text">
-              <string>ON/OFF</string>
+            <widget class="QSlider" name="horizontalSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="horizontalSlider">
+            <widget class="QSlider" name="horizontalSlider_1">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -169,7 +169,7 @@
            <item>
             <widget class="QLabel" name="label_Di">
              <property name="text">
-              <string>Slēdzis DI</string>
+              <string>Aktuators</string>
              </property>
             </widget>
            </item>
@@ -187,7 +187,7 @@
            <item>
             <widget class="QLabel" name="label_AN1">
              <property name="text">
-              <string>Devējs AN1</string>
+              <string>Devējs IN1</string>
              </property>
             </widget>
            </item>
@@ -205,7 +205,7 @@
            <item>
             <widget class="QLabel" name="label_AN2">
              <property name="text">
-              <string>Devējs AN2</string>
+              <string>Devējs IN2</string>
              </property>
             </widget>
            </item>

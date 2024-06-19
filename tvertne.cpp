@@ -15,18 +15,10 @@ Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
         this->setPalette(pal);
     //*/
 
-    //settings.startX = global.widHash[settings.name].startX;
-    //settings.startY = global.widHash[settings.name].startY;
-    //settings.startSize = global.widHash[settings.name].startSize;
-    //qDebug() << "TVERTNE Name: "<<settings.name <<settings.currX << settings.currY << settings.currSize ;
-
-   // timerIdUpd = startTimer(200, Qt::CoarseTimer);
+        timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
     fill = 0;
     full = 0;
-
-    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
-
 }
 
 void Tvertne::updateSettings()
@@ -34,29 +26,14 @@ void Tvertne::updateSettings()
 {
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
-    int diSensAdr = global.widHash[settings.name].sensAddres1;    // max level
-    int an1SensAdr = global.widHash[settings.name].sensAddres2;   // level
 
-    //int an2SensAdr = global.widHash[settings.name].sensAddres2;
+    int fval = global.DIinput[settings.sensAddres1].value; // fill value in %
 
-    //fill = (int)global.sensList[an1SensAdr].analog;
-    //fill = global.getANval(an1SensAdr);
-    //qDebug() << "fill"  << fill << an1SensAdr;
-
-    //int res;
-    float fval = global.getANval(an1SensAdr);
-    if(fval > 100){
     fill = 10 * qRound(24*100.0/fval);
-    qDebug() << "fill"  << fval << an1SensAdr << (24*100.0/fval);
-    //fill = res;
-    }
+    //qDebug() << "fill"  << fval << settings.sensAddres1 << (24*100.0/fval);
 
-
-
-
-    //full = global.sensList[dSensAdr].digital;
-    full = global.getDIval(diSensAdr);
-    //qDebug() << "Tvertne::updateSettings()" <<settings.name<<dSensAdr << full<< "----" <<an1SensAdr <<fill << "---" <<an2SensAdr;
+    full = global.DIinput[settings.sensAddres2].value;
+    qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
 
     update();
 }
@@ -69,18 +46,6 @@ void Tvertne::timerEvent(QTimerEvent *event)
 }
 
 
-/*
-void Tvertne::setNewPosition(float koef)
-{
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
-    settings.currSize = int (settings.startSize/koef);
-
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
-}
-
-*/
 void Tvertne::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
@@ -109,8 +74,6 @@ void Tvertne::paintEvent(QPaintEvent *event)
     if (full){
         painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
     }
-
-
 
     pen.setWidth(3);
     pen.setColor(Qt::black);
