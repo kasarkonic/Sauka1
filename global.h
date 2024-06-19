@@ -6,8 +6,8 @@
 #include "qlineedit.h"
 #include "qpushbutton.h"
 #include <QObject>
-#include <QHash>4
-#include <QList>4
+#include <QHash>
+#include <QList>
 #include "def.h"
 
 
