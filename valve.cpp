@@ -17,13 +17,8 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
- //*/
-    //widName = name;
-    //settings.startX = global.widHash[settings.name].startX;
-   // settings.startY = global.widHash[settings.name].startY;
-   // settings.startSize = global.widHash[settings.name].startSize;
-   // settings.options = global.widHash[settings.name].options;
-    timerIdUpd = startTimer(100, Qt::CoarseTimer);
+
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);
 }
 
 void Valve::updateSettings()
@@ -31,8 +26,14 @@ void Valve::updateSettings()
     qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
-    //int dSensAdr1 = global.widHash[settings.name].sensAddres1;
-   // int dSensAdr2 = global.widHash[settings.name].sensAddres2;
+    killTimer(timerIdUpd);
+    timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+
+
+
+
+   // int dSensAdr1 = global.widHash[settings.name].sensAddres1;
+    // int dSensAdr2 = global.widHash[settings.name].sensAddres2;
 
     int di1SensAdr = global.widHash[settings.name].sensAddres1;
     int di2SensAdr = global.widHash[settings.name].sensAddres2;
@@ -77,8 +78,12 @@ void Valve::updateSettings()
 
     global.actList[actAdr1].digital = settings.status;
     qDebug() << settings.name<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
+
+
+
+
+
     update();
-    //repaint();
 }
 
 void Valve::calcPoints(int angle)
@@ -141,18 +146,19 @@ void Valve::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.drawPolygon(points,4,Qt::WindingFill);
 
-      resize(settings.currSize,settings.currSize);
-    //  move(settings.currX,settings.currY);
+    resize(settings.currSize,settings.currSize);
+
 }
 
 
 void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
-   // qDebug() << "Valve::timerEvent";
-   // settings.options -= 5;
-   // att +=1;
-    // qDebug()<< "att" << att << settings.status;
-  /*  if (att > 100)
+    if(event->timerId() == timerIdUpd){
+        // qDebug() << "Valve::timerEvent";
+        // settings.options -= 5;
+        // att +=1;
+        // qDebug()<< "att" << att << settings.status;
+        /*  if (att > 100)
     {
         att = 0;
         settings.status +=1;
@@ -161,6 +167,7 @@ void Valve::timerEvent(QTimerEvent *event){
         }
     }
 */
-    //update();
-    updateSettings();
+        //update();
+        updateSettings();
+    }
 }

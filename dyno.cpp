@@ -27,7 +27,7 @@ void Dyno::updateSettings()
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
     }
     else{
-        timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+        timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
     }
     //repaint();
     update();

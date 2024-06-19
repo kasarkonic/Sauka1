@@ -15,7 +15,7 @@ Mix::Mix(Global &global, QString name, QWidget *parent)
     this->setPalette(pal);
     //*/
 
-    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
@@ -32,7 +32,6 @@ void Mix::updateSettings()
     else{
         timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
     }
-    //repaint();
     update();
 }
 

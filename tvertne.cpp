@@ -29,11 +29,14 @@ void Tvertne::updateSettings()
 
     int fval = global.DIinput[settings.sensAddres1].value; // fill value in %
 
-    fill = 10 * qRound(24*100.0/fval);
+   // fill = 10 * qRound(24*100.0/fval);
+    if(fill > 100)
+        fill = 100;
+    fill = 100 - fval;
     //qDebug() << "fill"  << fval << settings.sensAddres1 << (24*100.0/fval);
 
     full = global.DIinput[settings.sensAddres2].value;
-    qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
+    //qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
 
     update();
 }

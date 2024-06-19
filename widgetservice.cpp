@@ -101,6 +101,7 @@ void WidgetService::updateFormData()        // read data from global and display
         break;
 
     case WidgetType::widgT::ScalesMass:
+        ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
         break;
 
     default:
@@ -170,13 +171,8 @@ void WidgetService::updateFormData()        // read data from global and display
 
         str = "Izvēlēts elements \"Valve \"\n";
         str.append("ON OFF islēdz/ atslēdz vārstu\n");
-        str.append("DI1 un DI2 vārsta gala slēdži.\n");
-        //   ui->horizontalSlider->setDisabled(true);
-
-        //  ui->label_Di->setText("DI1 sens. addr. "+QString::number(addresAct));
-        // ui->label_AN1->setText("DI1 Sens. addr. "+QString::number(addresAN1));
-        //  ui->label_AN1->setText("-");
-        //  ui->label_AN2->setText("DI2 sens. addr. . "+QString::number(addresAN2));
+        str.append("DI1 atvērta vārsta gala slēdzis.\n");
+        str.append("DI2 aizvērta vārsta gala slēdzis.\n");
 
         break;
 
@@ -190,14 +186,11 @@ void WidgetService::updateFormData()        // read data from global and display
          *
          */
         str = "Izvēlēts sūknis \"Pump \"\n";
-        str.append("ON OFF ieslēdz/ atslēdz sūkni\n");
-        str.append("AN1 sūkņa griežšanās ātrums\n");
-        //  ui->horizontalSlider->setDisabled(false);
-
-        //  ui->label_Di->setText("DI addr."+QString::number(addresAct));
-        //  ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
-
-        //  ui->label_AN2->setText("-");
+        str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
+        str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
+        ui->horizontalSlider_2->setEnabled(false);
+        ui->horizontalSlider->setMaximum(100);
+        ui->horizontalSlider->setMinimum(-100);
 
         break;
 
@@ -216,11 +209,25 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->horizontalSlider_2->setEnabled(false);
 
         break;
+    case WidgetType::widgT::Pipe:
+        str = "Izvēlēta savienojošā caurule \"Pipe \"\n";
+        str.append("Options = 0 vertikala, \n");
+        str.append("Options = 90 horizontāla, \n");
+        ui->horizontalSlider->setEnabled(false);
+        ui->horizontalSlider_1->setEnabled(false);
+        ui->horizontalSlider_2->setEnabled(false);
+        break;
     case WidgetType::widgT::ScalesBase:
         str = "Izvēlēta svaru pamatne \"ScalesBase \"\n";
+        ui->horizontalSlider->setEnabled(false);
+        ui->horizontalSlider_1->setEnabled(false);
+        ui->horizontalSlider_2->setEnabled(false);
         break;
     case WidgetType::widgT::ScalesMass:
         str = "Izvēlēta svaru atsvars \"ScalesMass \"\n";
+        str.append("IN1 masas lielums, \n");
+        ui->horizontalSlider->setEnabled(false);
+        ui->horizontalSlider_2->setEnabled(false);
         break;
 
     default:
@@ -401,7 +408,7 @@ void WidgetService::on_pushButton_ON_clicked()
 */
 void WidgetService::on_horizontalSlider_valueChanged(int value)
 {
-    qDebug() << "on_horizontalSlider_valueChanged " << value;      
+    qDebug() << "on_horizontalSlider_valueChanged " << value;
     global.DIoutput[addresAct].value = value;
     updateSensorVal();
 }
@@ -423,6 +430,7 @@ void WidgetService::on_horizontalSlider_1_valueChanged(int value)
         break;
 
     case WidgetType::widgT::ScalesMass:
+        global.DIinput[addresSens1].value = value;
         break;
 
     default:

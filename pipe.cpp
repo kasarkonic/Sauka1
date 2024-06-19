@@ -12,24 +12,8 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     pal.setColor(QPalette::Window, Qt::lightGray);
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-/**/
-      //  widName = name;
-
-   // settings.type = global.widHash[settings.name].type;
-   // settings.name = global.widHash[settings.name].name;
-
-   // settings.startX = global.widHash[settings.name].startX;
-   // settings.startY = global.widHash[settings.name].startY;
-    //settings.startSize = global.widHash[settings.name].startSize;
-    //settings.startSizeWi = global.widHash[settings.name].startSizeWi;
-
-    //valve |- angle
-    // pipe angle
-    //settings.options = global.widHash[settings.name].options;
 
     angle = settings.options;
-   // settings.currSize = settings.startSize;        //Hi
-    //settings.currSizeWi = settings.startSizeWi;
 
     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
@@ -41,20 +25,13 @@ void Pipe::get(int *pnt)
     *pnt = po;
 }
 
-/*
-void Pipe::setNewPosition(float koef)
-{
-    WidgetDiagramElement::setNewPosition(koef); // call base class
-    settings.currSize = int(settings.startSize /koef);        //Hi
-    settings.currSizeWi = int(settings.startSizeWi /koef);
-       qDebug() << "Pipe::setNewPosition";
-}
-*/
+
 void Pipe::updateSettings()
 {
    // qDebug() << "Pipe updateSettings" << settings.name << settings.options <<  global.getTick();
     WidgetDiagramElement::updateSettings();
-    //repaint();
+    killTimer(timerIdUpd);
+    timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
     update();
   }
 
@@ -166,21 +143,13 @@ void Pipe::paintEvent(QPaintEvent *event)
         painter.drawLines(arrowPoints,2);
     }
 
-        //qDebug() << "Pipe resize,move  "<< settings.currSize << settings.currX << settings.currY;
-        resize(settings.currSize,stY  + hi * cos(an));
-       // move(settings.currX,settings.currY);
+      resize(wi + settings.currSize * sin(an), stY + hi * cos(an));
+
 }
 void Pipe::timerEvent(QTimerEvent *event){
 
     Q_UNUSED (event);
- //   qDebug() << "Pipe::timerEvent " <<  global.getTick();
-//WidgetDiagramElement::updateSettings();
+
     updateSettings();
 }
-/*
-void Pipe::mousePressEvent(QMouseEvent *event){
-    if (event->button() == Qt::LeftButton) {
-         qDebug() << "mousePressEvent" ;
-    }
-}
-*/
+

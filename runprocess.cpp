@@ -113,8 +113,7 @@ void Runprocess::runTaskCycle()
 {
    // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
     // Goto master state in state machine (state groups)
-    // Read about state groups here: http://172.16.16.15/docs/paf/tasks_and_state.html
-    //
+
 
     switch (getMasterState())
     {

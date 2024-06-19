@@ -5,14 +5,7 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
 {
 
     global.widHash[settings.name].ptrCurrWidget = this;
-    /*
-    settings.startX = global.widHash[settings.name].startX;
-    settings.startY = global.widHash[settings.name].startY;
-    settings.startSize = global.widHash[settings.name].startSize;
-    settings.startSizeWi = global.widHash[settings.name].startSizeWi;
-    settings.currSize = settings.startSize;        //Hi
-    settings.currSizeWi = settings.startSizeWi;
-    */
+
 
 //*
     QPalette pal = QPalette();
@@ -21,26 +14,17 @@ ScalesBase::ScalesBase(Global &global, QString name, QWidget *parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 //*/
-    //widName = name;
-    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
-
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
 }
 
 void ScalesBase::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-    //repaint();
+    killTimer(timerIdUpd);
+    timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
     update();
 }
-/*
-void ScalesBase::setNewPosition(float koef)
-{
-    WidgetDiagramElement::setNewPosition(koef); // call base class
-    settings.currSize = int(settings.startSize /koef);        //Hi
-    settings.currSizeWi = int(settings.startSizeWi /koef);
-    //   qDebug() << "Pipe::setNewPosition";
-}
-*/
+
 void ScalesBase::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED (event);
@@ -106,10 +90,7 @@ resize(settings.currSize,3 * wi);
 void ScalesBase::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-   // qDebug() << "ScalesBase::timerEvent";
-   // if(event->timerId() == timerIdUpd){
-    //    update();
-    //}
-  //  WidgetDiagramElement::updateSettings();
+    if(event->timerId() == timerIdUpd){
         updateSettings();
+    }
 }

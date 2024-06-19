@@ -362,17 +362,18 @@ void Global::creatWidgList()
 
     addWidgList(WidgetType::Mix,        "Mix",     1,        20,   30, 100,     0,        MIXSPEED, MIXONOFF,  0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   1,         200,   30, 100,   0,        DINOSPEED, DINONOFF,  0);
+    addWidgList(WidgetType::Tvertne,    "Tvertne 1",1,       380,   30, 100,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
+    addWidgList(WidgetType::Pump,       "Pump1",    1,        560,    30, 100,  0,        PUMP1SPEED, PUMP1NOFF,  0);
 
-    addWidgList(WidgetType::Tvertne,     "Tvertne 2",  1,     300,   300, 100,  0,       0,  TVERTNE1LEVEL,  TVERTNE1FULL);
+  // addWidgList(WidgetType::Valve,      "Valve 1",  1,       500,   500, 100,  0,       0, 0,  0);
+
+   addWidgList(WidgetType::Pipe,        "Pipe 1",  1,        720,    30,  100,  0,      0, 0,  0);
+
+   addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   500,  500,    100,  0,     0,   0, 0);
+     addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    431,  400,   100, 0,    0,   SCALESMASS, 0);
+
+
 /*
-   addWidgList(WidgetType::Pump,       "Pump1",  440,        496,    35, 0,  0,        0, 0,  305,0,0);
-    addWidgList(WidgetType::Valve,      "Valve 1",  240,       145,   30, 0,  90,       0, 0,  0,0,0);
-    addWidgList(WidgetType::Pipe,     "Pipe 1",   250,        110,    35,  10,  0,      0, 0,  0,0,0);
-    addWidgList(WidgetType::ScalesBase,    "Scales Base",    235,        100,    250,   15, 0,   0, 0,  0,0,0);
-    addWidgList(WidgetType::ScalesMass,    "Scales Mass",    431,       40,     62,   0,  0,   0, 0,  0,11,0);
-
-
-
 
 
     addWidgList(WidgetType::Mix,        "Mix",     424,        468,   96, 0, 0,        0,  0,0,0,0);

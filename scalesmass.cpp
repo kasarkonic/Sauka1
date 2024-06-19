@@ -5,31 +5,24 @@ ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     : WidgetDiagramElement(global,name,parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    //widName = name;
-    //settings.startX = global.widHash[settings.name].startX;
-    //settings.startY = global.widHash[settings.name].startY;
-    //settings.startSize = global.widHash[settings.name].startSize;
-   // timerIdUpd = startTimer(200, Qt::CoarseTimer);
 
-    //*
-        QPalette pal = QPalette();
-        pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
-        pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
-        this->setAutoFillBackground(true);
-        this->setPalette(pal);
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+    pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
     //*/
 
-    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 }
 
 void ScalesMass::updateSettings()
 {
     WidgetDiagramElement::updateSettings(); // base class
-    int an1SensAdr = global.widHash[settings.name].sensAddres1;
-    massValue = global.sensList[an1SensAdr].analog /10.0;
-    qDebug() << "scales val = " << settings.name <<an1SensAdr << massValue;
+    massValue = global.DIinput[settings.sensAddres1].value;
+    killTimer(timerIdUpd);update();
+    timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
     update();
-      //repaint();
 }
 
 void ScalesMass::paintEvent(QPaintEvent *event)
@@ -52,7 +45,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     painter.drawImage(QPoint(), *imgBackground);
 
     QString str = QString::number(massValue);
-   // qDebug() << massValue << str;
+    // qDebug() << massValue << str;
 
     QFont font("times", settings.currSize/6);
     painter.setFont(font);
@@ -64,9 +57,8 @@ void ScalesMass::paintEvent(QPaintEvent *event)
 void ScalesMass::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event)
-   // WidgetDiagramElement::updateSettings();
-    //qDebug() << "ScalesMass::timerEvent";
-    //if(event->timerId() == timerIdUpd){
+    if(event->timerId() == timerIdUpd){
+
         updateSettings();
-   // }
+    }
 }

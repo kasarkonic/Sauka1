@@ -10,25 +10,10 @@ Pump::Pump(Global &global,QString name, QWidget *parent)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
- //*/
-       // widName = name;
-    //settings.startX = global.widHash[settings.name].startX;
-    //settings.startY = global.widHash[settings.name].startY;
-    //settings.startSize = global.widHash[settings.name].startSize;
-     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
-/*
-void Pump::setNewPosition(float koef)
-{
-    settings.currX = int(settings.startX /koef);
-    settings.currY = int(settings.startY / koef);
-    settings.currSize = int (settings.startSize/koef);
-
-    move(settings.currX,settings.currY);
-    resize(settings.currSize,settings.currSize);
-}
-*/
 
 void Pump::updateSettings()
 {
@@ -36,18 +21,23 @@ void Pump::updateSettings()
     WidgetDiagramElement::updateSettings(); // base class
     //qDebug() << "Pump updateSettings" << settings.options;
 
+    speed = (int)global.DIoutput[settings.act_Addres1].value;
+    step = (int)(speed)/10;
+    if(global.DIoutput[settings.sensAddres1].value == 0){
+        step = 0;
+    }
 
-    int dSensAdr = global.widHash[settings.name].sensAddres1;
-    speed = (int)global.sensList[dSensAdr].analog /3;
+
+    //int dSensAdr = global.widHash[settings.name].sensAddres1;
+    //speed = (int)global.sensList[dSensAdr].analog /3;
     killTimer(timerIdUpd);
-    if(global.sensList[dSensAdr].digital){
-         timerIdUpd = startTimer(150, Qt::CoarseTimer);
+
+    if(speed & 0x7fff){
+        timerIdUpd = startTimer(50, Qt::CoarseTimer);
     }
     else{
-        killTimer(timerIdUpd);
-        timerIdUpd = startTimer(500, Qt::CoarseTimer);
+        timerIdUpd = startTimer(200, Qt::CoarseTimer);
     }
-    //repaint();
     update();
 }
 
@@ -55,7 +45,7 @@ void Pump::paintEvent(QPaintEvent *event)
 {
 
     Q_UNUSED (event);
-   // qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
+    // qDebug() << "Pump::paintEvent" << settings.currX << settings.currY << settings.currSize;
     QPainter painter(this);
     QPen pen;
     pen.setWidth(4);    //draw pipe
@@ -81,27 +71,24 @@ void Pump::paintEvent(QPaintEvent *event)
     painter.drawPolygon(points,3);
 
     resize(settings.currSize,settings.currSize);
-  //  move(settings.currX,settings.currY);
+    //  move(settings.currX,settings.currY);
 }
 
 void Pump::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED (event);
-    WidgetDiagramElement::updateSettings();
-    //qDebug() << "Pump::timerEvent";
-    // qDebug() << "Pump timerEvent" <<timerId << att;
     if(event->timerId() == timerIdUpd){
-        int step = (int)speed/10;
-        step = speed;
-         //settings.value/10; //360/72;
-        att += step;
+        att+= step;
+
+        if (att < 0)
+            att = 360;
+
         if (att > 360)
             att = 0;
 
-
-   //  qDebug() << "Pump::att " << att ;
-    //update();
-    updateSettings();
+        //qDebug() << "Pump::att " << att << Qt::hex << speed << (speed & 0x8000) ;
+        //update();
+        updateSettings();
     }
 }
 /*
