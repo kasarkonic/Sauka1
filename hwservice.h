@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include "actlistform.h"
 #include "senslistsform.h"
+#include <QElapsedTimer>
 
 namespace Ui {
 class HWService;
@@ -72,6 +73,8 @@ private:
     bool ok;
     int out_address;
     int out_value;
+    // QElapsedTimer *updateTimer;
+
 
 
 };

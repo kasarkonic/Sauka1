@@ -8,7 +8,7 @@
 #include <QElapsedTimer>
 #include <QThread>
 #include <QTimer>
-#include <QElapsedTimer>
+
 
 
 class Modbus485  :  public QThread //  public QMainWindow

@@ -23,7 +23,7 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
 
 void Valve::updateSettings()
 {
-    qDebug() << "Valve updateSettings" << settings.options;
+   // qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
     killTimer(timerIdUpd);
@@ -84,11 +84,7 @@ void Valve::updateSettings()
     }
 
     global.actList[actAdr1].digital = settings.status;
-    qDebug() << settings.name<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
-
-
-
-
+    //qDebug() << settings.name<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
 
     update();
 }

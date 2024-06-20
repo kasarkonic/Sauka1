@@ -34,7 +34,7 @@ Modbus485::Modbus485(Global &global, QWidget *parent)
 
     task_state = State_rd23IOD32_0;
     taskTimer = new QTimer(this);
-    //taskTimer->start(10);//---------------------------------------------------------------------------------------------
+    taskTimer->start(10);//---------------------------------------------------------------------------------------------
     connect(taskTimer, SIGNAL(timeout()),
             this, SLOT(runTaskCycle()));
 
@@ -367,7 +367,7 @@ void Modbus485::diOutputChangeSl(int i, int value)
         global.setwaitTx(0x8);
     }
 
-    // updateDIOut(i);   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     updateDIOut(i);   // !!-----------------------------------------------------------------------------------------------------------
 
 }
 
@@ -439,7 +439,7 @@ void Modbus485::onReadReady()
     //dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
     // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
-    //qDebug() << "onReadReady from addres" << reply->serverAddress();
+    qDebug() << "onReadReady from addres" << reply->serverAddress();
     if (reply->error() == QModbusDevice::NoError) {
         const QModbusDataUnit unit = reply->result();
 
@@ -787,7 +787,7 @@ void Modbus485::printDIinput1(int start, int finish){
 
 void Modbus485::runTaskCycle()
 {
-    int interval = 50;  // 25 arI strādā
+    int interval = 1000;  // 25 arI strādā
     //qDebug() << "runTaskCycle()" << task_state;
     switch (task_state)
     {
@@ -812,7 +812,7 @@ void Modbus485::runTaskCycle()
     case State_rd23IOD32_1:
         if (isTimerTimeout())
         {
-            //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
+               rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
             if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
             }
@@ -842,6 +842,7 @@ void Modbus485::runTaskCycle()
                 changeState(State_wd23IOD32_0,interval);
             }
             else {
+                global.setwaitTx(0x03);
                 changeState(State_wd23IOD32_0,interval);
             }
         }

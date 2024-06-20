@@ -49,7 +49,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
 
     QFont font("times", settings.currSize/6);
     painter.setFont(font);
-    qDebug() << "scalesM = " << settings.name <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
+   // qDebug() << "scalesM = " << settings.name <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
     painter.drawText(QRect(0, settings.currSize/6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
     resize(settings.currSize,settings.currSize);
 }

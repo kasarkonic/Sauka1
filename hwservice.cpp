@@ -29,6 +29,8 @@ HWService::HWService(Global &global, QWidget *parent)
     QString str = "Addres: 0-";
     str.append(QString::number(MAX_DIoutput));
     ui->label_6->setText(str);
+    //updateTimer = new QElapsedTimer();
+    //updateTimer->start();
 
 }
 
@@ -36,6 +38,8 @@ HWService::~HWService()
 {
     delete ui;
 }
+
+
 
 void HWService::updateDataAn(int row, int val)
 {
@@ -58,8 +62,6 @@ void HWService::updateDataAn(int row, int val)
 
     ui->label_row7->setText(str);
     //ui->label_row8->setText(str1);
-
-
 
 }
 void HWService::updateDataDi(int row, bool val)
@@ -185,7 +187,7 @@ void HWService::timerEvent(QTimerEvent *event)
     Q_UNUSED(event)
     // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
     // float volt24 = SUPLAY_24V/100.0;//  power supplay input
-
+ qDebug() << " HWService::timerEven " << global.getTick();
     int volt24 =  global.ANinput4_20[SUPLAY_24V].value ;
     QString v24 = QString::number(volt24/100.0, 'g', 4);
 
@@ -194,6 +196,11 @@ void HWService::timerEvent(QTimerEvent *event)
     str.append(v24);
     str.append(" V");
     ui->textEdit->setText(str);
+
+    updateDataDi(0,0);
+    updateDataAn(0,0);
+
+
 }
 
 void HWService::on_pushButton_actuator_clicked()

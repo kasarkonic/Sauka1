@@ -420,7 +420,7 @@ void WidgetService::on_horizontalSlider_valueChanged(int value)
 
 void WidgetService::on_horizontalSlider_1_valueChanged(int value)
 {
-    qDebug() << "on_horizontalSlider_1_valueChanged " << value;
+    qDebug() << "on_horizontalSlider_1_valueChanged " << value << addresSens1;
 
     switch (widgetElement->global.widHash[currentWid].type) {
     case WidgetType::widgT::Dyno:

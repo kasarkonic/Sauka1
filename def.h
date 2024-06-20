@@ -24,7 +24,7 @@
 #define  TVERTNE1FULL  2//  DIinput   //
 
 #define  PUMP1SPEED   100//  DIoutput  // reveerse => speed + 0x8000
-#define  PUMP1NOFF  0//  DIoutput   //
+#define  PUMP1NOFF  38//  DIoutput   //
 
 #define  VALVE1MOTOR   1//  DIoutput  // reveerse => speed + 0x8000
 #define  VALVE1SENSOPEN  3//  DIinput   //
