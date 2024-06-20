@@ -812,7 +812,7 @@ void Modbus485::runTaskCycle()
     case State_rd23IOD32_1:
         if (isTimerTimeout())
         {
-               rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
+            //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
             if( global.getwaitTx()){
                 changeState(State_wd23IOD32_0,interval);
             }
@@ -861,7 +861,7 @@ void Modbus485::runTaskCycle()
                 global.setwaitTx(tx);
             }
             if(global.getwaitTx() & 0x02){
-                updateDIOut(16);
+              //  updateDIOut(32);
                 int tx = global.getwaitTx() & ~0x2 ;  // remove d1
                 global.setwaitTx(tx);
             }

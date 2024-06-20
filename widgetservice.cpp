@@ -79,7 +79,7 @@ void WidgetService::updateFormData()        // read data from global and display
     // addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
 
     //qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
-    bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
+   // bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
 
 
 
