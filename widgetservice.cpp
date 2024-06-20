@@ -130,6 +130,8 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
     QString str;
+    QString strDeg = QChar(0x00b0);
+
     switch (widgetElement->global.widHash[currentWid].type) {
     case WidgetType::widgT::Dyno:
         str = "Izvēlēts elements \"Dynamill\"\n";
@@ -170,10 +172,12 @@ void WidgetService::updateFormData()        // read data from global and display
          */
 
         str = "Izvēlēts elements \"Valve \"\n";
-        str.append("ON OFF islēdz/ atslēdz vārstu\n");
+        str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
         str.append("DI1 atvērta vārsta gala slēdzis.\n");
         str.append("DI2 aizvērta vārsta gala slēdzis.\n");
-
+        str.append("Options iestāda atvērta vārsta leņķi 0-90\u00B0.\n");
+        //str.append(strDeg);
+        //str.append(" .\n");
         break;
 
     case WidgetType::widgT::Pump:

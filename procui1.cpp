@@ -96,28 +96,28 @@ void ProcUI1::drawWidgets()
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {
-                Dyno *dynoA = new Dyno(global,widData.name,ui->desktop);
+               new Dyno(global,widData.name,ui->desktop);
                // ui->horizontalLayout_Process->addWidget(dynoA);
             }
                 break;
 
             case WidgetType::widgT::Mix:
             {
-                Mix *mixA = new Mix(global,widData.name,ui->desktop);
+                new Mix(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(mixA);
             }
                 break;
 
             case WidgetType::widgT::Pipe:
             {
-                Pipe *pipeA = new Pipe(global,widData.name,ui->desktop);
+                new Pipe(global,widData.name,ui->desktop);
                // ui->horizontalLayout_Process->addWidget(pipeA);
             }
                 break;
 
             case WidgetType::Pump:
             {
-                Pump *pumpA = new Pump(global,widData.name,ui->desktop);
+                new Pump(global,widData.name,ui->desktop);
                // ui->horizontalLayout_Process->addWidget(pumpA);
 
             }
@@ -125,7 +125,7 @@ void ProcUI1::drawWidgets()
 
             case WidgetType::Tvertne:
             {
-                Tvertne *tvertneA = new Tvertne(global,widData.name,ui->desktop);
+                new Tvertne(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(tvertneA);
 
             }
@@ -133,7 +133,7 @@ void ProcUI1::drawWidgets()
 
             case WidgetType::Valve:
             {
-                Valve *valveA = new Valve(global,widData.name,ui->desktop);
+                new Valve(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(valveA);
 
             }
@@ -141,7 +141,7 @@ void ProcUI1::drawWidgets()
 
             case WidgetType::ScalesBase:
             {
-                ScalesBase *scalesBase = new ScalesBase(global,widData.name,ui->desktop);
+                new ScalesBase(global,widData.name,ui->desktop);
                // ui->horizontalLayout_Process->addWidget(scalesBase);
 
             }
@@ -149,7 +149,7 @@ void ProcUI1::drawWidgets()
 
             case WidgetType::ScalesMass:
             {
-                ScalesMass *scalesMass = new ScalesMass(global,widData.name,ui->desktop);
+                new ScalesMass(global,widData.name,ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
 
             }

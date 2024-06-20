@@ -39,6 +39,13 @@ void Valve::updateSettings()
     int di2SensAdr = global.widHash[settings.name].sensAddres2;
     int actAdr1  = global.widHash[settings.name].act_Addres1;
 
+
+
+
+    motorOn = (int)global.DIoutput[settings.act_Addres1].value;
+    swOpen = (int)global.DIinput[settings.sensAddres1].value;
+    swClose = (int)global.DIinput[settings.sensAddres2].value;
+
     // options Angle fron vertical CCW  options
     // startSizeWi  not used
     // sensAdr1.digital     end switch open

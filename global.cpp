@@ -358,22 +358,22 @@ page = 3   draw on all pages
 
 void Global::creatWidgList()
 {
-//          WidgetType::widgT ty,       name,    page,       X,    Y,  size, options,  actAdr1, sensAdr1,  sensAdr2)
+    //          WidgetType::widgT ty,       name,    page,       X,    Y,  size, options,  actAdr1, sensAdr1,  sensAdr2)
 
     addWidgList(WidgetType::Mix,        "Mix",     1,        20,   30, 100,     0,        MIXSPEED, MIXONOFF,  0);
     addWidgList(WidgetType::Dyno,       "Dyno1",   1,         200,   30, 100,   0,        DINOSPEED, DINONOFF,  0);
     addWidgList(WidgetType::Tvertne,    "Tvertne 1",1,       380,   30, 100,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
     addWidgList(WidgetType::Pump,       "Pump1",    1,        560,    30, 100,  0,        PUMP1SPEED, PUMP1NOFF,  0);
 
-  // addWidgList(WidgetType::Valve,      "Valve 1",  1,       500,   500, 100,  0,       0, 0,  0);
+    addWidgList(WidgetType::Valve,      "Valve 1",  1,       500,   500, 100,  0,       0, 0,  0);
 
-   addWidgList(WidgetType::Pipe,        "Pipe 1",  1,        720,    30,  100,  0,      0, 0,  0);
+    addWidgList(WidgetType::Pipe,        "Pipe 1",  1,        720,    30,  100,  0,      0, 0,  0);
 
-   addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   500,  500,    100,  0,     0,   0, 0);
-     addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    431,  400,   100, 0,    0,   SCALESMASS, 0);
+    addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   772,  142,    100,  0,     0,   0, 0);
+    addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   SCALESMASS, 0);
 
 
-/*
+    /*
 
 
     addWidgList(WidgetType::Mix,        "Mix",     424,        468,   96, 0, 0,        0,  0,0,0,0);

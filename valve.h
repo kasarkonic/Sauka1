@@ -55,7 +55,10 @@ private:
 
     QPoint points[4];
     void calcPoints(int angle);
-    // QColor color = Qt::yellow;;
+    // QColor color = Qt::yellow;
+    int motorOn;
+    int swOpen;
+    int swClose;
 
 };
 
