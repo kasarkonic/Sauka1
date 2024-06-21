@@ -10,13 +10,13 @@ Scale::Scale(Global &global, QWidget *parent) :
   , ui(new Ui::Scale)
 {
 
-
+#ifdef ENABLE_WIDGET_SIZE
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
+#endif
 
     timerRead = startTimer(500, Qt::CoarseTimer);
     timer1sId  = startTimer(1000, Qt::CoarseTimer);

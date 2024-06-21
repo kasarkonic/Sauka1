@@ -44,7 +44,7 @@ signals:
 protected:
     void    paintEvent(QPaintEvent *event) override;
     void    timerEvent(QTimerEvent *event) override;
-    void    updateWidget();
+   // void    updateWidget();
 
 private:
     int angle;
@@ -56,9 +56,13 @@ private:
     QPoint points[4];
     void calcPoints(int angle);
     // QColor color = Qt::yellow;
-    int motorOn;
-    int swOpen;
-    int swClose;
+    bool motorOn;
+    bool swOpen;
+    bool swClose;
+    int currentAngle;
+    int  timeratt = 0;
+    int changeDirections;
+
 
 };
 

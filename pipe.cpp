@@ -8,11 +8,12 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
     global.widHash[settings.name].ptrCurrWidget = this;
     /**/
    // qDebug() << "Pipe::Pipe";
+ #ifdef ENABLE_WIDGET_SIZE
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray);
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
+#endif
     angle = settings.options;
 
     timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust

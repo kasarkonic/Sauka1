@@ -13,78 +13,64 @@ Valve::Valve(Global &global, QString name, QWidget *parent)
 
     global.widHash[settings.name].ptrCurrWidget = this;
     //*
+#ifdef ENABLE_WIDGET_SIZE
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
+#endif
 
+    currentAngle = 45;
     timerIdUpd = startTimer(200, Qt::CoarseTimer);
 }
 
 void Valve::updateSettings()
 {
-   // qDebug() << "Valve updateSettings" << settings.options;
+    // qDebug() << "Valve updateSettings" << settings.options;
     WidgetDiagramElement::updateSettings();
 
     killTimer(timerIdUpd);
-    timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+    if(motorOn){
+        timerIdUpd = startTimer(50, Qt::CoarseTimer);
+    }
+    else{
+        timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+    }
+    int openPos = settings.options;//  0 vai 90
+    swOpen = (bool)(global.DIinput[settings.sensAddres1].value > 0);
+    swClose = (bool)(global.DIinput[settings.sensAddres2].value > 0);
+    motorOn = (bool)(global.DIoutput[settings.act_Addres1].value > 0);
 
-
-
-
-   // int dSensAdr1 = global.widHash[settings.name].sensAddres1;
-    // int dSensAdr2 = global.widHash[settings.name].sensAddres2;
-
-    int di1SensAdr = global.widHash[settings.name].sensAddres1;
-    int di2SensAdr = global.widHash[settings.name].sensAddres2;
-    int actAdr1  = global.widHash[settings.name].act_Addres1;
-
-
-
-
-    motorOn = (int)global.DIoutput[settings.act_Addres1].value;
-    swOpen = (int)global.DIinput[settings.sensAddres1].value;
-    swClose = (int)global.DIinput[settings.sensAddres2].value;
-
-    // options Angle fron vertical CCW  options
-    // startSizeWi  not used
-    // sensAdr1.digital     end switch open
-    // sensAdr2.digital     end switch close
-
-
-
-
-
-
-    int opSW = global.sensList[di1SensAdr].digital;       // open SW
-    int clSW = global.sensList[di2SensAdr].digital;       // close sw
-
-
-
-
-
-    if(clSW == 1 && opSW == 0){  //close
-        settings.options = global.widHash[settings.name].options;
-        settings.status = 0 ;    // close
+    if(swClose == 1 && swOpen == 0){  //close
+        currentAngle = 90 - openPos ;    // close
 
     }
-    if(clSW == 0 && opSW == 1){  //open
-        settings.options = global.widHash[settings.name].options + 90;;
-        settings.status = 1 ;    // open
+    if(swClose == 0 && swOpen == 1){  //open
+        currentAngle = 0 + openPos ;    // open
 
     }
-    if(clSW == 0 && opSW == 0){  //process
-        settings.options = global.widHash[settings.name].options + 45;
-        settings.status = 2 ;    // process
+    if(swClose == 0 && swOpen == 0){  //process
+        currentAngle = 45 ;    // process
     }
 
-    if(clSW == 1 && opSW == 1){  //error
-        settings.options = global.widHash[settings.name].options + 45;
-        settings.status = 2 ;    // error
+    if(swClose == 1 && swOpen == 1){  //error
+        currentAngle = 45 ;    // error
     }
+    if(swClose == 1 && swOpen == 1){  //error
+        currentAngle = 45 ;    // error
+    }
+    if(motorOn){  //motorOn
+        currentAngle = 45 + att ;
 
-    global.actList[actAdr1].digital = settings.status;
-    //qDebug() << settings.name<<" stat,Om,Off" << settings.status << settings.options<<opSW <<clSW;
+        if(swClose == 1 && openPos >=45) changeDirections = -1;
+        if(swClose == 1 && openPos <45) changeDirections = 1;
+        if(swOpen == 1 && openPos >=45) changeDirections = -1;
+        if(swOpen == 1 && openPos <45) changeDirections = 1;
+    }
+    else{
+        changeDirections = 0;
+    }
+    qDebug() << settings.name<<" stat,Om,Off" << currentAngle << settings.options << swOpen <<swClose;
 
     update();
 }
@@ -100,13 +86,13 @@ void Valve::calcPoints(int angle)
     points[2] = QPoint(size/2 + size/2 * cos(an1),size/2 - size/2 * sin(an1));//1
     points[3] = QPoint(size/2 - size/2 * cos(an1),size/2 + size/2 * sin(an1));//2
 }
-
+/*
 void Valve::updateWidget()
 {
     move(settings.currX,settings.currY);
     resize(settings.currSize,settings.currSize);
 }
-/*
+
 void Valve::setNewPosition(float koef)
 {
     settings.currX = int(settings.startX /koef);
@@ -126,7 +112,8 @@ void Valve::paintEvent(QPaintEvent *event)
     //qDebug() << "Valve::paintEvent" <<settings.status <<settings.options ;
     // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
-    calcPoints(settings.options);
+
+    calcPoints(currentAngle);
 
     QPainter painter(this);
     QPen pen;
@@ -135,13 +122,13 @@ void Valve::paintEvent(QPaintEvent *event)
 
     QColor  color = Qt::yellow;
 
-    if(settings.status == 0){
+    if(swClose == 1 && swOpen == 0){
         color = Qt::red;
     }
-    if(settings.status == 1){
+    else if(swClose == 0 && swOpen == 1){
         color = Qt::green;
     }
-    if(settings.status == 2){
+    else {
         color = Qt::yellow;
     }
 
@@ -156,20 +143,18 @@ void Valve::paintEvent(QPaintEvent *event)
 
 void Valve::timerEvent(QTimerEvent *event){
     Q_UNUSED (event);
+
     if(event->timerId() == timerIdUpd){
-        // qDebug() << "Valve::timerEvent";
-        // settings.options -= 5;
-        // att +=1;
-        // qDebug()<< "att" << att << settings.status;
-        /*  if (att > 100)
-    {
-        att = 0;
-        settings.status +=1;
-        if(settings.status > 2){
-            settings.status = 0;
+        att = att + changeDirections;
+        if (att > 3600)
+        {
+            att = 0;
         }
-    }
-*/
+        if (att < 0)
+        {
+            att = 3600;
+        }
+
         //update();
         updateSettings();
     }

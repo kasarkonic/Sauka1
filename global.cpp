@@ -354,7 +354,9 @@ page = 1   draw on "Dyno" page
 page = 3   draw on all pages
 
     */
-
+#define VALVE1ACT   23
+#define VALVE1SWOPEN   23
+#define VALVE1SWCLOSE   24
 
 void Global::creatWidgList()
 {
@@ -365,7 +367,7 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Tvertne,    "Tvertne 1",1,       380,   30, 100,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
     addWidgList(WidgetType::Pump,       "Pump1",    1,        560,    30, 100,  0,        PUMP1SPEED, PUMP1NOFF,  0);
 
-    addWidgList(WidgetType::Valve,      "Valve 1",  1,       500,   500, 100,  0,       0, 0,  0);
+    addWidgList(WidgetType::Valve,      "Valve 1",  1,       900,   30, 100,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
 
     addWidgList(WidgetType::Pipe,        "Pipe 1",  1,        720,    30,  100,  0,      0, 0,  0);
 

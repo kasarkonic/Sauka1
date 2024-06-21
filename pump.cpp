@@ -5,12 +5,13 @@ Pump::Pump(Global &global,QString name, QWidget *parent)
 {
     global.widHash[settings.name].ptrCurrWidget = this;
     //*
+#ifdef ENABLE_WIDGET_SIZE
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
     pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
+#endif
     timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }

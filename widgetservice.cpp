@@ -161,6 +161,7 @@ void WidgetService::updateFormData()        // read data from global and display
         //  ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
         //  ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
         break;
+
     case WidgetType::widgT::Valve:  //??????????????????????????
 
         /*
@@ -175,7 +176,8 @@ void WidgetService::updateFormData()        // read data from global and display
         str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
         str.append("DI1 atvērta vārsta gala slēdzis.\n");
         str.append("DI2 aizvērta vārsta gala slēdzis.\n");
-        str.append("Options iestāda atvērta vārsta leņķi 0-90\u00B0.\n");
+        str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
+        str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
         //str.append(strDeg);
         //str.append(" .\n");
         break;

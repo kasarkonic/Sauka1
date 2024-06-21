@@ -3,6 +3,9 @@
 
 #endif // DEF_H
 
+//for testing
+//#define ENABLE_WIDGET_SIZE
+
 
 // defines outputs
 
@@ -30,3 +33,7 @@
 #define  VALVE1SENSOPEN  3//  DIinput   //
 #define  VALVE1SENSCLOSE  4//  DIinput   //
 #define  SCALESMASS 100      // DIinput
+
+#define VALVE1ACT   23
+#define VALVE1SWOPEN   23
+#define VALVE1SWCLOSE   24
