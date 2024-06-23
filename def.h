@@ -33,7 +33,7 @@
 
 #define  SCALESMASS 100      // DIinput
 
-#define VALVE1ACT   3
+#define VALVE1ACT   8
 #define VALVE1SWOPEN   23
 #define VALVE1SWCLOSE   24
 

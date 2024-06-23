@@ -11,6 +11,7 @@ Adreses:
 8 	24DIB32 //DIinput[64-95] 
 
 
+connections  to Schnider A+ J45 pin 4      B- J45 pin 5
 
 
 modbus poll 4.3.4 Registration code 9876543210ABCDEFGHIJ9813
