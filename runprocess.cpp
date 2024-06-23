@@ -40,7 +40,8 @@ void Runprocess::stateReset()
         if(tempInt > 32 ){
             tempInt = 0;
         }
-        global.DIoutput[tempInt].value = 1;
+        //global.DIoutput[tempInt].value = 1;
+        DIOUT(tempInt,1)
         qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
         emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
 
@@ -50,7 +51,8 @@ void Runprocess::stateReset()
     case StateReset0:
         if (isTimerTimeout())
         {
-            global.DIoutput[tempInt].value = 0;
+            //global.DIoutput[tempInt].value = 0;
+            DIOUT(tempInt,0)
             qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
             emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
             changeState(StateReset1,100);

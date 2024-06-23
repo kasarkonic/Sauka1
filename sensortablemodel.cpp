@@ -113,7 +113,7 @@ QVariant SensorTableModel::data(const QModelIndex &index, int role) const
 QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
-        qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
+       // qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
 
         switch (role) {
         case Qt::DisplayRole:
@@ -147,7 +147,7 @@ QVariant SensorTableModel::headerData(int section, Qt::Orientation orientation, 
 }
 void SensorTableModel::updateData(int row)
 {
-     qDebug() << "SensorTableModel::updateData " << row ;
+     //qDebug() << "SensorTableModel::updateData " << row ;
     QModelIndex idx1 = createIndex(row,0);
     QModelIndex idx2 = createIndex(row,5);
     emit dataChanged(idx1, idx2, { Qt::DisplayRole });

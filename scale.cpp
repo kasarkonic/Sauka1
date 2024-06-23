@@ -54,7 +54,7 @@ void Scale::initUI()
 
 bool Scale::initPort()
 {
-    qDebug() << "\ninitPort()";
+    qDebug() << "\ninitPort() scale" << global.dev1;
     QString str;
 
     corectPort = global.dev1;
@@ -152,7 +152,7 @@ void Scale::timerEvent(QTimerEvent *event)
     }
 
     if(event->timerId() == timerInit){
-        qDebug()<< "Event Init";
+        //qDebug()<< "Event Init";
         initPort();
     }
 

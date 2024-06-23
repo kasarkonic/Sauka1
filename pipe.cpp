@@ -45,14 +45,14 @@ void Pipe::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
-    pen.setColor(Qt::black);
+    pen.setColor(pipeColor) ;       //(Qt::black);
     painter.setBrush(pipeColor);// (pipeColour);
     painter.setPen(pen);
 
-    pen.setWidth(2);    //draw pipe
-    pen.setColor(Qt::red);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(pen);
+  //  pen.setWidth(2);    //draw pipe
+  //  pen.setColor(Qt::red);
+  //  painter.setRenderHint(QPainter::Antialiasing);
+  //  painter.setPen(pen);
 
    // updateSettings();
     // arrow points
@@ -114,7 +114,7 @@ void Pipe::paintEvent(QPaintEvent *event)
     pen.setWidth(1);    //draw pipe
     pen.setColor(Qt::black);
     painter.setPen(pen);
-    painter.drawLines(pipemiddle,1);
+ //   painter.drawLines(pipemiddle,1);
 
     if(settings.value != 0)
     {

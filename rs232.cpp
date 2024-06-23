@@ -70,7 +70,7 @@ void Rs232::initUI()
 
 bool Rs232::initPort()
 {
-    qDebug() << "\ninitPort()";
+    qDebug() << "\ninitPort() Rs232" << global.dev1;
 
     corectPort = global.dev1;
 
@@ -223,7 +223,7 @@ void Rs232::timerEvent(QTimerEvent *event)
     }
 
     if(event->timerId() == timerInit){
-        qDebug()<< "Event Init";
+       // qDebug()<< "Event Init";
         initPort();
     }
 

@@ -323,12 +323,10 @@ void MainWindow::initUI()
 
     // default settings.
 
-    global.DIoutput[MIXSPEED].value = 20;
+    //global.DIoutput[MIXSPEED].value = 20;
+    DIOUT(MIXSPEED,20)
 
 }
-
-
-
 
 
 
@@ -341,7 +339,6 @@ void MainWindow::appendInfo(QString str, QColor col)
     QTextCursor cursor = ui->textEdit_Field->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textEdit_Field->setTextCursor(cursor);
-
 
 }
 /*

@@ -78,7 +78,7 @@ void HWService::updateDataDi(int row, bool val)
     QString str6 = "Di in 64-95   ";
 
     for(int i = 0; i < 8; i++){
-        str1.append(QString::number(global.DIoutput[i].value));
+        str1.append(QString::number(global.DIoutput[i].value)); //global.DIoutput[i].update(); ????   DIOUT(adr,val)
         str2.append(QString::number(global.DIoutput[i + 32 ].value));
         str3.append(QString::number(global.DIoutput[i + 64 ].value));
         str4.append(QString::number(global.DIinput[i].value));

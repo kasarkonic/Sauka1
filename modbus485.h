@@ -29,7 +29,7 @@ public:
     bool rd23IOD32(int boardAdr,int regAdr);
     bool rd24DIB32(int boardAdr,int regAdr);
     bool rdN4AIB16(int boardAdr,int regAdr,int len);
-    bool updateDIOut();
+   // bool updateDIOut();
     bool updateDIOut(int i);
 
 protected:
@@ -69,7 +69,8 @@ private:
     quint16 val1old,val2old,val3old,val4old;
     void printDIinput();
     void printDIinput1(int start, int finish);
-
+    void printDIoutput();
+    void printDIoutput1(int start, int finish);
 
     enum States
     {
@@ -79,8 +80,11 @@ private:
         State_rd24DIB32 ,
         State_rdN4AIB16 ,
 
-        State_wd23IOD32_0 ,
         State_wd23IOD32_1 ,
+        State_wd23IOD32_2 ,
+        State_wd23IOD32_4 ,
+        State_wd23IOD32_8 ,
+
         State_inverter1 ,
         State_inverter2 ,
         State_inverter3
@@ -96,7 +100,6 @@ private:
     int stateTimerInterval = 0;
    // bool stateTimerTimeout = false;
     int starttemp;
-    bool ismodbusFree = true;
     int oldstateStartTime;
 
 };

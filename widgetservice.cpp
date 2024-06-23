@@ -25,7 +25,7 @@ WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement,
     qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService ;
     ui->setupUi(this);
     //qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
-
+    setWindowTitle(currentWid);
     addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
     addresSens1 = widgetElement->global.widHash[currentWid].sensAddres1;
     addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
@@ -83,9 +83,9 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
 
-    ui->label_AddressDI->setText("" + QString::number(addresAct));
-    ui->label_AddressAI1->setText("" + QString::number(addresSens1));
-    ui->label_AddressAI2->setText("" + QString::number(addresSens2));
+    ui->label_AddressDI->setText("Q" + QString::number(addresAct+1));
+    ui->label_AddressAI1->setText("IN" + QString::number(addresSens1+1));
+    ui->label_AddressAI2->setText("IN" + QString::number(addresSens2+1));
 
     ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
 
@@ -108,23 +108,8 @@ void WidgetService::updateFormData()        // read data from global and display
         break;
     }
 
-    //ui->lineEdit_AddresAN1->setText(QString::number(global.DIoutput[addresSens1].value));
     ui->lineEdit_AddresAN2->setText(QString::number(global.DIinput[addresSens2].value));
 
-    //      ui->horizontalSlider_2->hide();
-    //      ui->label_AN2->hide();
-    //      ui->lineEdit_AddresAN2->hide();
-    //      ui->label_AddressAI2->hide();
-
-
-    //actValueDi = global.actList[addresAct].digital;
-    //actValueAn1 = global.actList[addresAct].analog;
-    //actValueAn2;
-
-    // }
-
-
-    // updateSensorVal();
 
     widgetElement->updateSettings();
 
@@ -282,9 +267,9 @@ void WidgetService::mouseMoveEvent(QMouseEvent *event)
     int pointX = (mouseStartPointX - pos.x())/-100;
     int pointY = (mouseStartPointY - pos.y())/-100;
     qDebug() << " WidgetService mouseMoveEvent dx:dy" << pointX<< pointY;
-    widgetElement->global.widHash[currentWid].startX += pointX;
-    widgetElement->global.widHash[currentWid].startY += pointY;
-    updateFormData();
+  //  widgetElement->global.widHash[currentWid].startX += pointX;
+  //  widgetElement->global.widHash[currentWid].startY += pointY;
+ //   updateFormData();
 }
 
 void WidgetService::mouseDoubleClickEvent(QMouseEvent *event)
@@ -414,8 +399,9 @@ void WidgetService::on_pushButton_ON_clicked()
 */
 void WidgetService::on_horizontalSlider_valueChanged(int value)
 {
-    qDebug() << "on_horizontalSlider_valueChanged " << value;
-    global.DIoutput[addresAct].value = value;
+    qDebug() << "on_horizontalSlider_valueChanged " << addresAct << " <- "  <<value;
+    //global.DIoutput[addresAct].value = value;
+    DIOUT(addresAct,value)
     updateSensorVal();
 }
 
@@ -428,7 +414,8 @@ void WidgetService::on_horizontalSlider_1_valueChanged(int value)
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Pump:
     case WidgetType::widgT::Mix:
-        global.DIoutput[addresSens1].value = value;
+        //global.DIoutput[addresSens1].value = value;
+        DIOUT(addresSens1,value)
         break;
     case WidgetType::widgT::Tvertne:
     case WidgetType::widgT::Valve:

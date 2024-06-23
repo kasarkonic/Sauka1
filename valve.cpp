@@ -35,30 +35,44 @@ void Valve::updateSettings()
     }
     else{
         timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
+        att =  0;
+        changeDirections = 0;
     }
     int openPos = settings.options;//  0 vai 90
+    motorOn = (bool)(global.DIoutput[settings.act_Addres1].value > 0);
     swOpen = (bool)(global.DIinput[settings.sensAddres1].value > 0);
     swClose = (bool)(global.DIinput[settings.sensAddres2].value > 0);
-    motorOn = (bool)(global.DIoutput[settings.act_Addres1].value > 0);
+
+
 
     if(swClose == 1 && swOpen == 0){  //close
-        currentAngle = 90 - openPos ;    // close
-
+        currentAngle =  openPos + 90 ;    // close
+        changeDirections = -1;
     }
     if(swClose == 0 && swOpen == 1){  //open
-        currentAngle = 0 + openPos ;    // open
+        currentAngle = openPos ;    // open
+
+        changeDirections = 1;
+    }
+    if(swClose == 0 && swOpen == 0 && motorOn){  //process
 
     }
-    if(swClose == 0 && swOpen == 0){  //process
-        currentAngle = 45 ;    // process
+    if(swClose == 0 && swOpen == 0 && !motorOn){  //process
+        currentAngle = 45 ;   // process
     }
 
     if(swClose == 1 && swOpen == 1){  //error
         currentAngle = 45 ;    // error
+        att = 0;
+        changeDirections = 0;
     }
-    if(swClose == 1 && swOpen == 1){  //error
-        currentAngle = 45 ;    // error
-    }
+
+
+   // qDebug() << "Valve sensors" << motorOn << swOpen << swClose << currentAngle << changeDirections << att;
+
+
+
+    /*
     if(motorOn){  //motorOn
         currentAngle = 45 + att ;
 
@@ -70,12 +84,13 @@ void Valve::updateSettings()
     else{
         changeDirections = 0;
     }
-    qDebug() << settings.name<<" stat,Om,Off" << currentAngle << settings.options << swOpen <<swClose;
+    */
+    //qDebug() << settings.name<<" stat,Om,Off" << currentAngle << settings.options << swOpen <<swClose << att <<changeDirections;
 
     update();
 }
 
-void Valve::calcPoints(int angle)
+void Valve::calcPoints(int angle )
 {
     float an = M_PI/180 * (35 + angle);
     float an1 = M_PI/180 * (180 -35 + angle);
@@ -113,7 +128,7 @@ void Valve::paintEvent(QPaintEvent *event)
     // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
 
-    calcPoints(currentAngle);
+    calcPoints(currentAngle + att);
 
     QPainter painter(this);
     QPen pen;
@@ -154,7 +169,7 @@ void Valve::timerEvent(QTimerEvent *event){
         {
             att = 3600;
         }
-
+        //qDebug() << att<<" timerIdUpd";
         //update();
         updateSettings();
     }

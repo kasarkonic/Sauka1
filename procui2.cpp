@@ -75,7 +75,7 @@ void ProcUI2::resizeEvent(QResizeEvent *event)
 
 void ProcUI2::timerEvent(QTimerEvent *event)
 {
-   // Q_UNUSED(event)
+    Q_UNUSED(event)
 }
 
 void ProcUI2::drawWidgets()

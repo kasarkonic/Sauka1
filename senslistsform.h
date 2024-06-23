@@ -22,16 +22,17 @@ public:
 
     ~SensListsForm();
 
-void updateData(int row);
+    void updateData(int row);
 
 private slots:
     void handleButton();
     void handleEditFinish();
 
 private:
+    Global &global;
     Ui::SensListsForm *ui;
     void initUI();
-    Global &global;
+
 
     SensorTableModel *sensorTableModel;
 
