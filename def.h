@@ -38,6 +38,8 @@
 #define VALVE1SWCLOSE   24
 
 
+// LABEL
+
 //MIX
 #define  MIXSPEED   96//  DIoutput  // invertor 96,97,98
 #define  MIXONOFF   97//  DIoutput virtual //

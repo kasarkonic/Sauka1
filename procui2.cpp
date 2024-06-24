@@ -21,7 +21,7 @@ ProcUI2::~ProcUI2()
 void ProcUI2::initUI()
 {
     this->move(50,25);
-    this->resize(1000,900);
+    this->resize(1820,980);
 
 QPixmap pixmap(":/pictures/logo2.png");
 ui->label_Logo->setPixmap(pixmap);
@@ -89,65 +89,77 @@ void ProcUI2::drawWidgets()
             switch (widData.type) {
             case WidgetType::widgT::Dyno:
             {
-                Dyno *dynoA = new Dyno(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(dynoA);
+                new Dyno(global,widData.name,ui->desktop);
+               // ui->horizontalLayout_Process->addWidget(dynoA);
             }
                 break;
 
             case WidgetType::widgT::Mix:
             {
-                Mix *mixA = new Mix(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(mixA);
+                new Mix(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(mixA);
             }
                 break;
 
             case WidgetType::widgT::Pipe:
             {
-                Pipe *pipeA = new Pipe(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(pipeA);
+               new Pipe(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(pipeA);
             }
                 break;
 
             case WidgetType::Pump:
             {
-                Pump *pumpA = new Pump(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(pumpA);
+               new Pump(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(pumpA);
 
             }
                 break;
 
             case WidgetType::Tvertne:
             {
-                Tvertne *tvertneA = new Tvertne(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(tvertneA);
+                new Tvertne(global,widData.name,ui->desktop);
+                  //ui->horizontalLayout_Process->addWidget(tvertneA);
 
             }
                 break;
 
             case WidgetType::Valve:
             {
-                Valve *valveA = new Valve(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(valveA);
+               new Valve(global,widData.name,ui->desktop);
+                  //ui->horizontalLayout_Process->addWidget(valveA);
 
             }
                 break;
 
             case WidgetType::ScalesBase:
             {
-                ScalesBase *scalesBase = new ScalesBase(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(scalesBase);
+                new ScalesBase(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesBase);
 
             }
                 break;
 
             case WidgetType::ScalesMass:
             {
-                ScalesMass *scalesMass = new ScalesMass(global,widData.name,this);
-                ui->horizontalLayout_Process->addWidget(scalesMass);
+                new ScalesMass(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
 
             }
                 break;
 
+            case WidgetType::Dispax:
+            {
+                new Dispax(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
+                break;
+            case WidgetType::Label:
+            {
+                new Label(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
+                break;
 
             default:
                 qDebug() << "Wrong widget type !!! "  <<widData.type;

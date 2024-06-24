@@ -17,10 +17,12 @@ SOURCES += \
     actlistform.cpp \
     acttablemodel.cpp \
     componentcard.cpp \
+    dispax.cpp \
     dyno.cpp \
     global.cpp \
     hwports.cpp \
     hwservice.cpp \
+    label.cpp \
     main.cpp \
     mainwindow.cpp \
     mix.cpp \
@@ -48,10 +50,12 @@ HEADERS += \
     acttablemodel.h \
     componentcard.h \
     def.h \
+    dispax.h \
     dyno.h \
     global.h \
     hwports.h \
     hwservice.h \
+    label.h \
     mainwindow.h \
     mix.h \
     modbus485.h \

@@ -7,6 +7,8 @@
 #include "mix.h"
 #include "pipe.h"
 #include "pump.h"
+#include "dispax.h"
+#include "label.h"
 #include "tvertne.h"
 #include "global.h"
 #include "valve.h"
@@ -38,6 +40,8 @@ private:
     Mix *mixA;
     Tvertne *tvertneA;
     Pump *pumpA;
+    Dispax *dispax;
+    Label *label;
     Pipe *pipeA;
     Valve *valveA;
     ScalesBase *scalesBase;

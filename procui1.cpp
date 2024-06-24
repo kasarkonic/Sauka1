@@ -23,7 +23,7 @@ ProcUI1::~ProcUI1()
 void ProcUI1::initUI()
 {
     this->move(100,50);
-    this->resize(1000,900);
+    this->resize(1820,980);
 
     QPixmap pixmap(":/pictures/logo2.png");
     ui->label_Logo->setPixmap(pixmap);
@@ -154,7 +154,18 @@ void ProcUI1::drawWidgets()
 
             }
                 break;
-
+            case WidgetType::Dispax:
+            {
+                new Dispax(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
+                break;
+            case WidgetType::Label:
+            {
+                new Label(global,widData.name,ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
+                break;
 
             default:
                 qDebug() << "Wrong widget type !!! "  <<widData.type;

@@ -51,7 +51,9 @@ enum widgT{
     Tvertne,
     Valve,
     ScalesBase,
-    ScalesMass
+    ScalesMass,
+    Dispax,
+    Label,
 };
 }
 
