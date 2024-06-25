@@ -1,1 +1,0 @@
-modbus poll 4.3.4 Registration code£º9876543210ABCDEFGHIJ9813

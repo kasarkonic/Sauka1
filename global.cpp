@@ -368,10 +368,10 @@ void Global::creatWidgList()
 
     addWidgList(WidgetType::Tvertne,    "T2",      1,   664,    1, 50,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
     addWidgList(WidgetType::Tvertne,    "T3",      1,   400,    300, 80,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne,    "T4",      1,   550,    300, 80,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne,    "T5",      1,   700,    300, 80,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne,    "T4",      1,   700,    300, 80,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne,    "T5",      1,   1000,    300, 80,    0,        0, TVERTNE1LEVEL, TVERTNE1FULL);
 
-    addWidgList(WidgetType::Pump,       "PUMP S4",  1,  300,    370, 40,     0,        PUMP1SPEED, PUMP1NOFF,  0);
+    addWidgList(WidgetType::Pump,       "PUMP S4",  1,  300,    410, 40,     0,        PUMP1SPEED, PUMP1NOFF,  0);
     addWidgList(WidgetType::Pump,       "PUMP S5",  1,  446,    54,  40,     0,        PUMP1SPEED, PUMP1NOFF,  0);
 
 
@@ -382,18 +382,18 @@ void Global::creatWidgList()
 
     addWidgList(WidgetType::Valve,      "Valve 3.1",  1,    399,   274, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
     addWidgList(WidgetType::Valve,      "Valve 3.2",  1,    459,   273, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 3.3",  1,    399,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 3.4",  1,    457,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 3.3",  1,    399,   463, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 3.4",  1,    457,   461, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
 
     addWidgList(WidgetType::Valve,      "Valve 4.1",  1,    545,   272, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
     addWidgList(WidgetType::Valve,      "Valve 4.2",  1,    610,   273, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 4.3",  1,    548,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 4.4",  1,    606,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 4.3",  1,    1001,   583, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 4.4",  1,    1059,   582, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
 
     addWidgList(WidgetType::Valve,      "Valve 5.1",  1,    702,   271, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
     addWidgList(WidgetType::Valve,      "Valve 5.2",  1,    760,   271, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 5.3",  1,    700,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve,      "Valve 5.4",  1,    758,   392, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 5.3",  1,    700,   522, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve,      "Valve 5.4",  1,    758,  521, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
 
     addWidgList(WidgetType::Valve,      "Valve 6.3",  1,    279,   271, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
     addWidgList(WidgetType::Valve,      "Valve 6.2",  1,    334,   274, 25,  0,       VALVE1ACT, VALVE1SWOPEN,  VALVE1SWCLOSE);
@@ -423,9 +423,9 @@ void Global::creatWidgList()
     addWidgList(WidgetType::Pipe,       "Pipe 16",     1,    522,    281,    20,  90,      0,0,0);
 
     addWidgList(WidgetType::Pipe,       "Pipe 17",     1,    787,    277,    20,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 18",     1,    727,    398,    30,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 19",     1,    393,    592,    327,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 20",    1,    566,    632,  395,    90,      0, 0,  0);
+    addWidgList(WidgetType::Pipe,       "Pipe 18",     1,    727,    530,    30,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 19",     1,    324,    590,    673,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 20",     1,    508,    650,    814,  90,      0, 0,  0);
 
 
     addWidgList(WidgetType::Pipe,       "Pipe 21",     1,    647,    261,    20,  0,      0,0,0);
@@ -433,18 +433,43 @@ void Global::creatWidgList()
 
     addWidgList(WidgetType::Pipe,       "Pipe 23",     1,    373,    256,    27,  0,      0,0,0);
     addWidgList(WidgetType::Pipe,       "Pipe 24",     1,    638,    281,    20,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 25",     1,    585,    378,    20,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 25",     1,    1035,   378,    214,   0,      0,0,0);
     addWidgList(WidgetType::Pipe,       "Pipe 26",     1,    486,    281,    20,  90,      0,0,0);
 
-    addWidgList(WidgetType::Pipe,       "Pipe 27",     1,    736,   378,    20,   0,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 28",     1,    426,   398,    30,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 29",     1,    575,   398,    30,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 30",     1,    436,   378,    20,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 27",     1,    737,   378,    154,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 28",     1,    425,   470,    30,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 29",     1,    1025,   591,    30,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 30",     1,    436,   377,    94,   0,      0,0,0);
 
     addWidgList(WidgetType::Pipe,       "Pipe 31",     1,    368,   282,    20,   90,      0,0,0);
     addWidgList(WidgetType::Pipe,       "Pipe 32",     1,    304,   283,    30,   90,      0,0,0);
     addWidgList(WidgetType::Pipe,       "Pipe 33",     1,    131,   283,    145,  90,      0,0,0);
-    addWidgList(WidgetType::Pipe,       "Pipe 34",     1,    314,   291,    20,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 34",     1,    484,   470,    25,   90,      0,0,0);
+
+    addWidgList(WidgetType::Pipe,       "Pipe 35",     1,   314,    357,    49,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 36",     1,    314,    462,   137,  0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 37",     1,    508,   541,    46,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 38",     1,    323,   470,    75,  90,      0,0,0);
+
+    addWidgList(WidgetType::Pipe,       "Pipe 39",     1,    509,   469,    60,  0,       0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 40",     1,    324,   530,    370,   90,    0,0,0);
+
+    addWidgList(WidgetType::Pipe,       "Pipe 41",     1,    647,    261,    20,  0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 42",     1,    495,    237,    44,  0,      0,0,0);
+
+    addWidgList(WidgetType::Pipe,       "Pipe 43",     1,    508,    603,    48,  0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 44",     1,   1086,    591,    22,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 45",     1,    808,    531,    56,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 46",     1,    1108,    590,    61,  0,      0,0,0);
+
+    addWidgList(WidgetType::Pipe,       "Pipe 47",     1,    808,   603,    48,   0,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 48",     1,    425,   200,    30,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 49",     1,    785,   531,    23,  90,      0,0,0);
+    addWidgList(WidgetType::Pipe,       "Pipe 50",     1,    436,   200,    94,   0,      0,0,0);
+
+
+
+
 
    // addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   772,  142,    100,  0,     0,   0, 0);
    // addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   SCALESMASS, 0);
