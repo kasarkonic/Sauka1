@@ -25,7 +25,8 @@ public:
     float angle = 0; // 0 options = 0;   vertical, ccw
     int flow = 1;        // int value 0 stop, 1 -> run up
 
-    QColor  pipeColor = QColor(9,163,228);  //Qt::white;   // pipe color
+    QColor  pipeColorFront = QColor(0x6a,0xc4,0xea);  //Qt::white;   // pipe color
+    QColor  pipeColorRear = QColor(0x24,0x8f,0xbc);  //Qt::white;   // pipe color
     QColor  arrowColor = Qt::white;    // pipe color
 
 

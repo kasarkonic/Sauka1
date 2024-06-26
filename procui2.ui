@@ -41,6 +41,11 @@
         </item>
         <item>
          <widget class="QLabel" name="label_Heder">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Procesa vadības shēma 2</string>
           </property>

@@ -16,7 +16,7 @@ Pipe::Pipe(Global &global,QString name, QWidget *parent)
 #endif
     angle = settings.options;
 
-    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 
@@ -45,8 +45,15 @@ void Pipe::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QPen pen;
     pen.setWidth(2);    //draw pipe
-    pen.setColor(pipeColor) ;       //(Qt::black);
-    painter.setBrush(pipeColor);// (pipeColour);
+    pen.setColor(pipeColorFront) ;       //(Qt::black);
+  //  if(settings.options == 1){
+  //      painter.setBrush(pipeColorRear);// (pipeColour);
+  //      settings.options = 0;
+   // }
+   // else{
+        painter.setBrush(pipeColorFront);
+   // }
+
     painter.setPen(pen);
 
   //  pen.setWidth(2);    //draw pipe
@@ -100,8 +107,9 @@ void Pipe::paintEvent(QPaintEvent *event)
     pipePoints[3].setX(stX  + hi * sin(an));
     pipePoints[3].setY(stY  + hi * cos(an));
 
-    painter.drawPolygon(pipePoints,4);
 
+    painter.drawPolygon(pipePoints,4,Qt::WindingFill);
+/*
 
     //pipe virtual middle line
 
@@ -112,10 +120,11 @@ void Pipe::paintEvent(QPaintEvent *event)
     pipemiddle[1].setY(stY + hi * cos(an) - wi * sin(an)/2 );
 
     pen.setWidth(1);    //draw pipe
-    pen.setColor(Qt::black);
+    pen.setColor(pipeColorFront); //(Qt::black);
     painter.setPen(pen);
- //   painter.drawLines(pipemiddle,1);
-
+    painter.drawLines(pipemiddle,1);
+    */
+/*
     if(settings.value != 0)
     {
         //draw arrow
@@ -144,6 +153,7 @@ void Pipe::paintEvent(QPaintEvent *event)
         painter.drawLines(arrowPoints,2);
     }
 
+    */
       resize(wi + settings.currSize * sin(an), stY + hi * cos(an));
 
 }

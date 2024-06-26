@@ -23,7 +23,7 @@ public:
         int startX = 100;
         int startY = 100;
         int startSize = 100;
-        int startSizeWi = 10;
+        int startSizeWi = 13;
 
         //valve |- angle
         // pipe angle

@@ -40,7 +40,7 @@ void Label::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::red);
     painter.setPen(pen);
 
-    QFont bold("Verdana", 15);
+    QFont bold("Verdana", 16);
     bold.setBold(false);
     painter.setFont(bold);
 
