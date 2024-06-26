@@ -48,7 +48,8 @@ void Label::paintEvent(QPaintEvent *event)
         width = 100;
         height = 45;
         dest = QRect(0,0,width,height);
-        str = "Uz\ndinamill";
+       // str = "Uz\ndinamill";
+        str = "Uz dinamill";
 }
     if(settings.name == "LABEL2" ){
         width = 150;
