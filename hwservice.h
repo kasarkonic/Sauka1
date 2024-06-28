@@ -10,26 +10,25 @@
 #include <QElapsedTimer>
 
 namespace Ui {
-class HWService;
+    class HWService;
 }
 
-class HWService  : public QMainWindow
-{
+class HWService : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit HWService(Global &global, QWidget *parent = nullptr );
+    explicit HWService(Global& global, QWidget* parent = nullptr);
 
-    Ui::HWService *ui;
+    Ui::HWService* ui;
     ActListForm actListForm;
     SensListsForm sensListsForm;
     ~HWService();
 
 signals:
-     void setBaudrate(int address);
-     bool factoryReset(int address);
-     void outputChange(int id, int address, int data);
-     void diOutputChangeSi(int i, int value);
+    void setBaudrate(int address);
+    bool factoryReset(int address);
+    void outputChange(int id, int address, int data);
+    void diOutputChangeSi(int i, int value);
 
 public slots:
     void updateDataAn(int row, int val);
@@ -37,7 +36,7 @@ public slots:
     void updateDIoutput(int row, int val);
 
 protected:
-         void    timerEvent(QTimerEvent *event) override;
+    void    timerEvent(QTimerEvent* event) override;
 
 
 private slots:
@@ -67,7 +66,7 @@ private slots:
 
 private:
 
-    Global &global;
+    Global& global;
     int modbusAddress = 0;
     int timerId;
     bool ok;

@@ -5,17 +5,16 @@
 #include"global.h"
 
 namespace Ui {
-class ComponentCard;
+    class ComponentCard;
 }
 
-class ComponentCard : public QWidget
-{
+class ComponentCard : public QWidget {
     Q_OBJECT
 
 public:
 
-    explicit ComponentCard(Global &global, QWidget *parent = nullptr);
-   // Ui::ComponentCard *ui;
+    explicit ComponentCard(Global& global, QWidget* parent = nullptr);
+    // Ui::ComponentCard *ui;
     ~ComponentCard();
 
 private slots:
@@ -83,8 +82,8 @@ private slots:
     void on_comboBox_loadCard_highlighted(int index);
 
 private:
-    Ui::ComponentCard *ui;
-    Global &global;
+    Ui::ComponentCard* ui;
+    Global& global;
     void updateUI();
 
     QString settingsFile;

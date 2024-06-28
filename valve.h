@@ -6,28 +6,26 @@
 #include "widgetdiagramelement.h"
 
 
-namespace ValveStatus
-{
-enum{
-    Close,  // 0
-    OpenBA,
-    OpenBC,
-    OpenAC,
-    Open_BA,
-    Open_BC,
-    Open_BB,
-    OpenABC_B,
-    OPENABC,
-    Unknown,
-};
+namespace ValveStatus {
+    enum {
+        Close,  // 0
+        OpenBA,
+        OpenBC,
+        OpenAC,
+        Open_BA,
+        Open_BC,
+        Open_BB,
+        OpenABC_B,
+        OPENABC,
+        Unknown,
+    };
 }
 
 
-class Valve : public WidgetDiagramElement
-{
+class Valve : public WidgetDiagramElement {
     Q_OBJECT
 public:
-    Valve(Global &global,QString name, QWidget *parent = nullptr);
+    Valve(Global& global, QString name, QWidget* parent = nullptr);
     // void saveSettings();
     // void loadSettings();
 
@@ -42,9 +40,9 @@ signals:
     // void openServiceValve();
 
 protected:
-    void    paintEvent(QPaintEvent *event) override;
-    void    timerEvent(QTimerEvent *event) override;
-   // void    updateWidget();
+    void    paintEvent(QPaintEvent* event) override;
+    void    timerEvent(QTimerEvent* event) override;
+    // void    updateWidget();
 
 private:
     int angle;

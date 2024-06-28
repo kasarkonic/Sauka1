@@ -32,12 +32,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(Global &global, QWidget *parent = nullptr);
+    MainWindow(Global& global, QWidget* parent = nullptr);
     ~MainWindow();
 
 public slots:
@@ -63,39 +62,39 @@ protected:
     Scale scale;
 
     void    resizeEvent(QResizeEvent* event) override;
-    void    mousePressEvent(QMouseEvent *event) override;
-    void    mouseMoveEvent (QMouseEvent *event) override;
-    void    timerEvent(QTimerEvent *event) override;
+    void    mousePressEvent(QMouseEvent* event) override;
+    void    mouseMoveEvent(QMouseEvent* event) override;
+    void    timerEvent(QTimerEvent* event) override;
 
 
 
 private:
 
-    Global &global;
+    Global& global;
 
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
 
     // WidgetData widgetData;
 
-    Dyno *dynoA;
-    Mix *mixA;
-    Tvertne *tvertneA;
-    Pump *pumpA;
-    Dispax *dispax;
-    Label *label;
-    Pipe *pipeA;
-    Valve *valveA;
-    ScalesBase *scalesBase;
-    ScalesMass *scalesMass;
+    Dyno* dynoA;
+    Mix* mixA;
+    Tvertne* tvertneA;
+    Pump* pumpA;
+    Dispax* dispax;
+    Label* label;
+    Pipe* pipeA;
+    Valve* valveA;
+    ScalesBase* scalesBase;
+    ScalesMass* scalesMass;
     ProcUI1 procUI1;
     ProcUI2 procUI2;
     Modbus485 modbus485;
     Runprocess runprocess;
-   // Scale scale;
+    // Scale scale;
 
     HWService hwService;
-   // Rs232 *rs232;
-   // ParMani *parmani;
+    // Rs232 *rs232;
+    // ParMani *parmani;
 
 
 
@@ -126,7 +125,7 @@ private:
     bool initTimer;
     void delAllWid();
 
-QString statusStr = "\u00A9 2023. vers. 0.0  tel. 29222201   02.02.2024  ";
+    QString statusStr = "\u00A9 2023. vers. 0.0  tel. 29222201   02.02.2024  ";
 
 };
 

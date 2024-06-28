@@ -10,25 +10,24 @@
 
 
 namespace Ui {
-class WidgetService;
+    class WidgetService;
 }
 
-class WidgetService :  public  QWidget
-{
+class WidgetService : public  QWidget {
     Q_OBJECT
 public:
-    Global &global;
-    Ui::WidgetService *ui;
-    explicit WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent = nullptr);
+    Global& global;
+    Ui::WidgetService* ui;
+    explicit WidgetService(Global& global, WidgetDiagramElement* widgetElement, QWidget* parent = nullptr);
     void openWidgetServiceForm();
     void updateSettings();
-     ~WidgetService();
+    ~WidgetService();
 
 protected:
-    void    closeEvent (QCloseEvent *event) override;
-    void    mousePressEvent(QMouseEvent *event) override;
-    void    mouseMoveEvent (QMouseEvent *event) override;
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+    void    closeEvent(QCloseEvent* event) override;
+    void    mousePressEvent(QMouseEvent* event) override;
+    void    mouseMoveEvent(QMouseEvent* event) override;
+    void    mouseDoubleClickEvent(QMouseEvent* event) override;
 private slots:
     void on_pushButton_Xplus_clicked();
 
@@ -54,7 +53,7 @@ private slots:
 
     void on_lineEdit_options_editingFinished();
 
-   // void on_pushButton_ON_clicked();
+    // void on_pushButton_ON_clicked();
 
     void on_horizontalSlider_valueChanged(int value);
 
@@ -69,8 +68,8 @@ private slots:
     void on_horizontalSlider_1_valueChanged(int value);
 
 private:
-         // WidgetDiagramElement::widDataStruct &wsettings;
-    WidgetDiagramElement *widgetElement;
+    // WidgetDiagramElement::widDataStruct &wsettings;
+    WidgetDiagramElement* widgetElement;
     //Global &global;
     QObject obj;
     //Ui::WidgetService *ui;

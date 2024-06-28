@@ -10,7 +10,7 @@
 //#include <QPushButton>
 
 
-SensListsForm::SensListsForm(Global &global, QWidget *parent)
+SensListsForm::SensListsForm(Global& global, QWidget* parent)
     : QMainWindow(parent)
     , global(global)
     , ui(new Ui::SensListsForm)
@@ -24,21 +24,20 @@ SensListsForm::SensListsForm(Global &global, QWidget *parent)
 
     ui->setupUi(this);
     ui->label_head->setText("Sensori");
-    sensorTableModel = new SensorTableModel(global,this);
+    sensorTableModel = new SensorTableModel(global, this);
     ui->tableView->setModel(sensorTableModel);
 
     int maxRow = global.sensList.size();
 
-    for(int row = 0; row < maxRow; row++)
-    {
+    for (int row = 0; row < maxRow; row++) {
         lineEditDi = new QLineEdit();
         lineEditAn = new QLineEdit();
 
         global.sensList[row].ptrLineEditDI = lineEditDi;
         global.sensList[row].ptrLineEditAN = lineEditAn;
 
-        ui->tableView->setIndexWidget(sensorTableModel->index(row,4),lineEditDi);
-        ui->tableView->setIndexWidget(sensorTableModel->index(row,5),lineEditAn);
+        ui->tableView->setIndexWidget(sensorTableModel->index(row, 4), lineEditDi);
+        ui->tableView->setIndexWidget(sensorTableModel->index(row, 5), lineEditAn);
 
         connect(lineEditDi, &QLineEdit::editingFinished, this, &SensListsForm::handleEditFinish);
         connect(lineEditAn, &QLineEdit::editingFinished, this, &SensListsForm::handleEditFinish);
@@ -47,21 +46,18 @@ SensListsForm::SensListsForm(Global &global, QWidget *parent)
     initUI();
 }
 
-SensListsForm::~SensListsForm()
-{
+SensListsForm::~SensListsForm() {
     delete ui;
 }
 
-void SensListsForm::updateData(int row)
-{
+void SensListsForm::updateData(int row) {
     sensorTableModel->updateData(row);
     // qDebug() << "SensListsForm::updateData(row); " << row ;
 
 }
 
 
-void SensListsForm::handleButton()
-{
+void SensListsForm::handleButton() {
     qDebug() << "SensListsForm::handleButton ";
 }
 
@@ -76,23 +72,22 @@ void SensListsForm::handleEditFinish()
     int maxRow = global.sensList.size();
     bool ok = true;
     int val;
-    for(int row = 0; row < maxRow; row++)
-    {
+    for (int row = 0; row < maxRow; row++) {
 
-        if(global.sensList[row].ptrLineEditDI == obj){
+        if (global.sensList[row].ptrLineEditDI == obj) {
             val = lEdit->text().toInt(&ok);
-            qDebug() <<"DI " <<row<< val << ok;
-            if(ok){
+            qDebug() << "DI " << row << val << ok;
+            if (ok) {
                 global.sensList[row].digital = (val > 0);
                 sensorTableModel->updateData(row);
                 global.needUpdateSensorIn(row, val);
             }
 
         }
-        if(global.sensList[row].ptrLineEditAN == obj){
+        if (global.sensList[row].ptrLineEditAN == obj) {
             val = lEdit->text().toInt(&ok);
-            qDebug() <<"AN " <<row<< val << ok;
-            if(ok){
+            qDebug() << "AN " << row << val << ok;
+            if (ok) {
                 global.sensList[row].analog = val;
                 sensorTableModel->updateData(row);
                 global.needUpdateSensorIn(row, val);
@@ -103,8 +98,7 @@ void SensListsForm::handleEditFinish()
 }
 
 
-void SensListsForm::initUI()
-{
+void SensListsForm::initUI() {
 
 
 }

@@ -3,20 +3,19 @@
 
 #include "widgetdiagramelement.h"
 
- class ScalesMass: public WidgetDiagramElement
-{
+class ScalesMass : public WidgetDiagramElement {
     Q_OBJECT
 
 public:
-    explicit ScalesMass(Global &global,QString name, QWidget *parent = nullptr);
+    explicit ScalesMass(Global& global, QString name, QWidget* parent = nullptr);
     void updateSettings() override;
 
 protected:
-    void    paintEvent(QPaintEvent *event) override;
-    void    timerEvent(QTimerEvent *event)override ;
+    void    paintEvent(QPaintEvent* event) override;
+    void    timerEvent(QTimerEvent* event)override;
 
 private:
-    QImage *imgBackground;
+    QImage* imgBackground;
     int att = 360;
     //int timerIdUpd = 0;
     QColor  triangColor = Qt::blue;

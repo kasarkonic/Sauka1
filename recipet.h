@@ -4,21 +4,20 @@
 #include <QMainWindow>
 #include"global.h"
 namespace Ui {
-class Recipet;
+    class Recipet;
 }
 
-class Recipet : public QWidget
-{
+class Recipet : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Recipet(Global &global, QWidget *parent = nullptr);
+    explicit Recipet(Global& global, QWidget* parent = nullptr);
     ~Recipet();
 
-  //  void setUpdateUI(const void &newUpdateUI);
+    //  void setUpdateUI(const void &newUpdateUI);
 
 protected:
- //   bool event(QEvent *e) override;
+    //   bool event(QEvent *e) override;
 
 
 private slots:
@@ -57,8 +56,8 @@ private slots:
     void on_pushButton_clear_clicked();
 
 private:
-    Ui::Recipet *ui;
-    Global &global;
+    Ui::Recipet* ui;
+    Global& global;
     QStringList cmbList;
     QStringList cardFileName;
     QStringList rcmbList;

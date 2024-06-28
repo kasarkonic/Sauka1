@@ -1,8 +1,7 @@
 #include "label.h"
 
-Label::Label(Global &global, QString name, QWidget *parent)
-    : WidgetDiagramElement(global,name,parent)
-{
+Label::Label(Global& global, QString name, QWidget* parent)
+    : WidgetDiagramElement(global, name, parent) {
     global.widHash[settings.name].ptrCurrWidget = this;
     //*
 #ifdef ENABLE_WIDGET_SIZE
@@ -16,8 +15,7 @@ Label::Label(Global &global, QString name, QWidget *parent)
 
 }
 
-void Label::updateSettings()
-{
+void Label::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     // qDebug() << "Mix updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
@@ -27,9 +25,8 @@ void Label::updateSettings()
     update();
 }
 
-void Label::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED (event);
+void Label::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event);
 
     //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
@@ -44,32 +41,31 @@ void Label::paintEvent(QPaintEvent *event)
     bold.setBold(false);
     painter.setFont(bold);
 
-    if(settings.name == "LABEL1" ){
+    if (settings.name == "LABEL1") {
         width = 100;
         height = 45;
-        dest = QRect(0,0,width,height);
-       // str = "Uz\ndinamill";
+        dest = QRect(0, 0, width, height);
+        // str = "Uz\ndinamill";
         str = "Uz dinamill";
-}
-    if(settings.name == "LABEL2" ){
+    }
+    if (settings.name == "LABEL2") {
         width = 150;
         height = 20;
-        dest = QRect(0,0,width,height);
+        dest = QRect(0, 0, width, height);
         str = "Iztukšošana";
-}
-
-
-    painter.drawText(dest,Qt::TextWordWrap | Qt::AlignCenter, str);
-
-    resize(width,height);
-}
-
-void Label::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED(event)
-    if(event->timerId() == timerIdUpd){
-        updateSettings();
     }
+
+
+    painter.drawText(dest, Qt::TextWordWrap | Qt::AlignCenter, str);
+
+    resize(width, height);
+}
+
+void Label::timerEvent(QTimerEvent* event) {
+    Q_UNUSED(event)
+        if (event->timerId() == timerIdUpd) {
+            updateSettings();
+        }
 }
 
 /*

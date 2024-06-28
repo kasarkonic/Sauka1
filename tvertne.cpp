@@ -1,22 +1,22 @@
 #include "tvertne.h"
 
 
-Tvertne::Tvertne(Global &global, QString name, QWidget *parent)
-    : WidgetDiagramElement(global,name,parent)
+Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
+    : WidgetDiagramElement(global, name, parent)
 
 {
     global.widHash[settings.name].ptrCurrWidget = this;
     //widName = name;
     //*
- #ifdef ENABLE_WIDGET_SIZE
-        QPalette pal = QPalette();
-        pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
-        pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
-        this->setAutoFillBackground(true);
-        this->setPalette(pal);
+#ifdef ENABLE_WIDGET_SIZE
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
+    pal.setColor(QPalette::Window, QColor(0, 0, 0, 20));
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
 #endif
 
-        timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
     fill = 0;
     full = 0;
@@ -30,8 +30,8 @@ void Tvertne::updateSettings()
 
     int fval = global.DIinput[settings.sensAddres1].value; // fill value in %
 
-   // fill = 10 * qRound(24*100.0/fval);
-    if(fill > 100)
+    // fill = 10 * qRound(24*100.0/fval);
+    if (fill > 100)
         fill = 100;
     fill = 100 - fval;
     //qDebug() << "fill"  << fval << settings.sensAddres1 << (24*100.0/fval);
@@ -42,17 +42,15 @@ void Tvertne::updateSettings()
     update();
 }
 
-void Tvertne::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED (event);
-   // qDebug() << "Tvertne::timerEvent";
+void Tvertne::timerEvent(QTimerEvent* event) {
+    Q_UNUSED(event);
+    // qDebug() << "Tvertne::timerEvent";
     updateSettings();
 }
 
 
-void Tvertne::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED (event);
+void Tvertne::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event);
 
     //qDebug() << "Tvertne paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
@@ -64,49 +62,49 @@ void Tvertne::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(pen);
 
-    int b = (int)settings.currSize /10;
+    int b = (int)settings.currSize / 10;
 
     QPoint points[4];
 
-    imgBackground= new QImage();
+    imgBackground = new QImage();
     imgBackground->load(":/pictures/fxup1.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
     // qDebug()<<"full:fill" <<full<<":" << fill;
-    if (full){
-        painter.drawLine(QPoint(b,b),QPoint(settings.currSize - b, b));
+    if (full) {
+        painter.drawLine(QPoint(b, b), QPoint(settings.currSize - b, b));
     }
 
     pen.setWidth(3);
     pen.setColor(Qt::black);
     painter.setPen(pen);
 
-    points[0] = QPoint(b,b);
+    points[0] = QPoint(b, b);
     points[1] = QPoint(settings.currSize - b, b);
-    points[2] = QPoint(settings.currSize - b ,settings.currSize - b);
-    points[3] = QPoint(b,settings.currSize -b);
+    points[2] = QPoint(settings.currSize - b, settings.currSize - b);
+    points[3] = QPoint(b, settings.currSize - b);
 
-    painter.drawLine(points[1],points[2]);
-    painter.drawLine(points[2],points[3]);
-    painter.drawLine(points[3],points[0]);
+    painter.drawLine(points[1], points[2]);
+    painter.drawLine(points[2], points[3]);
+    painter.drawLine(points[3], points[0]);
 
     pen.setWidth(1);
     pen.setColor(Qt::black);
     painter.setPen(pen);
     painter.setBrush(QColor(0, 32, 255, 50));
 
-    int tf = fill * (settings.currSize - 2*b)/100;
+    int tf = fill * (settings.currSize - 2 * b) / 100;
 
-    points[0] = QPoint(b,b + tf);
+    points[0] = QPoint(b, b + tf);
     points[1] = QPoint(settings.currSize - b, b + tf);
-    points[2] = QPoint(settings.currSize - b ,settings.currSize - 2*b);
-    points[3] = QPoint(b,settings.currSize - 2*b);
+    points[2] = QPoint(settings.currSize - b, settings.currSize - 2 * b);
+    points[3] = QPoint(b, settings.currSize - 2 * b);
 
-    painter.drawPolygon(points,4);
+    painter.drawPolygon(points, 4);
 
-resize(settings.currSize,settings.currSize);
+    resize(settings.currSize, settings.currSize);
 }
 
 /*

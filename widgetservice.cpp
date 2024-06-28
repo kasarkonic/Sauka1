@@ -6,23 +6,22 @@
 //#include "widgetdiagramelement.h"
 
 
-WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement, QWidget *parent)
+WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement, QWidget* parent)
 
     : QWidget(parent)
     , global(global)
     , ui(new Ui::WidgetService)
-    , widgetElement(widgetElement)
-{
+    , widgetElement(widgetElement) {
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-    currentWid =  widgetElement->settings.name;
+    currentWid = widgetElement->settings.name;
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = this;
 
-    qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService ;
+    qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService;
     ui->setupUi(this);
     //qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
     setWindowTitle(currentWid);
@@ -34,9 +33,8 @@ WidgetService::WidgetService(Global &global,WidgetDiagramElement *widgetElement,
 
     updateFormData();   // data from global. ...
 }
-void WidgetService::openWidgetServiceForm()
-{
-    qDebug() << "WidgetSrv Open service pipe ??? : " ;
+void WidgetService::openWidgetServiceForm() {
+    qDebug() << "WidgetSrv Open service pipe ??? : ";
 
     this->show();
 }
@@ -51,15 +49,13 @@ void WidgetService::openWidgetServiceForm()
 
 
 
-WidgetService::~WidgetService()
-{
+WidgetService::~WidgetService() {
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = nullptr;
-    qDebug() << "WidgetService::~WidgetService()" ;
+    qDebug() << "WidgetService::~WidgetService()";
     delete ui;
 }
 
-void WidgetService::updateUIvalue()
-{
+void WidgetService::updateUIvalue() {
 
 }
 
@@ -83,9 +79,9 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
 
-    ui->label_AddressDI->setText("Q" + QString::number(addresAct+1));
-    ui->label_AddressAI1->setText("IN" + QString::number(addresSens1+1));
-    ui->label_AddressAI2->setText("IN" + QString::number(addresSens2+1));
+    ui->label_AddressDI->setText("Q" + QString::number(addresAct + 1));
+    ui->label_AddressAI1->setText("IN" + QString::number(addresSens1 + 1));
+    ui->label_AddressAI2->setText("IN" + QString::number(addresSens2 + 1));
 
     ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
 
@@ -235,138 +231,121 @@ void WidgetService::updateSensorVal()  // take data from UI and update global. .
     QString qss2;
 
 
-    updateFormData() ;
+    updateFormData();
 
 }
 
-void WidgetService::updateSettings()
-{
+void WidgetService::updateSettings() {
     qDebug() << "WidgetService::updateSettings()";
 }
 
-void WidgetService::closeEvent(QCloseEvent *event)
-{
+void WidgetService::closeEvent(QCloseEvent* event) {
     Q_UNUSED(event);
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = nullptr;
-    qDebug() << "WidgetService::closeEvent" ;
+    qDebug() << "WidgetService::closeEvent";
 }
-void WidgetService::mousePressEvent(QMouseEvent *event)
-{
+void WidgetService::mousePressEvent(QMouseEvent* event) {
     const QPoint& pos = event->pos();
     mouseStartPointX = pos.x();
     mouseStartPointY = pos.y();
-    qDebug() << " WidgetService mousePressEvent dx:dy" <<pos.x() << pos.y();
+    qDebug() << " WidgetService mousePressEvent dx:dy" << pos.x() << pos.y();
 }
-void WidgetService::mouseMoveEvent(QMouseEvent *event)
-{
+void WidgetService::mouseMoveEvent(QMouseEvent* event) {
     // event->accept();
 
     // get the cursor position of this event
     const QPoint& pos = event->pos();
 
-    int pointX = (mouseStartPointX - pos.x())/-100;
-    int pointY = (mouseStartPointY - pos.y())/-100;
-    qDebug() << " WidgetService mouseMoveEvent dx:dy" << pointX<< pointY;
-  //  widgetElement->global.widHash[currentWid].startX += pointX;
-  //  widgetElement->global.widHash[currentWid].startY += pointY;
- //   updateFormData();
+    int pointX = (mouseStartPointX - pos.x()) / -100;
+    int pointY = (mouseStartPointY - pos.y()) / -100;
+    qDebug() << " WidgetService mouseMoveEvent dx:dy" << pointX << pointY;
+    //  widgetElement->global.widHash[currentWid].startX += pointX;
+    //  widgetElement->global.widHash[currentWid].startY += pointY;
+   //   updateFormData();
 }
 
-void WidgetService::mouseDoubleClickEvent(QMouseEvent *event)
-{
+void WidgetService::mouseDoubleClickEvent(QMouseEvent* event) {
     Q_UNUSED(event);
     // qDebug() << "WidgetService::mouseDoubleClickEvent" ;
 
 }
 
-void WidgetService::on_pushButton_Xplus_clicked()
-{
-    widgetElement->global.widHash[currentWid].startX +=1;
+void WidgetService::on_pushButton_Xplus_clicked() {
+    widgetElement->global.widHash[currentWid].startX += 1;
     // updateSettings();
     // updateFormData();
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_Xminus_clicked()
-{
-    if(widgetElement->global.widHash[currentWid].startX > 1)
-        widgetElement->global.widHash[currentWid].startX -=1;
+void WidgetService::on_pushButton_Xminus_clicked() {
+    if (widgetElement->global.widHash[currentWid].startX > 1)
+        widgetElement->global.widHash[currentWid].startX -= 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_Yplus_clicked()
-{
-    widgetElement->global.widHash[currentWid].startY +=1;
+void WidgetService::on_pushButton_Yplus_clicked() {
+    widgetElement->global.widHash[currentWid].startY += 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_Yminus_clicked()
-{
-    if(widgetElement->global.widHash[currentWid].startY > 1)
-        widgetElement->global.widHash[currentWid].startY -=1;
+void WidgetService::on_pushButton_Yminus_clicked() {
+    if (widgetElement->global.widHash[currentWid].startY > 1)
+        widgetElement->global.widHash[currentWid].startY -= 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_sizeplus_clicked()
-{
-    widgetElement->global.widHash[currentWid].startSize +=1;
+void WidgetService::on_pushButton_sizeplus_clicked() {
+    widgetElement->global.widHash[currentWid].startSize += 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_sizeMinus_clicked()
-{
-    if(widgetElement->global.widHash[currentWid].startSize > 1)
-        widgetElement->global.widHash[currentWid].startSize -=1;
+void WidgetService::on_pushButton_sizeMinus_clicked() {
+    if (widgetElement->global.widHash[currentWid].startSize > 1)
+        widgetElement->global.widHash[currentWid].startSize -= 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_OptionsMinus_clicked()
-{
-    if(widgetElement->global.widHash[currentWid].options > 0)
-        widgetElement->global.widHash[currentWid].options -=1;
+void WidgetService::on_pushButton_OptionsMinus_clicked() {
+    if (widgetElement->global.widHash[currentWid].options > 0)
+        widgetElement->global.widHash[currentWid].options -= 1;
     updateFormData();
 }
 
 
-void WidgetService::on_pushButton_OptionsPlus_clicked()
-{
-    widgetElement->global.widHash[currentWid].options +=1;
+void WidgetService::on_pushButton_OptionsPlus_clicked() {
+    widgetElement->global.widHash[currentWid].options += 1;
     updateFormData();
 }
 
 
-void WidgetService::on_lineEdit_Xpos_editingFinished()
-{
+void WidgetService::on_lineEdit_Xpos_editingFinished() {
     int val = ui->lineEdit_Xpos->text().toInt();
     widgetElement->global.widHash[currentWid].startX = val;
     updateFormData();
 }
 
 
-void WidgetService::on_lineEdit_Ypos_editingFinished()
-{
+void WidgetService::on_lineEdit_Ypos_editingFinished() {
     int val = ui->lineEdit_Ypos->text().toInt();
     widgetElement->global.widHash[currentWid].startY = val;
     updateFormData();
 }
 
 
-void WidgetService::on_lineEdit_startSize_editingFinished()
-{
+void WidgetService::on_lineEdit_startSize_editingFinished() {
     int val = ui->lineEdit_startSize->text().toInt();
     widgetElement->global.widHash[currentWid].startSize = val;
     updateFormData();
 }
 
 
-void WidgetService::on_lineEdit_options_editingFinished()
-{
+void WidgetService::on_lineEdit_options_editingFinished() {
     int val = ui->lineEdit_options->text().toInt();
     widgetElement->global.widHash[currentWid].options = val;
     updateSensorVal();
@@ -397,17 +376,15 @@ void WidgetService::on_pushButton_ON_clicked()
 }
 
 */
-void WidgetService::on_horizontalSlider_valueChanged(int value)
-{
-    qDebug() << "on_horizontalSlider_valueChanged " << addresAct << " <- "  <<value;
+void WidgetService::on_horizontalSlider_valueChanged(int value) {
+    qDebug() << "on_horizontalSlider_valueChanged " << addresAct << " <- " << value;
     //global.DIoutput[addresAct].value = value;
-    DIOUT(addresAct,value)
-    updateSensorVal();
+    DIOUT(addresAct, value)
+        updateSensorVal();
 }
 
 
-void WidgetService::on_horizontalSlider_1_valueChanged(int value)
-{
+void WidgetService::on_horizontalSlider_1_valueChanged(int value) {
     qDebug() << "on_horizontalSlider_1_valueChanged " << value << addresSens1;
 
     switch (widgetElement->global.widHash[currentWid].type) {
@@ -415,8 +392,8 @@ void WidgetService::on_horizontalSlider_1_valueChanged(int value)
     case WidgetType::widgT::Pump:
     case WidgetType::widgT::Mix:
         //global.DIoutput[addresSens1].value = value;
-        DIOUT(addresSens1,value)
-        break;
+        DIOUT(addresSens1, value)
+            break;
     case WidgetType::widgT::Tvertne:
     case WidgetType::widgT::Valve:
         global.DIinput[addresSens1].value = value;
@@ -435,8 +412,7 @@ void WidgetService::on_horizontalSlider_1_valueChanged(int value)
 }
 
 
-void WidgetService::on_horizontalSlider_2_valueChanged(int value)
-{
+void WidgetService::on_horizontalSlider_2_valueChanged(int value) {
     //actValueAn2 = value;
     qDebug() << "on_horizontalSlider_2_valueChanged " << value;
     global.DIinput[addresSens2].value = value;
@@ -449,11 +425,10 @@ void WidgetService::on_horizontalSlider_2_valueChanged(int value)
 
 
 
-void WidgetService::on_lineEdit_AddresAN1_editingFinished()
-{   
+void WidgetService::on_lineEdit_AddresAN1_editingFinished() {
     bool ok = true;
-    actValueAn1 = ui->lineEdit_AddresAN1->text().toInt(&ok,10);
-    if(!ok){
+    actValueAn1 = ui->lineEdit_AddresAN1->text().toInt(&ok, 10);
+    if (!ok) {
         actValueAn1 = 0;
     }
     qDebug() << "on_lineEdit_AddresAN1_editingFinished " << actValueAn1;
@@ -461,11 +436,10 @@ void WidgetService::on_lineEdit_AddresAN1_editingFinished()
     updateSensorVal();
 }
 
-void WidgetService::on_lineEdit_AddresAN2_editingFinished()
-{
+void WidgetService::on_lineEdit_AddresAN2_editingFinished() {
     bool ok = true;
-    actValueAn2 = ui->lineEdit_AddresAN1->text().toInt(&ok,10);
-    if(!ok){
+    actValueAn2 = ui->lineEdit_AddresAN1->text().toInt(&ok, 10);
+    if (!ok) {
         actValueAn2 = 0;
     }
     qDebug() << "on_lineEdit_AddresAN1_editingFinished " << actValueAn2;
@@ -473,11 +447,10 @@ void WidgetService::on_lineEdit_AddresAN2_editingFinished()
     updateSensorVal();
 }
 
-void WidgetService::on_lineEdit_AddresDI_editingFinished()
-{
+void WidgetService::on_lineEdit_AddresDI_editingFinished() {
     bool ok = true;
-    actValueDi = ui->lineEdit_AddresDI->text().toInt(&ok,10);
-    if(!ok){
+    actValueDi = ui->lineEdit_AddresDI->text().toInt(&ok, 10);
+    if (!ok) {
         actValueDi = 0;
     }
     qDebug() << "on_lineEdit_AddresDI_editingFinished " << actValueDi;

@@ -46,38 +46,37 @@ enum widgT{
 }
 */
 
-class WidgetData
-{
-/*
-public:
+class WidgetData {
+    /*
+    public:
 
-    struct dataStruct {
-        WidgetType::widgT type; // valve
-        WidgetName::widgN name ;
-        int startX = 100;
-        int startY = 100;
-        int startsize = 50;
+        struct dataStruct {
+            WidgetType::widgT type; // valve
+            WidgetName::widgN name ;
+            int startX = 100;
+            int startY = 100;
+            int startsize = 50;
 
-        // int triangStartSize = 250;     // startsize /2
-        // int triangSize = 150;     //  // startsize /2
+            // int triangStartSize = 250;     // startsize /2
+            // int triangSize = 150;     //  // startsize /2
 
-        int currentStatus = 0;      // digital
-        int currentValue = 0;   // analog
-        int currX = 0;
-        int currY = 0;
-
-
-    } settings;
-
-   // QVector <dataStruct> widData;
+            int currentStatus = 0;      // digital
+            int currentValue = 0;   // analog
+            int currX = 0;
+            int currY = 0;
 
 
-    WidgetData(Global &global);
-private:
-    Global &global;
-    void initData();
-    void add(WidgetType::widgT type, WidgetName::widgN name,int startX, int startY, int startsize);
-*/
+        } settings;
+
+       // QVector <dataStruct> widData;
+
+
+        WidgetData(Global &global);
+    private:
+        Global &global;
+        void initData();
+        void add(WidgetType::widgT type, WidgetName::widgN name,int startX, int startY, int startsize);
+    */
 };
 
 #endif // WIDGETDATA_H

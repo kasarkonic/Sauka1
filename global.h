@@ -25,101 +25,97 @@
 
 class WidgetService;
 class WidgetDiagramElement;
-namespace ActuatorType
-{
-enum actT{
-    Invertor,
-    Relay,
-};
+namespace ActuatorType {
+    enum actT {
+        Invertor,
+        Relay,
+    };
 }
-namespace SensorType
-{
-enum sensT{
-    Digital,
-    Analog,
-};
+namespace SensorType {
+    enum sensT {
+        Digital,
+        Analog,
+    };
 }
 
 
-namespace WidgetType
-{
-enum widgT{
-    Dyno,
-    Mix,
-    Pipe,
-    Pump,
-    Tvertne,
-    Valve,
-    ScalesBase,
-    ScalesMass,
-    Dispax,
-    Label,
-};
+namespace WidgetType {
+    enum widgT {
+        Dyno,
+        Mix,
+        Pipe,
+        Pump,
+        Tvertne,
+        Valve,
+        ScalesBase,
+        ScalesMass,
+        Dispax,
+        Label,
+    };
 }
 
-class Global
-{
+class Global {
 
 public:
     Global();
 
-    struct  act{
+    struct  act {
         ActuatorType::actT type = ActuatorType::actT::Relay;  // Dyno
         QString name = "Dyno";
         int address = 0;
         int digital = 0;
         int analog = 0;
-        QPushButton * ptrButton = nullptr;
-        QLineEdit * ptrLineEdit = nullptr;
-    } ;
+        QPushButton* ptrButton = nullptr;
+        QLineEdit* ptrLineEdit = nullptr;
+    };
 
-    struct  sens{
+    struct  sens {
         SensorType::sensT type = SensorType::sensT::Digital;  // digital 0 -> MAX_DIinput  tad analog MAX_DIinput ->MAX_DIinput + MAX_AN_VIRUAL_INPUT
         QString name = "Sens";
         int address = 0;
         int digital = 2; //VALUE
         int analog = 7; //VALUE
-        QLineEdit * ptrLineEditDI = nullptr;
-        QLineEdit * ptrLineEditAN = nullptr;
+        QLineEdit* ptrLineEditDI = nullptr;
+        QLineEdit* ptrLineEditAN = nullptr;
     };
 
     struct wdataStruct {
         WidgetType::widgT type;
-        QString name ;
+        QString name;
         int page = 0;
         int startX = 100;   // left upp corner
         int startY = 100;   // left upp corner
         int startSize = 50; // dimensions
-       // int startSizeWi = 10; // pipe len
+        // int startSizeWi = 10; // pipe len
         int options = 0;   //valve |- and pipe angle
         int windowNr = 0;
         bool formExist = false;
-        WidgetDiagramElement * ptrCurrWidget = nullptr;
-        WidgetService * ptrCurrWidgetService = nullptr;
+        WidgetDiagramElement* ptrCurrWidget = nullptr;
+        WidgetService* ptrCurrWidgetService = nullptr;
 
         int act_Addres1 = 0;
-       // int act_Addres2 = 0;
+        // int act_Addres2 = 0;
         int sensAddres1 = 0;
         int sensAddres2 = 0;
 
     };
 
-    struct  updateData{
+    struct  updateData {
         bool need = false;  // need uptate
         int row = 0;
         int val = 0;    // data value
-    } ;
-    struct inOut{
-      int value;
-      QString name;
-      bool update;
+    };
+    struct inOut {
+        int value;
+        QString name;
+        bool update;
     };
     updateData updateDataIn;
     updateData updateDataOut;
 
     QList<act> actList;
     QList<sens> sensList;
-    QHash<QString,wdataStruct> widHash;
+    QHash<QString, wdataStruct> widHash;
 
     //board input output;
     QList<inOut>DIinput;
@@ -137,7 +133,7 @@ public:
     int getANval(int addres);
     bool getDIval(int addres);
 
-   // void setDIval(int addres, bool val);
+    // void setDIval(int addres, bool val);
 
     QString settingsFileName;
     QString appSwVers;
@@ -193,7 +189,7 @@ private:
     int tick;
     void create_IN_OUT_list();
     void creatWidgList();
-    void addWidgList(WidgetType::widgT ty, QString name, int page,int X, int Y, int size,int options, int actAdr1, int sensAdr1, int sensAdr2);
+    void addWidgList(WidgetType::widgT ty, QString name, int page, int X, int Y, int size, int options, int actAdr1, int sensAdr1, int sensAdr2);
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);
 

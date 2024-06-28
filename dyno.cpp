@@ -3,9 +3,8 @@
 
 
 
-Dyno::Dyno(Global &global,QString name, QWidget *parent)
-    : WidgetDiagramElement(global, name, parent)
-{
+Dyno::Dyno(Global& global, QString name, QWidget* parent)
+    : WidgetDiagramElement(global, name, parent) {
     global.widHash[settings.name].ptrCurrWidget = this;
     ///*
 #ifdef ENABLE_WIDGET_SIZE
@@ -20,25 +19,22 @@ Dyno::Dyno(Global &global,QString name, QWidget *parent)
 
 }
 
-void Dyno::updateSettings()
-{
+void Dyno::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     // qDebug() << "Dino updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
     killTimer(timerIdUpd);
-    if(global.DIoutput[settings.act_Addres1].value){
+    if (global.DIoutput[settings.act_Addres1].value) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
-    }
-    else{
+    } else {
         timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
     }
     //repaint();
     update();
 }
 
-void Dyno::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED (event);
+void Dyno::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event);
     //qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
     //   qDebug() << "Dyno::paintEvent";
     QPainter painter(this);
@@ -50,27 +46,26 @@ void Dyno::paintEvent(QPaintEvent *event)
 
     QPoint points[4];
 
-    points[0] = QPoint(0 + settings.currX,0 + settings.currY);
-    points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
-    points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
-    points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
+    points[0] = QPoint(0 + settings.currX, 0 + settings.currY);
+    points[1] = QPoint(settings.currSize + settings.currX, 0 + settings.currY);
+    points[2] = QPoint(settings.currSize + settings.currX, settings.currSize + settings.currY);
+    points[3] = QPoint(0 + settings.currX, settings.currSize + settings.currY);
 
-    painter.drawPolygon(points,4);
+    painter.drawPolygon(points, 4);
 
-    imgBackground= new QImage();
+    imgBackground = new QImage();
     imgBackground->load(":/pictures/dino_mili.png"); // nepatīk krāsas png failam ???????????????????????????????
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-    resize(settings.currSize,settings.currSize);
+    resize(settings.currSize, settings.currSize);
 }
-void Dyno::timerEvent(QTimerEvent *event)
-{
+void Dyno::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
-    if(event->timerId() == timerIdUpd){
-        updateSettings();
-    }
+        if (event->timerId() == timerIdUpd) {
+            updateSettings();
+        }
 }
 
 /*

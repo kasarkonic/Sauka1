@@ -10,7 +10,7 @@
 #include "sensortablemodel.h"
 
 namespace Ui {
-class SensListsForm;
+    class SensListsForm;
 }
 
 class SensListsForm : public QMainWindow//, public QDialog
@@ -18,7 +18,7 @@ class SensListsForm : public QMainWindow//, public QDialog
     Q_OBJECT
 
 public:
-    explicit SensListsForm(Global &global, QWidget *parent = nullptr);
+    explicit SensListsForm(Global& global, QWidget* parent = nullptr);
 
     ~SensListsForm();
 
@@ -29,18 +29,18 @@ private slots:
     void handleEditFinish();
 
 private:
-    Global &global;
-    Ui::SensListsForm *ui;
+    Global& global;
+    Ui::SensListsForm* ui;
     void initUI();
 
 
-    SensorTableModel *sensorTableModel;
+    SensorTableModel* sensorTableModel;
 
     //QLineEdit *lineEdit ;
     //QPushButton *butt;
-    QLineEdit *lineEdit ;
-    QLineEdit *lineEditDi ;
-    QLineEdit *lineEditAn ;
+    QLineEdit* lineEdit;
+    QLineEdit* lineEditDi;
+    QLineEdit* lineEditAn;
 
 };
 

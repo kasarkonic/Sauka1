@@ -7,15 +7,14 @@
 #include <QComboBox>
 
 namespace Ui {
-class HwPorts;
+    class HwPorts;
 }
 
-class HwPorts : public QMainWindow
-{
+class HwPorts : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit HwPorts(Global&  global, QWidget *parent = nullptr);
+    explicit HwPorts(Global& global, QWidget* parent = nullptr);
     ~HwPorts();
     bool autoScanComPorts();
     void updateUI();
@@ -35,18 +34,20 @@ private slots:
     void on_comboBox_R4_activated(int index);
 
 private:
-    Global &global;
-    Ui::HwPorts *ui;
+    Global& global;
+    Ui::HwPorts* ui;
     void initUI();
 
-    enum { NumGridCol = 8,
-           NumGridRows = 3};
+    enum {
+        NumGridCol = 8,
+        NumGridRows = 3
+    };
 
     QLabel* labels[NumGridRows][NumGridCol];
     QComboBox* comboBox[NumGridRows];
     QStringList cmbList;
 
-    struct  ComInfo{
+    struct  ComInfo {
         QString port = "";
         QString location = "";
         QString description = "";
@@ -55,7 +56,7 @@ private:
         QString vendorIdentifier = "";
         QString productIdentifier = "";
     };
-    QMap<QString,ComInfo> comPortMap;
+    QMap<QString, ComInfo> comPortMap;
     void scanPortsInfo();
     void clearDisplay();
     void loadSettings();

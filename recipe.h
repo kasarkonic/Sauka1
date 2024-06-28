@@ -4,19 +4,18 @@
 #include <QWidget>
 
 namespace Ui {
-class Recipe;
+    class Recipe;
 }
 
-class Recipe : public QWidget
-{
+class Recipe : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Recipe(QWidget *parent = nullptr);
+    explicit Recipe(QWidget* parent = nullptr);
     ~Recipe();
 
 private:
-    Ui::Recipe *ui;
+    Ui::Recipe* ui;
 };
 
 #endif // RECIPE_H

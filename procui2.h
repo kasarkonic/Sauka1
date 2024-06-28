@@ -16,39 +16,38 @@
 #include "scalesmass.h"
 
 namespace Ui {
-class ProcUI2;
+    class ProcUI2;
 }
 
-class ProcUI2 : public QMainWindow
-{
+class ProcUI2 : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ProcUI2(Global &global, QWidget *parent = nullptr);
+    explicit ProcUI2(Global& global, QWidget* parent = nullptr);
     ~ProcUI2();
 
 protected:
     void    resizeEvent(QResizeEvent* event) override;
-    void    timerEvent(QTimerEvent *event) override;
+    void    timerEvent(QTimerEvent* event) override;
 
 
 private slots:
     void on_pushButton_Stop_clicked();
 
 private:
-    Dyno *dynoA;
-    Mix *mixA;
-    Tvertne *tvertneA;
-    Pump *pumpA;
-    Dispax *dispax;
-    Label *label;
-    Pipe *pipeA;
-    Valve *valveA;
-    ScalesBase *scalesBase;
-    ScalesMass *scalesMass;
+    Dyno* dynoA;
+    Mix* mixA;
+    Tvertne* tvertneA;
+    Pump* pumpA;
+    Dispax* dispax;
+    Label* label;
+    Pipe* pipeA;
+    Valve* valveA;
+    ScalesBase* scalesBase;
+    ScalesMass* scalesMass;
 
-    Global &global;
-    Ui::ProcUI2 *ui;
+    Global& global;
+    Ui::ProcUI2* ui;
     void initUI();
     void drawWidgets();
 };

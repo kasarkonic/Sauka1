@@ -1,9 +1,8 @@
 #include "scalesmass.h"
 #include "ui_scalesmass.h"
 
-ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
-    : WidgetDiagramElement(global,name,parent)
-{
+ScalesMass::ScalesMass(Global& global, QString name, QWidget* parent)
+    : WidgetDiagramElement(global, name, parent) {
     global.widHash[settings.name].ptrCurrWidget = this;
 
 #ifdef ENABLE_WIDGET_SIZE
@@ -17,8 +16,7 @@ ScalesMass::ScalesMass(Global &global, QString name, QWidget *parent)
     timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 }
 
-void ScalesMass::updateSettings()
-{
+void ScalesMass::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     massValue = global.DIinput[settings.sensAddres1].value;
     killTimer(timerIdUpd);update();
@@ -26,9 +24,8 @@ void ScalesMass::updateSettings()
     update();
 }
 
-void ScalesMass::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED (event);
+void ScalesMass::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event);
 
     // qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
@@ -39,7 +36,7 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::red);
     painter.setPen(pen);
 
-    imgBackground= new QImage();
+    imgBackground = new QImage();
     imgBackground->load(":/pictures/kettlebell1.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
@@ -48,18 +45,17 @@ void ScalesMass::paintEvent(QPaintEvent *event)
     QString str = QString::number(massValue);
     // qDebug() << massValue << str;
 
-    QFont font("times", settings.currSize/6);
+    QFont font("times", settings.currSize / 6);
     painter.setFont(font);
-   // qDebug() << "scalesM = " << settings.name <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
-    painter.drawText(QRect(0, settings.currSize/6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
-    resize(settings.currSize,settings.currSize);
+    // qDebug() << "scalesM = " << settings.name <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
+    painter.drawText(QRect(0, settings.currSize / 6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
+    resize(settings.currSize, settings.currSize);
 }
 
-void ScalesMass::timerEvent(QTimerEvent *event)
-{
+void ScalesMass::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
-    if(event->timerId() == timerIdUpd){
+        if (event->timerId() == timerIdUpd) {
 
-        updateSettings();
-    }
+            updateSettings();
+        }
 }

@@ -2,11 +2,10 @@
 #include "ui_parmani.h"
 //#include "global.h"
 
-ParMani::ParMani(Global &global, QWidget *parent)
+ParMani::ParMani(Global& global, QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::ParMani)
-    , global(global)
-{
+    , global(global) {
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
@@ -18,27 +17,24 @@ ParMani::ParMani(Global &global, QWidget *parent)
     //Dyno *dynoA = new Dyno(global,"",this);
    // ui->verticalLayout->addWidget(dynoA);
     //timerIdUpd = startTimer(200, Qt::CoarseTimer);
-     qDebug() << "parmani::att "<< att ;
+    qDebug() << "parmani::att " << att;
 }
 
-ParMani::~ParMani()
-{
+ParMani::~ParMani() {
     delete ui;
 
 
 }
 
-void ParMani::on_pushButtonExit_clicked()
-{
+void ParMani::on_pushButtonExit_clicked() {
     close();
 }
 
-void ParMani::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED (event);
-   // qDebug() << "ParMani::timerEvent";
+void ParMani::timerEvent(QTimerEvent* event) {
+    Q_UNUSED(event);
+    // qDebug() << "ParMani::timerEvent";
 
-    //qDebug() << "Mani::att "<< att ;
+     //qDebug() << "Mani::att "<< att ;
 
 }
 

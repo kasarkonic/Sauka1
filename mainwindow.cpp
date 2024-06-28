@@ -20,17 +20,17 @@
 
 
 
-MainWindow::MainWindow(Global &global,  QWidget *parent)
+MainWindow::MainWindow(Global& global, QWidget* parent)
     : QMainWindow(parent)
     //, global(global)
-    , scale(global,this)
+    , scale(global, this)
     , global(global)
     , ui(new Ui::MainWindow)
-    , procUI1(global,this)
-    , procUI2(global,this)
-    , modbus485(global,this)
-    , runprocess(global,this)
-    , hwService(global,this)
+    , procUI1(global, this)
+    , procUI2(global, this)
+    , modbus485(global, this)
+    , runprocess(global, this)
+    , hwService(global, this)
 
 
 {
@@ -45,7 +45,7 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //global.scalePtr = *scale;
 
     QString settingsFile = QApplication::applicationDirPath() + "/settings.ini";
-    global.settingsFileName =  settingsFile;
+    global.settingsFileName = settingsFile;
 
     QSettings settings(settingsFile, QSettings::IniFormat);
     qDebug() << "settingsFile" << settingsFile << global.settingsFileName;
@@ -58,19 +58,18 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //areaX = size().width();
     global.UIXsize = size().width();
     global.UIYsize = size().height();
-    qDebug() << "UI size" << global.UIXsize <<":" << global.UIYsize;
+    qDebug() << "UI size" << global.UIXsize << ":" << global.UIYsize;
 
     initUI();
     // drawWidgets();
 
 
     qDebug() << "Autosettings  Com ports";
-    HwPorts *hwPorts = new HwPorts(global,this);
-    if(!hwPorts->autoScanComPorts()){
-        qDebug()<< "ERROR!!! Com port nof found !!";
+    HwPorts* hwPorts = new HwPorts(global, this);
+    if (!hwPorts->autoScanComPorts()) {
+        qDebug() << "ERROR!!! Com port nof found !!";
         ui->textEdit_Field->setText("Kļūda sistērmā!\n Nevar automātiski atrast Com. portus! Veiciet to manuāli!");
-    }
-    else{
+    } else {
         ui->textEdit_Field->setText("Komunikācija ar perifēriju izveidota!");
     }
 
@@ -89,155 +88,148 @@ MainWindow::MainWindow(Global &global,  QWidget *parent)
     //                this, &MainWindow::openServiceFormPump
     //                );
 
-    connect(&modbus485,&Modbus485::valChangeAn,
-            &hwService, &HWService::updateDataAn);
+    connect(&modbus485, &Modbus485::valChangeAn,
+        &hwService, &HWService::updateDataAn);
 
-    connect(&modbus485,&Modbus485::valChangeDi,
-            &hwService, &HWService::updateDataDi);
+    connect(&modbus485, &Modbus485::valChangeDi,
+        &hwService, &HWService::updateDataDi);
 
-    connect(&modbus485,&Modbus485::valChangeDi,
-            this, &MainWindow::changeInputVal);
+    connect(&modbus485, &Modbus485::valChangeDi,
+        this, &MainWindow::changeInputVal);
 
 
-    connect (&hwService, &HWService::factoryReset,
-             &modbus485, &Modbus485::factoryReset);
+    connect(&hwService, &HWService::factoryReset,
+        &modbus485, &Modbus485::factoryReset);
 
     //connect (&hwService, &HWService::outputChange,
     //         &modbus485,&Modbus485::wr23IOD32);
 
-    connect (&runprocess,&Runprocess::diOutputChangeSi,
-                &modbus485,&Modbus485::diOutputChangeSl);
+    connect(&runprocess, &Runprocess::diOutputChangeSi,
+        &modbus485, &Modbus485::diOutputChangeSl);
 
-    connect (&hwService,&HWService::diOutputChangeSi,
-            &modbus485,&Modbus485::diOutputChangeSl);
+    connect(&hwService, &HWService::diOutputChangeSi,
+        &modbus485, &Modbus485::diOutputChangeSl);
 
 
-    connect(&runprocess,&Runprocess::diOutputChangeSi,
-            &hwService, &HWService::updateDataDi);
+    connect(&runprocess, &Runprocess::diOutputChangeSi,
+        &hwService, &HWService::updateDataDi);
 
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
-    qDebug() <<  "-------------------modbus485.init()";
+    qDebug() << "-------------------modbus485.init()";
     modbus485.init();
     att = 1;
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     saveSettings();
     delete ui;
 }
 
-void MainWindow::changeInputVal(int row, int val)
-{
+void MainWindow::changeInputVal(int row, int val) {
     Q_UNUSED(val);
 
-    foreach (Global::wdataStruct widData, global.widHash){
+    foreach(Global::wdataStruct widData, global.widHash) {
 
 
-        if( (widData.act_Addres1 == row) |
-           // (widData.act_Addres2 == row) |
+        if ((widData.act_Addres1 == row) |
+            // (widData.act_Addres2 == row) |
             (widData.sensAddres1 == row) |
-            (widData.sensAddres2 == row)){
-            qDebug() << "hange inputs, update "  << widData.name;
+            (widData.sensAddres2 == row)) {
+            qDebug() << "hange inputs, update " << widData.name;
             widData.ptrCurrWidget->updateSettings();
         }
     }
 }
 
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED (event);
+void MainWindow::resizeEvent(QResizeEvent* event) {
+    Q_UNUSED(event);
 
     float koefx = 1.0;
     float koefy = 1.0;
     float koef = 1.0;
 
-    qDebug() << "MainWindow::resizeEvent"  << size().height() << size().width();
+    qDebug() << "MainWindow::resizeEvent" << size().height() << size().width();
     global.UIXresizeSize = size().width();
-    global.UIYresizeSize = size().height() ;
+    global.UIYresizeSize = size().height();
 
-    if(size().width() > 0 && size().height() > 0){
-        koefx =  (float)global.UIXsize/global.UIXresizeSize;
-        koefy = (float)global.UIYsize/global.UIYresizeSize;
+    if (size().width() > 0 && size().height() > 0) {
+        koefx = (float)global.UIXsize / global.UIXresizeSize;
+        koefy = (float)global.UIYsize / global.UIYresizeSize;
     }
 
-    if(koefx >= koefy){
+    if (koefx >= koefy) {
         koef = koefx;
-    }
-    else{
+    } else {
         koef = koefy;
     }
 
-    if(koef == 0){
+    if (koef == 0) {
         koef = 1;
     }
-     qDebug() << "resizeEvent UIsize Main"  << global.UIXsize << global.UIYsize <<size().width()<<size().height()<<koefx <<koefy<<koef;
+    qDebug() << "resizeEvent UIsize Main" << global.UIXsize << global.UIYsize << size().width() << size().height() << koefx << koefy << koef;
     global.zoomKoef = koef;
 
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event){
+void MainWindow::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
-        qDebug() << "Main mousePressEvent MainWind" ;
+        qDebug() << "Main mousePressEvent MainWind";
     }
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
+void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     event->accept();
 
     // get the cursor position of this event
     const QPoint& pos = event->pos();
 
-    int dx =pos.x();
+    int dx = pos.x();
     int dy = pos.y();
 
-    qDebug() << " Main mouseMoveEventdx:dy"<< dx <<dy ;
+    qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
 }
 
-void MainWindow::timerEvent(QTimerEvent *event)
-{
-   // Q_UNUSED(event)
+void MainWindow::timerEvent(QTimerEvent* event) {
+    // Q_UNUSED(event)
 
-    if(event->timerId() == timerIdUpd){
+    if (event->timerId() == timerIdUpd) {
         currentTime = QTime::currentTime().toString("hh:mm:ss");
         setWindowTitle(currentTime);
-        ui->statusbar->showMessage (statusStr + currentTime);
+        ui->statusbar->showMessage(statusStr + currentTime);
 
-       // qDebug() <<  "-------------------";
-        //modbus485.readData();
-        // modbus485.rd24DIB32(4,0xc0);
-        // modbus485.rd23IOD32(4,0xc0);
-        // digital output
-        /*  if (att < 0xffff)
-        modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
-    else
-        modbus485.wr23IOD32(4,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
- */
-
-
-
-       // if(!global.disableRS485){
-
-        // analog input, next DI input, next update DI output
-       // modbus485.rdN4AIB16(2, 0,15);   // ok analog input
-       // modbus485.rd23IOD32(4,0xc0);  // ok digital input
-       //  }
-       }
+        // qDebug() <<  "-------------------";
+         //modbus485.readData();
+         // modbus485.rd24DIB32(4,0xc0);
+         // modbus485.rd23IOD32(4,0xc0);
+         // digital output
+         /*  if (att < 0xffff)
+         modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
+     else
+         modbus485.wr23IOD32(4,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
+  */
 
 
-    if(event->timerId() == timerTick){
+
+  // if(!global.disableRS485){
+
+   // analog input, next DI input, next update DI output
+  // modbus485.rdN4AIB16(2, 0,15);   // ok analog input
+  // modbus485.rd23IOD32(4,0xc0);  // ok digital input
+  //  }
+    }
+
+
+    if (event->timerId() == timerTick) {
         global.addTick();
     }
 }
 
-void MainWindow::loadSettings()
-{
+void MainWindow::loadSettings() {
 
     // QString settingsFile = global.settingsFileName;
     //  QSettings settings(settingsFile, QSettings::IniFormat);
@@ -249,8 +241,7 @@ void MainWindow::loadSettings()
 
 }
 
-void MainWindow::saveSettings()
-{
+void MainWindow::saveSettings() {
 
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
@@ -265,7 +256,7 @@ void MainWindow::saveSettings()
 
 
     // sText = QTime::currentTime().toString("YY:MM:DD:hh:mm:ss");
-    qDebug() << "QTime::currentTime:" << sText ;
+    qDebug() << "QTime::currentTime:" << sText;
     settings.setValue("last_save", sText);
 
 
@@ -279,10 +270,9 @@ void MainWindow::saveSettings()
 
 
 
-void MainWindow::initUI()
-{
+void MainWindow::initUI() {
     qDebug() << "start UI settings";
-    this->move(1000,1000);
+    this->move(1000, 1000);
 
 
     QPalette pal = QPalette();
@@ -296,7 +286,7 @@ void MainWindow::initUI()
     QString qss = QString("background-color: %1").arg(col.name());
     ui->pushButton_Stop->setStyleSheet(qss);
 
-    pal.setColor(QPalette::Base,Qt::yellow);
+    pal.setColor(QPalette::Base, Qt::yellow);
     ui->textEdit_Field->setPalette(pal);
 
     // strādā   ui->label_logo->setStyleSheet("background-image: url(:/pictures/logo2.png)");
@@ -312,7 +302,7 @@ void MainWindow::initUI()
     str.append("10.11:53 BRĪDINĀJUMS ! vārsta V4 aizversanas laiks 20s morma 12s\n");
     ui->textEdit_Field->setText(str);
 
-    cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Ražošana"<< "Par_mani";
+    cmbList << "Iestatijumi" << "Receptes" << "Kartiņa" << "Atskaites" << "Serviss" << "Ražošana" << "Par_mani";
     ui->comboBox->addItems(cmbList);
     ui->comboBox->setCurrentIndex(0);
 
@@ -324,14 +314,13 @@ void MainWindow::initUI()
     // default settings.
 
     //global.DIoutput[MIXSPEED].value = 20;
-    DIOUT(MIXSPEED,20)
+    DIOUT(MIXSPEED, 20)
 
 }
 
 
 
-void MainWindow::appendInfo(QString str, QColor col)
-{
+void MainWindow::appendInfo(QString str, QColor col) {
     ui->textEdit_Field->setTextColor(col);
     ui->textEdit_Field->append(str);
     ui->textEdit_Field->setTextColor(Qt::black);
@@ -421,11 +410,10 @@ void MainWindow::drawWidgets()
     }
 }
 */
-void MainWindow::delAllWid()
-{
-    foreach (Global::wdataStruct widData, global.widHash){
+void MainWindow::delAllWid() {
+    foreach(Global::wdataStruct widData, global.widHash) {
         // qDebug() << widData.name<< " exist ? " <<widData.ptrCurrWidget;
-        if(widData.ptrCurrWidget){
+        if (widData.ptrCurrWidget) {
             widData.ptrCurrWidget->close();
             //  qDebug() << widData.name<< " close() ";
         }
@@ -434,8 +422,7 @@ void MainWindow::delAllWid()
 
 
 
-void MainWindow::on_pushButton_Stop_clicked()
-{
+void MainWindow::on_pushButton_Stop_clicked() {
     qDebug() << "pushButton_EMERG_STOP_clicked() ????????????????????????????????????";
     QColor col = QColor(Qt::red);
     QString qss = QString("background-color: %1").arg(col.name());
@@ -444,13 +431,12 @@ void MainWindow::on_pushButton_Stop_clicked()
 
     qss = currentTime;
     qss.append("  PUSH EMERGENCY STOP !!!");
-    appendInfo(qss,Qt::red);
+    appendInfo(qss, Qt::red);
 
 }
 
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
+void MainWindow::on_comboBox_currentIndexChanged(int index) {
     qDebug() << " Combo box index" << index << cmbList[index];
     // cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Ražošana"<< "Par_mani";
 
@@ -460,21 +446,21 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
     case 1:
     {
-        Recipet *recipet = new Recipet(global,this);
+        Recipet* recipet = new Recipet(global, this);
         recipet->show();
 
         break;
     }
     case 2:
     {
-        ComponentCard *componentCard = new ComponentCard(global,this);
+        ComponentCard* componentCard = new ComponentCard(global, this);
         componentCard->show();
 
         break;
     }
     case 3:
     {
-        Rs232 *rs232 = new Rs232(global,this);
+        Rs232* rs232 = new Rs232(global, this);
         //rs232 = new Rs232(global,this);
         rs232->show();
         break;
@@ -486,20 +472,20 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         hwService.show();
         break;
     }
-        case 5:
+    case 5:
     {
-      //  Runprocess *runprocess = new Runprocess(global.this);
-            runprocess.show();
+        //  Runprocess *runprocess = new Runprocess(global.this);
+        runprocess.show();
 
-       // ParMani *parmani = new ParMani(global,this);
-        //parmani = new ParMani(global,this);
-       // parmani->show();
+        // ParMani *parmani = new ParMani(global,this);
+         //parmani = new ParMani(global,this);
+        // parmani->show();
         break;
     }
 
     case 6:
     {
-        ParMani *parmani = new ParMani(global,this);
+        ParMani* parmani = new ParMani(global, this);
         //parmani = new ParMani(global,this);
         parmani->show();
         break;
@@ -514,30 +500,26 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 }
 
 
-void MainWindow::on_pushButton_Dyno_clicked()
-{
+void MainWindow::on_pushButton_Dyno_clicked() {
     procUI2.show();
     procUI2.raise();
 }
 
-void MainWindow::on_pushButton_Mix_clicked()
-{
+void MainWindow::on_pushButton_Mix_clicked() {
     procUI1.show();
     procUI1.raise();
 }
 
-void MainWindow::on_pushButton_Recipes_clicked()
-{
-   // ComponentCard *componentCard = new ComponentCard(global,this);
-   // componentCard->show();
-    Recipet *recipet = new Recipet(global,this);
+void MainWindow::on_pushButton_Recipes_clicked() {
+    // ComponentCard *componentCard = new ComponentCard(global,this);
+    // componentCard->show();
+    Recipet* recipet = new Recipet(global, this);
     recipet->show();
 
 }
 
 
-void MainWindow::on_pushButton_Service_clicked()
-{
+void MainWindow::on_pushButton_Service_clicked() {
     hwService.show();
 }
 

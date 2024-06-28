@@ -8,15 +8,14 @@
 #include <QPainter>
 #include <QPixmap>
 
-class WidgetDiagramElement : public QWidget
-{
+class WidgetDiagramElement : public QWidget {
     Q_OBJECT
 public:
-    explicit WidgetDiagramElement( Global &global, QString name, QWidget *parent = nullptr);
+    explicit WidgetDiagramElement(Global& global, QString name, QWidget* parent = nullptr);
     virtual void updateSettings();
-    Global &global;
+    Global& global;
 
-    struct  widDataStruct{
+    struct  widDataStruct {
         int type = 4; // Dyno
         QString name = "";
 
@@ -49,15 +48,15 @@ public:
 
 
 protected:
-   // void    mousePressEvent(QMouseEvent *event) override;
-    //void    mouseMoveEvent (QMouseEvent *event) override;
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
-    void    timerEvent(QTimerEvent *event) override;
-    void    resizeEvent(QResizeEvent* event) override ;
-   // Global &global;
-   // void setNewPosition(float koef);
-   //virtual void updateSettings();
-   // QString widName;
+    // void    mousePressEvent(QMouseEvent *event) override;
+     //void    mouseMoveEvent (QMouseEvent *event) override;
+    void    mouseDoubleClickEvent(QMouseEvent* event) override;
+    void    timerEvent(QTimerEvent* event) override;
+    void    resizeEvent(QResizeEvent* event) override;
+    // Global &global;
+    // void setNewPosition(float koef);
+    //virtual void updateSettings();
+    // QString widName;
 
     int addresAct;  // global.widHash[].act_sensAddres  ok
     int addresSens1;  // global.widHash[].act_sensAddres  ok
@@ -66,7 +65,7 @@ protected:
     int timerIdUpd = 0;
 
 private:
-   // Global &global;
+    // Global &global;
     int timerId = 0;
     int att = 100;
     float zoomKoefPf1old = 0;

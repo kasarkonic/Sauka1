@@ -4,11 +4,10 @@
 #include <QSettings>
 
 
-HwPorts::HwPorts(Global &global, QWidget *parent)
+HwPorts::HwPorts(Global& global, QWidget* parent)
     : QMainWindow(parent)
     , global(global)
-    , ui(new Ui::HwPorts)
-{
+    , ui(new Ui::HwPorts) {
 
     ui->setupUi(this);
     initUI();
@@ -16,8 +15,7 @@ HwPorts::HwPorts(Global &global, QWidget *parent)
     loadSettings();
 }
 
-HwPorts::~HwPorts()
-{
+HwPorts::~HwPorts() {
     delete ui;
 }
 
@@ -28,8 +26,7 @@ HwPorts::~HwPorts()
 
 
 
-void HwPorts::initUI()
-{
+void HwPorts::initUI() {
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, global.backgroundColor); //QColor(255, 0, 0, 127)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
@@ -75,8 +72,7 @@ ui->gridLayout_Tabel->setColumnStretch(NumGridCol,1);
 
 }
 
-void HwPorts::scanPortsInfo()
-{
+void HwPorts::scanPortsInfo() {
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
     const QString blankString = QObject::tr("N/A");
     QString description;
@@ -90,11 +86,11 @@ void HwPorts::scanPortsInfo()
     ui->textEditInfo->append(str);
     int portCnt = 0;
 
-    for (const QSerialPortInfo &serialPortInfo : serialPortInfos) {
+    for (const QSerialPortInfo& serialPortInfo : serialPortInfos) {
         description = serialPortInfo.description();
         manufacturer = serialPortInfo.manufacturer();
         serialNumber = serialPortInfo.serialNumber();
-        qDebug() <<serialNumber <<description << manufacturer << "\n"; // << endl
+        qDebug() << serialNumber << description << manufacturer << "\n"; // << endl
 
         ComInfo  comInfo;
         comInfo.port = serialPortInfo.portName();
@@ -105,7 +101,7 @@ void HwPorts::scanPortsInfo()
         comInfo.vendorIdentifier = serialPortInfo.hasVendorIdentifier() ? QByteArray::number(serialPortInfo.vendorIdentifier(), 16) : blankString;
         comInfo.productIdentifier = serialPortInfo.hasProductIdentifier() ? QByteArray::number(serialPortInfo.productIdentifier(), 16) : blankString;
 
-        comPortMap.insert(QString::number(portCnt),comInfo);
+        comPortMap.insert(QString::number(portCnt), comInfo);
         portCnt++;
 
         str = "";
@@ -131,40 +127,38 @@ void HwPorts::scanPortsInfo()
 
         qDebug() << str;
         ui->textEditInfo->append(str);
-    }  
+    }
 }
 
-void HwPorts::clearDisplay()
-{
+void HwPorts::clearDisplay() {
 
 }
 
-bool HwPorts::autoScanComPorts()
-{
+bool HwPorts::autoScanComPorts() {
     int result = 0;
-    qDebug()<< "Vendor Id:"<< global.dev1_VendorId<< global.dev2_VendorId<< global.dev3_VendorId<< global.dev4_VendorId;
+    qDebug() << "Vendor Id:" << global.dev1_VendorId << global.dev2_VendorId << global.dev3_VendorId << global.dev4_VendorId;
 
-    foreach (ComInfo cmap, comPortMap) {
-        qDebug()<< cmap.vendorIdentifier ;
-        }
+    foreach(ComInfo cmap, comPortMap) {
+        qDebug() << cmap.vendorIdentifier;
+    }
 
-    foreach (ComInfo cmap, comPortMap) {
-        if(cmap.vendorIdentifier == global.dev1_VendorId){
+    foreach(ComInfo cmap, comPortMap) {
+        if (cmap.vendorIdentifier == global.dev1_VendorId) {
             global.dev1 = cmap.port;
             result |= 0x01;
         }
 
-        if(cmap.vendorIdentifier == global.dev2_VendorId){
+        if (cmap.vendorIdentifier == global.dev2_VendorId) {
             global.dev2 = cmap.port;
             result |= 0x02;
         }
 
-        if(cmap.vendorIdentifier == global.dev3_VendorId){
+        if (cmap.vendorIdentifier == global.dev3_VendorId) {
             global.dev3 = cmap.port;
             result |= 0x04;
         }
 
-        if(cmap.vendorIdentifier == global.dev4_VendorId){
+        if (cmap.vendorIdentifier == global.dev4_VendorId) {
             global.dev4 = cmap.port;
             result |= 0x08;
         }
@@ -173,41 +167,39 @@ bool HwPorts::autoScanComPorts()
     return(result == 0x0F);
 }
 
-void HwPorts::updateUI()
-{
+void HwPorts::updateUI() {
 
-    if(!global.dev1.isNull()){
-       ui->label_R1_port->setText(global.dev1);
-       ui->label_R1_vend->setText(global.dev1_VendorId);
+    if (!global.dev1.isNull()) {
+        ui->label_R1_port->setText(global.dev1);
+        ui->label_R1_vend->setText(global.dev1_VendorId);
     }
 
-    if(!global.dev2.isNull()){
+    if (!global.dev2.isNull()) {
         ui->label_R2_port->setText(global.dev2);
         ui->label_R2_vend->setText(global.dev2_VendorId);
     }
-    if(!global.dev3.isNull()){
+    if (!global.dev3.isNull()) {
         ui->label_R3_port->setText(global.dev3);
         ui->label_R3_vend->setText(global.dev3_VendorId);
     }
 
-    if(!global.dev4.isNull()){
+    if (!global.dev4.isNull()) {
         ui->label_R4_port->setText(global.dev4);
         ui->label_R4_vend->setText(global.dev4_VendorId);
     }
 
 }
 
-void HwPorts::loadSettings()
-{
+void HwPorts::loadSettings() {
 
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
-/*
-    global.dev1_VendorId = settings.value("Port_Settings/device_1_Id", "na").toString();
-    global.dev2_VendorId = settings.value("Port_Settings/device_2_Id", "na").toString();
-    global.dev3_VendorId = settings.value("Port_Settings/device_3_Id", "na").toString();
-    global.dev4_VendorId = settings.value("Port_Settings/device_4_Id", "na").toString();
-   */
+    /*
+        global.dev1_VendorId = settings.value("Port_Settings/device_1_Id", "na").toString();
+        global.dev2_VendorId = settings.value("Port_Settings/device_2_Id", "na").toString();
+        global.dev3_VendorId = settings.value("Port_Settings/device_3_Id", "na").toString();
+        global.dev4_VendorId = settings.value("Port_Settings/device_4_Id", "na").toString();
+       */
 
     global.dev1_VendorId = settings.value("Device_1/Vendor_Id", "na").toString();
     global.dev2_VendorId = settings.value("Device_2/Vendor_Id", "na").toString();
@@ -218,139 +210,133 @@ void HwPorts::loadSettings()
     global.dev3_description = settings.value("Device_3/Description", "na").toString();
     global.dev4_description = settings.value("Device_4/Description", "na").toString();
 
-    qDebug()<< "loadSettings() Vendor Id:"<< global.dev1_VendorId<< global.dev2_VendorId<< global.dev3_VendorId<< global.dev4_VendorId;
+    qDebug() << "loadSettings() Vendor Id:" << global.dev1_VendorId << global.dev2_VendorId << global.dev3_VendorId << global.dev4_VendorId;
 }
 
-    void HwPorts::on_pushButton_Save_clicked()
-    {
-        QString settingsFile = global.settingsFileName;
-        QSettings settings(settingsFile, QSettings::IniFormat);
-        QString sText = settingsFile;
+void HwPorts::on_pushButton_Save_clicked() {
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
+    QString sText = settingsFile;
 
-        settings.beginGroup("Device_1");
-        settings.setValue("port_Nr", global.dev1);
-        settings.setValue("Vendor_Id", global.dev1_VendorId);
-        settings.setValue("Description", global.dev1_description);
-        settings.endGroup();
-
-
-        settings.beginGroup("Device_2");
-        settings.setValue("port_Nr", global.dev2);
-        settings.setValue("Vendor_Id", global.dev2_VendorId);
-        settings.setValue("Description", global.dev2_description);
-        settings.endGroup();
-
-        settings.beginGroup("Device_3");
-        settings.setValue("port_Nr", global.dev3);
-        settings.setValue("Vendor_Id", global.dev3_VendorId);
-        settings.setValue("Description", global.dev3_description);
-        settings.endGroup();
-
-        settings.beginGroup("Device_4");
-        settings.setValue("port_Nr", global.dev4);
-        settings.setValue("Vendor_Id", global.dev4_VendorId);
-        settings.setValue("Description", global.dev4_description);
-        settings.endGroup();
+    settings.beginGroup("Device_1");
+    settings.setValue("port_Nr", global.dev1);
+    settings.setValue("Vendor_Id", global.dev1_VendorId);
+    settings.setValue("Description", global.dev1_description);
+    settings.endGroup();
 
 
-/*
-        settings.beginGroup("Port_Settings");
-        settings.setValue("device_1", global.dev1);
-        settings.setValue("device_2", global.dev2);
-        settings.setValue("device_3", global.dev3);
-        settings.setValue("device_4", global.dev4);
+    settings.beginGroup("Device_2");
+    settings.setValue("port_Nr", global.dev2);
+    settings.setValue("Vendor_Id", global.dev2_VendorId);
+    settings.setValue("Description", global.dev2_description);
+    settings.endGroup();
 
-        settings.setValue("device_1_Id", global.dev1_VendorId);
-        settings.setValue("device_2_Id", global.dev2_VendorId);
-        settings.setValue("device_3_Id", global.dev3_VendorId);
-        settings.setValue("device_4_Id", global.dev4_VendorId);
+    settings.beginGroup("Device_3");
+    settings.setValue("port_Nr", global.dev3);
+    settings.setValue("Vendor_Id", global.dev3_VendorId);
+    settings.setValue("Description", global.dev3_description);
+    settings.endGroup();
 
-        settings.endGroup();
-
-*/
-        ui->textEditInfo->append(tr("Com. portu iestatījumi saglabāti failā: %1").arg(settingsFile));
-    }
-
-
-    void HwPorts::on_pushButton_Update_clicked()
-    {
-        clearDisplay();
-        scanPortsInfo();
-    }
+    settings.beginGroup("Device_4");
+    settings.setValue("port_Nr", global.dev4);
+    settings.setValue("Vendor_Id", global.dev4_VendorId);
+    settings.setValue("Description", global.dev4_description);
+    settings.endGroup();
 
 
-    void HwPorts::on_comboBox_R1_activated(int index)
-    {
-        qDebug() << "\nR1 index "<< index;
-        QString ind = QString::number(index);
+    /*
+            settings.beginGroup("Port_Settings");
+            settings.setValue("device_1", global.dev1);
+            settings.setValue("device_2", global.dev2);
+            settings.setValue("device_3", global.dev3);
+            settings.setValue("device_4", global.dev4);
 
-        ui->label_R1_port->setText(comPortMap[ind].port);
-        ui->label_R1_desc->setText(comPortMap[ind].description);
-        ui->label_R1_man->setText(comPortMap[ind].manufacturer);
+            settings.setValue("device_1_Id", global.dev1_VendorId);
+            settings.setValue("device_2_Id", global.dev2_VendorId);
+            settings.setValue("device_3_Id", global.dev3_VendorId);
+            settings.setValue("device_4_Id", global.dev4_VendorId);
 
-        ui->label_R1_ser->setText(comPortMap[ind].serialNumber);
-        ui->label_R1_vend->setText(comPortMap[ind].vendorIdentifier);
-        ui->label_R1_pr_nr->setText(comPortMap[ind].productIdentifier);
-        ui->label_R1_stat->setText("");
-        global.dev1 = comPortMap[ind].port;
-        global.dev1_VendorId = comPortMap[ind].vendorIdentifier;
-        global.dev1_description = comPortMap[ind].description;
-    }
+            settings.endGroup();
 
-
-    void HwPorts::on_comboBox_R2_activated(int index)
-    {
-        qDebug() << "\nR2 index "<< index;
-        QString ind = QString::number(index);
-
-        ui->label_R2_port->setText(comPortMap[ind].port);
-        ui->label_R2_desc->setText(comPortMap[ind].description);
-        ui->label_R2_man->setText(comPortMap[ind].manufacturer);
-
-        ui->label_R2_ser->setText(comPortMap[ind].serialNumber);
-        ui->label_R2_vend->setText(comPortMap[ind].vendorIdentifier);
-        ui->label_R2_pr_nr->setText(comPortMap[ind].productIdentifier);
-        ui->label_R2_stat->setText("");
-        global.dev2 = comPortMap[ind].port;
-        global.dev2_VendorId = comPortMap[ind].vendorIdentifier;
-        global.dev2_description = comPortMap[ind].description;
-    }
+    */
+    ui->textEditInfo->append(tr("Com. portu iestatījumi saglabāti failā: %1").arg(settingsFile));
+}
 
 
-    void HwPorts::on_comboBox_R3_activated(int index)
-    {
-        qDebug() << "\nR3 index "<< index;
-        QString ind = QString::number(index);
-
-        ui->label_R3_port->setText(comPortMap[ind].port);
-        ui->label_R3_desc->setText(comPortMap[ind].description);
-        ui->label_R3_man->setText(comPortMap[ind].manufacturer);
-
-        ui->label_R3_ser->setText(comPortMap[ind].serialNumber);
-        ui->label_R3_vend->setText(comPortMap[ind].vendorIdentifier);
-        ui->label_R3_pr_nr->setText(comPortMap[ind].productIdentifier);
-        ui->label_R3_stat->setText("");
-        global.dev3 = comPortMap[ind].port;
-        global.dev3_VendorId = comPortMap[ind].vendorIdentifier;
-        global.dev3_description = comPortMap[ind].description;
-    }
+void HwPorts::on_pushButton_Update_clicked() {
+    clearDisplay();
+    scanPortsInfo();
+}
 
 
-    void HwPorts::on_comboBox_R4_activated(int index)
-    {
-        qDebug() << "\nR2 index "<< index;
-        QString ind = QString::number(index);
+void HwPorts::on_comboBox_R1_activated(int index) {
+    qDebug() << "\nR1 index " << index;
+    QString ind = QString::number(index);
 
-        ui->label_R4_port->setText(comPortMap[ind].port);
-        ui->label_R4_desc->setText(comPortMap[ind].description);
-        ui->label_R4_man->setText(comPortMap[ind].manufacturer);
+    ui->label_R1_port->setText(comPortMap[ind].port);
+    ui->label_R1_desc->setText(comPortMap[ind].description);
+    ui->label_R1_man->setText(comPortMap[ind].manufacturer);
 
-        ui->label_R4_ser->setText(comPortMap[ind].serialNumber);
-        ui->label_R4_vend->setText(comPortMap[ind].vendorIdentifier);
-        ui->label_R4_pr_nr->setText(comPortMap[ind].productIdentifier);
-        ui->label_R4_stat->setText("");
-        global.dev4 = comPortMap[ind].port;
-        global.dev4_VendorId = comPortMap[ind].vendorIdentifier;
-        global.dev4_description = comPortMap[ind].description;
-    }
+    ui->label_R1_ser->setText(comPortMap[ind].serialNumber);
+    ui->label_R1_vend->setText(comPortMap[ind].vendorIdentifier);
+    ui->label_R1_pr_nr->setText(comPortMap[ind].productIdentifier);
+    ui->label_R1_stat->setText("");
+    global.dev1 = comPortMap[ind].port;
+    global.dev1_VendorId = comPortMap[ind].vendorIdentifier;
+    global.dev1_description = comPortMap[ind].description;
+}
+
+
+void HwPorts::on_comboBox_R2_activated(int index) {
+    qDebug() << "\nR2 index " << index;
+    QString ind = QString::number(index);
+
+    ui->label_R2_port->setText(comPortMap[ind].port);
+    ui->label_R2_desc->setText(comPortMap[ind].description);
+    ui->label_R2_man->setText(comPortMap[ind].manufacturer);
+
+    ui->label_R2_ser->setText(comPortMap[ind].serialNumber);
+    ui->label_R2_vend->setText(comPortMap[ind].vendorIdentifier);
+    ui->label_R2_pr_nr->setText(comPortMap[ind].productIdentifier);
+    ui->label_R2_stat->setText("");
+    global.dev2 = comPortMap[ind].port;
+    global.dev2_VendorId = comPortMap[ind].vendorIdentifier;
+    global.dev2_description = comPortMap[ind].description;
+}
+
+
+void HwPorts::on_comboBox_R3_activated(int index) {
+    qDebug() << "\nR3 index " << index;
+    QString ind = QString::number(index);
+
+    ui->label_R3_port->setText(comPortMap[ind].port);
+    ui->label_R3_desc->setText(comPortMap[ind].description);
+    ui->label_R3_man->setText(comPortMap[ind].manufacturer);
+
+    ui->label_R3_ser->setText(comPortMap[ind].serialNumber);
+    ui->label_R3_vend->setText(comPortMap[ind].vendorIdentifier);
+    ui->label_R3_pr_nr->setText(comPortMap[ind].productIdentifier);
+    ui->label_R3_stat->setText("");
+    global.dev3 = comPortMap[ind].port;
+    global.dev3_VendorId = comPortMap[ind].vendorIdentifier;
+    global.dev3_description = comPortMap[ind].description;
+}
+
+
+void HwPorts::on_comboBox_R4_activated(int index) {
+    qDebug() << "\nR2 index " << index;
+    QString ind = QString::number(index);
+
+    ui->label_R4_port->setText(comPortMap[ind].port);
+    ui->label_R4_desc->setText(comPortMap[ind].description);
+    ui->label_R4_man->setText(comPortMap[ind].manufacturer);
+
+    ui->label_R4_ser->setText(comPortMap[ind].serialNumber);
+    ui->label_R4_vend->setText(comPortMap[ind].vendorIdentifier);
+    ui->label_R4_pr_nr->setText(comPortMap[ind].productIdentifier);
+    ui->label_R4_stat->setText("");
+    global.dev4 = comPortMap[ind].port;
+    global.dev4_VendorId = comPortMap[ind].vendorIdentifier;
+    global.dev4_description = comPortMap[ind].description;
+}
 

@@ -4,53 +4,52 @@
 
 #include "widgetdiagramelement.h"
 
-class Pipe : public WidgetDiagramElement
-{
+class Pipe : public WidgetDiagramElement {
     Q_OBJECT
 public:
-    Pipe(Global &global, QString name, QWidget *parent = nullptr);
+    Pipe(Global& global, QString name, QWidget* parent = nullptr);
 
-    void get(int *pnt);
-
-
- //   void setNewPosition(float koef);
+    void get(int* pnt);
 
 
-    //int starwi = 50;    //int options = 0;
-    //int starhi = 200;   //startSize
+    //   void setNewPosition(float koef);
 
-    //int currWi = 0;          //     pipe width
-    //int currHi = 0;          //     pipe hi
+
+       //int starwi = 50;    //int options = 0;
+       //int starhi = 200;   //startSize
+
+       //int currWi = 0;          //     pipe width
+       //int currHi = 0;          //     pipe hi
 
     float angle = 0; // 0 options = 0;   vertical, ccw
     int flow = 1;        // int value 0 stop, 1 -> run up
 
-    QColor  pipeColorFront = QColor(0x6a,0xc4,0xea);  //Qt::white;   // pipe color
-    QColor  pipeColorRear = QColor(0x24,0x8f,0xbc);  //Qt::white;   // pipe color
+    QColor  pipeColorFront = QColor(0x6a, 0xc4, 0xea);  //Qt::white;   // pipe color
+    QColor  pipeColorRear = QColor(0x24, 0x8f, 0xbc);  //Qt::white;   // pipe color
     QColor  arrowColor = Qt::white;    // pipe color
 
 
 
 
 signals:
-   // void openServicePipe();
+    // void openServicePipe();
     void updateServiceUI();
 protected:
-    void    paintEvent(QPaintEvent *event) override;
-    void    timerEvent(QTimerEvent *event) override;
-  //  void    mousePressEvent(QMouseEvent *event) override;
- //   void    mouseMoveEvent (QMouseEvent *event) override;
-//    void    mouseDoubleClickEvent(QMouseEvent *event) override;
- //   void setNewPosition(float koef);
+    void    paintEvent(QPaintEvent* event) override;
+    void    timerEvent(QTimerEvent* event) override;
+    //  void    mousePressEvent(QMouseEvent *event) override;
+   //   void    mouseMoveEvent (QMouseEvent *event) override;
+  //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+   //   void setNewPosition(float koef);
     void updateSettings() override;
 
 
- //   QImage *imgBackground;
+    //   QImage *imgBackground;
 
 
-         //     pipe hi
+            //     pipe hi
 
-    //int timerIdUpd = 0;
+       //int timerIdUpd = 0;
     int att = 100;
 
 

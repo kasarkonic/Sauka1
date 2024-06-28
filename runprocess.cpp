@@ -2,76 +2,66 @@
 #include "ui_runprocess.h"
 
 
-Runprocess::Runprocess(Global &global,QWidget *parent)
+Runprocess::Runprocess(Global& global, QWidget* parent)
     : QWidget(parent, Qt::Window)
     , ui(new Ui::Runprocess)
-    , global(global)
-{
+    , global(global) {
     ui->setupUi(this);
     init();
 }
 
-Runprocess::~Runprocess()
-{
+Runprocess::~Runprocess() {
     delete ui;
 }
 
-void Runprocess::timerEvent(QTimerEvent *event)
-{
+void Runprocess::timerEvent(QTimerEvent* event) {
     // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
-    if(event->timerId() == taskTimer){
+    if (event->timerId() == taskTimer) {
         //qDebug() << "timerEvent " ;
         runTaskCycle();
     }
 }
 
-void Runprocess::stateIdle()
-{
+void Runprocess::stateIdle() {
     changeState(StateReset);
 }
 
-void Runprocess::stateReset()
-{
-    switch (getState())
-    {
+void Runprocess::stateReset() {
+    switch (getState()) {
     case StateReset:
         tempInt++;
 
-        if(tempInt > 32 ){
+        if (tempInt > 32) {
             tempInt = 0;
         }
         //global.DIoutput[tempInt].value = 1;
-        DIOUT(tempInt,1)
-        qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
-        emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
+        DIOUT(tempInt, 1)
+            qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
+        emit diOutputChangeSi(tempInt, global.DIoutput[tempInt].value);
 
-      changeState(StateReset0,400);
+        changeState(StateReset0, 400);
         break;
 
     case StateReset0:
-        if (isTimerTimeout())
-        {
+        if (isTimerTimeout()) {
             //global.DIoutput[tempInt].value = 0;
-            DIOUT(tempInt,0)
-            qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
-            emit diOutputChangeSi(tempInt,global.DIoutput[tempInt].value);
-            changeState(StateReset1,100);
+            DIOUT(tempInt, 0)
+                qDebug() << " DIoutput[" << tempInt << "] = 0" << global.getTick();
+            emit diOutputChangeSi(tempInt, global.DIoutput[tempInt].value);
+            changeState(StateReset1, 100);
         }
         break;
 
     case StateReset1:
-        if (isTimerTimeout())
-        {
+        if (isTimerTimeout()) {
             changeState(StateReset);
         }
         break;
     }
 }
 
-void Runprocess::stateInit()
-{
-    switch (getState())
-    {
+void Runprocess::stateInit() {
+    switch (getState()) {
     case StateInit:
         qDebug() << "StateInit " << global.getTick();
         changeState(StateIdle);
@@ -79,10 +69,8 @@ void Runprocess::stateInit()
     }
 }
 
-void Runprocess::stateRunning()
-{
-    switch (getState())
-    {
+void Runprocess::stateRunning() {
+    switch (getState()) {
     case StateRunning:
         qDebug() << "StateRunning " << global.getTick();
         changeState(StateIdle);
@@ -90,10 +78,8 @@ void Runprocess::stateRunning()
     }
 }
 
-void Runprocess::stateError()
-{
-    switch (getState())
-    {
+void Runprocess::stateError() {
+    switch (getState()) {
     case StateError:
         qDebug() << "StateError " << global.getTick();
         changeState(StateIdle);
@@ -101,8 +87,7 @@ void Runprocess::stateError()
     }
 }
 
-void Runprocess::init()
-{
+void Runprocess::init() {
     task_state = 0;
     //taskTimer = startTimer(10);--------------------------------------------------------------------------------
     tempInt = 0;
@@ -111,14 +96,12 @@ void Runprocess::init()
     task_state = StateInit;
 }
 
-void Runprocess::runTaskCycle()
-{
-   // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
-    // Goto master state in state machine (state groups)
+void Runprocess::runTaskCycle() {
+    // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
+     // Goto master state in state machine (state groups)
 
 
-    switch (getMasterState())
-    {
+    switch (getMasterState()) {
     case StateInit:
         stateInit();
         break;
@@ -134,8 +117,7 @@ void Runprocess::runTaskCycle()
 
     default:
         // check for the single states that not grouped together
-        switch (getState())
-        {
+        switch (getState()) {
         case StateIdle:
             stateIdle();
             break;
@@ -144,18 +126,15 @@ void Runprocess::runTaskCycle()
     }
 }
 
-int Runprocess::getMasterState()
-{
+int Runprocess::getMasterState() {
     return task_state & 0xf00;
 }
 
-int Runprocess::getState()
-{
+int Runprocess::getState() {
     return task_state;
 }
 
-void Runprocess::changeState(int newState, int timeout)
-{
+void Runprocess::changeState(int newState, int timeout) {
     //    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = intervalTimer->elapsed();//  global.getTick();
@@ -166,12 +145,10 @@ void Runprocess::changeState(int newState, int timeout)
 }
 
 
-bool Runprocess::isTimerTimeout()
-{
+bool Runprocess::isTimerTimeout() {
     return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
 }
 
-int Runprocess::getStateRunTime()
-{
+int Runprocess::getStateRunTime() {
     return (intervalTimer->elapsed() - stateStartTime);
 }

@@ -3,24 +3,23 @@
 
 #include "widgetdiagramelement.h"
 
-class Tvertne : public WidgetDiagramElement
-{
+class Tvertne : public WidgetDiagramElement {
     Q_OBJECT
 public:
-    Tvertne(Global &global,QString name, QWidget *parent = nullptr);
+    Tvertne(Global& global, QString name, QWidget* parent = nullptr);
 
 
 
 protected:
-    void    paintEvent(QPaintEvent *event) override;
-    void    timerEvent(QTimerEvent *event) override;
+    void    paintEvent(QPaintEvent* event) override;
+    void    timerEvent(QTimerEvent* event) override;
     void updateSettings() override;
     //   void    mousePressEvent(QMouseEvent *event) override;
     //   void    mouseMoveEvent (QMouseEvent *event) override;
     //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
     //     void setNewPosition(float koef) ;
 private:
-    QImage *imgBackground;
+    QImage* imgBackground;
 
     int fill;
     int full;

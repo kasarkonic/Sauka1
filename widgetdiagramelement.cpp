@@ -3,8 +3,8 @@
 #include "widgetservice.h"
 //#include "global.h"
 
-WidgetDiagramElement::WidgetDiagramElement(Global &global,QString name, QWidget *parent)
-    : QWidget{parent}
+WidgetDiagramElement::WidgetDiagramElement(Global& global, QString name, QWidget* parent)
+    : QWidget{ parent }
     , global(global)
 
 {
@@ -34,9 +34,8 @@ void WidgetDiagramElement::setNewPosition(float koef)
 
 }
 */
-void WidgetDiagramElement::updateSettings()
-{
-   // qDebug() << "WidgetDiagramElement::updateSettings()";
+void WidgetDiagramElement::updateSettings() {
+    // qDebug() << "WidgetDiagramElement::updateSettings()";
 
     float koef = global.zoomKoefPf1;
 
@@ -50,26 +49,24 @@ void WidgetDiagramElement::updateSettings()
     settings.currSize = settings.startSize;        //Hi
     settings.currSizeWi = settings.startSizeWi;
 
-    settings.currX = global.widHash[settings.name].startX/koef;
-    settings.currY = global.widHash[settings.name].startY/koef;
-    settings.currSize = global.widHash[settings.name].startSize/koef;
+    settings.currX = global.widHash[settings.name].startX / koef;
+    settings.currY = global.widHash[settings.name].startY / koef;
+    settings.currSize = global.widHash[settings.name].startSize / koef;
 
-     // setNewPosition(koef);
-    move(settings.currX,settings.currY);
+    // setNewPosition(koef);
+    move(settings.currX, settings.currY);
 }
 
-void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    Q_UNUSED (event)
-    qDebug() << "WidgetDiagramElement::mouseDoubleClickEvent ws:" << settings.name << settings.type ;
+void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent* event) {
+    Q_UNUSED(event)
+        qDebug() << "WidgetDiagramElement::mouseDoubleClickEvent ws:" << settings.name << settings.type;
 
 
-    if(!global.widHash[settings.name].ptrCurrWidgetService){
+    if (!global.widHash[settings.name].ptrCurrWidgetService) {
         //global.widHash[settings.name].formExist = true;
-        WidgetService *serviceForm = new WidgetService(global, this );
+        WidgetService* serviceForm = new WidgetService(global, this);
         serviceForm->show();
-    }
-    else{
+    } else {
         qDebug() << "UI form " << settings.name << " exist";
 
         global.widHash[settings.name].ptrCurrWidgetService->raise();
@@ -77,34 +74,32 @@ void WidgetDiagramElement::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
-void WidgetDiagramElement::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED (event);
+void WidgetDiagramElement::timerEvent(QTimerEvent* event) {
+    Q_UNUSED(event);
     //qDebug() << "WidgetDiagramElement::timerEvent";
 }
 
 
 
-void WidgetDiagramElement::resizeEvent(QResizeEvent *event)
-{
+void WidgetDiagramElement::resizeEvent(QResizeEvent* event) {
     qDebug() << "WidgetDiagramElement::resizeEvent" << global.getTick();
-    Q_UNUSED (event);
+    Q_UNUSED(event);
 
 
-    if(global.widHash[settings.name].page == 1){
-        qDebug() << "setNewPosition 1 " << global.widHash[settings.name].name << zoomKoefPf1old <<global.zoomKoefPf1;
-       if( (int)(1000 * zoomKoefPf1old ) != (int)(1000 * global.zoomKoefPf1) ){
+    if (global.widHash[settings.name].page == 1) {
+        qDebug() << "setNewPosition 1 " << global.widHash[settings.name].name << zoomKoefPf1old << global.zoomKoefPf1;
+        if ((int)(1000 * zoomKoefPf1old) != (int)(1000 * global.zoomKoefPf1)) {
             //setNewPosition(global.zoomKoefPf1);
-            move(settings.currX,settings.currY);
+            move(settings.currX, settings.currY);
             zoomKoefPf1old = global.zoomKoefPf1;
-    }
+        }
 
     }
-    if(global.widHash[settings.name].page == 2){
+    if (global.widHash[settings.name].page == 2) {
         qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
-        if( (int)(1000 * zoomKoefPf2old) != (int)(1000 * global.zoomKoefPf2)){
-           // setNewPosition(global.zoomKoefPf2);
-            move(settings.currX,settings.currY);
+        if ((int)(1000 * zoomKoefPf2old) != (int)(1000 * global.zoomKoefPf2)) {
+            // setNewPosition(global.zoomKoefPf2);
+            move(settings.currX, settings.currY);
             zoomKoefPf2old = global.zoomKoefPf2;
         }
     }

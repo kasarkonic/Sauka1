@@ -1,25 +1,21 @@
 #include "acttablemodel.h"
 
-ActTableModel::ActTableModel(Global &global, QObject *parent)
-    : QAbstractTableModel{parent}
-    , global (global)
-{
+ActTableModel::ActTableModel(Global& global, QObject* parent)
+    : QAbstractTableModel{ parent }
+    , global(global) {
 
 }
-int ActTableModel::rowCount(const QModelIndex &parent) const
-{
+int ActTableModel::rowCount(const QModelIndex& parent) const {
     Q_UNUSED(parent);
     return MAX_ACTUATOR;
 }
 
-int ActTableModel::columnCount(const QModelIndex &parent) const
-{
+int ActTableModel::columnCount(const QModelIndex& parent) const {
     Q_UNUSED(parent);
     return 6;
 }
 
-QVariant ActTableModel::data(const QModelIndex &index, int role) const
-{
+QVariant ActTableModel::data(const QModelIndex& index, int role) const {
     int row = index.row();
     int col = index.column();
 
@@ -71,8 +67,7 @@ QVariant ActTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role ) const
-{
+QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         // qDebug() << "SensorTableModel::headerData" << section << orientation << role ;
 
@@ -96,23 +91,22 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
             }
 
         case Qt::SizeHintRole:
-            return QSize( 200, 50 );
+            return QSize(200, 50);
 
         default:
-            return QVariant ();
+            return QVariant();
         }
 
     }
 
-    return QVariant ();
+    return QVariant();
 }
 
-void ActTableModel::updateData(int row)
-{
+void ActTableModel::updateData(int row) {
 
-  //  qDebug() << "ActTableModel::updateData " << row ;
- //   QModelIndex idx1 = createIndex(row,0);    // for testing !!!
- //   QModelIndex idx2 = createIndex(row,5);
- //   emit dataChanged(idx1, idx2, { Qt::DisplayRole });
+    //  qDebug() << "ActTableModel::updateData " << row ;
+   //   QModelIndex idx1 = createIndex(row,0);    // for testing !!!
+   //   QModelIndex idx2 = createIndex(row,5);
+   //   emit dataChanged(idx1, idx2, { Qt::DisplayRole });
 }
 

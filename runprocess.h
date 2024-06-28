@@ -6,34 +6,32 @@
 #include <QElapsedTimer>
 
 namespace Ui {
-class Runprocess;
+    class Runprocess;
 }
 
-class Runprocess : public QWidget
-{
+class Runprocess : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Runprocess(Global &global,QWidget *parent = nullptr);
+    explicit Runprocess(Global& global, QWidget* parent = nullptr);
     ~Runprocess();
 protected:
-        void    timerEvent(QTimerEvent *event) override;
+    void    timerEvent(QTimerEvent* event) override;
 
 private:
 
-        // Typedefs & Enums
-        enum States
-        {
+    // Typedefs & Enums
+    enum States {
 
-            StateIdle,
-            StateReset = 0x100,//100
-            StateReset0,
-            StateReset1,
-            StateInit = 0x200,  // 0x200
-            StateRunning = 0x300,// 0x300
-            StateError = 0x600, // 0x600`
+        StateIdle,
+        StateReset = 0x100,//100
+        StateReset0,
+        StateReset1,
+        StateInit = 0x200,  // 0x200
+        StateRunning = 0x300,// 0x300
+        StateError = 0x600, // 0x600`
 
-        };
+    };
 
     void stateIdle(void);
     void stateReset(void);
@@ -42,10 +40,10 @@ private:
     void stateError(void);
 
 
-    Ui::Runprocess *ui;
-    Global &global;
+    Ui::Runprocess* ui;
+    Global& global;
 
-    QElapsedTimer *intervalTimer;
+    QElapsedTimer* intervalTimer;
 
     void init();
     void runTaskCycle();

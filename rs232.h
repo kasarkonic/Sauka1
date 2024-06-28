@@ -18,7 +18,7 @@
 #define UNDEFINED       3
 
 namespace Ui {
-class Rs232;
+    class Rs232;
 }
 
 class Rs232 : public QMainWindow //,public QThread
@@ -26,8 +26,8 @@ class Rs232 : public QMainWindow //,public QThread
     Q_OBJECT
 
 public:
-    explicit Rs232(Global &global, QWidget *parent = nullptr);
-    QSerialPort *m_serial;
+    explicit Rs232(Global& global, QWidget* parent = nullptr);
+    QSerialPort* m_serial;
     void readSerial();
     ~Rs232();
 
@@ -52,16 +52,16 @@ signals:
     void newData(QStringList data);
 
 protected:
-    void    timerEvent(QTimerEvent *event) override;
-    void    closeEvent (QCloseEvent *event) override;
-    void    mouseDoubleClickEvent(QMouseEvent *event) override;
+    void    timerEvent(QTimerEvent* event) override;
+    void    closeEvent(QCloseEvent* event) override;
+    void    mouseDoubleClickEvent(QMouseEvent* event) override;
 
 private:
 
-    Global &global;
-    Ui::Rs232 *ui;
+    Global& global;
+    Ui::Rs232* ui;
 
-    struct  ComInfo{
+    struct  ComInfo {
         QString port = "";
         QString location = "";
         QString description = "";
@@ -71,16 +71,16 @@ private:
         QString productIdentifier = "";
     };
 
-    struct chart1Data{
+    struct chart1Data {
         QPointF chartT1;
         QPointF chartT2;
     };
 
     QList<chart1Data> chartDataList;
 
-    QMap<QString,ComInfo> comPortMap;
+    QMap<QString, ComInfo> comPortMap;
     bool initPort();
-    QString str ;
+    QString str;
     QString corectPort;
     void sendData(QString send);
     void initUI();
@@ -97,15 +97,15 @@ private:
     QString qssCyan;
 
 
-    QChart *chart1;
-    QSplineSeries *sp_seriesT1;
-    QSplineSeries *sp_seriesT2;
-    QSplineSeries *sp_seriesMin;
-    QSplineSeries *sp_seriesMax;
+    QChart* chart1;
+    QSplineSeries* sp_seriesT1;
+    QSplineSeries* sp_seriesT2;
+    QSplineSeries* sp_seriesMin;
+    QSplineSeries* sp_seriesMax;
 
-    QValueAxis *myAxisX;
-    QValueAxis *myAxisY;
-    QChartView *chartView1;
+    QValueAxis* myAxisX;
+    QValueAxis* myAxisY;
+    QChartView* chartView1;
     QPointF  spser;
     QString myAxisYtitle;
 
@@ -117,7 +117,7 @@ private:
     int  att = 0;
     QString currentTime;
     QTime startTime;
-   // void newDataUpdateCh(QStringList currSdata);
+    // void newDataUpdateCh(QStringList currSdata);
     bool receiveDataRequest = false;
 
     int STATE;

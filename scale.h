@@ -13,21 +13,20 @@
 #define UNDEFINED       3
 
 namespace Ui {
-class Scale;
+    class Scale;
 }
 
-class Scale : public QMainWindow
-{
+class Scale : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit Scale(Global &global, QWidget *parent = nullptr);
-    QSerialPort *sc_serial;
+    explicit Scale(Global& global, QWidget* parent = nullptr);
+    QSerialPort* sc_serial;
     ~Scale();
 
 
 protected:
-    void    timerEvent(QTimerEvent *event) override;
+    void    timerEvent(QTimerEvent* event) override;
 signals:
     void newData(QStringList data);
 private slots:
@@ -45,11 +44,11 @@ private slots:
 
     void on_verticalSlider_valueChanged(int value);
 
-    void closeEvent (QCloseEvent *event) override;
+    void closeEvent(QCloseEvent* event) override;
 
 private:
-    Global &global;
-    Ui::Scale *ui;
+    Global& global;
+    Ui::Scale* ui;
     void initUI();
     bool initPort();
     void sendData(QString send);
@@ -58,7 +57,7 @@ private:
     QString receivedData;
 
 
-    struct  ComInfo{
+    struct  ComInfo {
         QString port = "";
         QString location = "";
         QString description = "";
@@ -68,7 +67,7 @@ private:
         QString productIdentifier = "";
     };
 
-    QMap<QString,ComInfo> comPortMap;
+    QMap<QString, ComInfo> comPortMap;
 
     int  timerTime = 0;
     int  timerRead = 0;

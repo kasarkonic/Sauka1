@@ -8,21 +8,20 @@
 #include <QPushButton>
 
 namespace Ui {
-class ActListForm;
+    class ActListForm;
 }
 
-class ActListForm : public QMainWindow
-{
+class ActListForm : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit ActListForm(Global &global, QWidget *parent = nullptr);
+    explicit ActListForm(Global& global, QWidget* parent = nullptr);
 
     ~ActListForm();
-         void updateData(int row);
+    void updateData(int row);
 
 signals:
-   // void updateDIoutput(int row, int val);
+    // void updateDIoutput(int row, int val);
     void updateDataTable();
 private slots:
     void handleButton();
@@ -30,12 +29,12 @@ private slots:
 
 
 private:
-    Global &global;
-    Ui::ActListForm *ui;
-    ActTableModel *acttablemodel;
-    QPushButton *butt;
-    QPushButton *buttA;
-    QLineEdit *lineEditAn ;
+    Global& global;
+    Ui::ActListForm* ui;
+    ActTableModel* acttablemodel;
+    QPushButton* butt;
+    QPushButton* buttA;
+    QLineEdit* lineEditAn;
 };
 
 #endif // ACTLISTFORM_H
