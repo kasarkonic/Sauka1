@@ -54,6 +54,12 @@ void Label::paintEvent(QPaintEvent* event) {
         dest = QRect(0, 0, width, height);
         str = "Iztukšošana";
     }
+    if (settings.name == "LABEL3") {
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "Komponentes";
+    }
 
 
     painter.drawText(dest, Qt::TextWordWrap | Qt::AlignCenter, str);

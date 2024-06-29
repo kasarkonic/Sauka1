@@ -64,8 +64,8 @@ bool Modbus485::init() {
 
     modbusDevice->setConnectionParameter(QModbusDevice::SerialPortNameParameter, global.dev3);
 
-    modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::NoParity);
-    modbusDevice->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, QSerialPort::Baud115200);
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialParityParameter, QSerialPort::EvenParity); //NoParity
+    modbusDevice->setConnectionParameter(QModbusDevice::SerialBaudRateParameter, QSerialPort::Baud38400); //Baud115200
     modbusDevice->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, QSerialPort::Data8);
     modbusDevice->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, QSerialPort::OneStop);
 
@@ -277,7 +277,7 @@ bool Modbus485::updateDIOut(int i) {
             global.DIoutput[k].update = false;
         }
         if (val3ch) {
-            res += wr23IOD32(5, 0x70, val3);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
+           // res += wr23IOD32(5, 0x70, val3);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
         }
     }
 
@@ -289,7 +289,7 @@ bool Modbus485::updateDIOut(int i) {
             global.DIoutput[k].update = false;
         }
         if (val4ch) {
-            res += wr23IOD32(5, 0x71, val4);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
+         //   res += wr23IOD32(5, 0x71, val4);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
         }
     }
 
