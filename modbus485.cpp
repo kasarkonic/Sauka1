@@ -277,7 +277,7 @@ bool Modbus485::updateDIOut(int i) {
             global.DIoutput[k].update = false;
         }
         if (val3ch) {
-           // res += wr23IOD32(5, 0x70, val3);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
+            res += wr23IOD32(5, 0x70, val3);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
         }
     }
 
@@ -289,7 +289,7 @@ bool Modbus485::updateDIOut(int i) {
             global.DIoutput[k].update = false;
         }
         if (val4ch) {
-         //   res += wr23IOD32(5, 0x71, val4);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
+            res += wr23IOD32(5, 0x71, val4);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
         }
     }
 
@@ -781,7 +781,7 @@ void Modbus485::runTaskCycle() {
         break;
     case State_rd23IOD32_1:
         if (isTimerTimeout()) {
-            //   rd23IOD32(5,0xc0);  // ok digital input  no board !!!!
+               rd23IOD32(5,0xc0);  // ok digital input  no board? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (global.getwaitTx()) {
                 changeState(State_wd23IOD32_1, interval);
             } else {

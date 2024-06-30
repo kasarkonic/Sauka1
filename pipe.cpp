@@ -61,8 +61,8 @@ void Pipe::paintEvent(QPaintEvent* event) {
      // updateSettings();
       // arrow points
 
-    int stX;
-    int stY;
+    int stX = 0;
+    int stY = 0;
 
     int hi = settings.currSize;        //Hi
     int wi = settings.currSizeWi;

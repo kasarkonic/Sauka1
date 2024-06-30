@@ -104,6 +104,7 @@ QVariant ActTableModel::headerData(int section, Qt::Orientation orientation, int
 
 void ActTableModel::updateData(int row) {
 
+    Q_UNUSED(row)
     //  qDebug() << "ActTableModel::updateData " << row ;
    //   QModelIndex idx1 = createIndex(row,0);    // for testing !!!
    //   QModelIndex idx2 = createIndex(row,5);
