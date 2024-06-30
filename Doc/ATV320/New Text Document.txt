@@ -1,0 +1,56 @@
+Labdien, Māri!
+Atbilde no advancētā tehniskā atbalsta komandas:
+
+For control over modbus RTU, you need to configure drive:
+Modbus address [ADD]
+Do not forget to switch off and on the drive when any of communication setting is changed in order to be applied.
+
+FR1 [freq reference channel 1] = Modbus RTU
+
+The rest is optional according to your preferences.
+
+
+
+To control the drive (to send commands and target speed), it is necessary to write value into:
+CMD register (@ 8501)
+LFR (@8502) or LFRD (@8602).
+LFR is register for target velocity in Hz and LFRD in rpm. You can write into one of them only, not to both.
+
+To read drive state, read:
+ETA (@3201) state register
+RFR (@3202) actual motor speed in Hz
+
+
+
+If ATV is configured for combined (target speed and commands always from the same channel) CHCF=combined or when ATV is configured from separate ((target speed and commands may come from different channels), CHCF=separate
+then drive is controlled according to CIA402 diagram.
+
+Diagram is shown in modbus manual or in my video.
+
+Sequence for start:
+CMD=6
+CMD=7
+CMD=15
+Sequence for STOP
+CMD=7 (or CMD=6)
+
+Forward or reverse is done by target speed in LFR or LFRD. Positive value = forward speed, negative value = reverse speed.
+
+In IO mode (CHCF=IO profile) the CMD register must be written by same values like terminals. e.g. bit 0 = same behavior like DI1 input.
+Bit 1 in CMD = same behavior like DI2, end so on.
+So start sequence is IO mode:
+CMD=1
+ST0P sequence in IO mode:
+CMD=0
+For reverse and reset, see example from modus manual, page attached.
+
+
+For reading and writing these 4 variables (ETA+RFR and CMD+LFR), we recommend to use read/write multiple registers modbus code. This telegram goes directly to ATV io scanner table and no need for extra setting.
+Scanner table can be easy configured in somove, so if you need to add more variables, it is very easy
+
+All that i explained here is also commented in my video
+
+https://schneiderelectric-my.sharepoint.com/:v:/g/personal/sesa80954_se_com/ESozrD6xB1ZHmLHgemRk50kBGMqGybak7ivdiG4p-RuuRA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=9Bd0W2
+
+
+Papildus jautājumu gadījumā, lūdzu, dodiet ziņu / In case of any questions, please let me know.
