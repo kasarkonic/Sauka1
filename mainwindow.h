@@ -17,6 +17,7 @@
 #include "scalesbase.h"
 #include "scalesmass.h"
 #include "hwservice.h"
+#include "rs232.h"
 #include "procui1.h"
 #include "procui2.h"
 #include "modbus485.h"
@@ -93,7 +94,7 @@ private:
     // Scale scale;
 
     HWService hwService;
-    // Rs232 *rs232;
+    Rs232 rs232;
     // ParMani *parmani;
 
 

@@ -1,7 +1,7 @@
 #ifndef ACTLISTFORM_H
 #define ACTLISTFORM_H
 
-#include "global.h"
+//#include "global.h"
 #include <QMainWindow>
 #include "acttablemodel.h"
 #include <QLineEdit>

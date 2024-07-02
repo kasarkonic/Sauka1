@@ -112,16 +112,25 @@ bool Rs232::initPort() {
 }
 
 void Rs232::sendData(QString send) {
+    if(global.dev1ConnectStatus){
     QByteArray utf8Data = send.toUtf8();
     const qint64 written = m_serial->write(utf8Data);
     Q_UNUSED(written);
+    }
+    else{
+        str = corectPort;
+        str.append(" Not fond \n Vendor Id: ");
+        str.append(global.dev1_VendorId);
+        str.append("\n");
+        ui->textEditInfo->append(str);
+    }
 }
 
 void Rs232::readSerial() {
     if (m_serial->bytesAvailable()) {
 
         if (!m_serial->canReadLine()) {
-            qDebug() << "line not receive all";
+            qDebug() << "line not receive all";  //9999 => error
             return;
         }
 
@@ -145,7 +154,7 @@ void Rs232::readSerial() {
                     }
                     break;
                 case IN_MESSAGE:                                                          // If state is IN_MESSAGE
-                    if (temp[i] == END_MSG) {                                              // If char examined is ;, switch state to END_MSG
+                    if (temp[i] == END_MSG ||temp[i] == '\n' ) {                                              // If char examined is ;, switch state to END_MSG
                         STATE = WAIT_START;
                         QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
                         //emit newData(incomingData);                                       // Emit signal for data received with the list

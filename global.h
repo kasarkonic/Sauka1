@@ -159,10 +159,14 @@ public:
 
 
     // attach Com. port
-    QString dev1;   // rs232 for temperature sensor
+    QString dev1;   // rs232 for temperature sensor and level meter
     QString dev2;   // rs232 for scale
     QString dev3;   // for RS485 Modbus DI DO An input
     QString dev4;
+    bool dev1ConnectStatus;   // rs232 for temperature sensor and level meter
+    bool dev2ConnectStatus;   // rs232 for scale
+    bool dev3ConnectStatus;   // for RS485 Modbus DI DO An input
+    bool dev4ConnectStatus;
     QString dev1_VendorId;
     QString dev2_VendorId;
     QString dev3_VendorId;

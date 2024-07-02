@@ -20,6 +20,11 @@ Global::Global() {
     dev2 = "";
     dev3 = "";
     dev4 = "";
+    dev1ConnectStatus = false;   // rs232 for temperature sensor and level meter
+    dev2ConnectStatus = false;   // rs232 for scale
+    dev3ConnectStatus = false;
+    dev4ConnectStatus = false;
+
     // dev1_VendorId = "";
     // dev2_VendorId = "";
     // dev3_VendorId = "";
@@ -476,7 +481,7 @@ void Global::creatWidgList() {
     // addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   SCALESMASS, 0);
 
 
-     /*
+    /*
 
      addWidgList(WidgetType::ScalesBase,    "Scales Base",    413,        545,    250,   15, 0,   0,  0,0,0,0);
      addWidgList(WidgetType::ScalesMass,    "Scales Mass",    584,       485,     62,   0,  0,   0,  0,11,0,0);

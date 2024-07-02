@@ -6,7 +6,7 @@
 
 #include <QFile>
 
-#include "rs232.h"
+//#include "rs232.h"
 #include "parmani.h"
 #include "componentcard.h"
 #include "recipet.h"
@@ -31,11 +31,9 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     , modbus485(global, this)
     , runprocess(global, this)
     , hwService(global, this)
-
+    , rs232 (global, this)
 
 {
-
-
     modbus485.start();
     //modbus485.run();
 
@@ -460,9 +458,9 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
     }
     case 3:
     {
-        Rs232* rs232 = new Rs232(global, this);
+        //Rs232* rs232 = new Rs232(global, this);
         //rs232 = new Rs232(global,this);
-        rs232->show();
+        rs232.show();
         break;
     }
     case 4:

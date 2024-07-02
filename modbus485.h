@@ -39,7 +39,7 @@ public slots:
     void errorHandler(QModbusDevice::Error error);
     bool setBaudrate(int address);
     bool factoryReset(int address);
-    void timerReadSlot();
+   // void timerReadSlot();
     void timerWriteSlot();
     void diOutputChangeSl(int i, int value);
 

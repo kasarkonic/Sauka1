@@ -63,7 +63,7 @@ void HWService::updateDataAn(int row, int val) {
 
 }
 void HWService::updateDataDi(int row, bool val) {
-    qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
+   // qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     //sensListsForm.updateData(row);
     //actListForm.updateData(row);
 
@@ -173,7 +173,7 @@ void HWService::updateDataDi(int row, bool val) {
 }
 
 void HWService::updateDIoutput(int row, int val) {
-    qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
+    //qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
     //  actListForm.updateDIoutput(row,val);
     //modbuss
 }
@@ -182,7 +182,7 @@ void HWService::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
         // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
         // float volt24 = SUPLAY_24V/100.0;//  power supplay input
-        qDebug() << " HWService::timerEven " << global.getTick();
+   //     qDebug() << " HWService::timerEven " << global.getTick();
     int volt24 = global.ANinput4_20[SUPLAY_24V].value;
     QString v24 = QString::number(volt24 / 100.0, 'g', 4);
 
@@ -192,9 +192,10 @@ void HWService::timerEvent(QTimerEvent* event) {
     str.append(" V");
     ui->textEdit->setText(str);
 
+    if(global.dev3ConnectStatus){
     updateDataDi(0, 0);
     updateDataAn(0, 0);
-
+    }
 
 }
 

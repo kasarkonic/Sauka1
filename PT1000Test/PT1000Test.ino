@@ -1,5 +1,5 @@
 
-//#include <TimerOne.h>
+#include <TimerOne.h>
 #include <Adafruit_MAX31865.h>
 
 // Use software SPI: CS, DI, DO, CLK
@@ -33,8 +33,8 @@ byte end = END_MSG;
 void setup() {
   Serial.begin(115200);
 
-  //  Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
-  //  Timer1.attachInterrupt(timerIsr); // attach the service routine here
+    Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
+    Timer1.attachInterrupt(timerIsr); // attach the service routine here
   pinMode(LED_BUILTIN, OUTPUT);
   //pinMode(9, OUTPUT);
   //pinMode(10, OUTPUT);

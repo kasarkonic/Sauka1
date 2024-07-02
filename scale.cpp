@@ -23,10 +23,10 @@ Scale::Scale(Global& global, QWidget* parent) :
     sc_serial = new QSerialPort(this);
     if (!initPort()) {
         qDebug() << "start timemark 1000";
-        timerInit = startTimer(1000, Qt::CoarseTimer);
+        timerInit = startTimer(10000, Qt::CoarseTimer);
     }
     connect(sc_serial, &QSerialPort::readyRead, this, &Scale::readSerial);   //readyRead
-    connect(this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdate(QStringList)));
+    connect(this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdate(QStringList)), Qt::UniqueConnection);
     initUI();
 }
 
@@ -49,10 +49,10 @@ void Scale::initUI() {
 }
 
 bool Scale::initPort() {
-    qDebug() << "\ninitPort() scale" << global.dev1;
+    qDebug() << "\ninitPort() scale" << global.dev2;
     QString str;
 
-    corectPort = global.dev1;
+    corectPort = global.dev2;
     if (corectPort != nullptr) {
         sc_serial->setPortName(corectPort);
         sc_serial->setBaudRate(QSerialPort::Baud115200);
@@ -65,6 +65,7 @@ bool Scale::initPort() {
         str = corectPort;
         if (sc_serial->open(QIODevice::ReadWrite)) {
             str.append(" open successful!\n");
+            global.dev2ConnectStatus = true;
             ui->label_5->setText(str);
             qDebug() << str;
             if (timerInit > 0) {
@@ -72,14 +73,19 @@ bool Scale::initPort() {
             }
             return true;
         } else {
-            str.append(" open error!");
+            str.append("Scale ");
+            str.append(global.dev2);
+            str.append(" port open error!");
+            global.dev2ConnectStatus = false;
             ui->label_5->setText(str);
             qDebug() << str;
             return false;
         }
     } else {
-        str = "Available com port nof fond \n search Vendor Id ";
-        str.append("403  ????????????????????");
+        str = "Available ";
+        str.append(global.dev2);
+        str.append(" port not fond \n search Vendor Id: ");
+        str.append(global.dev2_VendorId);
         qDebug() << str;
         return false;
     }
@@ -88,6 +94,7 @@ bool Scale::initPort() {
 }
 
 void Scale::sendData(QString send) {
+    if(global.dev2ConnectStatus){
     QString str = "";
     str.append(send);
     QByteArray utf8Data = str.toUtf8();
@@ -95,6 +102,10 @@ void Scale::sendData(QString send) {
     //qDebug() << "sendData" << send << utf8Data ;
     Q_UNUSED(written);
     ui->lineEdit_Send->setText(send);
+    }
+    else{
+        ui->lineEdit_Send->setText("communication error port: " + global.dev2);
+    }
 }
 
 void Scale::readSerial() {
@@ -122,7 +133,6 @@ void Scale::readSerial() {
             }
         }
     }
-
 }
 
 

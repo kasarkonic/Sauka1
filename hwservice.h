@@ -2,7 +2,7 @@
 #define HWSERVICE_H
 
 #include <QWidget>
-#include "global.h"
+//#include "global.h"
 //#include "senslistsform.h"
 #include <QMainWindow>
 #include "actlistform.h"

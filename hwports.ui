@@ -114,7 +114,7 @@
         <item row="5" column="6">
          <widget class="QLabel" name="label_R4_pr_nr">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -128,35 +128,35 @@
         <item row="4" column="6">
          <widget class="QLabel" name="label_R3_pr_nr">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="5">
          <widget class="QLabel" name="label_R2_vend">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
          <widget class="QLabel" name="label_R1_desc">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QLabel" name="label_R1_port">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="5">
          <widget class="QLabel" name="label_R1_vend">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -170,35 +170,35 @@
         <item row="5" column="4">
          <widget class="QLabel" name="label_R4_ser">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="6">
          <widget class="QLabel" name="label_R2_pr_nr">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="7">
          <widget class="QLabel" name="label_R2_stat">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>RS485   sensr.</string>
+           <string>RS485   boards.</string>
           </property>
          </widget>
         </item>
         <item row="4" column="4">
          <widget class="QLabel" name="label_R3_ser">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -218,14 +218,14 @@
         <item row="3" column="2">
          <widget class="QLabel" name="label_R2_desc">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="4">
          <widget class="QLabel" name="label_R2_ser">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -239,42 +239,42 @@
         <item row="3" column="0">
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Temperature</string>
+           <string>Scales</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>RS485 act.</string>
+           <string>Motors</string>
           </property>
          </widget>
         </item>
         <item row="2" column="3">
          <widget class="QLabel" name="label_R1_man">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="5" column="7">
          <widget class="QLabel" name="label_R4_stat">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="4" column="2">
          <widget class="QLabel" name="label_R3_desc">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
          <widget class="QLabel" name="label_R2_port">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -304,14 +304,14 @@
         <item row="5" column="3">
          <widget class="QLabel" name="label_R4_man">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="3" column="3">
          <widget class="QLabel" name="label_R2_man">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -334,14 +334,14 @@
         <item row="4" column="5">
          <widget class="QLabel" name="label_R3_vend">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="6">
          <widget class="QLabel" name="label_R1_pr_nr">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -355,42 +355,42 @@
         <item row="4" column="1">
          <widget class="QLabel" name="label_R3_port">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="4" column="3">
          <widget class="QLabel" name="label_R3_man">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="5" column="5">
          <widget class="QLabel" name="label_R4_vend">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="5" column="1">
          <widget class="QLabel" name="label_R4_port">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="4" column="7">
          <widget class="QLabel" name="label_R3_stat">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="4">
          <widget class="QLabel" name="label_R1_ser">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -411,7 +411,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="label_35">
           <property name="text">
-           <string>Scales</string>
+           <string>Temperature</string>
           </property>
          </widget>
         </item>
@@ -434,14 +434,14 @@
         <item row="2" column="7">
          <widget class="QLabel" name="label_R1_stat">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="5" column="2">
          <widget class="QLabel" name="label_R4_desc">
           <property name="text">
-           <string> </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -509,7 +509,7 @@
      <x>0</x>
      <y>0</y>
      <width>816</width>
-     <height>17</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
