@@ -71,16 +71,17 @@ private:
     void printDIinput1(int start, int finish);
     void printDIoutput();
     void printDIoutput1(int start, int finish);
+    bool RS485Ready;
 
     enum States {
 
-        State_rd23IOD32_0,
+        State_rd23IOD32_0,  // 0
         State_rd23IOD32_1,
         State_rd24DIB32,
         State_rdN4AIB16,
 
         State_wd23IOD32_1,
-        State_wd23IOD32_2,
+        State_wd23IOD32_2,  // 5
         State_wd23IOD32_4,
         State_wd23IOD32_8,
 

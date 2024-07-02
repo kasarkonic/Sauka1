@@ -151,7 +151,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     float koefy = 1.0;
     float koef = 1.0;
 
-    qDebug() << "MainWindow::resizeEvent" << size().height() << size().width();
+    //qDebug() << "MainWindow::resizeEvent" << size().height() << size().width();
     global.UIXresizeSize = size().width();
     global.UIYresizeSize = size().height();
 
@@ -169,7 +169,7 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
     if (koef == 0) {
         koef = 1;
     }
-    qDebug() << "resizeEvent UIsize Main" << global.UIXsize << global.UIYsize << size().width() << size().height() << koefx << koefy << koef;
+    //qDebug() << "resizeEvent UIsize Main" << global.UIXsize << global.UIYsize << size().width() << size().height() << koefx << koefy << koef;
     global.zoomKoef = koef;
 
 }
@@ -189,7 +189,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     int dx = pos.x();
     int dy = pos.y();
 
-    qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
+   // qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
 }
 
 void MainWindow::timerEvent(QTimerEvent* event) {

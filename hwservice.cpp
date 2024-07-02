@@ -298,7 +298,7 @@ void HWService::on_pushButton_Disable_clicked() {
 
 
 void HWService::on_pushButton_Out_write_clicked() {
-    int id = 4;
+    //int id = 4;
     if (out_value >= 1 && out_address < 96) { // 96,97.. inverter
         out_value = 1;
     }
@@ -311,12 +311,13 @@ void HWService::on_pushButton_Out_write_clicked() {
     global.actList[out_address].digital = (bool)out_value;
     global.updateDataOut.need = true;
 
-    qDebug() << "---------------------------------emit 1outputChange " << id << out_address << out_value;
+    qDebug() << "---------------------------------emit 1outputChange "  << out_address << out_value;
     //emit outputChange(id, out_address,out_value);   // function code 06, out_value  on = 100,  off 200    out_address  0-32
 
 
 
     global.DIoutput[out_address].value = out_value;
+    global.DIoutput[out_address].update = true;
     //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
     emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
 

@@ -63,7 +63,7 @@ void ProcUI2::resizeEvent(QResizeEvent* event) {
     if (koef == 0) {
         koef = 1;
     }
-    qDebug() << "resizeEvent UIsize 2" << global.UIXsizePf2 << global.UIYsizePf2 << size().width() << size().height() << koefx << koefy << koef;
+    //qDebug() << "resizeEvent UIsize 2" << global.UIXsizePf2 << global.UIYsizePf2 << size().width() << size().height() << koefx << koefy << koef;
     global.zoomKoefPf2 = koef;
 
 }
