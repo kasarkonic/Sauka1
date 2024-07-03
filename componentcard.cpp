@@ -3,7 +3,7 @@
 #include <QSettings>
 #include <QApplication>
 #include <QDir>
-#include <QMessageBox>
+//#include <QMessageBox>
 //#include <QComboBox>
 
 ComponentCard::ComponentCard(Global& global, QWidget* parent)

@@ -1,7 +1,7 @@
 #include "recipet.h"
 #include "ui_recipet.h"
 #include <QDir>
-#include <QMessageBox>
+//#include <QMessageBox>
 #include <QSettings>
 #include "componentcard.h"
 

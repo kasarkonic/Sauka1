@@ -212,13 +212,6 @@ void MainWindow::timerEvent(QTimerEvent* event) {
   */
 
 
-
-  // if(!global.disableRS485){
-
-   // analog input, next DI input, next update DI output
-  // modbus485.rdN4AIB16(2, 0,15);   // ok analog input
-  // modbus485.rd23IOD32(4,0xc0);  // ok digital input
-  //  }
     }
 
 
@@ -300,7 +293,7 @@ void MainWindow::initUI() {
     str.append("10.11:53 BRĪDINĀJUMS ! vārsta V4 aizversanas laiks 20s morma 12s\n");
     ui->textEdit_Field->setText(str);
 
-    cmbList << "Iestatijumi" << "Receptes" << "Kartiņa" << "Atskaites" << "Serviss" << "Ražošana" << "Par_mani";
+    cmbList << "Iestatijumi" << "Receptes" << "Kartiņa" << "Mērījumi" << "Serviss" << "Ražošana" << "Par_mani";
     ui->comboBox->addItems(cmbList);
     ui->comboBox->setCurrentIndex(0);
 
@@ -328,86 +321,7 @@ void MainWindow::appendInfo(QString str, QColor col) {
     ui->textEdit_Field->setTextCursor(cursor);
 
 }
-/*
-void MainWindow::drawWidgets()
-{
-    qDebug() << "widData draw  " << global.widHash.size() << "elements";
 
-    foreach (Global::wdataStruct widData, global.widHash){
-
-        if( widData.page == 0 || widData.page == 3 ){    // all pages
-            // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
-            switch (widData.type) {
-            case WidgetType::widgT::Dyno:
-            {
-                Dyno *dynoA = new Dyno(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(dynoA);
-            }
-                break;
-
-            case WidgetType::widgT::Mix:
-            {
-                Mix *mixA = new Mix(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(mixA);
-            }
-                break;
-
-            case WidgetType::widgT::Pipe:
-            {
-                Pipe *pipeA = new Pipe(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(pipeA);
-            }
-                break;
-
-            case WidgetType::Pump:
-            {
-                Pump *pumpA = new Pump(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(pumpA);
-
-            }
-                break;
-
-            case WidgetType::Tvertne:
-            {
-                Tvertne *tvertneA = new Tvertne(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(tvertneA);
-
-            }
-                break;
-
-            case WidgetType::Valve:
-            {
-                Valve *valveA = new Valve(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(valveA);
-
-            }
-                break;
-
-            case WidgetType::ScalesBase:
-            {
-                ScalesBase *scalesBase = new ScalesBase(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(scalesBase);
-
-            }
-                break;
-
-            case WidgetType::ScalesMass:
-            {
-                ScalesMass *scalesMass = new ScalesMass(global,widData.name,this);
-                ui->horizontalLayout_ProcessFlow->addWidget(scalesMass);
-
-            }
-                break;
-
-
-            default:
-                qDebug() << "Wrong widget type !!! "  <<widData.type;
-                break;
-            }
-        }
-    }
-}
-*/
 void MainWindow::delAllWid() {
     foreach(Global::wdataStruct widData, global.widHash) {
         // qDebug() << widData.name<< " exist ? " <<widData.ptrCurrWidget;

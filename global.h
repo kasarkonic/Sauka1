@@ -9,6 +9,7 @@
 #include <QHash>
 #include <QList>
 #include "def.h"
+#include <QMessageBox>
 
 
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
@@ -78,6 +79,18 @@ public:
         QLineEdit* ptrLineEditDI = nullptr;
         QLineEdit* ptrLineEditAN = nullptr;
     };
+    struct  press_sens {
+        int number = 0;     // number 0,1,2,3,...
+        int current_val; // current VALUE
+        int average_val; //VALUE
+        int full_val;
+        int empty_val;
+        int fill;       // fill %
+        QList<int> buf;      // circular buller
+        int curr_iter;  // current bufer iterator
+    };
+     QList<press_sens>press_sensList;
+
 
     struct wdataStruct {
         WidgetType::widgT type;

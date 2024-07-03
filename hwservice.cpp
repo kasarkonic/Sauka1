@@ -2,10 +2,11 @@
 #include "ui_hwservice.h"
 #include <Qdebug>
 //#include "global.h"
-#include "senslistsform.h"
+//#include "senslistsform.h"
 //#include "actlistform.h"
 #include "scale.h"
 #include "hwports.h"
+#include "rs232.h"
 
 
 HWService::HWService(Global& global, QWidget* parent)
@@ -225,6 +226,16 @@ void HWService::on_pushButton_Com_Ports_clicked() {
     hwPorts->show();
     hwPorts->updateUI();
 }
+
+void HWService::on_pushButton_measure_clicked()
+{
+    Rs232* rs232 = new Rs232(global, this);
+    rs232->show();
+
+}
+
+
+
 
 
 void HWService::on_pushButton_ReadBaudR_clicked() {

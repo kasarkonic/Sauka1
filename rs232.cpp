@@ -3,7 +3,7 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QFile>
-#include <QMessageBox>
+//#include <QMessageBox>
 
 
 
@@ -35,6 +35,7 @@ Rs232::Rs232(Global& global, QWidget* parent)
     startTime = QTime(0, 0);
     connect(m_serial, &QSerialPort::readyRead, this, &Rs232::readSerial);   //readyRead
     connect(this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
+    initPressSensList();
     initUI();
 
     drawTchart();
@@ -138,7 +139,7 @@ void Rs232::readSerial() {
         QByteArray data = m_serial->readLine(25);// readAll();  //readData()  readLineData()
 
 
-        qDebug() << "readSerial()" << data;//<< m_serial->waitForReadyRead();
+        //qDebug() << "readSerial()" << data;//<< m_serial->waitForReadyRead();
 
         if (!data.isEmpty()) {                                                             // If the byte array is not empty
             char* temp = data.data();
@@ -154,10 +155,10 @@ void Rs232::readSerial() {
                     }
                     break;
                 case IN_MESSAGE:                                                          // If state is IN_MESSAGE
-                    if (temp[i] == END_MSG ||temp[i] == '\n' ) {                                              // If char examined is ;, switch state to END_MSG
+                    if (temp[i] == END_MSG || temp[i] == '\n' || temp[i] == '\r' ) {                                              // If char examined is ;, switch state to END_MSG
                         STATE = WAIT_START;
                         QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
-                        //emit newData(incomingData);                                       // Emit signal for data received with the list
+                        emit newData(incomingData);                                       // Emit signal for data received with the list
 
                         if (receiveDataRequest) {
                             emit newData(incomingData);
@@ -427,6 +428,19 @@ bool Rs232::createMessageBox(QString text) {
     return (reply == QMessageBox::Yes);
 }
 
+void Rs232::initPressSensList()
+{
+   // foreeach(
+
+   //     ){
+
+
+   // }
+
+
+
+}
+
 void Rs232::newDataUpdateCh(QStringList currSdata) {
 
     bool ok;
@@ -438,15 +452,15 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
 
     qDebug() << "currSdata" << currSdata.size() << currSdata;
 
-    if (currSdata.size() == 4) {
-        // qDebug() << currSdata[0] <<"," << currSdata[1] <<"," << currSdata[2];
+    if (currSdata.size() == 2) {
+         qDebug() << currSdata[0] <<"," << currSdata[1] ;
 
-        t1 = currSdata[1].toFloat(&ok);
+        t1 = currSdata[0].toInt(&ok);
         if (!ok) {
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t1 = 0;
         }
-        t2 = currSdata[2].toFloat(&ok);
+        t2 = currSdata[1].toFloat(&ok);
         if (!ok) {
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t2 = 0;

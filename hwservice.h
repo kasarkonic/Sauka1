@@ -64,6 +64,8 @@ private slots:
 
     void on_lineEdit_Out_value_editingFinished();
 
+    void on_pushButton_measure_clicked();
+
 private:
 
     Global& global;

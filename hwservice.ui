@@ -209,9 +209,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButton_measure">
         <property name="text">
-         <string>PushButton</string>
+         <string>Mērījumi</string>
         </property>
        </widget>
       </item>
@@ -459,7 +459,7 @@
      <x>0</x>
      <y>0</y>
      <width>1222</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

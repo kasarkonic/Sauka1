@@ -121,8 +121,9 @@ private:
     bool receiveDataRequest = false;
 
     int STATE;
-
+    void initPressSensList();
 
 };
+
 
 #endif // RS232_H

@@ -1,7 +1,6 @@
 #include "valve.h"
-//#include<QMouseEvent>
-//#include <QSettings>
 
+//#include <QSettings>
 //#include <QPainter>
 
 
