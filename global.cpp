@@ -1,6 +1,7 @@
 #include "global.h"
 #include <Qdebug>
 #include <QTimer>
+#include <QElapsedTimer>
 
 
 
@@ -87,6 +88,9 @@ Global::Global() {
 
     tick = 0;
     waitTx = 0;
+
+    tickTimer.start();
+
 }
 
 //QList<bool>DIinput;
@@ -258,12 +262,17 @@ void Global::needUpdateSensorIn(int row, int val) {
 }
 
 int Global::getTick() {
-    return tick;
+    return tickTimer.elapsed();
 }
 
-void Global::addTick() {
-    tick++;
+int Global::getnTick()
+{
+    return tickTimer.nsecsElapsed();
 }
+
+//void Global::addTick() {
+//    tick++;
+//}
 
 int Global::getwaitTx() {
     return waitTx;

@@ -10,6 +10,7 @@
 #include <QList>
 #include "def.h"
 #include <QMessageBox>
+#include <QElapsedTimer>
 
 
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
@@ -196,13 +197,15 @@ public:
     void needUpdateDIoutputs(int row, int val);
     void needUpdateSensorIn(int row, int val);
     int getTick();
-    void addTick();
+    int getnTick();
+    //void addTick();
     int getwaitTx();
     void setwaitTx(int val);
 
 
 private:
 
+    QElapsedTimer tickTimer;
     int tick;
     void create_IN_OUT_list();
     void creatWidgList();

@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #    include <QModbusRtuSerialClient>
 #    include <QSerialPortInfo>
-#include <QElapsedTimer>
+//#include <QElapsedTimer>
 #include <QThread>
 #include <QTimer>
 
@@ -59,7 +59,7 @@ private:
     QModbusDataUnit writeRequest() const;
     void readData();
     void writeDat(QModbusDataUnit writeUnit, int boardAdr);
-    void writeDat();
+    //void writeDat();
     //QElapsedTimer timer;
     int timerTest;
     QElapsedTimer* intervalTimer;

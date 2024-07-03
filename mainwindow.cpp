@@ -73,7 +73,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     initTimer = true;
     timerIdUpd = startTimer(500);
-    timerTick = startTimer(1);
+   // timerTick = startTimer(1);
     timerUpdateOutput = startTimer(200);
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -215,9 +215,9 @@ void MainWindow::timerEvent(QTimerEvent* event) {
     }
 
 
-    if (event->timerId() == timerTick) {
-        global.addTick();
-    }
+   // if (event->timerId() == timerTick) {
+      //  global.addTick();
+   // }
 }
 
 void MainWindow::loadSettings() {
