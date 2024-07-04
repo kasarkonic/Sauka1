@@ -9,6 +9,11 @@
 #define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = true;
 
 
+// defines drive registers
+#define CMD_REG  8501
+#define LFR_REG  8502
+#define HMIS_REG 3240
+
 // defines outputs
 
 

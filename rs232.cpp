@@ -441,6 +441,7 @@ int Rs232::calcPressSensList(int sensorNr)
 
     for (int i = 0; i < 8; i++){       // 10 readings
         sum += global.press_sensList[sensorNr].buf[i];
+        qDebug() << i << sum << global.press_sensList[sensorNr].buf[i];
 
     }
     global.press_sensList[sensorNr].average_val = sum / 8;

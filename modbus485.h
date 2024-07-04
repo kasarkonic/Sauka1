@@ -29,10 +29,12 @@ public:
     bool rd23IOD32(int boardAdr, int regAdr);
     bool rd24DIB32(int boardAdr, int regAdr);
     bool rdN4AIB16(int boardAdr, int regAdr, int len);
+    bool wrDrive(int boardAdr, int regAdr, quint16 value);
+    bool wrDrivem(int boardAdr, int regAdr, quint16 value1,quint16 value2);
 
-
+    bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1,quint16 value2);
     // bool updateDIOut();
-    bool updateDIOut(int i);
+    quint16 updateDIOut(int i);
 
 protected:
     void    timerEvent(QTimerEvent* event) override;
@@ -75,7 +77,22 @@ private:
     void printDIoutput1(int start, int finish);
     bool RS485Ready;
 
+
+
     enum States {
+        IDLE,
+        STDIN1,
+        STDIN2,
+        STIAN3,
+        STIAN4,
+        STOUT5,
+        STOUT6,
+
+        STDRIVE8_Start,
+        STDRIVE8_2,
+        STDRIVE8_3,
+        STDRIVE8_Stop,
+        STDRIVE8_Reset,
 
         State_rd23IOD32_0,  // 0
         State_rd23IOD32_1,
@@ -96,6 +113,7 @@ private:
     // void runTaskCycle();
     void changeState(int newState, int timeout = -1);
     int task_state;
+    int oldtask_state;
     int stateStartTime;
     QTimer* taskTimer;
     bool isTimerTimeout();
@@ -103,6 +121,10 @@ private:
     // bool stateTimerTimeout = false;
     int starttemp;
     int oldstateStartTime;
+
+    // for testing
+    quint16 vval1  = 0x1;
+    quint16 vval2 = 0x8000;
 
 };
 

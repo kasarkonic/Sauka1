@@ -411,7 +411,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="label_35">
           <property name="text">
-           <string>Temperature</string>
+           <string>Temperature, level sensors</string>
           </property>
          </widget>
         </item>
@@ -509,7 +509,7 @@
      <x>0</x>
      <y>0</y>
      <width>816</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
