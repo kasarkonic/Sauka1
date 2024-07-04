@@ -85,12 +85,22 @@ Global::Global() {
     //}
     disableRS485 = false;   // for testing
     create_IN_OUT_list();
-
+    createPressSensList();
     tick = 0;
     waitTx = 0;
 
     tickTimer.start();
 
+}
+
+void Global::createPressSensList()
+{
+    press_sens psl;
+
+    for (int i = 0; i < 8; i++){       // 8 readings average
+        psl.buf.append(0);
+    }
+    press_sensList.append(psl);
 }
 
 //QList<bool>DIinput;

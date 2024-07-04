@@ -454,6 +454,22 @@ void Modbus485::onReadReady() {
                 }
             }
 
+            //---------------
+            if (unit.registerType() == 3 && replayDataArray.length() == datalen) {
+                // qDebug() << "rdN4AIB16" << reply->serverAddress() << datalen  << reply->result().values();
+                for (int i = 0; i <= 15; i++) {    // in0 - in14 0-20mA input  in15 30v input
+                    if (global.ANinput4_20[i].value != reply->result().value(i)) {
+                        //  qDebug() << "emit valChangeAn(i)"<< i  << global.ANinput4_20[i].value << reply->result().value(i);
+                        global.ANinput4_20[i].value = reply->result().value(i);
+                        global.ANinput4_20[i].update = true;
+                        emit valChangeAn(i, global.ANinput4_20[i].value);// for testing
+                    }
+                }
+            }
+
+
+
+            //------------
             else {
                 qDebug() << "error";
             }

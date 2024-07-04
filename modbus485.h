@@ -29,6 +29,8 @@ public:
     bool rd23IOD32(int boardAdr, int regAdr);
     bool rd24DIB32(int boardAdr, int regAdr);
     bool rdN4AIB16(int boardAdr, int regAdr, int len);
+
+
     // bool updateDIOut();
     bool updateDIOut(int i);
 

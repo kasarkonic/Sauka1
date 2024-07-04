@@ -8,6 +8,7 @@
 #include "actlistform.h"
 #include "senslistsform.h"
 #include <QElapsedTimer>
+#include "rs232.h"
 
 namespace Ui {
     class HWService;
@@ -17,7 +18,7 @@ class HWService : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit HWService(Global& global, QWidget* parent = nullptr);
+    explicit HWService(Global& global, Rs232& rs232, QWidget* parent = nullptr);
 
     Ui::HWService* ui;
     ActListForm actListForm;
@@ -69,6 +70,7 @@ private slots:
 private:
 
     Global& global;
+    Rs232& rs232;
     int modbusAddress = 0;
     int timerId;
     bool ok;

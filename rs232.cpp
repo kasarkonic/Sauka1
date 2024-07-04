@@ -1,4 +1,5 @@
 #include "rs232.h"
+
 #include "ui_rs232.h"
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
@@ -35,10 +36,15 @@ Rs232::Rs232(Global& global, QWidget* parent)
     startTime = QTime(0, 0);
     connect(m_serial, &QSerialPort::readyRead, this, &Rs232::readSerial);   //readyRead
     connect(this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdateCh(QStringList)));
-    initPressSensList();
+
     initUI();
 
     drawTchart();
+
+    //for testing:
+
+    ui->verticalSlider_S0->setValue(30);
+    ui->verticalSlider_S1->setValue(70);
 
 }
 
@@ -114,9 +120,9 @@ bool Rs232::initPort() {
 
 void Rs232::sendData(QString send) {
     if(global.dev1ConnectStatus){
-    QByteArray utf8Data = send.toUtf8();
-    const qint64 written = m_serial->write(utf8Data);
-    Q_UNUSED(written);
+        QByteArray utf8Data = send.toUtf8();
+        const qint64 written = m_serial->write(utf8Data);
+        Q_UNUSED(written);
     }
     else{
         str = corectPort;
@@ -160,11 +166,6 @@ void Rs232::readSerial() {
                         QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
                         emit newData(incomingData);                                       // Emit signal for data received with the list
 
-                        if (receiveDataRequest) {
-                            emit newData(incomingData);
-                            //qDebug() <<"emit" <<incomingData;
-                            receiveDataRequest = false;
-                        }
                         break;
                     } else if (isdigit(temp[i]) || isspace(temp[i]) || temp[i] == '-' || temp[i] == '.') {
                         /* If examined char is a digit, and not '$' or ';', append it to temporary string */
@@ -195,7 +196,7 @@ void Rs232::timerEvent(QTimerEvent* event) {
             int sec = startTime.secsTo(finishTime);
             QTime t = QTime(0, 0).addSecs(sec);
             QString durat = QString("%1h. %2min. %3sek.")
-                .arg(t.hour()).arg(t.minute()).arg(t.second());
+                                .arg(t.hour()).arg(t.minute()).arg(t.second());
 
             QString str = tr("  Ieraksts sākts ");
             str.append(startTime.toString("hh:mm:ss"));
@@ -212,7 +213,7 @@ void Rs232::timerEvent(QTimerEvent* event) {
     if (event->timerId() == timerIdUpd) {
         // qDebug()<< "Event Id";
         att++;
-        receiveDataRequest = true;
+        receiveDataRequest = 3; // bit0 ch10   bit1 ch11
 
         if (att > 100) {
             int range = att * 1.1;
@@ -331,10 +332,10 @@ void Rs232::drawTchart() {
 
 
     //  chart1->createDefaultAxes();
-     // chart1->axes(Qt::Vertical).first()->setRange(0,100);
-     // chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
+    // chart1->axes(Qt::Vertical).first()->setRange(0,100);
+    // chart1->axes(Qt::Horizontal).first()->setRange(0, 110);
 
-     // chart1->axes(Qt::Horizontal).first()->setTitleText(myAxisYtitle);
+    // chart1->axes(Qt::Horizontal).first()->setTitleText(myAxisYtitle);
 
 
 
@@ -428,17 +429,30 @@ bool Rs232::createMessageBox(QString text) {
     return (reply == QMessageBox::Yes);
 }
 
-void Rs232::initPressSensList()
+int Rs232::calcPressSensList(int sensorNr)
 {
-   // foreeach(
+    if(global.press_sensList.size() < sensorNr){
+        qDebug() << "ERROR calcPressSensList size " << global.press_sensList.size() << sensorNr;
+        return -1;
 
-   //     ){
+    }
 
+    int sum = 0;
 
-   // }
+    for (int i = 0; i < 8; i++){       // 10 readings
+        sum += global.press_sensList[sensorNr].buf[i];
 
+    }
+    global.press_sensList[sensorNr].average_val = sum / 8;
 
+    global.press_sensList[sensorNr].fill = (int)
+                                           ((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) *
+                                            global.press_sensList[sensorNr].average_val) / 100;
 
+    if (global.press_sensList[sensorNr].fill < 0){
+        global.press_sensList[sensorNr].fill = 0;
+    }
+    return global.press_sensList[sensorNr].fill;
 }
 
 void Rs232::newDataUpdateCh(QStringList currSdata) {
@@ -446,6 +460,8 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
     bool ok;
     int t1 = 0;
     int t2 = 0;
+    int val1 = 0;
+    int val2 = 0;
 
 
     // QStringList elements = QString(currSdata).split(',');
@@ -453,47 +469,82 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
     qDebug() << "currSdata" << currSdata.size() << currSdata;
 
     if (currSdata.size() == 2) {
-         qDebug() << currSdata[0] <<"," << currSdata[1] ;
+        qDebug() << currSdata[0] <<"," << currSdata[1] ;
 
         t1 = currSdata[0].toInt(&ok);
         if (!ok) {
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
-            t1 = 0;
+            t1 = -1;
         }
         t2 = currSdata[1].toFloat(&ok);
         if (!ok) {
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t2 = 0;
         }
+    }
+    // qDebug() << currSdata[0]<< t1 << "," << currSdata[1] << t2 ;
+    int sensorNr = t1;
+    if(t1 >= 0){
 
-        chart1Data chdat;
-        // QPointF  spser;
-        spser.setX(att);
-        spser.setY(t1);
+        switch (t1) {
+        case 0:
 
-        sp_seriesT1->append(spser);
-        chdat.chartT1 = spser;
+            global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2);
+            qDebug()<< "?" << t1 << ","  << t2 << "val " << global.DIinput[LEVEL_SENSOR_1].value;
+            ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value/10);
+            ui->label_average_S0->setText(QString::number(global.press_sensList[sensorNr].average_val));
+            ui->label_current_S0->setText(QString::number(global.press_sensList[sensorNr].current_val));
+            ui->label_current_S0->setText(QString::number(abs(t2)));
+            break;
+        case 1:
+            global.DIinput[LEVEL_SENSOR_2].value = addPressSensList(t1, t2);
+            ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value/10);
+            ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
+            ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
+            ui->label_current_S1->setText(QString::number(t2));
+            break;
+        case 10:
+            val1 = t2;
+            break;
+        case 11:
+            val2 = t2;
 
-        spser.setY(t2);
-        sp_seriesT2->append(spser);
-        chdat.chartT2 = spser;
+            break;
+        default:
+            break;
+        }
 
-        chartDataList.append(chdat);
-
-
-        //qDebug() << "add T2: " << spser.x() << spser.y();
-
-        sp_seriesMin->append(att, TMIN);
-        sp_seriesMax->append(att, TMAX);
-    } else {
-        qDebug() << currSdata;
+    }
+    if (receiveDataRequest) {
+        addPointToChart(val1, val2);
     }
 
-    // QString strn = "Dino temperatūra        ";
-    // strn.append(currentTime)  ;
-    // chart1->setTitle(strn);
+}
+void Rs232::addPointToChart(int val1, int val2)
+{
 
 
+    chart1Data chdat;
+    // QPointF  spser;
+    spser.setX(att);
+    spser.setY(val1);
+
+    sp_seriesT1->append(spser);
+    chdat.chartT1 = spser;
+
+    spser.setY(val2);
+    sp_seriesT2->append(spser);
+    chdat.chartT2 = spser;
+
+    chartDataList.append(chdat);
+
+
+    //qDebug() << "add T2: " << spser.x() << spser.y();
+
+    sp_seriesMin->append(att, TMIN);
+    sp_seriesMax->append(att, TMAX);
+
+    receiveDataRequest = 0;
     if (att > 100) {
         int range = att * 1.1;
         //chart1->axes(Qt::Horizontal).first()->setRange(0, range);
@@ -502,6 +553,19 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
 
 }
 
+int Rs232::addPressSensList(int sensorNr, int val)
+{
+    global.press_sensList[sensorNr].current_val = val;
+    global.press_sensList[sensorNr].buf[global.press_sensList[sensorNr].curr_iter] = val;
+
+    global.press_sensList[sensorNr].curr_iter ++;
+    if(global.press_sensList[sensorNr].curr_iter >= 8){
+        global.press_sensList[sensorNr].curr_iter = 0;
+    }
+
+    return calcPressSensList(sensorNr);
+
+}
 
 
 void Rs232::on_pushButton_Save_clicked() {
@@ -543,7 +607,7 @@ void Rs232::on_pushButton_Save_clicked() {
         }
     }
     //      foreach (chart1Data, chartDataList) {
-  //stream << "something" << endl;
+    //stream << "something" << endl;
     file.close();
     // filename = "Dino_T_";
     // filename.append (currentTime);
@@ -554,5 +618,29 @@ void Rs232::on_pushButton_Save_clicked() {
     // }
 
 
+}
+
+
+void Rs232::on_pushButton_set_S0_clicked()
+{
+    global.press_sensList[0].full_val = global.press_sensList[0].average_val;
+}
+
+
+void Rs232::on_pushButton_set_S1_clicked()
+{
+    global.press_sensList[1].full_val = global.press_sensList[1].average_val;
+}
+
+
+void Rs232::on_pushButton_set_empty_s0_clicked()
+{
+    global.press_sensList[0].empty_val = global.press_sensList[0].average_val;
+}
+
+
+void Rs232::on_pushButton_set_empty_s1_clicked()
+{
+    global.press_sensList[0].empty_val = global.press_sensList[0].average_val;
 }
 

@@ -9,12 +9,13 @@
 #include "rs232.h"
 
 
-HWService::HWService(Global& global, QWidget* parent)
+HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::HWService)
     , actListForm(global, this)
     , sensListsForm(global, this)
     , global(global)
+    , rs232(rs232)
 
 
 {
@@ -229,8 +230,8 @@ void HWService::on_pushButton_Com_Ports_clicked() {
 
 void HWService::on_pushButton_measure_clicked()
 {
-    Rs232* rs232 = new Rs232(global, this);
-    rs232->show();
+   // Rs232* rs232 = new Rs232(global, this);
+    rs232.show();
 
 }
 

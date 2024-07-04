@@ -92,9 +92,9 @@ private:
     Modbus485 modbus485;
     Runprocess runprocess;
     // Scale scale;
-
-    HWService hwService;
     Rs232 rs232;
+    HWService hwService;
+    //Rs232 rs232;
     // ParMani *parmani;
 
 

@@ -48,6 +48,14 @@ private slots:
     void on_pushButton_Save_clicked();
 
     void newDataUpdateCh(QStringList);
+    void on_pushButton_set_S0_clicked();
+
+    void on_pushButton_set_S1_clicked();
+
+    void on_pushButton_set_empty_s0_clicked();
+
+    void on_pushButton_set_empty_s1_clicked();
+
 signals:
     void newData(QStringList data);
 
@@ -118,10 +126,12 @@ private:
     QString currentTime;
     QTime startTime;
     // void newDataUpdateCh(QStringList currSdata);
-    bool receiveDataRequest = false;
+    int receiveDataRequest = false;
+    void addPointToChart(int val1, int val2);
 
     int STATE;
-    void initPressSensList();
+    int addPressSensList(int sensorNr, int val);    // ret fill %
+    int  calcPressSensList(int sensorNr);
 
 };
 

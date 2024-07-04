@@ -80,18 +80,19 @@ public:
         QLineEdit* ptrLineEditDI = nullptr;
         QLineEdit* ptrLineEditAN = nullptr;
     };
-    struct  press_sens {
-        int number = 0;     // number 0,1,2,3,...
-        int current_val; // current VALUE
-        int average_val; //VALUE
-        int full_val;
-        int empty_val;
-        int fill;       // fill %
+    struct  press_sens {        // pressure sensors
+        //int number = 0;     // number 0,1,2,3,...
+        int current_val = 0; // current VALUE
+        int average_val = 0; //VALUE
+        int full_val = 0;
+        int empty_val = 0;
+        int fill = 0;       // fill %
         QList<int> buf;      // circular buller
-        int curr_iter;  // current bufer iterator
+        int curr_iter = 0;  // current bufer iterator
     };
      QList<press_sens>press_sensList;
 
+    void createPressSensList();
 
     struct wdataStruct {
         WidgetType::widgT type;

@@ -30,8 +30,9 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     , procUI2(global, this)
     , modbus485(global, this)
     , runprocess(global, this)
-    , hwService(global, this)
+   // , hwService(global, this)
     , rs232 (global, this)
+    , hwService(global,rs232, this)
 
 {
     modbus485.start();
