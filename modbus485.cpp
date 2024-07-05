@@ -297,79 +297,57 @@ quint16 Modbus485::updateDIOut(int i) {
 
 
 
-    if (0 >= i && i < 16) {
+    if ((0 <= i) && (i < 16)) {
         for (int k = 15; k >= 0;k--) {
             val1 <<= 1;
             val1 += (global.DIoutput[k].value > 0);
-            val1ch |= global.DIoutput[k].update;
+           // val1ch |= global.DIoutput[k].update;
+            qDebug() << k << i << val1 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val1;
-        // if (val1ch) {
-        // res = wr23IOD32(4, 0x70, val1);  // wr23IOD32(7,0x70, 0xff)
-        // }
-        // else{
-        //     RS485Ready = true;
-        // }
+         qDebug() << "retval0" << i << retval;
     }
+ qDebug() << "retval1" << i << retval;
 
-    if (16 >= i && i < 32) {
+    if ((16 <= i) && (i < 32)) {
         for (int k = 31; k >= 16;k--) {
             val2 <<= 1;
             val2 += (global.DIoutput[k].value > 0);
-            val2ch |= global.DIoutput[k].update;
+            //val2ch |= global.DIoutput[k].update;
+            qDebug()<< k << i << val2 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val2;
-        // if (val2ch) {
-        //res += wr23IOD32(4, 0x71, val2);  // wr23IOD32(7,0x70, 0xff)
-        // }
-        // else{
-        //     RS485Ready = true;
-        // }
     }
 
 
 
-    if (32 >= i && i < 48) {
+    if ((32 <= i) && (i < 48)) {
         for (int k = 47; k >= 32;k--) {
             val3 <<= 1;
             val3 += (global.DIoutput[k].value > 0);
-            val3ch |= global.DIoutput[k].update;
+           // val3ch |= global.DIoutput[k].update;
+            qDebug()<< k << i << val3 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val3;
-        // if (val3ch) {
-        // res += wr23IOD32(5, 0x70, val3);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
-        //     RS485Ready = true;
-        //  }
-        //  else{
-        //      RS485Ready = true;
-        //  }
     }
 
-    if (48 >= i && i < 64) {
+
+    if ((48 <= i) && (i < 64)) {
         for (int k = 63; k >= 48;k--) {
             val4 <<= 1;
             val4 += (global.DIoutput[k].value > 0);
-            val4ch |= global.DIoutput[k].update;
+            //val4ch |= global.DIoutput[k].update;
+            qDebug()<< k << i << val4 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val4;
-        //if (val4ch) {
-        // res += wr23IOD32(5, 0x71, val4);  // wr23IOD32(7,0x70, 0xff) ----------------------------------------------------------------------
-        //     RS485Ready = true;
-        // }
-        //  else{
-        //      RS485Ready = true;
-        //  }
     }
 
-    // qDebug() << "wr23IOD32 = " << (void *)val1 << (void *)val2 << (void *)val3 << (void *)val4;
-    // qDebug() << "wr23IOD32 = " << i << global.DIoutput[i].value << "HEX ->"
-    //<< Qt::hex<<val1 << val2 << val3 << val4
-    //<<val1ch << val2ch << val3ch << val4ch << global.getTick();
-    qDebug() << "updateDIOut" << i << retval;
+
+    qDebug() << "retval2" << i << Qt::hex << retval;
     return retval;
 }
 
@@ -951,7 +929,7 @@ void Modbus485::runTaskCycle() {
 
             quint16 dat1 = updateDIOut(32);
             quint16 dat2 = updateDIOut(48);
-            wr23IOD32m(4,0x71,dat1,dat2);
+           // wr23IOD32m(5,0x71,dat1,dat2);
             changeState(IDLE,1);
 
         }
