@@ -929,7 +929,7 @@ void Modbus485::runTaskCycle() {
 
             quint16 dat1 = updateDIOut(32);
             quint16 dat2 = updateDIOut(48);
-           // wr23IOD32m(5,0x71,dat1,dat2);
+            wr23IOD32m(5,0x70,dat1,dat2);
             changeState(IDLE,1);
 
         }
