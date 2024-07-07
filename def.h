@@ -7,8 +7,6 @@
 //#define ENABLE_WIDGET_SIZE
 
 
-
-
 #define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = true;
 
 
