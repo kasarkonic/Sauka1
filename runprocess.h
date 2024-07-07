@@ -44,6 +44,7 @@ private:
     Global& global;
 
     QElapsedTimer* intervalTimer;
+    Global::rs485WrPar param;
 
     void init();
     void runTaskCycle();

@@ -49,16 +49,6 @@ private slots:
 
     void on_pushButton_Com_Ports_clicked();
 
-    void on_pushButton_ReadBaudR_clicked();
-
-    void on_lineEdit_Input_address_editingFinished();
-
-    void on_pushButton_ChangeAddress_clicked();
-
-    void on_pushButton_FactoryReset_clicked();
-
-    void on_pushButton_Disable_clicked();
-
     void on_pushButton_Out_write_clicked();
 
     void on_lineEdit_Out_address_editingFinished();
@@ -67,15 +57,32 @@ private slots:
 
     void on_pushButton_measure_clicked();
 
+    void on_comboBox_use_motor_currentIndexChanged(int index);
+
+    void on_pushButton_Motor_off_clicked(bool checked);
+
+    void on_pushButton_Reset_clicked();
+
+    void on_pushButton_Motor_on_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_pushButton_slider_minus_clicked(bool checked);
+
+    void on_pushButton_slider_plus_clicked();
+
 private:
 
     Global& global;
     Rs232& rs232;
+    Global::rs485WrPar param;
     int modbusAddress = 0;
     int timerId;
     bool ok;
     int out_address;
     int out_value;
+    int testMotorAddres = 18; // M8
+    int rpm;
     // QElapsedTimer *updateTimer;
 
 

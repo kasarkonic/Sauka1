@@ -26,11 +26,15 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     ui->setupUi(this);
-    ui->lineEdit_Input_address->setText("0");
     timerId = startTimer(1000, Qt::CoarseTimer);
     QString str = "Addres: 0-";
     str.append(QString::number(MAX_DIoutput));
     ui->label_6->setText(str);
+
+    ui->comboBox_use_motor->addItem("M8");
+    ui->comboBox_use_motor->addItem("M9");
+    ui->comboBox_use_motor->addItem("M10");
+    ui->horizontalSlider->setRange(-100,100);
     //updateTimer = new QElapsedTimer();
     //updateTimer->start();
 
@@ -236,79 +240,6 @@ void HWService::on_pushButton_measure_clicked()
 }
 
 
-
-
-
-void HWService::on_pushButton_ReadBaudR_clicked() {
-    emit setBaudrate(modbusAddress);
-
-    /*
- *
- *
- *
- *
- * For example 1, Change the baud rate to 4800bps:
-Send data(address 1):01 06 00 FE 00 02 69 FB
-Return data :01 06 00 FE 00 02 69 FB
-Baud rate corresponds to the number: 0:1200 1:2400 2:4800 3:9600
-4:19200 5:38400 6:57600 7: 115200 8: Factory reset
-Note: 1 The baud rate will be updated only when the module
-
-
-*/
-}
-
-
-void HWService::on_lineEdit_Input_address_editingFinished() {
-    bool ok = true;
-
-    int val = ui->lineEdit_Input_address->text().toInt(&ok);
-    if (!ok) {
-        val = 0;;
-    }
-    modbusAddress = val;
-    qDebug() << "input address" << modbusAddress;
-
-}
-
-
-void HWService::on_pushButton_ChangeAddress_clicked() {
-
-    emit factoryReset(modbusAddress);
-    emit setBaudrate(modbusAddress);
-    /*
-     * Send data(address is 1): 01 06 00 FD 00 02 99 FB
-Return data : 01 06 00 FD 00 02 99 FB
-Send data(don't know the address): FF 06 00 FD 00 02 8C 25
-Return data : FF 06 00 FD 00 02 8C 25
-*/
-
-}
-
-
-void HWService::on_pushButton_FactoryReset_clicked() {
-    emit factoryReset(modbusAddress);
-
-    /*  Modbus Address(PLC)：40252
-        RS485 address : 0x01~0x3F
-        Function code:Write 0x06;
-    Register address:0x00FB(251)
-        Send data(address 1):FF 06 00 FB 00 00 ED E5
-            Return data :FF 06 00 FB 00 00 ED E5
-*/
-}
-
-
-void HWService::on_pushButton_Disable_clicked() {
-    global.disableRS485 = !global.disableRS485;
-    QString str = "Eable RS485";
-    if (global.disableRS485) {
-        str = "Disable RS485";
-    }
-    ui->pushButton_Disable->setText(str);
-}
-
-
 void HWService::on_pushButton_Out_write_clicked() {
     //int id = 4;
     if (out_value >= 1 && out_address < 96) { // 96,97.. inverter
@@ -355,5 +286,121 @@ void HWService::on_lineEdit_Out_value_editingFinished() {
         ui->lineEdit_Out_value->setText("ERROR!");
         out_value = 0;
     }
+}
+
+
+void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
+{
+    switch (index) {
+    case 0:
+        testMotorAddres = 18;
+        break;
+    default:
+    case 1:
+        testMotorAddres = 19;
+        break;
+    case 2:
+        testMotorAddres = 20;
+        break;
+        testMotorAddres = 0;
+    }
+
+qDebug() << "Motor test address" << index << testMotorAddres;
+
+
+}
+
+/*
+#define CMD_REG  8501
+#define LFR_REG  8502
+#define LFRD_REG 8602
+#define HMIS_REG 3240
+*/
+void HWService::on_pushButton_Motor_off_clicked(bool checked)
+{
+
+    param.boardAdr = testMotorAddres;
+    param.regAdr = CMD_REG;
+    param.value = 7;
+
+    global.rs485WrList.append(param);
+
+    //QString str = "Motor On";
+    //ui->pushButton_Motor_on->setText(str);
+}
+
+
+void HWService::on_pushButton_Reset_clicked()
+{
+    param.boardAdr = testMotorAddres;
+
+    param.regAdr = CMD_REG;
+    param.value = 128;
+    global.rs485WrList.append(param);
+}
+
+
+void HWService::on_pushButton_Motor_on_clicked()
+{
+
+    param.boardAdr = testMotorAddres;
+    param.value = 128;          // ??????????????? reset
+    param.regAdr = CMD_REG;
+    global.rs485WrList.append(param);
+
+    param.value = 6;
+    global.rs485WrList.append(param);
+
+    param.value = 7;
+    global.rs485WrList.append(param);
+
+    param.regAdr = 15;
+    global.rs485WrList.append(param);
+
+    QString str;// = "Atrums: ";
+    str.append(QString::number(rpm)) ;
+    str.append(" rpm");
+
+    ui->label_slider_center->setText(str);
+}
+
+
+void HWService::on_horizontalSlider_valueChanged(int value)
+{
+    int koef = 1;
+    rpm = value * koef;    // koef for diferrent motors?
+    qDebug() << "Motor speed rpm" << value;
+    param.boardAdr = testMotorAddres;
+
+    param.regAdr = LFRD_REG;
+    param.value = value;
+    global.rs485WrList.append(param);
+
+    QString str;// = "Atrums: ";
+    str.append(QString::number(rpm)) ;
+    str.append(" rpm");
+    ui->label_slider_center->setText(str);
+}
+
+
+void HWService::on_pushButton_slider_minus_clicked(bool checked)
+{
+   int val =  ui->horizontalSlider->value();
+   if(val > - 100){
+       val--;
+        ui->horizontalSlider->setValue(val);
+       on_horizontalSlider_valueChanged(val);
+   }
+}
+
+
+void HWService::on_pushButton_slider_plus_clicked()
+{
+  int val =  ui->horizontalSlider->value();
+  if(val < 100){
+      val++;
+       ui->horizontalSlider->setValue(val);
+      on_horizontalSlider_valueChanged(val);
+  }
 }
 

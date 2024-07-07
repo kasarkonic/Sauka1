@@ -56,6 +56,10 @@ namespace WidgetType {
     };
 }
 
+
+
+
+
 class Global {
 
 public:
@@ -120,11 +124,21 @@ public:
         int row = 0;
         int val = 0;    // data value
     };
+
     struct inOut {
         int value;
         QString name;
         bool update;
     };
+
+    struct rs485WrPar {
+        int boardAdr;
+        int regAdr;
+        quint16 value;
+    };
+
+    QList<rs485WrPar> rs485WrList;
+
     updateData updateDataIn;
     updateData updateDataOut;
 

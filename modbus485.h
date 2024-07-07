@@ -32,7 +32,8 @@ public:
     bool wrDrive(int boardAdr, int regAdr, quint16 value);
     bool wrDrivem(int boardAdr, int regAdr, quint16 value1,quint16 value2);
 
-    bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1,quint16 value2);
+
+    bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2);
     // bool updateDIOut();
     quint16 updateDIOut(int i);
 
@@ -87,6 +88,8 @@ private:
         STIAN4,
         STOUT5,
         STOUT6,
+
+        STDOUTLIST,
 
         STDRIVE8_Start,
         STDRIVE8_2,

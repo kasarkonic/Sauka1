@@ -276,7 +276,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len) {
 
 bool Modbus485::wrDrive(int boardAdr, int regAdr, quint16 value)
 {
-   return wr23IOD32(boardAdr, regAdr, value);
+    return wr23IOD32(boardAdr, regAdr, value);
 }
 
 bool Modbus485::wrDrivem(int boardAdr, int regAdr, quint16 value1, quint16 value2)
@@ -301,14 +301,14 @@ quint16 Modbus485::updateDIOut(int i) {
         for (int k = 15; k >= 0;k--) {
             val1 <<= 1;
             val1 += (global.DIoutput[k].value > 0);
-           // val1ch |= global.DIoutput[k].update;
+            // val1ch |= global.DIoutput[k].update;
             qDebug() << k << i << val1 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val1;
-         qDebug() << "retval0" << i << retval;
+        qDebug() << "retval0" << i << retval;
     }
- qDebug() << "retval1" << i << retval;
+    qDebug() << "retval1" << i << retval;
 
     if ((16 <= i) && (i < 32)) {
         for (int k = 31; k >= 16;k--) {
@@ -327,7 +327,7 @@ quint16 Modbus485::updateDIOut(int i) {
         for (int k = 47; k >= 32;k--) {
             val3 <<= 1;
             val3 += (global.DIoutput[k].value > 0);
-           // val3ch |= global.DIoutput[k].update;
+            // val3ch |= global.DIoutput[k].update;
             qDebug()<< k << i << val3 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
@@ -917,23 +917,52 @@ void Modbus485::runTaskCycle() {
             // starttemp = global.getTick();
             // RS485Ready = false;
 
-            changeState(STOUT6,10);
+            changeState(STDOUTLIST,10);
 
         }
         break;
+
+
+    case STDOUTLIST:
+
+        if(global.rs485WrList.size() > 0){
+            qDebug() << "STDOUTLIST"<<global.rs485WrList[0].boardAdr
+                     <<global.rs485WrList[0].regAdr
+                    <<global.rs485WrList[0].value
+                   << global.getTick();
+
+            wr23IOD32(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].value);
+            global.rs485WrList.removeFirst();
+
+            changeState(STOUT6,10);
+        }
+        else{
+            changeState(STOUT6,1);
+        }
+        break;
+
 
     case STOUT6:
 
-        if(RS485Ready){
-            //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
+        if(global.rs485WrList.size() > 0){
+            changeState(STDOUTLIST,1);
+        }
+        else{
+            if(RS485Ready){
+                //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
 
-            quint16 dat1 = updateDIOut(32);
-            quint16 dat2 = updateDIOut(48);
-           // wr23IOD32m(5,0x71,dat1,dat2);
-            changeState(IDLE,1);
+                quint16 dat1 = updateDIOut(32);
+                quint16 dat2 = updateDIOut(48);
+                // wr23IOD32m(5,0x71,dat1,dat2);
+                changeState(IDLE,1);
 
+            }
         }
         break;
+
+
+
+
 
 
 

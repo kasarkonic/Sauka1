@@ -89,7 +89,7 @@ void Runprocess::stateError() {
 
 void Runprocess::init() {
     task_state = 0;
-    //taskTimer = startTimer(10);--------------------------------------------------------------------------------
+    taskTimer = startTimer(10);--------------------------------------------------------------------------------
     tempInt = 0;
     intervalTimer = new QElapsedTimer();
     intervalTimer->start();
@@ -100,10 +100,18 @@ void Runprocess::runTaskCycle() {
     // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
      // Goto master state in state machine (state groups)
 
-
     switch (getMasterState()) {
     case StateInit:
         stateInit();
+
+for(int i = 128; i> 100; i--){
+        param.boardAdr = M8;
+        param.regAdr = i;   // reset    ??
+        param.value = 0;
+
+        global.rs485WrList.append(param);
+}
+
         break;
     case StateReset:
         stateReset();

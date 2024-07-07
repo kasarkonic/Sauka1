@@ -6,12 +6,21 @@
 //for testing
 //#define ENABLE_WIDGET_SIZE
 
+
+
+
 #define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = true;
 
+
+// define rive adress
+#define M8 18
+#define M9 19   // ??
+#define M10 20  // ??
 
 // defines drive registers
 #define CMD_REG  8501
 #define LFR_REG  8502
+#define LFRD_REG 8602
 #define HMIS_REG 3240
 
 // defines outputs

@@ -244,38 +244,86 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Set MODBUS service tools</string>
+           <string>Motoru komandas</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_ChangeAddress">
+         <widget class="QComboBox" name="comboBox_use_motor"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_Motor_on">
           <property name="text">
-           <string>Change address from 01 to 255</string>
+           <string>Motor Start</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_Input_address"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton_SetBaudR">
+         <widget class="QPushButton" name="pushButton_Motor_off">
           <property name="text">
-           <string>Set Mbsus Baudrate to 115200</string>
+           <string>Motor Stop</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_FactoryReset">
-          <property name="text">
-           <string>Factory reset</string>
+         <widget class="QSlider" name="horizontalSlider">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_Disable">
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QPushButton" name="pushButton_slider_minus">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>-</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_slider_center">
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_slider_plus">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_Reset">
           <property name="text">
-           <string>Disable RS485</string>
+           <string>Reset</string>
           </property>
          </widget>
         </item>
@@ -459,7 +507,7 @@
      <x>0</x>
      <y>0</y>
      <width>1222</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
