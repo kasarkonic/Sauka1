@@ -42,9 +42,10 @@ Rs232::Rs232(Global& global, QWidget* parent)
     drawTchart();
 
     //for testing:
-
-    ui->verticalSlider_S0->setValue(30);
-    ui->verticalSlider_S1->setValue(70);
+    ui->verticalSlider_S0->setRange(30,350);
+    ui->verticalSlider_S1->setRange(30,350);
+    //ui->verticalSlider_S0->setValue(30);
+    //ui->verticalSlider_S1->setValue(70);
 
 }
 
@@ -441,19 +442,23 @@ int Rs232::calcPressSensList(int sensorNr)
 
     for (int i = 0; i < 8; i++){       // 10 readings
         sum += global.press_sensList[sensorNr].buf[i];
-        qDebug() << i << sum << global.press_sensList[sensorNr].buf[i];
+        // qDebug() << i << sum << global.press_sensList[sensorNr].buf[i];
 
     }
     global.press_sensList[sensorNr].average_val = sum / 8;
 
-    global.press_sensList[sensorNr].fill = (int)
-                                           ((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) *
-                                            global.press_sensList[sensorNr].average_val) / 100;
+    if(global.press_sensList[sensorNr].full_val > global.press_sensList[sensorNr].empty_val){
+        global.press_sensList[sensorNr].fill = (int)
+                                               ((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) *
+                                                global.press_sensList[sensorNr].average_val) / 100;
 
-    if (global.press_sensList[sensorNr].fill < 0){
-        global.press_sensList[sensorNr].fill = 0;
+        if (global.press_sensList[sensorNr].fill < 0){
+            global.press_sensList[sensorNr].fill = 0;
+        }
+        //return global.press_sensList[sensorNr].fill;  ??????????????????????????????????????
     }
-    return global.press_sensList[sensorNr].fill;
+
+    return global.press_sensList[sensorNr].average_val;
 }
 
 void Rs232::newDataUpdateCh(QStringList currSdata) {
@@ -467,7 +472,7 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
 
     // QStringList elements = QString(currSdata).split(',');
 
-    qDebug() << "currSdata" << currSdata.size() << currSdata;
+    //qDebug() << "currSdata" << currSdata.size() << currSdata;
 
     if (currSdata.size() == 2) {
         qDebug() << currSdata[0] <<"," << currSdata[1] ;
@@ -492,14 +497,14 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
 
             global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2);
             qDebug()<< "?" << t1 << ","  << t2 << "val " << global.DIinput[LEVEL_SENSOR_1].value;
-            ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value/10);
+            ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value/1000);
             ui->label_average_S0->setText(QString::number(global.press_sensList[sensorNr].average_val));
             ui->label_current_S0->setText(QString::number(global.press_sensList[sensorNr].current_val));
             ui->label_current_S0->setText(QString::number(abs(t2)));
             break;
         case 1:
             global.DIinput[LEVEL_SENSOR_2].value = addPressSensList(t1, t2);
-            ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value/10);
+            ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value/1000);
             ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
             ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
             ui->label_current_S1->setText(QString::number(t2));
@@ -625,23 +630,27 @@ void Rs232::on_pushButton_Save_clicked() {
 void Rs232::on_pushButton_set_S0_clicked()
 {
     global.press_sensList[0].full_val = global.press_sensList[0].average_val;
+    ui->verticalSlider_S0->setMaximum(global.press_sensList[0].empty_val);
 }
 
 
 void Rs232::on_pushButton_set_S1_clicked()
 {
     global.press_sensList[1].full_val = global.press_sensList[1].average_val;
+    ui->verticalSlider_S1->setMaximum(global.press_sensList[0].empty_val);
 }
 
 
 void Rs232::on_pushButton_set_empty_s0_clicked()
 {
     global.press_sensList[0].empty_val = global.press_sensList[0].average_val;
+    ui->verticalSlider_S0->setMinimum(global.press_sensList[0].empty_val);
 }
 
 
 void Rs232::on_pushButton_set_empty_s1_clicked()
 {
     global.press_sensList[0].empty_val = global.press_sensList[0].average_val;
+    ui->verticalSlider_S1->setMinimum(global.press_sensList[0].empty_val);
 }
 
