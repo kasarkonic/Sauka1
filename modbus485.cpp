@@ -288,12 +288,12 @@ bool Modbus485::wrDrivem(int boardAdr, int regAdr, quint16 value1, quint16 value
 quint16 Modbus485::updateDIOut(int i) {
     //qDebug() << "updateDIOut----------------------" << global.getTick();
     //int res = 0;
-    quint16 val1, val2, val3, val4, retval;
+    quint16 val1, val2, val3, val4;
     bool val1ch, val2ch, val3ch, val4ch;
     val1 = val2 = val3 = val4 = 0;
     val1ch = val2ch = val3ch = val4ch = false;
 
-    printDIoutput();
+   // printDIoutput();
 
 
 
@@ -302,20 +302,20 @@ quint16 Modbus485::updateDIOut(int i) {
             val1 <<= 1;
             val1 += (global.DIoutput[k].value > 0);
             // val1ch |= global.DIoutput[k].update;
-            qDebug() << k << i << val1 << val1ch << (global.DIoutput[k].value > 0);
+          //  qDebug() << k << i << val1 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val1;
         qDebug() << "retval0" << i << retval;
     }
-    qDebug() << "retval1" << i << retval;
+    //qDebug() << "retval1" << i << retval;
 
     if ((16 <= i) && (i < 32)) {
         for (int k = 31; k >= 16;k--) {
             val2 <<= 1;
             val2 += (global.DIoutput[k].value > 0);
             //val2ch |= global.DIoutput[k].update;
-            qDebug()<< k << i << val2 << val1ch << (global.DIoutput[k].value > 0);
+          //  qDebug()<< k << i << val2 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val2;
@@ -328,7 +328,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val3 <<= 1;
             val3 += (global.DIoutput[k].value > 0);
             // val3ch |= global.DIoutput[k].update;
-            qDebug()<< k << i << val3 << val1ch << (global.DIoutput[k].value > 0);
+          //  qDebug()<< k << i << val3 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val3;
@@ -340,7 +340,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val4 <<= 1;
             val4 += (global.DIoutput[k].value > 0);
             //val4ch |= global.DIoutput[k].update;
-            qDebug()<< k << i << val4 << val1ch << (global.DIoutput[k].value > 0);
+          //  qDebug()<< k << i << val4 << val1ch << (global.DIoutput[k].value > 0);
             global.DIoutput[k].update = false;
         }
         retval = val4;
