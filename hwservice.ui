@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1222</width>
-    <height>611</height>
+    <width>1214</width>
+    <height>780</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,5,5,5,5,5,5,1,50">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -242,7 +242,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="label_ETA">
           <property name="text">
            <string>Motoru komandas</string>
           </property>
@@ -506,8 +506,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1222</width>
-     <height>21</height>
+     <width>1214</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

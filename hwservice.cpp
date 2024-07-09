@@ -25,6 +25,7 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
+    this->move(50, 50);
     ui->setupUi(this);
     timerId = startTimer(1000, Qt::CoarseTimer);
     QString str = "Addres: 0-";
@@ -69,7 +70,7 @@ void HWService::updateDataAn(int row, int val) {
 
 }
 void HWService::updateDataDi(int row, bool val) {
-   // qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
+    // qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     //sensListsForm.updateData(row);
     //actListForm.updateData(row);
 
@@ -174,11 +175,15 @@ void HWService::updateDataDi(int row, bool val) {
     ui->label_row5->setText(str5);
     ui->label_row6->setText(str6);
 
-
+    QString str = "M8 ETA: ";
+    str.append(QString::number(global.DIoutput[drive_M8_status].value,16));    // hex
+    ui->label_ETA->setText(str);
 
 }
 
 void HWService::updateDIoutput(int row, int val) {
+    Q_UNUSED(row)
+    Q_UNUSED(val)
     //qDebug() << " REC HWService::updateDIoutput(int row) " << row << val;
     //  actListForm.updateDIoutput(row,val);
     //modbuss
@@ -186,21 +191,54 @@ void HWService::updateDIoutput(int row, int val) {
 
 void HWService::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
-        // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
-        // float volt24 = SUPLAY_24V/100.0;//  power supplay input
-   //     qDebug() << " HWService::timerEven " << global.getTick();
+    // float volt24 = global.ANinput4_20 [15].value * 0.020797;//  voltage input   BBBBBBBB   wrong addres
+    // float volt24 = SUPLAY_24V/100.0;//  power supplay input
+    //     qDebug() << " HWService::timerEven " << global.getTick();
     int volt24 = global.ANinput4_20[SUPLAY_24V].value;
     QString v24 = QString::number(volt24 / 100.0, 'g', 4);
 
     QString str = "24V Barošanas bloka spriegums = ";
 
+    ui->textEdit->clear();
     str.append(v24);
     str.append(" V");
     ui->textEdit->setText(str);
 
+    QString noteTxt = "bit0  = 1: Ready to switch on, awaiting power section line supply\n";
+    noteTxt.append("bit1  = 1: Switched on, ready\n");
+    noteTxt.append("bit2  = 1: Operation enabled, running\n");
+    noteTxt.append("bit3  = 1: Fault detection\n");
+    noteTxt.append("bit4  Voltage enabled  0: not conn,  1: connected\n");
+    noteTxt.append("bit5  = 0 quick stop\n");
+    noteTxt.append("bit6  =  switched on disable\n");
+    noteTxt.append("bit7  = 0: not warning  1: warning\n\n");
+    noteTxt.append("bit8  = 0 reserved\n");
+    noteTxt.append("bit9  = 0 cmd from LCD  1: cmd from fieldbus\n");
+    noteTxt.append("bit10  = 0: reference not reach target   1: reach target\n");
+    noteTxt.append("bit11  = 0: reference in internal limits  1: out of limits\n");
+    noteTxt.append("bit12  = 0 reserved\n");
+    noteTxt.append("bit13  = 0 reserved\n");
+    noteTxt.append("bit14  = 0: Stop key not active  1: StopKey active\n");
+    noteTxt.append("bit15  = 0: forvard direction 1: revers direction\n");
+
+    ui->textEdit->append(noteTxt);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     if(global.dev3ConnectStatus){
-    updateDataDi(0, 0);
-    updateDataAn(0, 0);
+        updateDataDi(0, 0);
+        updateDataAn(0, 0);
     }
 
 }
@@ -234,7 +272,7 @@ void HWService::on_pushButton_Com_Ports_clicked() {
 
 void HWService::on_pushButton_measure_clicked()
 {
-   // Rs232* rs232 = new Rs232(global, this);
+    // Rs232* rs232 = new Rs232(global, this);
     rs232.show();
 
 }
@@ -305,7 +343,7 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
         testMotorAddres = 0;
     }
 
-qDebug() << "Motor test address" << index << testMotorAddres;
+    qDebug() << "Motor test address" << index << testMotorAddres;
 
 
 }
@@ -385,22 +423,22 @@ void HWService::on_horizontalSlider_valueChanged(int value)
 
 void HWService::on_pushButton_slider_minus_clicked(bool checked)
 {
-   int val =  ui->horizontalSlider->value();
-   if(val > - 100){
-       val--;
+    int val =  ui->horizontalSlider->value();
+    if(val > - 100){
+        val--;
         ui->horizontalSlider->setValue(val);
-       on_horizontalSlider_valueChanged(val);
-   }
+        on_horizontalSlider_valueChanged(val);
+    }
 }
 
 
 void HWService::on_pushButton_slider_plus_clicked()
 {
-  int val =  ui->horizontalSlider->value();
-  if(val < 100){
-      val++;
-       ui->horizontalSlider->setValue(val);
-      on_horizontalSlider_valueChanged(val);
-  }
+    int val =  ui->horizontalSlider->value();
+    if(val < 100){
+        val++;
+        ui->horizontalSlider->setValue(val);
+        on_horizontalSlider_valueChanged(val);
+    }
 }
 

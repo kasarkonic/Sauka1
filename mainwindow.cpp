@@ -185,10 +185,10 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     event->accept();
 
     // get the cursor position of this event
-    const QPoint& pos = event->pos();
+    //const QPoint& pos = event->pos();
 
-    int dx = pos.x();
-    int dy = pos.y();
+    //int dx = pos.x();
+    //int dy = pos.y();
 
    // qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
 }

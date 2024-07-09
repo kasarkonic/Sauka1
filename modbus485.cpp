@@ -605,6 +605,53 @@ void Modbus485::onReadReady() {
 
             break;
 
+
+        case 18:     // Drive Motor M8
+
+            if (unit.registerType() == 4 && replayDataArray.length() == datalen) {  // read input reg
+                qDebug() << "Drive Motor M8:" << reply->serverAddress()
+                        << QString::number(reply->result().value(0), 16)
+                        << QString::number(reply->result().value(1), 16);
+
+                global.DIinput[drive_M8_status].value = (reply->result().value(0));
+                global.DIinput[drive_M8_speed].value = (reply->result().value(1));
+               // emit valChangeDi(drive_M8_status, global.DIinput[drive_M8_status].value);
+               // emit valChangeDi(drive_M8_speed, global.DIinput[drive_M8_speed].value);
+            }
+                break;
+
+
+              /*
+            if (unit.registerType() == 4 && replayDataArray.length() == datalen) {  // read holding reg
+                //qDebug() << "Din 24DIB32 address:" << reply->serverAddress()
+                //        << QString::number(reply->result().value(0), 16)
+                //        << QString::number(reply->result().value(1), 16);
+
+                for (int i = 0; i < 16; i++) {
+                    if ((bool)global.DIinput[i + 64].value != (bool)(reply->result().value(0) & (1 << i))) {
+                        global.DIinput[i + 64].value = (bool)(reply->result().value(0) & (1 << i));
+                        global.DIinput[i + 64].update = true;
+                        qDebug() << "emit valChangeDi(" << i + 64 << ")" << global.DIinput[i + 64].value;
+                        emit valChangeDi(i + 64, (bool)global.DIinput[i + 64].value);
+                    }
+                }
+                for (int i = 0; i < 16; i++) {
+                    if ((bool)global.DIinput[i + 64 + 16].value != (bool)(reply->result().value(1) & (1 << i))) {
+                        global.DIinput[i + 64 + 16].value = (bool)(reply->result().value(1) & (1 << i));
+                        global.DIinput[i + 64 + 16].update = true;
+                        qDebug() << "emit valChangeDi(" << i + 64 + 16 << ")" << global.DIinput[i + 64 + 16].value;
+                        emit valChangeDi(i + 64 + 16, (bool)global.DIinput[i + 64 + 16].value);
+                    }
+                }
+                // printDIinput();
+            }
+
+            break;
+
+*/
+
+
+
         default:
             qDebug() << "Receive Msg from uncnown Modbus addres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
             break;

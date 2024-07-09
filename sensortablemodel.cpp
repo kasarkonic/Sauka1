@@ -8,7 +8,7 @@ SensorTableModel::SensorTableModel(Global& global, QObject* parent)
 
 int SensorTableModel::rowCount(const QModelIndex& parent) const {
     Q_UNUSED(parent);
-    return (MAX_DIinput + MAX_VIRUAL_INPUT);
+    return (MAX_DIinput + VIRUAL_PORTS);
 }
 
 int SensorTableModel::columnCount(const QModelIndex& parent) const {

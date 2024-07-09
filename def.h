@@ -3,6 +3,7 @@
 
 #endif // DEF_H
 
+
 //for testing
 //#define ENABLE_WIDGET_SIZE
 
@@ -16,34 +17,70 @@
 #define M10 20  // ??
 
 // defines drive registers
-#define CMD_REG  8501
-#define LFR_REG  8502
-#define LFRD_REG 8602
-#define HMIS_REG 3240
+#define CMD_REG  8501   // command reg
+#define LFR_REG  8502   // set frequence
+#define LFRD_REG 8602   // set rpm
+#define ETA_REG  3201   // drive status
+#define RFRD_REG 8604   // output velocyty
 
-// defines outputs
+// defines ports count
+#define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
+#define DI_OUT_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIoutput
+#define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
+#define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
+
+#define VIRUAL_PORTS 16 // Virtual input copy invertor ON/OFF
+#define MAX_DIinput     32*3 + VIRUAL_PORTS       // addres [0 , MAX_DIinp] 32*3
+#define MAX_DIoutput     32*3 + VIRUAL_PORTS      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
+#define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
+#define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
 
 
-// defines digital inputs
+// defines virtual inputs
+
+
+enum virtualInputs
+{
+    scales_mass = MAX_DIinput - VIRUAL_PORTS  ,    // virtual input
+
+    drive_M8_status,
+    drive_M8_speed,
+    drive_M4_status,
+    drive_M4_speed,
+    drive_M9_status,
+    drive_M9_speed,
+
+
+    mix_speeds,
+    dino_speed,
+    pump1_speed
+
+
+
+};
+
+enum virtualOutputs
+{
+
+    set_mix_speed = MAX_DIoutput - VIRUAL_PORTS,
+    set_mix_On_Off,
+    set_dino_speed,
+    set_dino_On_Off,
+    set_pump1_speed,
+    set_pump1_On_Off,
+
+};
+
 
 
 //defines analog inputs
 
 #define  SUPLAY_24V  15 // ANinput4_20[SUPLAY_24V]
 
-#define  MIXSPEED   96//  DIoutput  // invertor 96,97,98
-#define  MIXONOFF   97//  DIoutput virtual //
-
-#define  DINOSPEED   98//  DIoutput  virtual //
-#define  DINONOFF   99//  DIoutput  virtual //
 
 #define  TVERTNE1LEVEL   1// DIinput   ANinput4_20  //
 #define  TVERTNE1FULL  2//  DIinput   //
 
-#define  PUMP1SPEED   100//  DIoutput  // reveerse => speed + 0x8000
-#define  PUMP1NOFF  38//  DIoutput   //
-
-#define  SCALESMASS 100      // DIinput
 
 #define VALVE1ACT   8
 #define VALVE1SWOPEN   23

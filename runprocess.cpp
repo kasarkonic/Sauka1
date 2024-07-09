@@ -23,7 +23,7 @@ void Runprocess::timerEvent(QTimerEvent* event) {
 }
 
 void Runprocess::stateIdle() {
-    changeState(StateReset);
+   // changeState(StateReset);
 }
 
 void Runprocess::stateReset() {
@@ -64,17 +64,35 @@ void Runprocess::stateInit() {
     switch (getState()) {
     case StateInit:
         qDebug() << "StateInit " << global.getTick();
-        changeState(StateIdle);
+        changeState(StateRun);
         break;
     }
 }
 
-void Runprocess::stateRunning() {
+void Runprocess::stateRun() {
     switch (getState()) {
-    case StateRunning:
-        qDebug() << "StateRunning " << global.getTick();
-        changeState(StateIdle);
+    case StateRun:
+        paramr.boardAdr = 18;        // for test !!!
+        paramr.regAdr = ETA_REG;
+        paramr.value = 0;
+
+        global.rs485WrList.append(paramr);
+        //qDebug() << "StateRun " << global.getTick();
+        changeState(StateRun1,500);
         break;
+
+    case StateRun1:
+        if(isTimerTimeout()){
+
+
+        //qDebug() << "StateRun1 " << global.getTick();
+        changeState(StateRun);
+        }
+        break;
+
+
+
+
     }
 }
 
@@ -103,7 +121,7 @@ void Runprocess::runTaskCycle() {
     switch (getMasterState()) {
     case StateInit:
         stateInit();
-
+/*
 for(int i = 128; i> 100; i--){
         param.boardAdr = M8;
         param.regAdr = i;   // reset    ??
@@ -111,13 +129,13 @@ for(int i = 128; i> 100; i--){
 
         global.rs485WrList.append(param);
 }
-
+*/
         break;
     case StateReset:
         stateReset();
         break;
-    case StateRunning:
-        stateRunning();
+    case StateRun:
+        stateRun();
         break;
     case StateError:
         stateError();
@@ -143,7 +161,7 @@ int Runprocess::getState() {
 }
 
 void Runprocess::changeState(int newState, int timeout) {
-    //    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+        qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
     task_state = newState;
     stateStartTime = intervalTimer->elapsed();//  global.getTick();
     stateTimerInterval = 0;

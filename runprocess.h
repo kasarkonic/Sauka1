@@ -6,7 +6,7 @@
 #include <QElapsedTimer>
 
 namespace Ui {
-    class Runprocess;
+class Runprocess;
 }
 
 class Runprocess : public QWidget {
@@ -28,7 +28,8 @@ private:
         StateReset0,
         StateReset1,
         StateInit = 0x200,  // 0x200
-        StateRunning = 0x300,// 0x300
+        StateRun = 0x300,// 0x300
+        StateRun1,
         StateError = 0x600, // 0x600`
 
     };
@@ -36,7 +37,7 @@ private:
     void stateIdle(void);
     void stateReset(void);
     void stateInit(void);
-    void stateRunning(void);
+    void stateRun(void);
     void stateError(void);
 
 
@@ -61,6 +62,8 @@ private:
     int stateTimerInterval = 0;
     bool stateTimerTimeout = false;
     int tempInt = 0;
+    Global::rs485WrPar paramr;
+
 
 signals:
     void diOutputChangeSi(int i, int value);

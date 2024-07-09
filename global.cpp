@@ -368,11 +368,11 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //      WidgetType::widgT ty,    name,       page, X,       Y,  size, options,  actAdr1, sensAdr1,  sensAdr2)
 
-    addWidgList(WidgetType::Mix, "MIX", 1, 496, 27, 120, 0, MIXSPEED, MIXONOFF, 0);
+    addWidgList(WidgetType::Mix, "MIX", 1, 496, 27, 120, 0, set_mix_speed, set_mix_On_Off, 0);
     addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   393,  123,   172,  0, 0, 0, 0);
-    addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    389,  48,   77, 0,0,SCALESMASS, 0);
+    addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    389,  48,   77, 0,0,scales_mass, 0);
 
-    addWidgList(WidgetType::Dispax, "DISPAX", 1, 400, 330, 120, 0, DINOSPEED, DINONOFF, 0);
+    addWidgList(WidgetType::Dispax, "DISPAX", 1, 400, 330, 120, 0, set_dino_speed, set_dino_On_Off, 0);
     addWidgList(WidgetType::Label, "LABEL1", 1, 1644, 230, 250, 0, 0, 0, 0);
     addWidgList(WidgetType::Label, "LABEL2", 1, 233, 251, 250, 0, 0, 0, 0);
     addWidgList(WidgetType::Label, "LABEL3", 1, 243, 1, 250, 0, 0, 0, 0);
@@ -382,8 +382,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne, "T4", 1, 1000, 310, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
     addWidgList(WidgetType::Tvertne, "T5", 1, 1300, 310, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
 
-    addWidgList(WidgetType::Pump, "PUMP S4", 1, 433, 483, 50, 0, PUMP1SPEED, PUMP1NOFF, 0);
-    addWidgList(WidgetType::Pump, "PUMP S5", 1, 744, 61, 50, 0, PUMP1SPEED, PUMP1NOFF, 0);
+    addWidgList(WidgetType::Pump, "PUMP S4", 1, 433, 483, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
+    addWidgList(WidgetType::Pump, "PUMP S5", 1, 744, 61, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
 
 
     addWidgList(WidgetType::Valve, "Valve 2.1", 1, 608, 7, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
@@ -499,7 +499,7 @@ void Global::creatWidgList() {
 
 
     // addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   772,  142,    100,  0,     0,   0, 0);
-    // addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   SCALESMASS, 0);
+    // addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   scales_mass, 0);
 
 
     /*

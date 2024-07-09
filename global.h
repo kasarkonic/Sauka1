@@ -12,19 +12,19 @@
 #include <QMessageBox>
 #include <QElapsedTimer>
 
-
+/*
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
 #define DI_OUT_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIoutput
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define MAX_VIRUAL_INPUT 16 // Virtual input copy invertor ON/OFF
-#define MAX_DIinput     32*3 + MAX_VIRUAL_INPUT       // addres [0 , MAX_DIinp] 32*3
-#define MAX_DIoutput     32*3 + MAX_VIRUAL_INPUT      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
+#define VIRUAL_PORTS 16 // Virtual input copy invertor ON/OFF
+#define MAX_DIinput     32*3 + VIRUAL_PORTS       // addres [0 , MAX_DIinp] 32*3
+#define MAX_DIoutput     32*3 + VIRUAL_PORTS      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
 #define MAX_AN_INPUT4_20 16    // addres [200 , MAX_AN_VIRUAL_INPUT + 200]   200+MAX_AN_VIRUAL_INPUT  a/d input  0-30V
 
-
+*/
 class WidgetService;
 class WidgetDiagramElement;
 namespace ActuatorType {
@@ -136,6 +136,7 @@ public:
         int regAdr;
         quint16 value;
     };
+
 
     QList<rs485WrPar> rs485WrList;
 
