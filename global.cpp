@@ -98,9 +98,18 @@ void Global::createPressSensList()
     press_sens psl;
 
     for (int i = 0; i < 8; i++){       // 8 readings average
-        psl.buf.append(0);
+        psl.buf.append(i);
     }
-    press_sensList.append(psl);
+
+    for (int i = 0; i < 8; i++){       // 8 readings average
+        press_sensList.append(psl);
+    }
+    qDebug() <<"press_sensList"<< press_sensList.size();
+
+
+    press_sensList[0].name = "1. tvertnes līmenis";
+    press_sensList[1].name = "2. tvertnes līmenis";
+
 }
 
 //QList<bool>DIinput;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>951</width>
+    <width>1082</width>
     <height>600</height>
    </rect>
   </property>
@@ -132,13 +132,6 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_sens_1">
       <item>
-       <widget class="Line" name="line_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <widget class="QLabel" name="label_current_S0">
@@ -157,7 +150,17 @@
        </layout>
       </item>
       <item>
+       <widget class="Line" name="line_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_full_S0"/>
+        </item>
         <item>
          <widget class="QLabel" name="label_full_S0">
           <property name="text">
@@ -168,7 +171,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_S0">
           <property name="text">
-           <string>set</string>
+           <string>set average</string>
           </property>
          </widget>
         </item>
@@ -194,6 +197,9 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
+         <widget class="QLineEdit" name="lineEdit_empty_S0"/>
+        </item>
+        <item>
          <widget class="QLabel" name="label_empty_S0">
           <property name="text">
            <string>Empty</string>
@@ -203,7 +209,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_empty_s0">
           <property name="text">
-           <string>set</string>
+           <string>set average</string>
           </property>
          </widget>
         </item>
@@ -225,18 +231,11 @@
         <item>
          <widget class="QLabel" name="label_name_S0">
           <property name="text">
-           <string>Sensor name</string>
+           <string>Sensor Name</string>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="Line" name="line_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
@@ -257,13 +256,6 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_sens_2">
       <item>
-       <widget class="Line" name="line_7">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_16">
         <item>
          <widget class="QLabel" name="label_current_S1">
@@ -282,7 +274,17 @@
        </layout>
       </item>
       <item>
+       <widget class="Line" name="line_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_15">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_full_S1"/>
+        </item>
         <item>
          <widget class="QLabel" name="label_full_S1">
           <property name="text">
@@ -293,7 +295,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_S1">
           <property name="text">
-           <string>set</string>
+           <string>set average</string>
           </property>
          </widget>
         </item>
@@ -319,6 +321,9 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_13">
         <item>
+         <widget class="QLineEdit" name="lineEdit_empty_S1"/>
+        </item>
+        <item>
          <widget class="QLabel" name="label_empty_S1">
           <property name="text">
            <string>Empty</string>
@@ -328,7 +333,7 @@
         <item>
          <widget class="QPushButton" name="pushButton_set_empty_s1">
           <property name="text">
-           <string>set</string>
+           <string>set average</string>
           </property>
          </widget>
         </item>
@@ -356,13 +361,6 @@
         </item>
        </layout>
       </item>
-      <item>
-       <widget class="Line" name="line_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -372,7 +370,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>951</width>
+     <width>1082</width>
      <height>25</height>
     </rect>
    </property>

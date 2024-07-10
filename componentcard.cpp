@@ -16,8 +16,8 @@ ComponentCard::ComponentCard(Global& global, QWidget* parent)
     //QPalette pal = QPalette();
     //pal.setColor(QPalette::Window,global.backgroundColor); //QColor(255, 0, 0, 127)
     //pal.setColor(QPalette::Window, QColor(242, 219, 238, 0.251));
-   // this->setAutoFillBackground(true);
-   // this->setPalette(pal);
+    //this->setAutoFillBackground(true);
+    //this->setPalette(pal);
 
 
 
@@ -38,7 +38,6 @@ ComponentCard::ComponentCard(Global& global, QWidget* parent)
     //cmbList << "Iestatijumi" << "Receptes" << "Atskaites" << "Serviss"  << "Par_mani";
    // ui->comboBox_loadCard->addItems(cmbList);
     ui->comboBox_loadCard->setCurrentIndex(0);
-
 
 }
 

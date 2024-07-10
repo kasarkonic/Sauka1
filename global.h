@@ -93,6 +93,7 @@ public:
         int fill = 0;       // fill %
         QList<int> buf;      // circular buller
         int curr_iter = 0;  // current bufer iterator
+        QString name = "";
     };
      QList<press_sens>press_sensList;
 

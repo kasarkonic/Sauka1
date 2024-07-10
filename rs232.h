@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "global.h"
+#include "qsettings.h"
 
 #include <QSerialPort>
 #include <QSplineSeries>
@@ -56,6 +57,18 @@ private slots:
 
     void on_pushButton_set_empty_s1_clicked();
 
+    void on_lineEdit_empty_S0_editingFinished();
+
+    void on_lineEdit_empty_S1_editingFinished();
+
+    void on_lineEdit_full_S1_editingFinished();
+
+    void on_lineEdit_full_S0_editingFinished();
+
+    void on_pushButton_save_S0_clicked();
+
+    void on_pushButton_save_S1_clicked();
+
 signals:
     void newData(QStringList data);
 
@@ -85,7 +98,7 @@ private:
     };
 
     QList<chart1Data> chartDataList;
-
+    QSettings settings;
     QMap<QString, ComInfo> comPortMap;
     bool initPort();
     QString str;
@@ -132,6 +145,10 @@ private:
     int STATE;
     int addPressSensList(int sensorNr, int val);    // ret fill %
     int  calcPressSensList(int sensorNr);
+    bool ok;
+
+    QString settingsFile;
+
 
 };
 
