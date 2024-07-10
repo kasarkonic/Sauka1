@@ -1,0 +1,24 @@
+Level sensors send:
+baudrate 115200
+
+$Nr val
+Nr 0-10 level meter
+Nr 10,11 temperature sensors
+
+if error
+val = "ERROR error text"
+
+$0 xxxx.x   // 0. sensor pressure value
+$1 xxxx.x   // 1. pressure value
+.
+.
+
+$10 xxx.x   temperature measurement T1
+$11 xxx.x   temperature measurement T2
+
+
+if error
+
+$0 ERROR text
+
+
