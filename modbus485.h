@@ -124,6 +124,7 @@ private:
     // bool stateTimerTimeout = false;
     int starttemp;
     int oldstateStartTime;
+    quint16  retval;
 
     // for testing
     quint16 vval1  = 0x1;
