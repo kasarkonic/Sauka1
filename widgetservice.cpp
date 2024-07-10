@@ -254,7 +254,7 @@ void WidgetService::mouseMoveEvent(QMouseEvent* event) {
     // event->accept();
 
     // get the cursor position of this event
-    const QPoint& pos = event->pos();
+   // const QPoint& pos = event->pos();
 
    // int pointX = (mouseStartPointX - pos.x()) / -100;
    // int pointY = (mouseStartPointY - pos.y()) / -100;

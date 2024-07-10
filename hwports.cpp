@@ -216,7 +216,7 @@ void HwPorts::loadSettings() {
 void HwPorts::on_pushButton_Save_clicked() {
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
-    QString sText = settingsFile;
+    //QString sText = settingsFile;
 
     settings.beginGroup("Device_1");
     settings.setValue("port_Nr", global.dev1);

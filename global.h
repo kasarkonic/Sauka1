@@ -206,6 +206,7 @@ public:
     QString dev2_description;
     QString dev3_description;
     QString dev4_description;
+    //QString level_description;
 
 
     QColor  backgroundColor = QColor(250, 250, 250, 175);   // 255 transparent

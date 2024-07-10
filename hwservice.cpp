@@ -70,6 +70,8 @@ void HWService::updateDataAn(int row, int val) {
 
 }
 void HWService::updateDataDi(int row, bool val) {
+    Q_UNUSED(row)
+    Q_UNUSED(val)
     // qDebug() << " REC HWService::updateDataDi(int row) " << row << val;
     //sensListsForm.updateData(row);
     //actListForm.updateData(row);
@@ -356,7 +358,7 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
 */
 void HWService::on_pushButton_Motor_off_clicked(bool checked)
 {
-
+    Q_UNUSED(checked)
     param.boardAdr = testMotorAddres;
     param.regAdr = CMD_REG;
     param.value = 7;
@@ -423,6 +425,7 @@ void HWService::on_horizontalSlider_valueChanged(int value)
 
 void HWService::on_pushButton_slider_minus_clicked(bool checked)
 {
+    Q_UNUSED(checked)
     int val =  ui->horizontalSlider->value();
     if(val > - 100){
         val--;

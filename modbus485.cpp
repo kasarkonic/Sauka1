@@ -104,7 +104,7 @@ bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 
     qDebug() << "Modbus485::wr23IOD32 " << boardAdr << regAdr << Qt::hex << value << Qt::dec <<global.getTick();
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
-    Q_ASSERT(startAddress >= 0 && startAddress < 200);
+    Q_ASSERT(startAddress >= 0 && startAddress < 0xffff);
 
     quint16 numberOfEntries = 2;
     //return QModbusDataUnit(table, startAddress, numberOfEntries);
@@ -998,8 +998,8 @@ void Modbus485::runTaskCycle() {
             if(RS485Ready){
                 //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
 
-                quint16 dat1 = updateDIOut(32);
-                quint16 dat2 = updateDIOut(48);
+                //quint16 dat1 = updateDIOut(32);
+               // quint16 dat2 = updateDIOut(48);
                 // wr23IOD32m(5,0x71,dat1,dat2);
                 changeState(IDLE,1);
 

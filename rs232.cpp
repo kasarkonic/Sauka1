@@ -46,38 +46,48 @@ Rs232::Rs232(Global& global, QWidget* parent)
 
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
-    settings.beginGroup("calibrate_level_meter");
+   // settings.beginGroup("Calibrate_level_meter");
     //settings.setValue("level_max_0", 1000);
-    //settings.setValue("level_min_0", -1000);
+   // settings.setValue("level_min_0", -1000);
     //settings.setValue("level_max_1", 1000);
-    //settings.setValue("level_min_1", -1000);
-    //settings.setValue("Description", global.dev1_description);
-    settings.endGroup();
+   // settings.setValue("level_min_1", -1000);
+   // settings.setValue("Description", global.level_description);
+   // settings.endGroup();
 
 
     global.press_sensList[0].full_val = settings.value("level_max_0", "").toInt(&ok);
     if (!ok) {
-        global.press_sensList[0].full_val = 1000;
+        global.press_sensList[0].full_val = 1010;
+        qDebug() << "ERROR1" <<settings.value("level_max_0", "");
     }
 
     global.press_sensList[0].empty_val = settings.value("level_min_0", "").toInt(&ok);
     if (!ok) {
-        global.press_sensList[0].empty_val = 0;
+        global.press_sensList[0].empty_val = 3;
+        qDebug() << "ERROR2" <<settings.value("level_min_0", "");
     }
-    global.press_sensList[1].full_val = settings.value("level_max_0", "").toInt(&ok);
+    global.press_sensList[1].full_val = settings.value("level_max_1", "").toInt(&ok);
     if (!ok) {
-        global.press_sensList[1].full_val = 1000;
+        global.press_sensList[1].full_val = 1011;
+        qDebug() << "ERROR3" <<settings.value("level_max_1", "");
     }
 
-    global.press_sensList[1].empty_val = settings.value("level_min_0", "").toInt(&ok);
+    global.press_sensList[1].empty_val = settings.value("level_min_1", "").toInt(&ok);
     if (!ok) {
-        global.press_sensList[1].empty_val = 0;
+        global.press_sensList[1].empty_val = 4;
+        qDebug() << "ERROR4" <<settings.value("level_min_1", "");
     }
 
     ui->verticalSlider_S0->setRange(global.press_sensList[0].empty_val,global.press_sensList[0].full_val);
     ui->verticalSlider_S1->setRange(global.press_sensList[1].empty_val,global.press_sensList[1].full_val);
     ui->verticalSlider_S0->setValue(500);
     ui->verticalSlider_S1->setValue(500);
+
+
+    ui->lineEdit_empty_S0->setText(QString::number(global.press_sensList[0].empty_val));
+    ui->lineEdit_empty_S1->setText(QString::number(global.press_sensList[1].empty_val));
+    ui->lineEdit_full_S0->setText(QString::number(global.press_sensList[0].full_val));
+    ui->lineEdit_full_S1->setText(QString::number(global.press_sensList[1].full_val));
 
     ui->label_name_S0->setText(global.press_sensList[0].name);
     ui->label_name_S1->setText(global.press_sensList[1].name);
@@ -740,6 +750,8 @@ void Rs232::on_lineEdit_empty_S1_editingFinished()
 
 void Rs232::on_pushButton_save_S0_clicked()
 {
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
     settings.setValue("level_max_0", global.press_sensList[0].full_val);
     settings.setValue("level_min_0", global.press_sensList[0].empty_val);
 }
@@ -747,6 +759,8 @@ void Rs232::on_pushButton_save_S0_clicked()
 
 void Rs232::on_pushButton_save_S1_clicked()
 {
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
     settings.setValue("level_max_1", global.press_sensList[1].full_val);
     settings.setValue("level_min_1", global.press_sensList[1].empty_val);
 }

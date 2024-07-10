@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "global.h"
-#include "qsettings.h"
+#include <QSettings>
 
 #include <QSerialPort>
 #include <QSplineSeries>
@@ -98,7 +98,6 @@ private:
     };
 
     QList<chart1Data> chartDataList;
-    QSettings settings;
     QMap<QString, ComInfo> comPortMap;
     bool initPort();
     QString str;
