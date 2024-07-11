@@ -240,7 +240,7 @@ void MainWindow::saveSettings() {
     QString sText = settingsFile;
 
     settings.beginGroup("mainwindow");
-    settings.setValue("settingsFile", global.appSwVers);
+    settings.setValue("Description", "Global information");
     settings.setValue("settingsFile", sText);
 
     QDateTime date = QDateTime::currentDateTime();
@@ -249,9 +249,10 @@ void MainWindow::saveSettings() {
 
     // sText = QTime::currentTime().toString("YY:MM:DD:hh:mm:ss");
     qDebug() << "QTime::currentTime:" << sText;
+    QString str = global.appSwVers;
+    str.append(sText) ;
+    settings.setValue("SwVers", str);
     settings.setValue("last_save", sText);
-
-
     settings.setValue("UI_width", size().width());
     settings.setValue("UI_height", size().height());
     settings.endGroup();

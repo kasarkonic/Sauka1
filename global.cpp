@@ -10,7 +10,7 @@
 //using namespace inputSens;
 
 Global::Global() {
-    appSwVers = "0.1 08.02.2024";
+    appSwVers = "vers: 0.1   ";
     zoomKoef = zoomKoefPf1 = zoomKoefPf2 = 1.0;
     UIXsize = UIXsizePf1 = UIXsizePf2 = 1000;
     UIYsize = UIYsizePf1 = UIYsizePf2 = 1000;

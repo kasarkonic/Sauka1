@@ -445,3 +445,13 @@ void HWService::on_pushButton_slider_plus_clicked()
     }
 }
 
+
+void HWService::on_pushButton_2_clicked()
+{
+    param.boardAdr = testMotorAddres;
+
+    param.regAdr = ERRD;
+    param.value = 0;
+    global.rs485WrList.append(param);
+}
+

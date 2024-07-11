@@ -611,7 +611,14 @@ void Modbus485::onReadReady() {
             if (unit.registerType() == 4 && replayDataArray.length() == datalen) {  // read input reg
                 qDebug() << "Drive Motor M8:" << reply->serverAddress()
                         << QString::number(reply->result().value(0), 16)
-                        << QString::number(reply->result().value(1), 16);
+                        << QString::number(reply->result().value(1), 16)
+                       << QString::number(reply->result().registerType(),16)
+                    << QString::number(reply->result().startAddress())
+                    << QString::number(reply->result().HoldingRegisters);
+
+
+
+                // reg ERRD 8606 is CiA402 fault code
 
                 global.DIinput[drive_M8_status].value = (reply->result().value(0));
                 global.DIinput[drive_M8_speed].value = (reply->result().value(1));

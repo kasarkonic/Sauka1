@@ -327,6 +327,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="text">
+           <string>Get ERROR code</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

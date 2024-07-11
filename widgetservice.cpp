@@ -251,6 +251,7 @@ void WidgetService::mousePressEvent(QMouseEvent* event) {
     qDebug() << " WidgetService mousePressEvent dx:dy" << pos.x() << pos.y();
 }
 void WidgetService::mouseMoveEvent(QMouseEvent* event) {
+    Q_UNUSED(event);
     // event->accept();
 
     // get the cursor position of this event

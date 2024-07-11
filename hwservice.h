@@ -71,6 +71,8 @@ private slots:
 
     void on_pushButton_slider_plus_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
 
     Global& global;

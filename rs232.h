@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "global.h"
-#include <QSettings>
+//#include <QSettings>
 
 #include <QSerialPort>
 #include <QSplineSeries>
@@ -76,6 +76,7 @@ protected:
     void    timerEvent(QTimerEvent* event) override;
     void    closeEvent(QCloseEvent* event) override;
     void    mouseDoubleClickEvent(QMouseEvent* event) override;
+    void     showEvent(QShowEvent* event) override;
 
 private:
 
@@ -147,6 +148,7 @@ private:
     bool ok;
 
     QString settingsFile;
+    void loadQsettings();
 
 
 };

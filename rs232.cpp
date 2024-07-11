@@ -4,7 +4,7 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QDateTime>
 #include <QFile>
-//#include <QSettings>
+#include <QSettings>
 //#include <QMessageBox>
 
 
@@ -41,53 +41,6 @@ Rs232::Rs232(Global& global, QWidget* parent)
     initUI();
 
     drawTchart();
-
-
-
-    QString settingsFile = global.settingsFileName;
-    QSettings settings(settingsFile, QSettings::IniFormat);
-   // settings.beginGroup("Calibrate_level_meter");
-    //settings.setValue("level_max_0", 1000);
-   // settings.setValue("level_min_0", -1000);
-    //settings.setValue("level_max_1", 1000);
-   // settings.setValue("level_min_1", -1000);
-   // settings.setValue("Description", global.level_description);
-   // settings.endGroup();
-
-
-    global.press_sensList[0].full_val = settings.value("level_max_0", "").toInt(&ok);
-    if (!ok) {
-        global.press_sensList[0].full_val = 1010;
-        qDebug() << "ERROR1" <<settings.value("level_max_0", "");
-    }
-
-    global.press_sensList[0].empty_val = settings.value("level_min_0", "").toInt(&ok);
-    if (!ok) {
-        global.press_sensList[0].empty_val = 3;
-        qDebug() << "ERROR2" <<settings.value("level_min_0", "");
-    }
-    global.press_sensList[1].full_val = settings.value("level_max_1", "").toInt(&ok);
-    if (!ok) {
-        global.press_sensList[1].full_val = 1011;
-        qDebug() << "ERROR3" <<settings.value("level_max_1", "");
-    }
-
-    global.press_sensList[1].empty_val = settings.value("level_min_1", "").toInt(&ok);
-    if (!ok) {
-        global.press_sensList[1].empty_val = 4;
-        qDebug() << "ERROR4" <<settings.value("level_min_1", "");
-    }
-
-    ui->verticalSlider_S0->setRange(global.press_sensList[0].empty_val,global.press_sensList[0].full_val);
-    ui->verticalSlider_S1->setRange(global.press_sensList[1].empty_val,global.press_sensList[1].full_val);
-    ui->verticalSlider_S0->setValue(500);
-    ui->verticalSlider_S1->setValue(500);
-
-
-    ui->lineEdit_empty_S0->setText(QString::number(global.press_sensList[0].empty_val));
-    ui->lineEdit_empty_S1->setText(QString::number(global.press_sensList[1].empty_val));
-    ui->lineEdit_full_S0->setText(QString::number(global.press_sensList[0].full_val));
-    ui->lineEdit_full_S1->setText(QString::number(global.press_sensList[1].full_val));
 
     ui->label_name_S0->setText(global.press_sensList[0].name);
     ui->label_name_S1->setText(global.press_sensList[1].name);
@@ -284,6 +237,11 @@ void Rs232::mouseDoubleClickEvent(QMouseEvent* event) {
     Q_UNUSED(event);
 }
 
+void Rs232::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event);
+    loadQsettings();
+}
 
 void Rs232::on_pushButtonStart_clicked() {
     recordStatus = true;
@@ -508,6 +466,60 @@ int Rs232::calcPressSensList(int sensorNr)
     }
     qDebug()  << "AVR" << sum << global.press_sensList[sensorNr].average_val << global.press_sensList[sensorNr].fill;
     return global.press_sensList[sensorNr].average_val;
+}
+
+void Rs232::loadQsettings()
+{
+
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
+
+    settings.beginGroup("Calibrate");
+    settings.setValue("Description", "Level pressure sensors calibration values");
+    settings.setValue("level_max_0", 1000);
+    settings.setValue("level_min_0", 0);
+    settings.setValue("level_max_1", 1000);
+    settings.setValue("level_min_1", 0);
+    settings.setValue("Description", "Level pressure sensors calibration values");
+    settings.endGroup();
+    qDebug() << "init file RS232  QSettings settings(settingsFile, QSettings::IniFormat)" << settingsFile;
+
+    settings.sync();
+
+    global.press_sensList[0].full_val = settings.value("level_max_0", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[0].full_val = 1010;
+        qDebug() << "ERROR1" <<settings.value("level_max_0", "");
+    }
+
+    global.press_sensList[0].empty_val = settings.value("level_min_0", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[0].empty_val = 3;
+        qDebug() << "ERROR2" <<settings.value("level_min_0", "");
+    }
+    global.press_sensList[1].full_val = settings.value("level_max_1", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[1].full_val = 1011;
+        qDebug() << "ERROR3" <<settings.value("level_max_1", "");
+    }
+
+    global.press_sensList[1].empty_val = settings.value("level_min_1", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[1].empty_val = 4;
+        qDebug() << "ERROR4" <<settings.value("level_min_1", "");
+    }
+
+    ui->verticalSlider_S0->setRange(global.press_sensList[0].empty_val,global.press_sensList[0].full_val);
+    ui->verticalSlider_S1->setRange(global.press_sensList[1].empty_val,global.press_sensList[1].full_val);
+    ui->verticalSlider_S0->setValue(500);
+    ui->verticalSlider_S1->setValue(500);
+
+
+    ui->lineEdit_empty_S0->setText(QString::number(global.press_sensList[0].empty_val));
+    ui->lineEdit_empty_S1->setText(QString::number(global.press_sensList[1].empty_val));
+    ui->lineEdit_full_S0->setText(QString::number(global.press_sensList[0].full_val));
+    ui->lineEdit_full_S1->setText(QString::number(global.press_sensList[1].full_val));
+
 }
 
 void Rs232::newDataUpdateCh(QStringList currSdata) {
@@ -752,8 +764,10 @@ void Rs232::on_pushButton_save_S0_clicked()
 {
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
+    settings.beginGroup("Calibrate");
     settings.setValue("level_max_0", global.press_sensList[0].full_val);
     settings.setValue("level_min_0", global.press_sensList[0].empty_val);
+    settings.endGroup();
 }
 
 
@@ -761,7 +775,9 @@ void Rs232::on_pushButton_save_S1_clicked()
 {
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
+    settings.beginGroup("Calibrate");
     settings.setValue("level_max_1", global.press_sensList[1].full_val);
     settings.setValue("level_min_1", global.press_sensList[1].empty_val);
+    settings.endGroup();
 }
 

@@ -17,6 +17,7 @@ SOURCES += \
     actlistform.cpp \
     acttablemodel.cpp \
     componentcard.cpp \
+    def.cpp \
     dispax.cpp \
     dyno.cpp \
     global.cpp \
