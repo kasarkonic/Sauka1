@@ -484,7 +484,7 @@ void Rs232::loadQsettings()
     qDebug() << "init file RS232  QSettings settings(settingsFile, QSettings::IniFormat)" << settingsFile;
 
     //settings.sync();
-
+    settings.beginGroup("Calibrate");
     global.press_sensList[0].full_val = settings.value("level_max_0", "").toInt(&ok);
     if (!ok) {
         global.press_sensList[0].full_val = 1010;
