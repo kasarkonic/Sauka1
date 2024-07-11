@@ -16,7 +16,7 @@
 // define rive adress
 #define M8 18
 #define M9 19   // ??
-#define M10 20  // ??
+#define M4 14  // ??
 
 // defines drive registers
 #define CMD_REG  8501   // command reg

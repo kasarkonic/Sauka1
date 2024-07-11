@@ -76,7 +76,7 @@ void Runprocess::stateRun() {
         paramr.regAdr = ETA_REG;
         paramr.value = 0;
 
-        global.rs485WrList.append(paramr);
+      //  global.rs485WrList.append(paramr);    // READ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!  nevis write
         //qDebug() << "StateRun " << global.getTick();
         changeState(StateRun1,500);
         break;

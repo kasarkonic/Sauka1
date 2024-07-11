@@ -31,7 +31,7 @@ public:
     bool rdN4AIB16(int boardAdr, int regAdr, int len);
     bool wrDrive(int boardAdr, int regAdr, quint16 value);
     bool wrDrivem(int boardAdr, int regAdr, quint16 value1,quint16 value2);
-
+    bool rdDrive(int boardAdr, int regAdr);
 
     bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2);
     // bool updateDIOut();

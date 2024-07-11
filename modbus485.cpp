@@ -130,7 +130,7 @@ bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 
 
 bool Modbus485::wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2)
 {
-    qDebug() << "Modbus485::wr23IOD32m " << boardAdr << regAdr << Qt::hex << value1 << value2 << Qt::dec <<global.getnTick();
+    qDebug() << "Modbus485::wr23IOD32m " << boardAdr << regAdr << Qt::hex << value1 << value2 << Qt::dec <<global.getTick();
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 200);
@@ -282,6 +282,11 @@ bool Modbus485::wrDrive(int boardAdr, int regAdr, quint16 value)
 bool Modbus485::wrDrivem(int boardAdr, int regAdr, quint16 value1, quint16 value2)
 {
     return wr23IOD32m(boardAdr, regAdr, value1,value2);
+}
+
+bool Modbus485::rdDrive(int boardAdr, int regAdr)
+{
+    rdN4AIB16(boardAdr, regAdr, 1);
 }
 
 
@@ -467,6 +472,12 @@ void Modbus485::onReadReady() {
     // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
     qDebug() << "onReadReady from addres" << reply->serverAddress() << global.getTick();
+
+    qDebug() << QString::number(reply->result().registerType(),16)   // 4
+    << QString::number(reply->result().startAddress())      //192
+    << QString::number(reply->result().HoldingRegisters);   // 4
+
+
     if (reply->error() == QModbusDevice::NoError) {
         const QModbusDataUnit unit = reply->result();
 
@@ -983,6 +994,7 @@ void Modbus485::runTaskCycle() {
             qDebug() << "STDOUTLIST"<<global.rs485WrList[0].boardAdr
                      <<global.rs485WrList[0].regAdr
                     <<global.rs485WrList[0].value
+                    << "tick:"
                    << global.getTick();
 
             wr23IOD32(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].value);
@@ -999,7 +1011,8 @@ void Modbus485::runTaskCycle() {
     case STOUT6:
 
         if(global.rs485WrList.size() > 0){
-            changeState(STDOUTLIST,1);
+            rdDrive(M8,ETA_REG);
+            changeState(STDOUTLIST,100);
         }
         else{
             if(RS485Ready){
@@ -1272,7 +1285,7 @@ updateDIOut(0);
 
 void Modbus485::changeState(int newState, int timeout) {
     if(task_state != newState){
-        qDebug() << "485: " << Qt::hex << task_state<< "->" << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+       // qDebug() << "485: " << Qt::hex << task_state<< "->" << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick(); -------------------------------------
         task_state = newState;
     }
 

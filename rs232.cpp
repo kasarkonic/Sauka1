@@ -474,17 +474,16 @@ void Rs232::loadQsettings()
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
 
-    settings.beginGroup("Calibrate");
-    settings.setValue("Description", "Level pressure sensors calibration values");
-    settings.setValue("level_max_0", 1000);
-    settings.setValue("level_min_0", 0);
-    settings.setValue("level_max_1", 1000);
-    settings.setValue("level_min_1", 0);
-    settings.setValue("Description", "Level pressure sensors calibration values");
-    settings.endGroup();
+   // settings.beginGroup("Calibrate");
+   // settings.setValue("Description", "Level pressure sensors calibration values");
+    //settings.setValue("level_max_0", 1000);
+    //settings.setValue("level_min_0", 0);
+    //settings.setValue("level_max_1", 1000);
+    //settings.setValue("level_min_1", 0);
+   // settings.endGroup();
     qDebug() << "init file RS232  QSettings settings(settingsFile, QSettings::IniFormat)" << settingsFile;
 
-    settings.sync();
+    //settings.sync();
 
     global.press_sensList[0].full_val = settings.value("level_max_0", "").toInt(&ok);
     if (!ok) {
@@ -508,6 +507,8 @@ void Rs232::loadQsettings()
         global.press_sensList[1].empty_val = 4;
         qDebug() << "ERROR4" <<settings.value("level_min_1", "");
     }
+
+    settings.endGroup();
 
     ui->verticalSlider_S0->setRange(global.press_sensList[0].empty_val,global.press_sensList[0].full_val);
     ui->verticalSlider_S1->setRange(global.press_sensList[1].empty_val,global.press_sensList[1].full_val);

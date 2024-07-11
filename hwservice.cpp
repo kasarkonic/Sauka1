@@ -34,7 +34,7 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
 
     ui->comboBox_use_motor->addItem("M8");
     ui->comboBox_use_motor->addItem("M9");
-    ui->comboBox_use_motor->addItem("M10");
+    ui->comboBox_use_motor->addItem("M4");
     ui->horizontalSlider->setRange(-100,100);
     //updateTimer = new QElapsedTimer();
     //updateTimer->start();
@@ -333,14 +333,14 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
 {
     switch (index) {
     case 0:
-        testMotorAddres = 18;
+        testMotorAddres = M8;
         break;
     default:
     case 1:
-        testMotorAddres = 19;
+        testMotorAddres = M9;
         break;
     case 2:
-        testMotorAddres = 20;
+        testMotorAddres = M4;
         break;
         testMotorAddres = 0;
     }
@@ -394,7 +394,7 @@ void HWService::on_pushButton_Motor_on_clicked()
     param.value = 7;
     global.rs485WrList.append(param);
 
-    param.regAdr = 15;
+    param.value = 15;
     global.rs485WrList.append(param);
 
     QString str;// = "Atrums: ";
@@ -407,13 +407,13 @@ void HWService::on_pushButton_Motor_on_clicked()
 
 void HWService::on_horizontalSlider_valueChanged(int value)
 {
-    int koef = 1;
+    int koef = 10;
     rpm = value * koef;    // koef for diferrent motors?
     qDebug() << "Motor speed rpm" << value;
     param.boardAdr = testMotorAddres;
 
     param.regAdr = LFRD_REG;
-    param.value = value;
+    param.value = rpm;
     global.rs485WrList.append(param);
 
     QString str;// = "Atrums: ";
