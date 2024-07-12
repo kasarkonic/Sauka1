@@ -301,6 +301,23 @@ void Global::setwaitTx(int val) {
     waitTx = val;
 }
 
+QString Global::getDriveErrorTxt(int errCode)
+{
+    QString res = "Error code: ";
+    res.append(QString::number(errCode));
+
+    for(int i = 0; i < driveErrorCodes.size(); i++)
+    {
+        if (driveErrorCodes[i].code == errCode) {
+            res.append(driveErrorCodes[i].name);
+            //res.append("/n");
+        }
+    }
+    // qDebug() << errCode << res;
+    return res;
+}
+
+
 //*************************************************************
 //in out number:
 

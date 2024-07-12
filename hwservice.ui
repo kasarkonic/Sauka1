@@ -328,7 +328,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="pushButton_get_error_code">
           <property name="text">
            <string>Get ERROR code</string>
           </property>

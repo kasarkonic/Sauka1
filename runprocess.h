@@ -62,7 +62,7 @@ private:
     int stateTimerInterval = 0;
     bool stateTimerTimeout = false;
     int tempInt = 0;
-    Global::rs485WrPar paramr;
+   // Global::rs485WrPar paramr;
 
 
 signals:

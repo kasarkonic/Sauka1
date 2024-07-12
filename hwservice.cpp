@@ -362,7 +362,7 @@ void HWService::on_pushButton_Motor_off_clicked(bool checked)
     param.boardAdr = testMotorAddres;
     param.regAdr = CMD_REG;
     param.value = 7;
-
+    param.cmd = WR_REG;
     global.rs485WrList.append(param);
 
     //QString str = "Motor On";
@@ -376,6 +376,8 @@ void HWService::on_pushButton_Reset_clicked()
 
     param.regAdr = CMD_REG;
     param.value = 128;
+    param.len = 1;
+    param.cmd = WR_REG;
     global.rs485WrList.append(param);
 }
 
@@ -386,6 +388,8 @@ void HWService::on_pushButton_Motor_on_clicked()
     param.boardAdr = testMotorAddres;
     param.value = 128;          // ??????????????? reset
     param.regAdr = CMD_REG;
+    param.len = 1;
+    param.cmd = WR_REG;
     global.rs485WrList.append(param);
 
     param.value = 6;
@@ -414,6 +418,8 @@ void HWService::on_horizontalSlider_valueChanged(int value)
 
     param.regAdr = LFRD_REG;
     param.value = rpm;
+    param.len = 1;
+    param.cmd = WR_REG;
     global.rs485WrList.append(param);
 
     QString str;// = "Atrums: ";
@@ -446,12 +452,22 @@ void HWService::on_pushButton_slider_plus_clicked()
 }
 
 
-void HWService::on_pushButton_2_clicked()
+void HWService::on_pushButton_get_error_code_clicked()
 {
     param.boardAdr = testMotorAddres;
 
     param.regAdr = ERRD;
-    param.value = 0;
+   // param.value = 0;
+    param.len = 1;
+    param.cmd = RD_REG;
     global.rs485WrList.append(param);
+
+
+    param.regAdr = SAF1;
+    //param.value = 0;
+    param.len = 14;
+    param.cmd = RD_REG;
+    global.rs485WrList.append(param);
+
 }
 

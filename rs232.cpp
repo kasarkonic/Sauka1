@@ -449,11 +449,10 @@ int Rs232::calcPressSensList(int sensorNr)
     }
     global.press_sensList[sensorNr].average_val = (int)(sum / 8);
 
-    if(global.press_sensList[sensorNr].full_val > global.press_sensList[sensorNr].empty_val){
-        global.press_sensList[sensorNr].fill = (int)(
-            (global.press_sensList[sensorNr].average_val - global.press_sensList[sensorNr].empty_val)/
-            (global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) * 100);
-
+    if((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) > 0)  {
+        global.press_sensList[sensorNr].fill =  (int)(
+            (100 * global.press_sensList[sensorNr].average_val)/
+            (global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val));
 
         if (global.press_sensList[sensorNr].fill < 0){
             global.press_sensList[sensorNr].fill = 0;
@@ -465,7 +464,7 @@ int Rs232::calcPressSensList(int sensorNr)
         global.press_sensList[sensorNr].average_val = 0;
     }
     qDebug()  << "AVR" << sum << global.press_sensList[sensorNr].average_val << global.press_sensList[sensorNr].fill;
-    return global.press_sensList[sensorNr].average_val;
+    return global.press_sensList[sensorNr].fill;
 }
 
 void Rs232::loadQsettings()

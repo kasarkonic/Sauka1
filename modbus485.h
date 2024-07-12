@@ -32,6 +32,7 @@ public:
     bool wrDrive(int boardAdr, int regAdr, quint16 value);
     bool wrDrivem(int boardAdr, int regAdr, quint16 value1,quint16 value2);
     bool rdDrive(int boardAdr, int regAdr);
+    bool rdDrivem(int boardAdr, int regAdr,int len);
 
     bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2);
     // bool updateDIOut();
@@ -97,19 +98,7 @@ private:
         STDRIVE8_Stop,
         STDRIVE8_Reset,
 
-        State_rd23IOD32_0,  // 0
-        State_rd23IOD32_1,
-        State_rd24DIB32,
-        State_rdN4AIB16,
 
-        State_wd23IOD32_1,
-        State_wd23IOD32_2,  // 5
-        State_wd23IOD32_4,
-        State_wd23IOD32_8,
-
-        State_inverter1,
-        State_inverter2,
-        State_inverter3
 
     };
 
@@ -129,6 +118,7 @@ private:
     // for testing
     quint16 vval1  = 0x1;
     quint16 vval2 = 0x8000;
+    Global::rs485WrPar param;
 
 };
 

@@ -72,9 +72,10 @@ void Runprocess::stateInit() {
 void Runprocess::stateRun() {
     switch (getState()) {
     case StateRun:
-        paramr.boardAdr = 18;        // for test !!!
-        paramr.regAdr = ETA_REG;
-        paramr.value = 0;
+        param.boardAdr = 18;        // for test !!!
+        param.regAdr = ETA_REG;
+        param.value = 0;
+        param.len = 1;
 
       //  global.rs485WrList.append(paramr);    // READ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!  nevis write
         //qDebug() << "StateRun " << global.getTick();
@@ -126,7 +127,8 @@ for(int i = 128; i> 100; i--){
         param.boardAdr = M8;
         param.regAdr = i;   // reset    ??
         param.value = 0;
-
+        param.len = 1;
+        param.cmd
         global.rs485WrList.append(param);
 }
 */

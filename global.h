@@ -134,10 +134,86 @@ public:
 
     struct rs485WrPar {
         int boardAdr;
+        int cmd;    // 6 write single reg.   3 reead holding reg.
         int regAdr;
         quint16 value;
+        int len;
     };
 
+    struct drError_code{
+        int code;
+        const char *name;
+    };
+
+
+    QList<drError_code>  driveErrorCodes {
+        {0x0000,	"[No fault] (NOF)	No fault saved"},
+        {0x1000,	"[Precharge] (CRF1)	Precharge"},
+        {0x1000,	"[Motor overload] (OLF)	Motor overload fault"},
+        {0x1000,	"[Overspeed] (SOF)	Motor overspeed fault"},
+        {0x1000,	"[IGBT desaturation] (HDF)	IGBT desaturation"},
+        {0x1000,	"[internal- CPU ] (INFE)	internal- CPU"},
+        {0x1000,	"[Ch.sw. fault] (CSF)	Channel switching fault"},
+        {0x1000,	"[Angle error] (ASF)	Angle error"},
+
+        {0x2230,	"[IGBT short circuit] (SCF4)	IGBT short circuit fault"},
+        {0x2310,	"[Overcurrent] (OCF)	Overcurrent fault"},
+        {0x2311,	"[Proc.Overload Flt] (OLC)	Process Overload Fault"},
+        {0x2320,	"[Motor short circuit] (SCF1)	Motor short circuit"},
+        {0x2320,	"[Motor short circuit] (SCF5)	motor short circuit"},
+       {0x2330,     "[Ground short circuit] (SCF3)	Ground short circuit"},
+        {0x3110,	"[Mains overvoltage] (OSF)	Supply overvoltage fault"},
+        {0x3120,	"[Undervoltage] (USF)	Supply undervolt fault"},
+        {0x3130,	"[Input phase loss] (PHF)	Supply phase loss fault"},
+        {0x3310,	"[Overbraking] (OBF)	DC bus overvoltage fault"},
+        {0x3310,	"[1 output phase loss] (OPF1)	1 motor phase loss fault"},
+        {0x3310,	"[3out ph loss] (OPF2)	3 motor phase loss fault"},
+        {0x4210,	"[Drive overheat] (OHF)	Drive overheating fault"},
+       {0x4210,     "[IGBT overheat] (TJF)	IGBT overheat fault"},
+       {0x4310,     "[PTC fault] (OTFL)	LI6=PTC overheat fault"},
+         {0x5000,	"[Out. contact. stuck] (FCF1)	Output cont close fault"},
+         {0x5000,	"[Out. contact. open.] (FCF2)	Output cont open fault"},
+          {0x5000,	"[input contactor] (LCF)	input contactor"},
+         {0x5210,	"[Internal- I measure] (INF9)	Internal I measure fault"},
+       {0x5210,     "[Internal-mains circuit] (INFA)	Internal i/p volt circuit flt"},
+            {0x5210,	"[Internal- th. sensor] (INFB)	Internal temperature fault"},
+            {0x5530,	"[Control Eeprom] (EEF1)	EEprom control fault"},
+            {0x5530,	"[Power Eeprom] (EEF2)	EEprom power fault"},
+            {0x6100,	"[Rating error] (INF1)	Rating error"},
+            {0x6100,	"[PWR Calib.] (INF2)	Incompatible control card"},
+            {0x6100,	"[Int.serial link] (INF3)	Internal coms link fault"},
+            {0x6100,	"[Int.Mfg area] (INF4)	Internal manu zone fault"},
+            {0x6100,	"[Cards pairing] (HCF)	Cards pairing"},
+            {0x6300,	"[Incorrect config.] (CFF)	Incorrect configuration"},
+            {0x6300,	"[Invalid config.] (CFI)	Invalid config parameters"},
+            {0x6300,	"[Bad conf] (CFI2)	Interrupted config."},
+            {0x7000,	"[Internal-option] (INF6)	Internal option fault"},
+            {0x7110,	"[Brake feedback] (BRF)	Brake feedback fault"},
+            {0x7300,	"[Load slipping] (ANF)	Output speed <> ref"},
+            {0x7300,	"[LI6=PTC probe] (PTFL)	LI6=PTC failed"},
+          {0x7300,	"[AI3 4-20mA loss] (LFF3)	AI3 4-20mA loss"},
+          {0x7310,	"[Speed fdback loss] (SPF)	Speed feedback loss"},
+          {0x7400,	"[FB fault] (FBE)	FB fault"},
+          {0x7400,	"[FB stop flt.] (FBES)	FB stop fault"},
+          {0x7510,	"[Modbus com.] (SLF1)	Modbus coms fault"},
+          {0x7510,	"[HMI com.] (SLF3)	HMI coms fault"},
+          {0x7520,	"[int. com.link] (ILF)	Com Internal link fault"},
+          {0x7520,	"[Com. network] (CNF)	Network fault"},
+          {0x7530,	"[PC com.] (SLF2)	PC coms fault"},
+          {0x8100,	"[CAN com.] (COF)	Comms fault CANopen"},
+          {0x9000,	"[External flt-LI/Bit] (EPF1)	External fault logic input"},
+          {0x9000,	"[External fault com.] (EPF2)	External fault comms"},
+          {0xFF00,	"[Auto-tuning ] (TNF)	Auto-tuning fault"},
+                {0xFF01,	"[Brake control] (BLF)	Brake control fault"},
+                {0xFF02,	"[Torque/current lim] (SSF)	Torque/current limit fault"},
+                {0xFF03,	"[Pr.Underload.Flt] (ULF)	Process Underlaod Fault"},
+                {0xFF03,	"[Safety fault] (SAFF)	Safety fault"},
+                {0xFF80,	"[Load fault] (DLF)	Dynamic load fault"}
+
+
+
+
+    };
 
     QList<rs485WrPar> rs485WrList;
 
@@ -219,7 +295,7 @@ public:
     //void addTick();
     int getwaitTx();
     void setwaitTx(int val);
-
+    QString    getDriveErrorTxt(int errCode);
 
 private:
 

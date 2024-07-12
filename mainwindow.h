@@ -23,6 +23,7 @@
 #include "scale.h"
 #include "runprocess.h"
 
+
 //#include "componentcard.h"
 //#include "recipet.h"
 
