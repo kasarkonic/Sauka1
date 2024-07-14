@@ -69,8 +69,8 @@ void setup() {
 
 
 
-  //   Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
-  //  Timer1.attachInterrupt(timerIsr); // attach the service routine here
+ //    Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
+ //   Timer1.attachInterrupt(timerIsr); // attach the service routine here
 
   Serial.begin(115200);
   scale_1.begin(LOADCELL_1_DOUT_PIN, LOADCELL_1_SCK_PIN);
