@@ -26,12 +26,12 @@ public:
     bool init();
     void test(int address, int value);
     bool wr23IOD32(int boardAdr, int regAdr, quint16 value);
-    bool rd23IOD32(int boardAdr, int regAdr);
+    bool rd23IOD32(int boardAdr, int regAdr, int len);
     bool rd24DIB32(int boardAdr, int regAdr);
     bool rdN4AIB16(int boardAdr, int regAdr, int len);
     bool wrDrive(int boardAdr, int regAdr, quint16 value);
     bool wrDrivem(int boardAdr, int regAdr, quint16 value1,quint16 value2);
-    bool rdDrive(int boardAdr, int regAdr);
+   // bool rdDrive(int boardAdr, int regAdr);
     bool rdDrivem(int boardAdr, int regAdr,int len);
 
     bool wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2);

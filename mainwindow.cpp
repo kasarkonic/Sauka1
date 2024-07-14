@@ -201,16 +201,7 @@ void MainWindow::timerEvent(QTimerEvent* event) {
         setWindowTitle(currentTime);
         ui->statusbar->showMessage(statusStr + currentTime);
 
-        // qDebug() <<  "-------------------";
-         //modbus485.readData();
-         // modbus485.rd24DIB32(4,0xc0);
-         // modbus485.rd23IOD32(4,0xc0);
-         // digital output
-         /*  if (att < 0xffff)
-         modbus485.wr23IOD32(4,0x70,att);  // wr23IOD32(7,0x70, 0xff);
-     else
-         modbus485.wr23IOD32(4,0x71,att>>16);  // wr23IOD32(7,0x70, 0xff);
-  */
+
 
 
     }

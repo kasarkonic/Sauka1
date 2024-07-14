@@ -1,23 +1,23 @@
 #include "HX711.h"
 #include <TimerOne.h>
 /*
-msg format:
+  msg format:
 
-$0 xxxx.x   // 0. sensor pressure value
-$1 xxxx.x   // 1. pressure value
-.
-.
-.
-.
-.
+  $0 xxxx.x   // 0. sensor pressure value
+  $1 xxxx.x   // 1. pressure value
+  .
+  .
+  .
+  .
+  .
 
-$10 xxx.x   temperature measurement T1
-$11 xxx.x   temperature measurement T2
+  $10 xxx.x   temperature measurement T1
+  $11 xxx.x   temperature measurement T2
 
 
-if error
+  if error
 
-$0 ERROR text
+  $0 ERROR text
 
 
 
@@ -40,9 +40,15 @@ Adafruit_MAX31865 thermo2 = Adafruit_MAX31865(9, 11, 12, 13);
 // level sensors
 
 // HX711 circuit wiring
-const int LOADCELL_1_DOUT_PIN =2;
+const int LOADCELL_1_DOUT_PIN = 2;
 const int LOADCELL_1_SCK_PIN = 3;
+const int LOADCELL_2_DOUT_PIN = 4;
+const int LOADCELL_2_SCK_PIN = 5;
+const int LOADCELL_3_DOUT_PIN = 6;
+const int LOADCELL_3_SCK_PIN = 7;
 HX711 scale_1;
+HX711 scale_2;
+HX711 scale_3;
 
 //const int LOADCELL_2_DOUT_PIN 4;
 //const int LOADCELL_2_SCK_PIN = 5;
@@ -63,74 +69,81 @@ void setup() {
 
 
 
- //   Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
+  //   Timer1.initialize(1000000); //1000 ms,   1000000 => 1 s
   //  Timer1.attachInterrupt(timerIsr); // attach the service routine here
-  
+
   Serial.begin(115200);
   scale_1.begin(LOADCELL_1_DOUT_PIN, LOADCELL_1_SCK_PIN);
-//  scale_2.begin(LOADCELL_2_DOUT_PIN, LOADCELL_2_SCK_PIN);
-  
+  scale_2.begin(LOADCELL_2_DOUT_PIN, LOADCELL_2_SCK_PIN);
+  scale_3.begin(LOADCELL_3_DOUT_PIN, LOADCELL_3_SCK_PIN);
+
   pinMode(LED_BUILTIN, OUTPUT);
   thermo1.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   thermo2.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   delay(1000);
-
 }
 
 void loop() {
-// read pressure_1
-long reading_1;
+
+  long reading_1 ;
+  long reading_2 ;
+  long reading_3 ;
+
   if (scale_1.is_ready()) {
     reading_1 = scale_1.read();
     Serial.print("$0 ");
-
-  } else {
-    Serial.print("$0 ");
-    reading_1 = 9999;
+    Serial.println(reading_1);
   }
-Serial.println(reading_1);
   
-delay(100);
-/*
-// read pressure_2
+  //-----------------------------------
+
+  //  Serial.print("$1 ");
   if (scale_2.is_ready()) {
-    long reading_2 = scale_2.read();
-    Serial.print("$2 ");
+    reading_2 = scale_2.read();
+    Serial.print("$1 ");
     Serial.println(reading_2);
-  } else {
-    Serial.println("ERROR sensor not found.");
   }
+
+  //------------------------------------------
+
+  if (scale_3.is_ready()) {
+    reading_3 = scale_3.read();
+    Serial.print("$2 ");
+    Serial.println(reading_3);
+  }
+
+  //----------------------------------------------
+
+
+
   delay(100);
 
-*/
+  //read temperature
+  uint16_t rtd1 = thermo1.readRTD();
 
+  uint16_t rtd2 = thermo2.readRTD();
 
-//read temperature
-uint16_t rtd1 = thermo1.readRTD();
-
-uint16_t rtd2 = thermo2.readRTD();
-
-    //Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
-    float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3893.0);
-    Serial.print("$10 ");
+  //Serial.print(rtd1); Serial.print("   "); Serial.println(rtd2);
+  float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3893.0);
+   Serial.print("$10 ");
     Serial.println(temp1);
-    delay(100);
-    float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.5);
-    Serial.print("$11 ");
-    Serial.println(temp2);
-   // String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
-    //    Serial.println(str);
-delay(100);
+  delay(100);
+  float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3976.5);
+   Serial.print("$11 ");
+   Serial.println(temp2);
+  // String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+  //    Serial.println(str);
+  delay(100);
 
 
-        
-    timerCount++;
-    if (timerCount & 1) {
-      digitalWrite(LED_BUILTIN, HIGH);
-    }
-    else {
-      digitalWrite(LED_BUILTIN, LOW);
-    }
+
+  timerCount++;
+  if (timerCount & 1) {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
 
 
 
@@ -138,27 +151,25 @@ delay(100);
 
 
 
-  ///////////////////////////////////////
-  void timerIsr() {
-    timerCount++;
-    Serial.println(timerCount);
-    if (timerCount % 2 == 0) {
-      digitalWrite(LED_BUILTIN, HIGH);
-    }
-    else {
-      digitalWrite(LED_BUILTIN, LOW);
-    }
-    
-    //uint16_t rtd1 = thermo1.readRTD();
-    //uint16_t rtd2 = thermo2.readRTD();
-
-    //thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
-    //float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3850.0);
-    //float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3876.0);
-
-    //String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
-   // Serial.println(str);
-
+///////////////////////////////////////
+void timerIsr() {
+  timerCount++;
+  // Serial.println(timerCount);
+  if (timerCount % 2 == 0) {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else {
+    digitalWrite(LED_BUILTIN, LOW);
   }
 
-  
+  //uint16_t rtd1 = thermo1.readRTD();
+  //uint16_t rtd2 = thermo2.readRTD();
+
+  //thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
+  //float temp1 =  thermo1.calculateTemperature(rtd1, 1000, 3850.0);
+  //float temp2 =  thermo2.calculateTemperature(rtd2, 1000, 3876.0);
+
+  //String str = "$" + String(timerCount) + (" ") + String(temp1) + (" ")  + String(temp2) + " ;" ;
+  // Serial.println(str);
+
+}
