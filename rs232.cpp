@@ -44,6 +44,7 @@ Rs232::Rs232(Global& global, QWidget* parent)
 
     ui->label_name_S0->setText(global.press_sensList[0].name);
     ui->label_name_S1->setText(global.press_sensList[1].name);
+    ui->label_name_S2->setText(global.press_sensList[2].name);
 }
 
 Rs232::~Rs232() {
@@ -443,9 +444,9 @@ int Rs232::calcPressSensList(int sensorNr)
 
     int sum = 0;
 
-    for (int i = 0; i < 8; i++){       // 10 readings
+    for (int i = 0; i < 8; i++){       // 8 readings
         sum += global.press_sensList[sensorNr].buf[i];
-            qDebug() << i << sum << global.press_sensList[sensorNr].buf[i];
+        qDebug() << i << sum << global.press_sensList[sensorNr].buf[i]<<global.press_sensList[sensorNr].current_val ;
     }
     global.press_sensList[sensorNr].average_val = (int)(sum / 8);
 
@@ -479,6 +480,8 @@ void Rs232::loadQsettings()
     //settings.setValue("level_min_0", 0);
     //settings.setValue("level_max_1", 1000);
     //settings.setValue("level_min_1", 0);
+    //settings.setValue("level_max_2", 1000);
+    //settings.setValue("level_min_2", 0);
    // settings.endGroup();
     qDebug() << "init file RS232  QSettings settings(settingsFile, QSettings::IniFormat)" << settingsFile;
 
@@ -506,6 +509,17 @@ void Rs232::loadQsettings()
         global.press_sensList[1].empty_val = 4;
         qDebug() << "ERROR4" <<settings.value("level_min_1", "");
     }
+    global.press_sensList[2].full_val = settings.value("level_max_2", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[2].full_val = 1012;
+        qDebug() << "ERROR3" <<settings.value("level_max_2", "");
+    }
+
+    global.press_sensList[2].empty_val = settings.value("level_min_2", "").toInt(&ok);
+    if (!ok) {
+        global.press_sensList[2].empty_val = 5;
+        qDebug() << "ERROR4" <<settings.value("level_min_2", "");
+    }
 
     settings.endGroup();
 
@@ -517,6 +531,7 @@ void Rs232::loadQsettings()
 
     ui->lineEdit_empty_S0->setText(QString::number(global.press_sensList[0].empty_val));
     ui->lineEdit_empty_S1->setText(QString::number(global.press_sensList[1].empty_val));
+
     ui->lineEdit_full_S0->setText(QString::number(global.press_sensList[0].full_val));
     ui->lineEdit_full_S1->setText(QString::number(global.press_sensList[1].full_val));
 
@@ -529,11 +544,12 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
     int t2 = 0;
     int val1 = 0;
     int val2 = 0;
+    bool comError = false;
 
 
     // QStringList elements = QString(currSdata).split(',');
 
-    //qDebug() << "currSdata" << currSdata.size() << currSdata;
+    qDebug() << "currSdata" << currSdata.size() << currSdata;
 
     if (currSdata.size() == 2) {
         qDebug() << currSdata[0] <<"," << currSdata[1] ;
@@ -542,15 +558,25 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
         if (!ok) {
             ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
             t1 = -1;
+            comError = true;
         }
         if(t1>=0){
             t2 = currSdata[1].toFloat(&ok);
             if (!ok) {
                 ui->textEditInfo->append(QString("Uztverti kļūdaini dati !!!"));
                 t2 = 0;
+                comError = true;
             }
         }
     }
+    else{
+       comError = true;
+    }
+    if(comError){
+        qDebug() << "communicate error from pressure level sensor!";
+        return;
+    }
+
     // qDebug() << currSdata[0]<< t1 << "," << currSdata[1] << t2 ;
     int sensorNr = t1;
 
@@ -572,6 +598,13 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
             ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
             ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
             ui->label_current_S1->setText(QString::number(global.DIinput[LEVEL_SENSOR_2].value));
+            break;
+        case 2:
+            global.DIinput[LEVEL_SENSOR_3].value = addPressSensList(t1, t2/100);
+            ui->verticalSlider_S2->setValue(global.DIinput[LEVEL_SENSOR_3].value);
+            ui->label_average_S2->setText(QString::number(global.press_sensList[sensorNr].average_val));
+            ui->label_current_S2->setText(QString::number(global.press_sensList[sensorNr].current_val));
+            ui->label_current_S2->setText(QString::number(global.DIinput[LEVEL_SENSOR_3].value));
             break;
         case 10:
             val1 = t2;
@@ -780,4 +813,50 @@ void Rs232::on_pushButton_save_S1_clicked()
     settings.setValue("level_min_1", global.press_sensList[1].empty_val);
     settings.endGroup();
 }
+
+
+void Rs232::on_lineEdit_full_S2_editingFinished()
+{
+    global.press_sensList[2].full_val = ui->lineEdit_full_S2->text().toInt(&ok);
+    if (!ok) {
+        ui->lineEdit_full_S2->setText("ERROR!");
+    }
+    ui->verticalSlider_S2->setMaximum(global.press_sensList[2].full_val);
+}
+
+
+void Rs232::on_pushButton_set_S2_clicked()
+{
+    global.press_sensList[2].full_val = global.press_sensList[2].average_val;
+    ui->verticalSlider_S2->setMaximum(global.press_sensList[2].full_val);
+    ui->lineEdit_full_S2->setText(QString::number(global.press_sensList[2].full_val));
+}
+
+void Rs232::on_lineEdit_empty_S2_editingFinished()
+{
+    global.press_sensList[2].empty_val = ui->lineEdit_empty_S2->text().toInt(&ok);
+    if (!ok) {
+        ui->lineEdit_empty_S2->setText("ERROR!");
+    }
+    ui->verticalSlider_S2->setMinimum(global.press_sensList[2].empty_val);
+}
+
+void Rs232::on_pushButton_set_empty_s2_clicked()
+{
+    global.press_sensList[2].empty_val = global.press_sensList[2].average_val;
+    ui->verticalSlider_S2->setMinimum(global.press_sensList[2].empty_val);
+    ui->lineEdit_empty_S2->setText(QString::number(global.press_sensList[2].empty_val));
+}
+
+
+void Rs232::on_pushButton_save_S2_clicked()
+{
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
+    settings.beginGroup("Calibrate");
+    settings.setValue("level_max_2", global.press_sensList[2].full_val);
+    settings.setValue("level_min_2", global.press_sensList[2].empty_val);
+    settings.endGroup();
+}
+
 

@@ -69,6 +69,16 @@ private slots:
 
     void on_pushButton_save_S1_clicked();
 
+    void on_lineEdit_full_S2_editingFinished();
+
+    void on_pushButton_set_S2_clicked();
+
+    void on_pushButton_set_empty_s2_clicked();
+
+    void on_pushButton_save_S2_clicked();
+
+    void on_lineEdit_empty_S2_editingFinished();
+
 signals:
     void newData(QStringList data);
 

@@ -201,8 +201,10 @@ enum virtualOutputs
 
 #define LEVEL_SENSOR_1   101
 #define LEVEL_SENSOR_2   102
-#define TEMP_SENSOR_1   103
-#define TEMP_SENSOR_2   104
+#define LEVEL_SENSOR_3   103
+#define TEMP_SENSOR_1   104
+#define TEMP_SENSOR_2   105
+
 
 class Def {
 public:

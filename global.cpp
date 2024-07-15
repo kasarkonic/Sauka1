@@ -109,6 +109,7 @@ void Global::createPressSensList()
 
     press_sensList[0].name = "1. tvertnes līmenis";
     press_sensList[1].name = "2. tvertnes līmenis";
+    press_sensList[2].name = "3. tvertnes līmenis";
 
 }
 
