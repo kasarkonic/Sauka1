@@ -639,7 +639,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                      << "reg:"
                      <<  reply->result().startAddress()
                      << "data" ;
-            for(int i = 0; i < replayDataArray.length(); i++){
+            for(int i = 0; i < replayDataArray.length(); i++){  // 0,1,2
                 qDebug() << reply->result().value(i);
             }
             qDebug() << " -------------------";
@@ -666,10 +666,23 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for(int i = 0; i < replayDataArray.length(); i++){
                     qDebug() << reply->result().value(i);
                 }
+
+                qDebug() << reply->result().value(0);   // tas ir rezults ERRD
+                break;
+            case RFRD_REG:      // RFRD_REG 8605   1 rpm
+                qDebug() << "RFRD_REG : ";
+                for(int i = 0; i < replayDataArray.length(); i++){
+                    qDebug() << reply->result().value(i);
+                }
+
+                qDebug() << reply->result().value(0) << " ---------------------------------------- rpm" ;   // tas ir rezults RFRD_REG
                 break;
             default:
                 break;
             }
+
+
+
 
 
             // reg ERRD 8606 is CiA402 fault code
