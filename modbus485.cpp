@@ -318,7 +318,7 @@ quint16 Modbus485::updateDIOut(int i) {
             global.DIoutput[k].update = false;
         }
         retval = val1;
-        qDebug() << "retval0" << i << retval;
+       // qDebug() << "retval0" << i << retval;
     }
     //qDebug() << "retval1" << i << retval;
 
@@ -359,7 +359,7 @@ quint16 Modbus485::updateDIOut(int i) {
     }
 
 
-    qDebug() << "retval2" << i << Qt::hex << retval;
+  //  qDebug() << "retval2" << i << Qt::hex << retval;
     return retval;
 }
 
@@ -966,7 +966,7 @@ void Modbus485::runTaskCycle() {
 
     stateStartTime = global.getTick();
     if(oldtask_state != task_state){
-        qDebug() << "runTaskCycle()" << task_state << stateStartTime;
+       // qDebug() << "runTaskCycle()" << task_state << stateStartTime;
     }
     oldtask_state = task_state;
     int interval = 10;  // 25 arI strādā

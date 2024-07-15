@@ -94,16 +94,16 @@ void loop() {
     Serial.print("$0 ");
     Serial.println(reading_1);
   }
-  
+ 
   //-----------------------------------
-
+ 
   //  Serial.print("$1 ");
   if (scale_2.is_ready()) {
     reading_2 = scale_2.read();
     Serial.print("$1 ");
     Serial.println(reading_2);
   }
-
+ 
   //------------------------------------------
 
   if (scale_3.is_ready()) {
@@ -117,7 +117,7 @@ void loop() {
 
 
   delay(100);
-
+/*
   //read temperature
   uint16_t rtd1 = thermo1.readRTD();
 
@@ -135,7 +135,7 @@ void loop() {
   //    Serial.println(str);
   delay(100);
 
-
+*/
 
   timerCount++;
   if (timerCount & 1) {

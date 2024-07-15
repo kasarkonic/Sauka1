@@ -195,7 +195,7 @@ void Rs232::timerEvent(QTimerEvent* event) {
             int sec = startTime.secsTo(finishTime);
             QTime t = QTime(0, 0).addSecs(sec);
             QString durat = QString("%1h. %2min. %3sek.")
-                                .arg(t.hour()).arg(t.minute()).arg(t.second());
+                    .arg(t.hour()).arg(t.minute()).arg(t.second());
 
             QString str = tr("  Ieraksts sākts ");
             str.append(startTime.toString("hh:mm:ss"));
@@ -452,8 +452,8 @@ int Rs232::calcPressSensList(int sensorNr)
 
     if((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) > 0)  {
         global.press_sensList[sensorNr].fill =  (int)(
-            (100 * global.press_sensList[sensorNr].average_val)/
-            (global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val));
+                    (100 * global.press_sensList[sensorNr].average_val)/
+                    (global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val));
 
         if (global.press_sensList[sensorNr].fill < 0){
             global.press_sensList[sensorNr].fill = 0;
@@ -474,15 +474,15 @@ void Rs232::loadQsettings()
     QString settingsFile = global.settingsFileName;
     QSettings settings(settingsFile, QSettings::IniFormat);
 
-   // settings.beginGroup("Calibrate");
-   // settings.setValue("Description", "Level pressure sensors calibration values");
+    // settings.beginGroup("Calibrate");
+    // settings.setValue("Description", "Level pressure sensors calibration values");
     //settings.setValue("level_max_0", 1000);
     //settings.setValue("level_min_0", 0);
     //settings.setValue("level_max_1", 1000);
     //settings.setValue("level_min_1", 0);
     //settings.setValue("level_max_2", 1000);
     //settings.setValue("level_min_2", 0);
-   // settings.endGroup();
+    // settings.endGroup();
     qDebug() << "init file RS232  QSettings settings(settingsFile, QSettings::IniFormat)" << settingsFile;
 
     //settings.sync();
@@ -570,53 +570,54 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
         }
     }
     else{
-       comError = true;
+        comError = true;
     }
+
     if(comError){
         qDebug() << "communicate error from pressure level sensor!";
         return;
     }
+    else{
+        // qDebug() << currSdata[0]<< t1 << "," << currSdata[1] << t2 ;
+        int sensorNr = t1;
 
-    // qDebug() << currSdata[0]<< t1 << "," << currSdata[1] << t2 ;
-    int sensorNr = t1;
+        if(t1 >= 0){
+            t2 = t2/100;
+            switch (t1) {
+            case 0:
+                //global.press_sensList[sensorNr].current_val;//?????????????????????????????????????????????????????????????????????????????
+                global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2);
+                // qDebug()<< "?" << t1 << ","  << t2 << "val " << global.DIinput[LEVEL_SENSOR_1].value;
+                ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value);
+                ui->label_average_S0->setText(QString::number(global.press_sensList[sensorNr].average_val));
+                ui->label_current_S0->setText(QString::number(global.press_sensList[sensorNr].current_val));
+                ui->label_current_S0->setText(QString::number(global.DIinput[LEVEL_SENSOR_1].value));
+                break;
+            case 1:
+                global.DIinput[LEVEL_SENSOR_2].value = addPressSensList(t1, t2);
+                ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value);
+                ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
+                ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
+                ui->label_current_S1->setText(QString::number(global.DIinput[LEVEL_SENSOR_2].value));
+                break;
+            case 2:
+                global.DIinput[LEVEL_SENSOR_3].value = addPressSensList(t1, t2);
+                ui->verticalSlider_S2->setValue(global.DIinput[LEVEL_SENSOR_3].value);
+                ui->label_average_S2->setText(QString::number(global.press_sensList[sensorNr].average_val));
+                ui->label_current_S2->setText(QString::number(global.press_sensList[sensorNr].current_val));
+                ui->label_current_S2->setText(QString::number(global.DIinput[LEVEL_SENSOR_3].value));
+                break;
+            case 10:
+                val1 = t2;
+                break;
+            case 11:
+                val2 = t2;
 
-    if(t1 >= 0){
-
-        switch (t1) {
-        case 0:
-
-            global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2/100);
-            // qDebug()<< "?" << t1 << ","  << t2 << "val " << global.DIinput[LEVEL_SENSOR_1].value;
-            ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value);
-            ui->label_average_S0->setText(QString::number(global.press_sensList[sensorNr].average_val));
-            ui->label_current_S0->setText(QString::number(global.press_sensList[sensorNr].current_val));
-            ui->label_current_S0->setText(QString::number(global.DIinput[LEVEL_SENSOR_1].value));
-            break;
-        case 1:
-            global.DIinput[LEVEL_SENSOR_2].value = addPressSensList(t1, t2/100);
-            ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value);
-            ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
-            ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
-            ui->label_current_S1->setText(QString::number(global.DIinput[LEVEL_SENSOR_2].value));
-            break;
-        case 2:
-            global.DIinput[LEVEL_SENSOR_3].value = addPressSensList(t1, t2/100);
-            ui->verticalSlider_S2->setValue(global.DIinput[LEVEL_SENSOR_3].value);
-            ui->label_average_S2->setText(QString::number(global.press_sensList[sensorNr].average_val));
-            ui->label_current_S2->setText(QString::number(global.press_sensList[sensorNr].current_val));
-            ui->label_current_S2->setText(QString::number(global.DIinput[LEVEL_SENSOR_3].value));
-            break;
-        case 10:
-            val1 = t2;
-            break;
-        case 11:
-            val2 = t2;
-
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
+            }
         }
-
     }
     if (receiveDataRequest) {
         addPointToChart(val1, val2);
