@@ -73,6 +73,10 @@ private slots:
 
     void on_pushButton_get_error_code_clicked();
 
+    void on_pushButton_readReg_clicked();
+
+    void on_lineEdit_enter_reg_editingFinished();
+
 private:
 
     Global& global;
@@ -85,6 +89,7 @@ private:
     int out_value;
     int testMotorAddres = 18; // M8
     int rpm;
+    int readRegTest;
     // QElapsedTimer *updateTimer;
 
 

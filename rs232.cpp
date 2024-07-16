@@ -195,7 +195,7 @@ void Rs232::timerEvent(QTimerEvent* event) {
             int sec = startTime.secsTo(finishTime);
             QTime t = QTime(0, 0).addSecs(sec);
             QString durat = QString("%1h. %2min. %3sek.")
-                    .arg(t.hour()).arg(t.minute()).arg(t.second());
+                                .arg(t.hour()).arg(t.minute()).arg(t.second());
 
             QString str = tr("  Ieraksts sākts ");
             str.append(startTime.toString("hh:mm:ss"));
@@ -446,26 +446,23 @@ int Rs232::calcPressSensList(int sensorNr)
 
     for (int i = 0; i < 8; i++){       // 8 readings
         sum += global.press_sensList[sensorNr].buf[i];
-        qDebug() << i << sum << global.press_sensList[sensorNr].buf[i]<<global.press_sensList[sensorNr].current_val ;
     }
     global.press_sensList[sensorNr].average_val = (int)(sum / 8);
 
-    if((global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val) > 0)  {
-        global.press_sensList[sensorNr].fill =  (int)(
-                    (100 * global.press_sensList[sensorNr].average_val)/
-                    (global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val));
 
-        if (global.press_sensList[sensorNr].fill < 0){
-            global.press_sensList[sensorNr].fill = 0;
-        }
-        qDebug()  << "AVR" << global.press_sensList[sensorNr].average_val << global.press_sensList[sensorNr].fill;
-        //return global.press_sensList[sensorNr].fill;  ??????????????????????????????????????
+    if(global.press_sensList[sensorNr].full_val == global.press_sensList[sensorNr].empty_val){
+        global.press_sensList[sensorNr].full_val++;
     }
-    else{
-        global.press_sensList[sensorNr].average_val = 0;
-    }
+
+    float range = global.press_sensList[sensorNr].full_val - global.press_sensList[sensorNr].empty_val;
+    float res = 100 * ( global.press_sensList[sensorNr].average_val - global.press_sensList[sensorNr].empty_val)/range;
+
+    global.press_sensList[sensorNr].fill =  (int)res;
+
+
+
     qDebug()  << "AVR" << sum << global.press_sensList[sensorNr].average_val << global.press_sensList[sensorNr].fill;
-    return global.press_sensList[sensorNr].fill;
+    return global.press_sensList[sensorNr].average_val;
 }
 
 void Rs232::loadQsettings()
@@ -525,16 +522,18 @@ void Rs232::loadQsettings()
 
     ui->verticalSlider_S0->setRange(global.press_sensList[0].empty_val,global.press_sensList[0].full_val);
     ui->verticalSlider_S1->setRange(global.press_sensList[1].empty_val,global.press_sensList[1].full_val);
-    ui->verticalSlider_S0->setValue(500);
-    ui->verticalSlider_S1->setValue(500);
-
+    ui->verticalSlider_S2->setRange(global.press_sensList[2].empty_val,global.press_sensList[2].full_val);
+    ui->verticalSlider_S0->setValue((global.press_sensList[0].empty_val+global.press_sensList[0].full_val)/2);
+    ui->verticalSlider_S1->setValue((global.press_sensList[1].empty_val+global.press_sensList[1].full_val)/2);
+    ui->verticalSlider_S2->setValue((global.press_sensList[2].empty_val+global.press_sensList[2].full_val)/2);
 
     ui->lineEdit_empty_S0->setText(QString::number(global.press_sensList[0].empty_val));
     ui->lineEdit_empty_S1->setText(QString::number(global.press_sensList[1].empty_val));
+    ui->lineEdit_empty_S2->setText(QString::number(global.press_sensList[2].empty_val));
 
     ui->lineEdit_full_S0->setText(QString::number(global.press_sensList[0].full_val));
     ui->lineEdit_full_S1->setText(QString::number(global.press_sensList[1].full_val));
-
+    ui->lineEdit_full_S2->setText(QString::number(global.press_sensList[2].full_val));
 }
 
 void Rs232::newDataUpdateCh(QStringList currSdata) {
@@ -545,11 +544,12 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
     int val1 = 0;
     int val2 = 0;
     bool comError = false;
+    QString str;
 
 
     // QStringList elements = QString(currSdata).split(',');
 
-    qDebug() << "currSdata" << currSdata.size() << currSdata;
+    // qDebug() << "currSdata" << currSdata.size() << currSdata;
 
     if (currSdata.size() == 2) {
         qDebug() << currSdata[0] <<"," << currSdata[1] ;
@@ -576,36 +576,57 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
     if(comError){
         qDebug() << "communicate error from pressure level sensor!";
         return;
+
+
+
+
     }
     else{
         // qDebug() << currSdata[0]<< t1 << "," << currSdata[1] << t2 ;
         int sensorNr = t1;
 
         if(t1 >= 0){
-            t2 = t2/100;
+            t2 = (int)t2/1000.0;
             switch (t1) {
             case 0:
                 //global.press_sensList[sensorNr].current_val;//?????????????????????????????????????????????????????????????????????????????
-                global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2);
+                global.DIinput[LEVEL_SENSOR_1].value = addPressSensList(t1, t2);        // current
                 // qDebug()<< "?" << t1 << ","  << t2 << "val " << global.DIinput[LEVEL_SENSOR_1].value;
                 ui->verticalSlider_S0->setValue(global.DIinput[LEVEL_SENSOR_1].value);
                 ui->label_average_S0->setText(QString::number(global.press_sensList[sensorNr].average_val));
                 ui->label_current_S0->setText(QString::number(global.press_sensList[sensorNr].current_val));
-                ui->label_current_S0->setText(QString::number(global.DIinput[LEVEL_SENSOR_1].value));
+
+                str = global.press_sensList[0].name;
+                str.append("  ");
+                str.append(QString::number(global.press_sensList[sensorNr].fill));
+                str.append("%");
+                ui->label_name_S0->setText(str);
                 break;
+
             case 1:
                 global.DIinput[LEVEL_SENSOR_2].value = addPressSensList(t1, t2);
                 ui->verticalSlider_S1->setValue(global.DIinput[LEVEL_SENSOR_2].value);
                 ui->label_average_S1->setText(QString::number(global.press_sensList[sensorNr].average_val));
                 ui->label_current_S1->setText(QString::number(global.press_sensList[sensorNr].current_val));
-                ui->label_current_S1->setText(QString::number(global.DIinput[LEVEL_SENSOR_2].value));
+
+                str = global.press_sensList[1].name;
+                str.append("  ");
+                str.append(QString::number(global.press_sensList[sensorNr].fill));
+                str.append("%");
+                ui->label_name_S1->setText(str);
                 break;
+
             case 2:
                 global.DIinput[LEVEL_SENSOR_3].value = addPressSensList(t1, t2);
                 ui->verticalSlider_S2->setValue(global.DIinput[LEVEL_SENSOR_3].value);
                 ui->label_average_S2->setText(QString::number(global.press_sensList[sensorNr].average_val));
                 ui->label_current_S2->setText(QString::number(global.press_sensList[sensorNr].current_val));
-                ui->label_current_S2->setText(QString::number(global.DIinput[LEVEL_SENSOR_3].value));
+
+                str = global.press_sensList[2].name;
+                str.append("  ");
+                str.append(QString::number(global.press_sensList[sensorNr].fill));
+                str.append("%");
+                ui->label_name_S2->setText(str);
                 break;
             case 10:
                 val1 = t2;
@@ -662,7 +683,7 @@ int Rs232::addPressSensList(int sensorNr, int val)
     qDebug() << "addPressSensList" << sensorNr << val << global.press_sensList[sensorNr].curr_iter;
     global.press_sensList[sensorNr].current_val = val;
     global.press_sensList[sensorNr].curr_iter ++;
-    if(global.press_sensList[sensorNr].curr_iter >= 8){
+    if(global.press_sensList[sensorNr].curr_iter > 7){
         global.press_sensList[sensorNr].curr_iter = 0;
     }
     global.press_sensList[sensorNr].buf[global.press_sensList[sensorNr].curr_iter] = val;

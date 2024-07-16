@@ -401,6 +401,12 @@ void HWService::on_pushButton_Motor_on_clicked()
     param.value = 15;
     global.rs485WrList.append(param);
 
+    param.regAdr = LFRD_REG;
+    param.value = rpm;
+    param.len = 1;
+    param.cmd = WR_REG;
+    global.rs485WrList.append(param);
+
     QString str;// = "Atrums: ";
     str.append(QString::number(rpm)) ;
     str.append(" rpm");
@@ -411,7 +417,7 @@ void HWService::on_pushButton_Motor_on_clicked()
 
 void HWService::on_horizontalSlider_valueChanged(int value)
 {
-    int koef = 10;
+    int koef = 15;
     rpm = value * koef;    // koef for diferrent motors?
     qDebug() << "Motor speed rpm" << value;
     param.boardAdr = testMotorAddres;
@@ -469,5 +475,26 @@ void HWService::on_pushButton_get_error_code_clicked()
     param.cmd = RD_REG;
     global.rs485WrList.append(param);
 
+}
+
+void HWService::on_pushButton_readReg_clicked()
+{
+    if (readRegTest != 0){
+        param.regAdr = readRegTest;
+        //param.value = 0;
+        param.len = 1;
+        param.cmd = RD_REG;
+        global.rs485WrList.append(param);
+    }
+}
+
+void HWService::on_lineEdit_enter_reg_editingFinished()
+{
+    readRegTest = ui->lineEdit_enter_reg->text().toInt(&ok);
+    qDebug() << "out_value " << out_value << ok;
+    if (!ok) {
+        ui->lineEdit_Out_value->setText("ERROR!");
+        readRegTest = 0;
+    }
 }
 

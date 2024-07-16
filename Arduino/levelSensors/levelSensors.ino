@@ -25,8 +25,8 @@
 
 // temperatures sensors
 #include <Adafruit_MAX31865.h>
-Adafruit_MAX31865 thermo1 = Adafruit_MAX31865(10, 11, 12, 13);
-Adafruit_MAX31865 thermo2 = Adafruit_MAX31865(9, 11, 12, 13);
+//Adafruit_MAX31865 thermo1 = Adafruit_MAX31865(10, 11, 12, 13);
+//Adafruit_MAX31865 thermo2 = Adafruit_MAX31865(9, 11, 12, 13);
 // The value of the Rref resistor. Use 430.0 for PT100 and 4300.0 for PT1000
 //#define RREF      3900.0  //430.0  thermo1 =>3905.0 Om,  thermo2 =>3975.0 Om
 
@@ -49,11 +49,6 @@ const int LOADCELL_3_SCK_PIN = 7;
 HX711 scale_1;
 HX711 scale_2;
 HX711 scale_3;
-
-//const int LOADCELL_2_DOUT_PIN 4;
-//const int LOADCELL_2_SCK_PIN = 5;
-//HX711 scale_2;
-
 
 
 #define START_MSG 2
@@ -78,8 +73,8 @@ void setup() {
   scale_3.begin(LOADCELL_3_DOUT_PIN, LOADCELL_3_SCK_PIN);
 
   pinMode(LED_BUILTIN, OUTPUT);
-  thermo1.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
-  thermo2.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
+//  thermo1.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
+//  thermo2.begin(MAX31865_4WIRE);  // set to 2WIRE or 4WIRE as necessary
   delay(1000);
 }
 
@@ -94,16 +89,16 @@ void loop() {
     Serial.print("$0 ");
     Serial.println(reading_1);
   }
- 
+  delay(50);
   //-----------------------------------
  
-  //  Serial.print("$1 ");
+
   if (scale_2.is_ready()) {
     reading_2 = scale_2.read();
     Serial.print("$1 ");
     Serial.println(reading_2);
   }
- 
+   delay(50);
   //------------------------------------------
 
   if (scale_3.is_ready()) {
@@ -111,7 +106,7 @@ void loop() {
     Serial.print("$2 ");
     Serial.println(reading_3);
   }
-
+  delay(50);
   //----------------------------------------------
 
 
@@ -152,6 +147,7 @@ void loop() {
 
 
 ///////////////////////////////////////
+/*
 void timerIsr() {
   timerCount++;
   // Serial.println(timerCount);
@@ -173,3 +169,4 @@ void timerIsr() {
   // Serial.println(str);
 
 }
+*/
