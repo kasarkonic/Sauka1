@@ -189,6 +189,7 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr, int len) {
                readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         } else
             delete reply; // broadcast replies return immediately
+
          qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
 
         return true;

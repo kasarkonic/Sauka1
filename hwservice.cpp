@@ -484,7 +484,7 @@ void HWService::on_pushButton_get_error_code_clicked()
     else{
         param.regAdr = 0;    //  for testing ERRD;
         param.value = 0;
-        param.len = 3;  // for testing 1;
+        param.len = 8;  // for testing 1;
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 

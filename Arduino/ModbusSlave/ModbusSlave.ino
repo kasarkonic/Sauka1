@@ -167,11 +167,11 @@ void loop() {
   inputRegisters[0] = (int)reading_1;
   inputRegisters[1] = (int)reading_2;
   inputRegisters[2] = (int)reading_3;
-  inputRegisters[3] = 0;
+  inputRegisters[3] = 1234;
   inputRegisters[4] = (int)top1;
   inputRegisters[5] = (int)top2;
   inputRegisters[6] = (int)top3;
-  inputRegisters[7] = 0;
+  inputRegisters[7] = 5678;
 
 
   discreteInputs[0] = 1;// !digitalRead(buttonPins[0]);
