@@ -549,7 +549,7 @@ void Rs232::newDataUpdateCh(QStringList currSdata) {
 
     // QStringList elements = QString(currSdata).split(',');
 
-    // qDebug() << "currSdata" << currSdata.size() << currSdata;
+     qDebug() << "currSdata" << currSdata.size() << currSdata;
 
     if (currSdata.size() == 2) {
         qDebug() << currSdata[0] <<"," << currSdata[1] ;

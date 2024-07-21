@@ -35,6 +35,7 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     ui->comboBox_use_motor->addItem("M8");
     ui->comboBox_use_motor->addItem("M9");
     ui->comboBox_use_motor->addItem("M4");
+    ui->comboBox_use_motor->addItem("Tvertnes");
     ui->horizontalSlider->setRange(-100,100);
     //updateTimer = new QElapsedTimer();
     //updateTimer->start();
@@ -342,6 +343,9 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
     case 2:
         testMotorAddres = M4;
         break;
+    case 3:
+        testMotorAddres = SENSORS;
+        break;
         testMotorAddres = 0;
     }
 
@@ -462,6 +466,7 @@ void HWService::on_pushButton_get_error_code_clicked()
 {
     param.boardAdr = testMotorAddres;
 
+    if(param.boardAdr != 20){
     param.regAdr = RFRD_REG;    //  for testing ERRD;
     param.value = 0;
     param.len = 3;  // for testing 1;
@@ -474,6 +479,18 @@ void HWService::on_pushButton_get_error_code_clicked()
     param.len = 14;
     param.cmd = RD_REG;
     global.rs485WrList.append(param);
+}
+
+    else{
+        param.regAdr = 0;    //  for testing ERRD;
+        param.value = 0;
+        param.len = 3;  // for testing 1;
+        param.cmd = RD_REG;
+        global.rs485WrList.append(param);
+
+    }
+
+
 
 }
 

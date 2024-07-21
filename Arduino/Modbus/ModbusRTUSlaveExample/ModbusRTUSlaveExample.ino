@@ -50,7 +50,7 @@
 
 
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 //#include <ModbusRTUSlave.h>
 
 const byte potPins[2] = {A0, A1};
@@ -61,13 +61,13 @@ const byte dePin = 13;
 
 
 
-const byte rxPin = 10;
-const byte txPin = 11;
+//const byte rxPin = 10;
+//const byte txPin = 11;
 
 
 
 //?SoftwareSerial mySerial(rxPin, txPin);
-SoftwareSerial mySerial(rxPin, txPin);
+//SoftwareSerial mySerial(rxPin, txPin);
 
 //SoftwareSerial mySerialM(rxPin+2, txPin+2);
 
@@ -81,24 +81,25 @@ uint16_t holdingRegisters[2];
 uint16_t inputRegisters[2];
 
 void setup() {
-  mySerial.begin(9600);
+  Serial.begin(115200);
+  //Serial1.begin(115200);
+  //Serial2.begin(115200);
  // mySerial.print("0");
 
   
-  Serial.begin(115200);
-  Serial.println("Modbus START");
-  pinMode(rxPin, INPUT);
-  pinMode(txPin, OUTPUT);
+
+  //pinMode(rxPin, INPUT);
+ // pinMode(txPin, OUTPUT);
 
 
-  pinMode(potPins[0], INPUT);
-  pinMode(potPins[1], INPUT);
-  pinMode(buttonPins[0], INPUT_PULLUP);
-  pinMode(buttonPins[1], INPUT_PULLUP);
-  pinMode(ledPins[0], OUTPUT);
-  pinMode(ledPins[1], OUTPUT);
-  pinMode(ledPins[2], OUTPUT);
-  pinMode(ledPins[3], OUTPUT);
+  //pinMode(potPins[0], INPUT);
+  //pinMode(potPins[1], INPUT);
+  //pinMode(buttonPins[0], INPUT_PULLUP);
+  //pinMode(buttonPins[1], INPUT_PULLUP);
+  //pinMode(ledPins[0], OUTPUT);
+  //pinMode(ledPins[1], OUTPUT);
+  //pinMode(ledPins[2], OUTPUT);
+  //pinMode(ledPins[3], OUTPUT);
 
  // modbus.configureCoils(coils, 2);                       // bool array of coil values, number of coils
  // modbus.configureDiscreteInputs(discreteInputs, 2);     // bool array of discrete input values, number of discrete inputs
@@ -116,12 +117,16 @@ void loop() {
 
  // modbus.poll();
  // mySerial.println("0");
- Serial.println("Modbus START");
- mySerial.write(0x31);
+ //Serial.write("1");
+ Serial.print("1");
+ //Serial1.write(0x3c);
+ //Serial2.print("1");
+ //Serial1.println(" Modbus START");
+
  
-   delay(100);
-  analogWrite(ledPins[0], holdingRegisters[0]);
-  analogWrite(ledPins[1], holdingRegisters[1]);
-  digitalWrite(ledPins[2], coils[0]);
-  digitalWrite(ledPins[3], coils[1]);
+   delay(200);
+ // analogWrite(ledPins[0], holdingRegisters[0]);
+ // analogWrite(ledPins[1], holdingRegisters[1]);
+  //digitalWrite(ledPins[2], coils[0]);
+  //digitalWrite(ledPins[3], coils[1]);
 }
