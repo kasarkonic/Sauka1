@@ -107,7 +107,9 @@ bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 0xffff);
 
-    quint16 numberOfEntries = 2;
+
+    quint16 numberOfEntries = 1;
+    //quint16 numberOfEntries = 2;
     //return QModbusDataUnit(table, startAddress, numberOfEntries);
 
 
