@@ -43,16 +43,18 @@ HX711 press_1;
 HX711 press_2;
 HX711 press_3;
 
+
 #define START_MSG 2
 #define END_MSG 3
 byte start = START_MSG;
 byte end = END_MSG;
 int timerCount = 0;
-
 #define MODBUS_ID 20
 #define TOPSENS0  A0
 #define TOPSENS0  A1
 #define TOPSENS0  A2
+//#define Rx 10
+//#define Tx 11
 
 const byte topSensPins[3] = {A0, A1, A2};
 
@@ -63,8 +65,10 @@ const byte topSensPins[3] = {A0, A1, A2};
 const byte potPins[2] = {A3, A4};
 
 const byte buttonPins[2] = {2, 3};
-const byte ledPins[4] = {5, 6, 7, 8};
-const byte dePin = 29;
+//const byte ledPins[4] = {5, 6, 7, 8};
+const byte dePin = 29;    // Di pin  Hi when Tx,  Lo when Rx outputs in hight impedance
+// !Re  Lo  receive enable , must be low
+
 
 
 ModbusRTUSlave modbus(Serial1, dePin); // serial port, driver enable pin for rs-485
@@ -85,47 +89,60 @@ void setup() {
   press_3.begin(LOADCELL_3_DOUT_PIN, LOADCELL_3_SCK_PIN);
   pinMode(LED_BUILTIN, OUTPUT);
 
-/*
-  pinMode(potPins[0], INPUT);
-  pinMode(potPins[1], INPUT);
-  pinMode(buttonPins[0], INPUT_PULLUP);
-  pinMode(buttonPins[1], INPUT_PULLUP);
-  pinMode(ledPins[0], OUTPUT);
-  pinMode(ledPins[1], OUTPUT);
-  pinMode(ledPins[2], OUTPUT);
-  pinMode(ledPins[3], OUTPUT);
-*/
+  /*
+    pinMode(potPins[0], INPUT);
+    pinMode(potPins[1], INPUT);
+    pinMode(buttonPins[0], INPUT_PULLUP);
+    pinMode(buttonPins[1], INPUT_PULLUP);
+    pinMode(ledPins[0], OUTPUT);
+    pinMode(ledPins[1], OUTPUT);
+    pinMode(ledPins[2], OUTPUT);
+    pinMode(ledPins[3], OUTPUT);
+  */
 
 
   pinMode(A0, INPUT_PULLUP);
   pinMode(A1, INPUT_PULLUP);
   pinMode(A2, INPUT_PULLUP);
-  pinMode(dePin, OUTPUT);
+  //pinMode(dePin, OUTPUT);
+
 
   modbus.configureCoils(coils, 2);                       // bool array of coil values, number of coils
   modbus.configureDiscreteInputs(discreteInputs, 2);     // bool array of discrete input values, number of discrete inputs
   modbus.configureHoldingRegisters(holdingRegisters, 2); // unsigned 16 bit integer array of holding register values, number of holding registers
   modbus.configureInputRegisters(inputRegisters, 8);     // unsigned 16 bit integer array of input register values, number of input registers
- // Serial1.begin(38400,SERIAL_8E1); even parity
-  modbus.begin(1, 38400,SERIAL_8E1);
+   modbus.begin(MODBUS_ID, 38400, SERIAL_8E1);
+  //   modbus.begin(MODBUS_ID, 9600,SERIAL_8E1);
+  //modbus.begin(MODBUS_ID, 38400);
+  // modbus.begin(MODBUS_ID, 9600);
+ // Serial1.begin(9600);
 
   //#if defined USE_SOFTWARE_SERIAL
-  //serial.begin(MODBUS_ID, 38400);
+  //  modbus.begin(MODBUS_ID, 38400, SERIAL_8E1);
   //#endif
 
-  Serial.begin(115200);
-
-  Serial.println("ModbusRTUSlave");
+  //  Serial.println("ModbusRTUSlave");
+  //  Serial1.println("ModbusRTUSlave");
 
   delay(1000);
 }
 
 void loop() {
+  /*
+     if (Serial1.available() > 0) {
+      int incomingByte = Serial.read();
+
+    // say what you got:
+     Serial.print("I received: ");
+      Serial.println(incomingByte, DEC);
+     }
+  */
+  modbus.poll();
 
   long reading_1 ;
   long reading_2 ;
   long reading_3 ;
-  modbus.poll();
+
   if (press_1.is_ready()) {
     reading_1 = press_1.read();
     //  Serial.print("$0 ");
@@ -158,11 +175,17 @@ void loop() {
   int top3 = analogRead (topSensPins[2]);
 
 
-  //Serial.print(top1);
-  //Serial.print("  ");
-  //Serial.print(top2);
-  //Serial.print("  ");
-  //Serial.println(top3);
+  // Serial.print(top1);
+  // Serial.print("  ");
+  // Serial.print(top2);
+  // Serial.print("  ");
+  // Serial.println(top3);
+
+  // Serial1.print(top1);
+  // Serial1.print("  ");
+  // Serial1.print(top2);
+  // Serial1.print("  ");
+  // Serial1.println(top3);
 
   inputRegisters[0] = (int)reading_1;
   inputRegisters[1] = (int)reading_2;
@@ -194,9 +217,10 @@ void loop() {
   timerCount++;
   if (timerCount & 1) {
     digitalWrite(LED_BUILTIN, HIGH);
+
   }
   else {
     digitalWrite(LED_BUILTIN, LOW);
   }
-  //delay(100);
+  delay(100);
 }
