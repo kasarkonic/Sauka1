@@ -107,8 +107,8 @@ void setup() {
   modbus.configureHoldingRegisters(holdingRegisters, 2); // unsigned 16 bit integer array of holding register values, number of holding registers
   modbus.configureInputRegisters(inputRegisters, 8);     // unsigned 16 bit integer array of input register values, number of input registers
  // Serial1.begin(38400,SERIAL_8E1); even parity
-  modbus.begin(1, 38400,SERIAL_8E1);
-
+  //modbus.begin(1, 38400,SERIAL_8E1);
+ modbus.begin(1, 384001);
   //#if defined USE_SOFTWARE_SERIAL
   //serial.begin(MODBUS_ID, 38400);
   //#endif
@@ -128,8 +128,8 @@ void loop() {
   modbus.poll();
   if (press_1.is_ready()) {
     reading_1 = press_1.read();
-    //  Serial.print("$0 ");
-    //  Serial.println(reading_1);
+      Serial.print("$0 ");
+      Serial.println(reading_1);
 
   }
   //delay(50);
@@ -158,11 +158,11 @@ void loop() {
   int top3 = analogRead (topSensPins[2]);
 
 
-  //Serial.print(top1);
-  //Serial.print("  ");
-  //Serial.print(top2);
-  //Serial.print("  ");
-  //Serial.println(top3);
+  Serial.print(top1);
+  Serial.print("  ");
+  Serial.print(top2);
+  Serial.print("  ");
+  Serial.println(top3);
 
   inputRegisters[0] = (int)reading_1;
   inputRegisters[1] = (int)reading_2;
@@ -180,7 +180,7 @@ void loop() {
   holdingRegisters[0] = 4321;
   holdingRegisters[1] = 8765;
 
-  //modbus.poll();
+  modbus.poll();
 
   //analogWrite(ledPins[0], holdingRegisters[0]);
   //analogWrite(ledPins[1], holdingRegisters[1]);
@@ -192,11 +192,11 @@ void loop() {
 
 
   timerCount++;
-  if (timerCount & 1) {
+  if (timerCount & 8) {
     digitalWrite(LED_BUILTIN, HIGH);
   }
   else {
     digitalWrite(LED_BUILTIN, LOW);
   }
-  //delay(100);
+  delay(100);
 }

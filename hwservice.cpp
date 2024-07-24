@@ -36,7 +36,7 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     ui->comboBox_use_motor->addItem("M9");
     ui->comboBox_use_motor->addItem("M4");
     ui->comboBox_use_motor->addItem("Tvertnes");
-    ui->horizontalSlider->setRange(-100,100);
+    ui->horizontalSlider->setRange(-1000,1000);
     //updateTimer = new QElapsedTimer();
     //updateTimer->start();
 
@@ -421,13 +421,14 @@ void HWService::on_pushButton_Motor_on_clicked()
 
 void HWService::on_horizontalSlider_valueChanged(int value)
 {
-    int koef = 15;
+    int koef = 1;
     rpm = value * koef;    // koef for diferrent motors?
     qDebug() << "Motor speed rpm" << value;
     param.boardAdr = testMotorAddres;
 
     param.regAdr = LFRD_REG;
     param.value = rpm;
+    if(testMotorAddres == M8){param.value = -param.value;}   // M8 reverse
     param.len = 1;
     param.cmd = WR_REG;
     global.rs485WrList.append(param);
@@ -443,7 +444,7 @@ void HWService::on_pushButton_slider_minus_clicked(bool checked)
 {
     Q_UNUSED(checked)
     int val =  ui->horizontalSlider->value();
-    if(val > - 100){
+    if(val > - 1000){
         val--;
         ui->horizontalSlider->setValue(val);
         on_horizontalSlider_valueChanged(val);
@@ -454,7 +455,7 @@ void HWService::on_pushButton_slider_minus_clicked(bool checked)
 void HWService::on_pushButton_slider_plus_clicked()
 {
     int val =  ui->horizontalSlider->value();
-    if(val < 100){
+    if(val < 1000){
         val++;
         ui->horizontalSlider->setValue(val);
         on_horizontalSlider_valueChanged(val);

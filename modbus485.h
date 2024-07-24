@@ -114,6 +114,7 @@ private:
     int starttemp;
     int oldstateStartTime;
     quint16  retval;
+    int driveStatusTimer = 0;
 
     // for testing
     quint16 vval1  = 0x1;

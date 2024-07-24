@@ -86,8 +86,8 @@ void loop() {
 
   if (scale_1.is_ready()) {
     reading_1 = scale_1.read();
-    Serial.print("$0 ");
-    Serial.println(reading_1);
+   // Serial.print("$0 ");
+   // Serial.println(reading_1);
   }
   delay(50);
   //-----------------------------------
@@ -95,20 +95,26 @@ void loop() {
 
   if (scale_2.is_ready()) {
     reading_2 = scale_2.read();
-    Serial.print("$1 ");
-    Serial.println(reading_2);
+   // Serial.print("$1 ");
+   // Serial.println(reading_2);
   }
    delay(50);
   //------------------------------------------
 
   if (scale_3.is_ready()) {
     reading_3 = scale_3.read();
-    Serial.print("$2 ");
-    Serial.println(reading_3);
+   // Serial.print("$2 ");
+   // Serial.println(reading_3);
   }
   delay(50);
   //----------------------------------------------
 
+
+  int sensorValue = analogRead(A0);
+
+
+    Serial.print("$7 ");
+    Serial.println(sensorValue);
 
 
   delay(100);

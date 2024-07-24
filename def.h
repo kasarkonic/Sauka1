@@ -18,7 +18,7 @@
 #define LFR_REG  8502   // set frequence
 #define LFRD_REG 8602   // set rpm
 #define ETA_REG  3201   // drive status
-#define RFRD_REG 8604   // output velocyty  use len = 3
+#define RFRD_REG 8604   // output velocyty, 8605 ramp speed, 8606 error  use len = 3 ?
 #define ERRD 8606   //CiA402 fault code  see error code table  driveErrorCodes[]
 #define STOS    15322   // STO status
 
@@ -28,6 +28,7 @@
 
 #define WR_REG 6
 #define RD_REG 3
+#define RD_IN_REG 4
 
 // defines ports count
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
