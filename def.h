@@ -2,7 +2,6 @@
 #define DEF_H
 
 #include <QList>
-#include "def.h"
 
 #define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = true;
 
@@ -36,7 +35,7 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define VIRUAL_PORTS 16 // Virtual input copy invertor ON/OFF
+#define VIRUAL_PORTS 32 // Virtual input copy invertor ON/OFF
 #define MAX_DIinput     32*3 + VIRUAL_PORTS       // addres [0 , MAX_DIinp] 32*3
 #define MAX_DIoutput     32*3 + VIRUAL_PORTS      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
@@ -60,9 +59,20 @@ enum virtualInputs
 
     mix_speeds,
     dino_speed,
-    pump1_speed
+    pump1_speed,
+
+    TVERTNE1LEVEL ,
+    TVERTNE2LEVEL,
+    TVERTNE3LEVEL,
+    TVERTNE4LEVEL,
+    TVERTNE5LEVEL,
 
 
+    TVERTNE1FULL,
+    TVERTNE2FULL,
+    TVERTNE3FULL,
+    TVERTNE4FULL,
+    TVERTNE5FULL,
 
 };
 
@@ -84,9 +94,160 @@ enum virtualOutputs
 
 #define  SUPLAY_24V  15 // ANinput4_20[SUPLAY_24V]
 
+enum a1DIn
+{
+    Fāzu_relejs_RF1 = 0,    // nr. on board  => IN1
+    Automātslēdži,
+    Mot_aizs_1Q1,
+    Mot_aizs_2Q1,
+    Mot_aizs_3Q1,
+    Mot_aizs_5Q1,
+    Mot_aizs_6Q1,
+    Mot_aizs_7Q1,
+    dInomill_10Q1,
+    VFD_4U1_ready,
+    VFD_8U1_ready,
+    VFD_9U1_ready,
+    Rot_kontrole_šnekam,
+    Šneks_auto_run,
+    Šneks_manual_run,
+    Šneks_MAN_FWD,
+    Šneks_MAN_REV,
+    Kontaktors_1KM1_ieslēgts,
+    Kontaktors_2KM1_ieslēgts,
+    Kontaktors_3KM1_ieslēgts,
+    Kontaktors_5KM1_ieslēgts,
+    Kontaktors_6KM1_ieslēgts,
+    Kontaktors_7KM1_ieslēgts,
 
-#define  TVERTNE1LEVEL   1// DIinput   ANinput4_20  //
-#define  TVERTNE1FULL  2//  DIinput   //
+    kontrolbarošana_T2_Murr = 31,   // nr. on board  => IN32
+
+
+
+
+};
+
+enum a1DOut
+{
+
+    brīvs = 0,                  // nr. on board  => Q1
+    Ieslēgt_kontaktor_1KM1,
+    Ieslēgt_kontaktoru_2KM1,
+    Ieslēgt_kontaktoru_3KM1,
+    Ieslēgt_kontaktoru_5KM1,
+    Ieslēgt_kontaktoru_6KM1,
+    Ieslēgt_kontaktoru_7KM1,
+    Luksofors_sirēna,
+
+
+    VFD_Reset,
+    brīvs1,
+    Y1_1_atvērt,
+    Y1_2_atvērt,
+    Y1_3_atvērt,
+    brīvs2,
+    Y2_1_atvērt,
+    Y2_1_aizv,
+    Y2_2_atvērt,
+    Y2_2_aizv,
+    Y2_3_atvērt,
+    Y2_3_aizv,
+    Y2_4_atvērt,
+    Y2_4_aizv,
+    Y3_1_atvērt,
+    Y3_1_aizv,
+    Y3_2_atvērt,
+    Y3_2_aizv,
+    Y3_3_atvērt,
+    Y3_3_aizv,
+    Y3_4_atvērt,
+    Y3_4_aizv,
+
+};
+
+enum a2DIn
+{
+    Y2_1_close = 32, // nr. on board  => IN1
+    Y2_1_open,
+    Y2_2_close,
+    Y2_2_open,
+    Y2_3_close,
+    Y2_3_open,
+    Y2_4_close,
+    Y2_4_open,
+    Y3_1_close,
+    Y3_1_open,
+    Y3_2_close,
+    Y3_2_open,
+    Y3_3_close,
+    Y3_3_open,
+    Y3_4_close,
+    Y3_4_open,
+    Y4_1_close,
+    Y4_1_open,
+    Y4_2_close,
+    Y4_2_open,
+    Y4_3_close,
+    Y4_3_open,
+    Y4_4_close,
+    Y4_4_open,
+    Y5_1_close,
+    Y5_1_open,
+    Y5_2_close,
+    Y5_2_open,
+    Y5_3_close,
+    Y5_3_open,
+    Y5_4_close,
+    Y5_4_open,
+
+};
+
+enum a2DOut
+{
+    Y4_1_atvērt_4KY1 = 32,  // nr. on board  => Q1
+    Y4_1_aizv_4KY2,
+    Y4_2_atvērt_4KY3,
+    Y4_2_aizv_4KY4,
+    Y4_3_atvērt_4KY5,
+    Y4_3_aizv_4KY6,
+    Y4_4_atvērt_4KY7,
+    Y4_4_aizv_4KY8,
+    Y5_1_atvērt_5KY1,
+    Y5_1_aizv_5KY2,
+    Y5_2_atvērt_5KY3,
+    Y5_2_aizv_5KY4,
+    Y5_3_atvērt_5KY5,
+    Y5_3_aizv_5KY6,
+    Y5_4_atvērt_5KY7,
+    Y5_4_aizv_5KY8,
+
+};
+enum a3DIn
+{
+    Y6_1_ciet = 64, // nr. on board  => IN1
+    Y6_1_vaļā,
+    Y6_2_ciet,
+    Y6_2_vaļā,
+
+};
+
+enum a3DOut
+{
+    Outx = 64,  // nr. on board  => Q1
+};
+
+
+
+
+
+
+
+
+
+
+
+//#define  TVERTNE1LEVEL   1// DIinput   ANinput4_20  //
+//#define  TVERTNE1FULL  2//  DIinput   //
 
 
 #define VALVE1ACT   8
@@ -126,64 +287,46 @@ enum virtualOutputs
 #define VALVE2_1SWCLOSE   24
 
 #define VALVE2_2ACT   3
-#define VALVE2_2SWOPEN   23
-#define VALVE2_2SWCLOSE   24
+
 
 #define VALVE2_3_ACT   3
-#define VALVE2_3SWOPEN   23
-#define VALVE2_3SWCLOSE   24
+
 
 #define VALVE2_4ACT   3
-#define VALVE2_4SWOPEN   23
-#define VALVE2_4SWCLOSE   24
+
 
 #define VALVE3_1ACT   3
-#define VALVE3_1SWOPEN   23
-#define VALVE3_1SWCLOSE   24
+
 
 #define VALVE3_2ACT   3
-#define VALVE3_2SWOPEN   23
-#define VALVE3_2SWCLOSE   24
+
 
 #define VALVE3_3_ACT   3
-#define VALVE3_3SWOPEN   23
-#define VALVE3_3SWCLOSE   24
+
 
 #define VALVE3_4ACT   3
-#define VALVE3_4SWOPEN   23
-#define VALVE3_4SWCLOSE   24
+
 
 #define VALVE4_1ACT   3
-#define VALVE4_1SWOPEN   23
-#define VALVE4_1SWCLOSE   24
+
 
 #define VALVE4_2ACT   3
-#define VALVE4_2SWOPEN   23
-#define VALVE4_2SWCLOSE   24
+
 
 #define VALVE4_3_ACT   3
-#define VALVE4_3SWOPEN   23
-#define VALVE4_3SWCLOSE   24
+
 
 #define VALVE4_4ACT   3
-#define VALVE4_4SWOPEN   23
-#define VALVE4_4SWCLOSE   24
+
 
 #define VALVE5_1ACT   3
-#define VALVE5_1SWOPEN   23
-#define VALVE5_1SWCLOSE   24
 
 #define VALVE5_2ACT   3
-#define VALVE5_2SWOPEN   23
-#define VALVE5_2SWCLOSE   24
 
 #define VALVE5_3_ACT   3
-#define VALVE5_3SWOPEN   23
-#define VALVE5_3SWCLOSE   24
 
 #define VALVE5_4ACT   3
-#define VALVE5_4SWOPEN   23
-#define VALVE5_4SWCLOSE   24
+
 
 #define VALVE6_1ACT   3
 #define VALVE6_1SWOPEN   23
