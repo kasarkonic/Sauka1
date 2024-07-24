@@ -404,34 +404,34 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label, "LABEL2", 1, 233, 251, 250, 0, 0, 0, 0);
     addWidgList(WidgetType::Label, "LABEL3", 1, 243, 1, 250, 0, 0, 0, 0);
 
-    addWidgList(WidgetType::Tvertne, "T2", 1, 1598, 1, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne, "T3", 1, 700, 310, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne, "T4", 1, 1000, 310, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne, "T5", 1, 1300, 310, 120, 0, 0, TVERTNE1LEVEL, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne, "T2", 1, 1598, 1, 120, 0, 0, TVERTNE2LEVEL, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne, "T3", 1, 700, 310, 120, 0, 0, TVERTNE3LEVEL, TVERTNE3FULL);
+    addWidgList(WidgetType::Tvertne, "T4", 1, 1000, 310, 120, 0, 0, TVERTNE4LEVEL, TVERTNE4FULL);
+    addWidgList(WidgetType::Tvertne, "T5", 1, 1300, 310, 120, 0, 0, TVERTNE5LEVEL, TVERTNE5FULL);
 
     addWidgList(WidgetType::Pump, "PUMP S4", 1, 433, 483, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
     addWidgList(WidgetType::Pump, "PUMP S5", 1, 744, 61, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
 
 
-    addWidgList(WidgetType::Valve, "Valve 2.1", 1, 608, 7, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 2.2", 1, 608, 147, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 2.3", 1, 1524, 124, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 2.4", 1, 1452, 124, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve, "Valve 2.1", 1, 608, 7, 25, 0, VALVE1ACT, Y2_1_open, Y2_1_close);
+    addWidgList(WidgetType::Valve, "Valve 2.2", 1, 608, 147, 25, 0, VALVE1ACT, Y2_2_open, Y2_2_close);
+    addWidgList(WidgetType::Valve, "Valve 2.3", 1, 1524, 124, 25, 0, VALVE1ACT, Y2_3_open, Y2_3_close);
+    addWidgList(WidgetType::Valve, "Valve 2.4", 1, 1452, 124, 25, 0, VALVE1ACT, Y2_4_open, Y2_4_close);
 
-    addWidgList(WidgetType::Valve, "Valve 3.1", 1, 709, 273, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 3.2", 1, 782, 275, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 3.3", 1, 710, 458, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 3.4", 1, 781, 458, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve, "Valve 3.1", 1, 709, 273, 25, 0, VALVE1ACT, Y3_1_open, Y3_1_close);
+    addWidgList(WidgetType::Valve, "Valve 3.2", 1, 782, 275, 25, 0, VALVE1ACT, Y3_2_open, Y3_2_close);
+    addWidgList(WidgetType::Valve, "Valve 3.3", 1, 710, 458, 25, 0, VALVE1ACT, Y3_3_open, Y3_3_close);
+    addWidgList(WidgetType::Valve, "Valve 3.4", 1, 781, 458, 25, 0, VALVE1ACT, Y3_4_open, Y3_4_close);
 
-    addWidgList(WidgetType::Valve, "Valve 4.1", 1, 1009, 225, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 4.2", 1, 1080, 224, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 4.3", 1, 1382, 563, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 4.4", 1, 1310, 563, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve, "Valve 4.1", 1, 1009, 225, 25, 0, VALVE1ACT, Y4_1_open, Y4_1_close);
+    addWidgList(WidgetType::Valve, "Valve 4.2", 1, 1080, 224, 25, 0, VALVE1ACT, Y4_2_open, Y4_2_close);
+    addWidgList(WidgetType::Valve, "Valve 4.3", 1, 1382, 563, 25, 0, VALVE1ACT, Y4_3_open, Y4_3_close);
+    addWidgList(WidgetType::Valve, "Valve 4.4", 1, 1310, 563, 25, 0, VALVE1ACT, Y4_4_open, Y4_4_close);
 
-    addWidgList(WidgetType::Valve, "Valve 5.1", 1, 1307, 174, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 5.2", 1, 1379, 173, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 5.3", 1, 1010, 514, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 5.4", 1, 1081, 513, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve, "Valve 5.1", 1, 1307, 174, 25, 0, VALVE1ACT, Y5_1_open, Y5_1_close);
+    addWidgList(WidgetType::Valve, "Valve 5.2", 1, 1379, 173, 25, 0, VALVE1ACT, Y5_2_open, Y5_2_close);
+    addWidgList(WidgetType::Valve, "Valve 5.3", 1, 1010, 514, 25, 0, VALVE1ACT, Y5_3_open, Y5_3_close);
+    addWidgList(WidgetType::Valve, "Valve 5.4", 1, 1081, 513, 25, 0, VALVE1ACT, Y5_4_open, Y5_4_close);
 
 
     addWidgList(WidgetType::Valve, "Valve 6.2", 1, 468, 273, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
