@@ -34,7 +34,6 @@ Modbus485::Modbus485(Global& global, QWidget* parent)
     intervalTimer->start();
 
     task_state = 0; // start
-    //task_state = State_rd23IOD32_0;
     taskTimer = new QTimer(this);
     taskTimer->start(10);//---------------------------------------------------------------------------------------------
     qDebug() <<" taskTimer->start(10);//----------------";
@@ -386,7 +385,7 @@ void Modbus485::timerEvent(QTimerEvent* event) {
 
 
     if ( true &&(event->timerId() == driveStatusTimer )) {
-/* //only for testing
+
         param.boardAdr = M8;
         param.regAdr = ETA_REG;
         param.value = 0;
@@ -424,13 +423,13 @@ void Modbus485::timerEvent(QTimerEvent* event) {
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
-*/  //only for testing
+/*
         param.boardAdr = 20;    // read pressure level sensor
         param.regAdr = 0;    //  for testing ERRD;
         param.len = 8;  // for testing 1;
         param.cmd = RD_IN_REG;          // ta tomer md 3  vajag 4  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         global.rs485WrList.append(param);
-
+*/
 
 
     }
@@ -1046,10 +1045,10 @@ void Modbus485::runTaskCycle() {
 
 
     case STDIN1:
-       // RS485Ready = false;
-       // rd23IOD32(4, 0xc0, 2);  // ok digital input
-       // changeState(STDIN2,interval);
-        changeState(STDOUTLIST,interval);   // only for testing !!!!!!!!!!!!!!!!!!!!!!!
+        RS485Ready = false;
+        rd23IOD32(4, 0xc0, 2);  // ok digital input
+        changeState(STDIN2,interval);
+       // changeState(STDOUTLIST,interval);   // only for testing !!!!!!!!!!!!!!!!!!!!!!!
        break;
 
     case STDIN2:

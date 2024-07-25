@@ -366,21 +366,21 @@
         <item>
          <widget class="QLabel" name="label_row1">
           <property name="text">
-           <string>Di out 0-31</string>
+           <string>A1 out 0-31</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_row2">
           <property name="text">
-           <string>Di out 32-63</string>
+           <string>A2 out 32-63</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_row3">
           <property name="text">
-           <string>Di out 64-95</string>
+           <string>A3 out 64-95</string>
           </property>
          </widget>
         </item>
@@ -394,21 +394,21 @@
         <item>
          <widget class="QLabel" name="label_row4">
           <property name="text">
-           <string>Di in 1-31</string>
+           <string>A1 in 1-31</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_row5">
           <property name="text">
-           <string>Di in 32-63</string>
+           <string>A2 in 32-63</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_row6">
           <property name="text">
-           <string>Di in 64-95</string>
+           <string>A3 in 64-95</string>
           </property>
          </widget>
         </item>
@@ -532,7 +532,7 @@
      <x>0</x>
      <y>0</y>
      <width>1214</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
