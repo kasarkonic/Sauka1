@@ -89,7 +89,7 @@ private:
         STIAN4,
         STOUT5,
         STOUT6,
-
+        STOUT7,
         STDOUTLIST,
 
         STDRIVE8_Start,

@@ -79,12 +79,12 @@ bool Modbus485::init() {
 
 
     if (!modbusDevice->connectDevice()) {
-        qDebug() << global.dev3 << "Connect failed:" << modbusDevice->errorString();
+        qDebug() << global.dev3 << "Connect failed:"<< global.dev3 << modbusDevice->errorString();
         global.dev3ConnectStatus = false;
         return false;
         //statusBar()->showMessage(tr("Connect failed: %1").arg(modbusDevice->errorString()), 5000);
     } else {
-        qDebug() << "modbusDevice connect OK";
+        qDebug() << "modbusDevice connect OK" << global.dev3;
         global.dev3ConnectStatus = true;
 
         return true;
@@ -206,17 +206,26 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr, int len) {
 }
 
 bool Modbus485::rd24DIB32(int boardAdr, int regAdr) {
-    //qDebug() << "rd24DIB32" <<boardAdr << global.getTick();
+    qDebug() << "rd24DIB32" <<boardAdr<< regAdr << global.getTick();
     if (!modbusDevice) {
         qDebug() << "readDat RET";
         return false;
     }
+/*
+    enum RegisterType {
+        Invalid,                 nesūta neko
+        DiscreteInputs,         2
+        Coils,                  1
+        InputRegisters,         4
+        HoldingRegisters        3
+    };  5                       compile error
+ */
+    const auto table = QModbusDataUnit::HoldingRegisters;   //3
 
-    const auto table = QModbusDataUnit::HoldingRegisters;   //4
     int startAddress = regAdr;
     //Q_ASSERT(startAddress >= 0 && startAddress < 200);
 
-    quint16 numberOfEntries = 2;
+    quint16 numberOfEntries = 1;    // 2 ??????????????????????????????????????????????????????????????
     QModbusDataUnit dataUnit = QModbusDataUnit(table, startAddress, numberOfEntries);
 
 
@@ -377,13 +386,13 @@ void Modbus485::timerEvent(QTimerEvent* event) {
 
 
     if ( true &&(event->timerId() == driveStatusTimer )) {
-
+/* //only for testing
         param.boardAdr = M8;
         param.regAdr = ETA_REG;
         param.value = 0;
         param.cmd = RD_REG;
         param.len = 1;
-      //  global.rs485WrList.append(param);
+        //  global.rs485WrList.append(param);
 
         param.boardAdr = M9;
         //   global.rs485WrList.append(param);
@@ -415,12 +424,12 @@ void Modbus485::timerEvent(QTimerEvent* event) {
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
-
+*/  //only for testing
         param.boardAdr = 20;    // read pressure level sensor
         param.regAdr = 0;    //  for testing ERRD;
         param.len = 8;  // for testing 1;
         param.cmd = RD_IN_REG;          // ta tomer md 3  vajag 4  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //  global.rs485WrList.append(param);
+        global.rs485WrList.append(param);
 
 
 
@@ -1029,45 +1038,34 @@ void Modbus485::runTaskCycle() {
     }
     oldtask_state = task_state;
     int interval = 25;  // 25 arI strādā
+    quint16 dat1;
+    quint16 dat2;
 
     switch (task_state) {
 
 
 
     case STDIN1:
-        starttemp = global.getTick();
-        RS485Ready = false;
-        rd23IOD32(4, 0xc0, 2);  // ok digital input
-        changeState(STDIN2,interval);
-
-        break;
-
+       // RS485Ready = false;
+       // rd23IOD32(4, 0xc0, 2);  // ok digital input
+       // changeState(STDIN2,interval);
+        changeState(STDOUTLIST,interval);   // only for testing !!!!!!!!!!!!!!!!!!!!!!!
+       break;
 
     case STDIN2:
-
         if(RS485Ready){
-            //qDebug() << "rd23IOD32(4, 0xc0) response time:" << global.getTick() - starttemp;
-
-            // starttemp = global.getTick();
-                   RS485Ready = false;
-                   rd23IOD32(5, 0xc0, 2);  // ok digital input
-            //changeState(ST3,50);
+            RS485Ready = false;
+            rd23IOD32(5, 0xc0, 2);  // ok digital input
             changeState(STIAN3,1);
-
         }
         break;
 
-
     case STIAN3:
-
         if(RS485Ready){
             // qDebug() << "rd23IOD32(5, 0xc0) response time:" << global.getTick() - starttemp;
-
-            starttemp = global.getTick();
-             RS485Ready = false;
-             rd24DIB32(8, 0xc0); // analog input
+            RS485Ready = false;
+            rd24DIB32(8, 0xc0); // analog input
             changeState(STIAN4,interval);
-
         }
         break;
 
@@ -1076,12 +1074,9 @@ void Modbus485::runTaskCycle() {
 
         if(RS485Ready){
             //qDebug() << "rd24DIB32(8, 0xc0) response time:" << global.getTick() - starttemp;
-
-            starttemp = global.getTick();
             RS485Ready = false;
             rdN4AIB16(2, 0, 16); // analog input
-            changeState(STOUT5,interval*2);
-
+            changeState(STOUT5,interval);
         }
         break;
 
@@ -1090,27 +1085,37 @@ void Modbus485::runTaskCycle() {
         if(RS485Ready){
             //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
 
-
-            quint16 dat1 = updateDIOut(0);
-            quint16 dat2 = updateDIOut(16);
-             wr23IOD32m(4,0x70,dat1,dat2);
-
-            // starttemp = global.getTick();
-             RS485Ready = false;
-
-            changeState(STDOUTLIST,50);//50
+             dat1 = updateDIOut(0);
+             dat2 = updateDIOut(16);
+            wr23IOD32m(4,0x70,dat1,dat2);
+            // RS485Ready = false;
+            changeState(STOUT6,interval);//50
 
         }
         break;
+
+    case STOUT6:
+
+        // if(RS485Ready){
+         dat1 = updateDIOut(32);
+         dat2 = updateDIOut(48);
+        wr23IOD32m(5,0x70,dat1,dat2);
+
+        RS485Ready = false;
+        changeState(STDOUTLIST,interval);//50
+
+        // }
+        break;
+
 
 
     case STDOUTLIST:
 
         if(global.rs485WrList.size() > 0){
-           // qDebug() << "STDOUTLIST rs485WrList" << global.rs485WrList.length();
+            // qDebug() << "STDOUTLIST rs485WrList" << global.rs485WrList.length();
 
             qDebug() << "STDOUTLIST: len="<<global.rs485WrList.length()
-                    << "Adr:"
+                     << "Adr:"
                      <<global.rs485WrList[0].boardAdr
                      << "node:"
                      <<global.rs485WrList[0].regAdr
@@ -1123,168 +1128,48 @@ void Modbus485::runTaskCycle() {
                      << "tick:"
                      << global.getTick();
 
-
-
-
-            // switch case !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if(global.rs485WrList[0].cmd == WR_REG){    //6 add len   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            switch (global.rs485WrList[0].cmd) {
+            case WR_REG:
                 wr23IOD32(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].value);
-                global.rs485WrList.removeFirst();
-                changeState(STOUT6,interval);
-
-            }
-            if(global.rs485WrList[0].cmd == RD_REG){    // 3
+                break;
+            case RD_REG:
                 RS485Ready = false;
                 rdDrivem(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].len);
                 // rdDrivem(18, 3201, 2);
                 //rdDrivem(2, 0, 4);
-                global.rs485WrList.removeFirst();
-                changeState(STOUT6,interval);
-            }
-
-
-                if(global.rs485WrList[0].cmd == RD_IN_REG){    //4 read input reg
-                //wr23IOD32(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].value);
-
+                break;
+            case RD_IN_REG:
                 rd24DIB32(global.rs485WrList[0].boardAdr,global.rs485WrList[0].regAdr) ;    // for testing
-                global.rs485WrList.removeFirst();
-
-                changeState(STOUT6,interval);
-
+                break;
+            default:
+                break;
             }
 
-
-
-            //global.rs485WrList.removeFirst();
-            // changeState(STOUT6,100);
+            global.rs485WrList.removeFirst();
+            changeState(STOUT7,interval);
         }
         else{
-            changeState(STOUT6,1);
+            changeState(STOUT7,1);
         }
         break;
 
 
-    case STOUT6:
+    case STOUT7:
 
         if(global.rs485WrList.size() > 0){
 
             changeState(STDOUTLIST,1);
         }
         else{
-            if(RS485Ready){
-                //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
-
-
-
-
-
-
-                //quint16 dat1 = updateDIOut(32);
-                // quint16 dat2 = updateDIOut(48);
-                // wr23IOD32m(5,0x71,dat1,dat2);
-
-                changeState(IDLE,1);
-
-            }
+            changeState(IDLE,1);
         }
         break;
-
-
-
-
-
-
-
-
-
-
-    case STDRIVE8_Start:
-
-        wrDrive(18, CMD_REG, 6);
-        changeState(STDRIVE8_2,10);
-        break;
-
-
-    case STDRIVE8_2:
-        wrDrive(18, CMD_REG, 7);
-
-        changeState(STDRIVE8_3,10);
-        break;
-
-
-    case STDRIVE8_3:
-
-        wrDrive(18, CMD_REG, 15);
-        changeState(IDLE,10);
-        break;
-
-
-
-    case STDRIVE8_Stop:
-
-        wrDrive(18, CMD_REG, 7);
-        changeState(IDLE,10);
-        break;
-
-
-    case STDRIVE8_Reset:
-        wrDrive(18, CMD_REG, 128);
-
-        changeState(IDLE,10);
-        break;
-
-
-
-
-
-        /*
-
-
-updateDIOut(0);
-15
-32
-48
-
-
-    case ST3:
-      //  if (isTimerTimeout()) {
-        vval1 = vval1 << 1;
-        vval2 = vval2 >> 1;
-        if(vval1 == 0){
-            vval1  = 0x1;
-            vval2 = 0x8000;
-        }
-            wr23IOD32m(4,0x70,vval1,vval2);
-
-
-            vval1 = vval1 << 1;
-            vval2 = vval2 >> 1;
-            if(vval1 == 0){
-                vval1  = 0x1;
-                vval2 = 0x8000;
-            }
-            wr23IOD32m(4,0x70,vval1,vval2);
-
-
-
-            changeState(ST3);
-
-        break;
-
-*/
-
 
     case IDLE:
         //qDebug() << "------------------------------" << global.getTick();
         RS485Ready = true;
-        changeState(STDIN1, 100);
+        changeState(STDIN1, interval);
         break;
-
-
-
-
-
-
 
 
     default:

@@ -28,10 +28,10 @@ Rs232::Rs232(Global& global, QWidget* parent)
 
     m_serial = new QSerialPort(this);
 
-    if (!initPort()) {
-        qDebug() << "start timemark 1000" << m_serial->openMode();
-        timerInit = startTimer(1000, Qt::CoarseTimer);
-    }
+  //  if (!initPort()) {
+   //     qDebug() << "start timemark 1000" << m_serial->openMode();
+     //   timerInit = startTimer(1000, Qt::CoarseTimer);  for testing
+   // }
 
     STATE = WAIT_START;
     startTime = QTime(0, 0);

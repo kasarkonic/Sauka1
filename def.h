@@ -96,8 +96,9 @@ enum virtualOutputs
 
 enum a1DIn
 {
-    Fāzu_relejs_RF1 = 0,    // nr. on board  => IN1
-    Automātslēdži,
+    empty = 0,  // array starts from 0 pins from 1
+    Fazu_relejs_RF1,    // nr. on board  => IN1
+    Automatsledzi,
     Mot_aizs_1Q1,
     Mot_aizs_2Q1,
     Mot_aizs_3Q1,
@@ -108,19 +109,19 @@ enum a1DIn
     VFD_4U1_ready,
     VFD_8U1_ready,
     VFD_9U1_ready,
-    Rot_kontrole_šnekam,
-    Šneks_auto_run,
-    Šneks_manual_run,
-    Šneks_MAN_FWD,
-    Šneks_MAN_REV,
-    Kontaktors_1KM1_ieslēgts,
-    Kontaktors_2KM1_ieslēgts,
-    Kontaktors_3KM1_ieslēgts,
-    Kontaktors_5KM1_ieslēgts,
-    Kontaktors_6KM1_ieslēgts,
-    Kontaktors_7KM1_ieslēgts,
+    Rot_kontrole_snekam,
+    Sneks_auto_run,
+    Sneks_manual_run,
+    Sneks_MAN_FWD,
+    Sneks_MAN_REV,
+    Kontaktors_1KM1_ieslegts,
+    Kontaktors_2KM1_ieslegts,
+    Kontaktors_3KM1_ieslegts,
+    Kontaktors_5KM1_ieslegts,
+    Kontaktors_6KM1_ieslegts,
+    Kontaktors_7KM1_ieslegts,
 
-    kontrolbarošana_T2_Murr = 31,   // nr. on board  => IN32
+    kontrolbarosana_T2_Murr = 31,   // nr. on board  => IN32
 
 
 
@@ -131,13 +132,13 @@ enum a1DOut
 {
 
     brīvs = 0,                  // nr. on board  => Q1
-    Ieslēgt_kontaktor_1KM1,
-    Ieslēgt_kontaktoru_2KM1,
-    Ieslēgt_kontaktoru_3KM1,
-    Ieslēgt_kontaktoru_5KM1,
-    Ieslēgt_kontaktoru_6KM1,
-    Ieslēgt_kontaktoru_7KM1,
-    Luksofors_sirēna,
+    Ieslegt_kontaktor_1KM1,
+    Ieslegt_kontaktoru_2KM1,
+    Ieslegt_kontaktoru_3KM1,
+    Ieslegt_kontaktoru_5KM1,
+    Ieslegt_kontaktoru_6KM1,
+    Ieslegt_kontaktoru_7KM1,
+    Luksofors_sirena,
 
 
     VFD_Reset,
