@@ -51,16 +51,28 @@ HX711 press_4;
 byte start = START_MSG;
 byte end = END_MSG;
 int timerCount = 0;
-#define MODBUS_ID 20
+byte modbusID; //  20 +  ADD0 + ADD1 *2
 
 #define TOPSENS0  A0
 #define TOPSENS1  A1
 #define TOPSENS2  A2
 #define TOPSENS3  A3
+
+
+// Modbus node addres = 20 + ADD0*1 +ADD1*2
+// booth pins are INPUT_PULLUP it means  value 1
+// default address = 20 + 1 + 2 = 23.
+// short pins to ground, when change address. ground is pin 14.
+
+byte ADD0 = 12;  // Modbus node addres = 20 + ADD0*1 +ADD1*2
+byte ADD1 = 13;
+// pin 14 ground
+
+
 //#define Rx 10
 //#define Tx 11
 
-const byte topSensPins[4] = {A0, A1, A2,A3};
+const byte topSensPins[4] = {A0, A1, A2, A3};
 
 
 
@@ -112,13 +124,21 @@ void setup() {
   pinMode(rePin, OUTPUT);
   digitalWrite(rePin, LOW);
 
+  pinMode(ADD0, INPUT);
+  pinMode(ADD1, INPUT);
+  pinMode(ADD0, INPUT_PULLUP);
+  pinMode(ADD1, INPUT_PULLUP);
+
+
+  modbusID = 20 + digitalRead(ADD0) + digitalRead(ADD1) * 2;
+
 
 
   modbus.configureCoils(coils, 2);                       // bool array of coil values, number of coils
   modbus.configureDiscreteInputs(discreteInputs, 2);     // bool array of discrete input values, number of discrete inputs
   modbus.configureHoldingRegisters(holdingRegisters, 2); // unsigned 16 bit integer array of holding register values, number of holding registers
   modbus.configureInputRegisters(inputRegisters, 8);     // unsigned 16 bit integer array of input register values, number of input registers
-  modbus.begin(MODBUS_ID, 38400, SERIAL_8E1);
+  modbus.begin(modbusID, 38400, SERIAL_8E1);
 
   //   modbus.begin(MODBUS_ID, 9600,SERIAL_8E1);
   //modbus.begin(MODBUS_ID, 38400);
@@ -129,7 +149,7 @@ void setup() {
   //  modbus.begin(MODBUS_ID, 38400, SERIAL_8E1);
   //#endif
 
-    Serial.println("ModbusRTUSlave");
+  Serial.println("ModbusRTUSlave");
   //  Serial1.println("ModbusRTUSlave");
 
   delay(1000);

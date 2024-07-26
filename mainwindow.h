@@ -126,8 +126,7 @@ private:
     bool initTimer;
     void delAllWid();
 
-    QString statusStr = "\u00A9 2023. vers. 0.0  tel. 29222201   02.02.2024  ";
-
+    QString statusStr;
 };
 
 

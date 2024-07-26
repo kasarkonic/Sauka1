@@ -30,7 +30,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     , procUI2(global, this)
     , modbus485(global, this)
     , runprocess(global, this)
-   // , hwService(global, this)
+    // , hwService(global, this)
     , rs232 (global, this)
     , hwService(global,rs232, this)
 
@@ -74,7 +74,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     initTimer = true;
     timerIdUpd = startTimer(500);
-   // timerTick = startTimer(1);
+    // timerTick = startTimer(1);
     timerUpdateOutput = startTimer(200);
 
     // connect(&valve,SIGNAL(openService()),this,SLOT(openServiceFormValve()));  old style
@@ -88,30 +88,30 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     //                );
 
     connect(&modbus485, &Modbus485::valChangeAn,
-        &hwService, &HWService::updateDataAn);
+            &hwService, &HWService::updateDataAn);
 
     connect(&modbus485, &Modbus485::valChangeDi,
-        &hwService, &HWService::updateDataDi);
+            &hwService, &HWService::updateDataDi);
 
     connect(&modbus485, &Modbus485::valChangeDi,
-        this, &MainWindow::changeInputVal);
+            this, &MainWindow::changeInputVal);
 
 
     connect(&hwService, &HWService::factoryReset,
-        &modbus485, &Modbus485::factoryReset);
+            &modbus485, &Modbus485::factoryReset);
 
     //connect (&hwService, &HWService::outputChange,
     //         &modbus485,&Modbus485::wr23IOD32);
 
     connect(&runprocess, &Runprocess::diOutputChangeSi,
-        &modbus485, &Modbus485::diOutputChangeSl);
+            &modbus485, &Modbus485::diOutputChangeSl);
 
     connect(&hwService, &HWService::diOutputChangeSi,
-        &modbus485, &Modbus485::diOutputChangeSl);
+            &modbus485, &Modbus485::diOutputChangeSl);
 
 
     connect(&runprocess, &Runprocess::diOutputChangeSi,
-        &hwService, &HWService::updateDataDi);
+            &hwService, &HWService::updateDataDi);
 
 
     // sender, &Sender::valueChanged,
@@ -190,7 +190,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent* event) {
     //int dx = pos.x();
     //int dy = pos.y();
 
-   // qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
+    // qDebug() << " Main mouseMoveEventdx:dy" << dx << dy;
 }
 
 void MainWindow::timerEvent(QTimerEvent* event) {
@@ -207,9 +207,9 @@ void MainWindow::timerEvent(QTimerEvent* event) {
     }
 
 
-   // if (event->timerId() == timerTick) {
-      //  global.addTick();
-   // }
+    // if (event->timerId() == timerTick) {
+    //  global.addTick();
+    // }
 }
 
 void MainWindow::loadSettings() {
@@ -300,6 +300,12 @@ void MainWindow::initUI() {
     //global.DIoutput[MIXSPEED].value = 20;
     DIOUT(MIXSPEED, 20)
 
+    statusStr = "\u00A9 2024.  vers: 0.0, build: ";
+    statusStr.append(__DATE__);
+    statusStr.append(",   tel. 29222201,   current time: ");
+
+    QString datetime = QStringLiteral(__DATE__) + QStringLiteral(" ") + QStringLiteral(__TIME__);
+    qDebug()  << datetime;
 }
 
 
@@ -383,7 +389,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
         runprocess.show();
 
         // ParMani *parmani = new ParMani(global,this);
-         //parmani = new ParMani(global,this);
+        //parmani = new ParMani(global,this);
         // parmani->show();
         break;
     }
