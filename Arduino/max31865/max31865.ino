@@ -24,7 +24,7 @@
 Adafruit_MAX31865 thermo = Adafruit_MAX31865(53);
 
 // The value of the Rref resistor. Use 430.0 for PT100 and 4300.0 for PT1000
-#define RREF      1000.0
+#define RREF     2200.0 // 430.0 //1000.0
 // The 'nominal' 0-degrees-C resistance of the sensor
 // 100.0 for PT100, 1000.0 for PT1000
 #define RNOMINAL  1000.0
@@ -46,7 +46,7 @@ void loop() {
   ratio /= 32768;
 //  Serial.print("Ratio = "); Serial.println(ratio, 8);
  // Serial.print("Resistance = "); Serial.println(RREF * ratio, 8);
- // Serial.print("Temperature = "); Serial.println(thermo.temperature(RNOMINAL, RREF));
+  Serial.print("Temperature = "); Serial.println(thermo.temperature(RNOMINAL, RREF));
 
   // Check and print any faults
   uint8_t fault = thermo.readFault();
