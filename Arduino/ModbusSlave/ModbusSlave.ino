@@ -127,10 +127,16 @@ uint16_t inputRegisters[8];
 void setup() {
 
   Serial.begin(115200);
-  press_1.begin(LOADCELL_1_DOUT_PIN, LOADCELL_1_SCK_PIN);
-  press_2.begin(LOADCELL_2_DOUT_PIN, LOADCELL_2_SCK_PIN);
-  press_3.begin(LOADCELL_3_DOUT_PIN, LOADCELL_3_SCK_PIN);
-  press_4.begin(LOADCELL_4_DOUT_PIN, LOADCELL_4_SCK_PIN);
+
+  pinMode(LOADCELL_1_DOUT_PIN, INPUT);
+  pinMode(LOADCELL_1_SCK_PIN, OUTPUT);
+  pinMode(LOADCELL_2_DOUT_PIN, INPUT);
+  pinMode(LOADCELL_2_SCK_PIN, OUTPUT);
+  
+  press_4.begin(LOADCELL_1_DOUT_PIN, LOADCELL_1_SCK_PIN);
+  press_3.begin(LOADCELL_2_DOUT_PIN, LOADCELL_2_SCK_PIN);
+  press_2.begin(LOADCELL_3_DOUT_PIN, LOADCELL_3_SCK_PIN);
+  press_1.begin(LOADCELL_4_DOUT_PIN, LOADCELL_4_SCK_PIN);
 
   thermo1.begin(MAX31865_3WIRE);  // set to 2WIRE or 4WIRE as necessary
   thermo2.begin(MAX31865_3WIRE);
@@ -273,36 +279,36 @@ void loop() {
 
   if (press_1.is_ready()) {
     reading_1 = press_1.read();
-    Serial.print("Pres1= ");
-    Serial.println(reading_1);
+    Serial.print("Pres1=");
+    Serial.print(reading_1);
 
   }
-  //delay(50);
+  delay(50);
   //-----------------------------------
 
 
   if (press_2.is_ready()) {
     reading_2 = press_2.read();
-    Serial.print("Pres2 ");
-    Serial.println(reading_2);
+    Serial.print(",  Pres2=");
+    Serial.print(reading_2);
   }
-  //delay(50);
+  delay(50);
   //------------------------------------------
 
   if (press_3.is_ready()) {
     reading_3 = press_3.read();
-    Serial.print("Pres3 ");
-    Serial.println(reading_3);
+    Serial.print(",  Pres3=");
+    Serial.print(reading_3);
   }
-  //delay(50);
+  delay(50);
   //----------------------------------------------
 
   if (press_4.is_ready()) {
     reading_4 = press_4.read();
-    Serial.print("Pres4 ");
+    Serial.print(",  Pres4=");
     Serial.println(reading_4);
   }
-  //delay(50);
+  delay(50);
   //----------------------------------------------
 
 
@@ -375,6 +381,7 @@ void loop() {
   delay(100);
 }
 void faults(int code) {
+  return;
   // Check and print any faults
   //uint8_t code = thermo1.readFault();
   if (code) {
