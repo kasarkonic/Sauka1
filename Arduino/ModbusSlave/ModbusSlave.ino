@@ -283,7 +283,7 @@ void loop() {
     Serial.print(reading_1);
 
   }
-  delay(50);
+  //delay(50);
   //-----------------------------------
 
 
@@ -292,7 +292,7 @@ void loop() {
     Serial.print(",  Pres2=");
     Serial.print(reading_2);
   }
-  delay(50);
+  //delay(50);
   //------------------------------------------
 
   if (press_3.is_ready()) {
@@ -300,7 +300,7 @@ void loop() {
     Serial.print(",  Pres3=");
     Serial.print(reading_3);
   }
-  delay(50);
+  //delay(50);
   //----------------------------------------------
 
   if (press_4.is_ready()) {
@@ -308,7 +308,7 @@ void loop() {
     Serial.print(",  Pres4=");
     Serial.println(reading_4);
   }
-  delay(50);
+  //delay(50);
   //----------------------------------------------
 
 
@@ -356,8 +356,6 @@ void loop() {
   discreteInputs[0] = 1;// !digitalRead(buttonPins[0]);
   discreteInputs[1] = 0; //!digitalRead(buttonPins[1]);
 
-  holdingRegisters[0] = 4321;
-  holdingRegisters[1] = 8765;
 
   //modbus.poll();
 
