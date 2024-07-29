@@ -91,8 +91,8 @@ byte modbusID; //  20 +  ADD0 + ADD1 *2
 // short pins to ground, when change address. ground is pin 14.
 
 byte ADD0 = A13;  // Modbus node addres = 20 + ADD0*1 +ADD1*2
-byte ADD1 = A15;
-byte ADDGND = A14;
+byte ADD1 = A14;
+byte ADDGND = A15;
 // pin A14 ground
 
 

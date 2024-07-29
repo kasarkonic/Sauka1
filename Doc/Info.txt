@@ -44,3 +44,25 @@ QList<bool>DIoutput	[0 - MAX_DIoutput]
 
 U-(0.15 + Ux)/Ux
 qRound()
+
+
+kabelis 4 pin no spiediena devējiem /tvertnās līmenis uz signālu kolektoru kasti/ 1:1 salodēts
+kabelis 4 pin no pilnas tvertnes devējiem / dakšām / 1 signals 4 zeme, ja sajauc, nekas, tiek mērīta el pretestība.
+kabelis 3 pin no temperatūras devēja:
+1 zalie
+2 brunie
+3 zilie
+
+kabelis uz el skapi 5pin:
+1 +24v
+2 A+  Modbus
+3
+4 B- Modbus
+5 GND
+
+Modbus node addres = 20 + ADD0 * 1 + ADD1*2 kur ADD0, ADD1, ADDGND ir Arduino PIni 
+Lai iegūtu vajadzīgo adresi, jasavieno attiecīgās ieejas ar zema līmeņa izeju ADDGND. 
+ ADD0 = pin A13;  
+ ADD1 = pin A14;
+ ADDGND = pin A15;
+// pin A15 ground
