@@ -76,10 +76,7 @@ Adafruit_MAX31865 thermo4 = Adafruit_MAX31865(45);
 
 //*************************************************
 // full fill sensors
-#define TOPSENS0  A0
-#define TOPSENS1  A1
-#define TOPSENS2  A2
-#define TOPSENS3  A3
+const byte topSensPins[4] = {A1, A2, A3,A0};
 
 
 //*************************************************
@@ -95,28 +92,9 @@ byte ADD1 = A14;
 byte ADDGND = A15;
 // pin A14 ground
 
-
-//#define Rx 10
-//#define Tx 11
-
-const byte topSensPins[4] = {A0, A1, A2, A3};
-
-
-
-
-
-//const byte potPins[2] = {A3, A4};
-
-const byte buttonPins[2] = {2, 3};
-//const byte ledPins[4] = {5, 6, 7, 8};
 const byte dePin = 29;    // Di pin  Hi when Tx,  Lo when Rx outputs in hight impedance
 const byte rePin = 31;// !Re  Lo  receive enable , must be low
-
-
-
 ModbusRTUSlave modbus(Serial1, dePin); // serial port, driver enable pin for rs-485
-
-
 
 
 bool coils[2];
@@ -379,7 +357,7 @@ void loop() {
   delay(100);
 }
 void faults(int code) {
-  return;
+  //return;
   // Check and print any faults
   //uint8_t code = thermo1.readFault();
   if (code) {
