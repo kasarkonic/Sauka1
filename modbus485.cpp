@@ -210,7 +210,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr) {
         qDebug() << "readDat RET";
         return false;
     }
-/*
+    /*
     enum RegisterType {
         Invalid,                 nesūta neko
         DiscreteInputs,         2
@@ -423,11 +423,11 @@ void Modbus485::timerEvent(QTimerEvent* event) {
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
-/*
+        /*
         param.boardAdr = 20;    // read pressure level sensor
         param.regAdr = 0;    //  for testing ERRD;
-        param.len = 8;  // for testing 1;
-        param.cmd = RD_IN_REG;          // ta tomer md 3  vajag 4  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        param.len = 12;  // for testing 1;
+        param.cmd = RD_IN_REG;          // ta tomer md 3
         global.rs485WrList.append(param);
 */
 
@@ -698,9 +698,6 @@ void Modbus485::onReadReady() {     // RS485 handler
                      << QString::number(reply->result().startAddress()) ;     //192
 
 
-
-
-
             qDebug() << "Adr Id: "
                      <<  reply->serverAddress()
                      << "reg:"
@@ -761,36 +758,49 @@ void Modbus485::onReadReady() {     // RS485 handler
 
             break;
 
+        case 20:     // collect sensors from external box
 
             /*
-            if (unit.registerType() == 4 && replayDataArray.length() == datalen) {  // read holding reg
-                //qDebug() << "Din 24DIB32 address:" << reply->serverAddress()
-                //        << QString::number(reply->result().value(0), 16)
-                //        << QString::number(reply->result().value(1), 16);
 
-                for (int i = 0; i < 16; i++) {
-                    if ((bool)global.DIinput[i + 64].value != (bool)(reply->result().value(0) & (1 << i))) {
-                        global.DIinput[i + 64].value = (bool)(reply->result().value(0) & (1 << i));
-                        global.DIinput[i + 64].update = true;
-                        qDebug() << "emit valChangeDi(" << i + 64 << ")" << global.DIinput[i + 64].value;
-                        emit valChangeDi(i + 64, (bool)global.DIinput[i + 64].value);
-                    }
-                }
-                for (int i = 0; i < 16; i++) {
-                    if ((bool)global.DIinput[i + 64 + 16].value != (bool)(reply->result().value(1) & (1 << i))) {
-                        global.DIinput[i + 64 + 16].value = (bool)(reply->result().value(1) & (1 << i));
-                        global.DIinput[i + 64 + 16].update = true;
-                        qDebug() << "emit valChangeDi(" << i + 64 + 16 << ")" << global.DIinput[i + 64 + 16].value;
-                        emit valChangeDi(i + 64 + 16, (bool)global.DIinput[i + 64 + 16].value);
-                    }
-                }
-                // printDIinput();
+
+
+
+                reply->result().value(0)
+
+
+
+
+
+
+                */
+
+            if(datalen != 12){
+                qDebug() << " Modbus Id:20 lenght error" << datalen;
+            }
+            else{
+                global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
+                global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
+                global.DIinput[TVERTNE3LEVEL].value = reply->result().value(2);
+                global.DIinput[TVERTNE4LEVEL].value = reply->result().value(3);
+                global.DIinput[TVERTNE1FULL].value = reply->result().value(4);
+                global.DIinput[TVERTNE2FULL].value = reply->result().value(5);
+                global.DIinput[TVERTNE3FULL].value = reply->result().value(6);
+                global.DIinput[TVERTNE4FULL].value = reply->result().value(7);
+                global.DIinput[TVERTNE1TEMP].value = reply->result().value(8);
+                global.DIinput[TVERTNE2TEMP].value = reply->result().value(9);
+                global.DIinput[TVERTNE3TEMP].value = reply->result().value(10);
+                global.DIinput[TVERTNE4TEMP].value = reply->result().value(11);
+
+                qDebug() << " Modbus Id:20 Data"
+                         << TVERTNE1LEVEL << TVERTNE2LEVEL
+                         << TVERTNE3LEVEL << TVERTNE4LEVEL
+                         << TVERTNE1FULL << TVERTNE2FULL
+                         << TVERTNE3FULL << TVERTNE4FULL
+                         << TVERTNE1TEMP << TVERTNE2TEMP
+                         << TVERTNE3TEMP << TVERTNE4TEMP ;
             }
 
             break;
-
-*/
-
 
 
         default:
@@ -1048,8 +1058,8 @@ void Modbus485::runTaskCycle() {
         RS485Ready = false;
         rd23IOD32(4, 0xc0, 2);  // ok digital input
         changeState(STDIN2,interval);
-       // changeState(STDOUTLIST,interval);   // only for testing !!!!!!!!!!!!!!!!!!!!!!!
-       break;
+        // changeState(STDOUTLIST,interval);   // only for testing !!!!!!!!!!!!!!!!!!!!!!!
+        break;
 
     case STDIN2:
         if(RS485Ready){
@@ -1084,8 +1094,8 @@ void Modbus485::runTaskCycle() {
         if(RS485Ready){
             //qDebug() << "rdN4AIB16(2, 0, 16) response time:" << global.getTick() - starttemp;
 
-             dat1 = updateDIOut(0);
-             dat2 = updateDIOut(16);
+            dat1 = updateDIOut(0);
+            dat2 = updateDIOut(16);
             wr23IOD32m(4,0x70,dat1,dat2);
             // RS485Ready = false;
             changeState(STOUT6,interval);//50
@@ -1096,8 +1106,8 @@ void Modbus485::runTaskCycle() {
     case STOUT6:
 
         // if(RS485Ready){
-         dat1 = updateDIOut(32);
-         dat2 = updateDIOut(48);
+        dat1 = updateDIOut(32);
+        dat2 = updateDIOut(48);
         wr23IOD32m(5,0x70,dat1,dat2);
 
         RS485Ready = false;

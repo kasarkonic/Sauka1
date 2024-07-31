@@ -77,12 +77,13 @@ void HWService::updateDataDi(int row, bool val) {
     //sensListsForm.updateData(row);
     //actListForm.updateData(row);
 
-    QString str1 = "Di out 0-31   ";
-    QString str2 = "Di out 32-63  ";
-    QString str3 = "Di out 64-95  ";
-    QString str4 = "Di in 0-31    ";
-    QString str5 = "Di in 32-63   ";
-    QString str6 = "Di in 64-95   ";
+    QString str1 = "Di out 0-31     ";
+    QString str2 = "Di out 32-63    ";
+    QString str3 = "Di out 64-95    ";
+    QString str4 = "Di in 0-31      ";
+    QString str5 = "Di in 32-63     ";
+    QString str6 = "Di in 64-95     ";
+    QString str8 = "Virtual in 0-32 ";
 
     for (int i = 0; i < 8; i++) {
         str1.append(QString::number(global.DIoutput[i].value)); //global.DIoutput[i].update(); ????   DIOUT(adr,val)
@@ -91,6 +92,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(QString::number(global.DIinput[i].value));
         str5.append(QString::number(global.DIinput[i + 32].value));
         str6.append(QString::number(global.DIinput[i + 64].value));
+        str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
         str1.append(", ");
         str2.append(", ");
@@ -98,6 +100,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(", ");
         str5.append(", ");
         str6.append(", ");
+        str8.append(", ");
     }
 
     str1.append("  ");
@@ -106,6 +109,7 @@ void HWService::updateDataDi(int row, bool val) {
     str4.append("  ");
     str5.append("  ");
     str6.append("  ");
+    str8.append("  ");
 
     for (int i = 9; i < 16; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -114,6 +118,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(QString::number(global.DIinput[i].value));
         str5.append(QString::number(global.DIinput[i + 32].value));
         str6.append(QString::number(global.DIinput[i + 64].value));
+        str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
         str1.append(", ");
         str2.append(", ");
@@ -121,6 +126,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(", ");
         str5.append(", ");
         str6.append(", ");
+        str8.append(", ");
     }
 
     str1.append("  ");
@@ -129,6 +135,7 @@ void HWService::updateDataDi(int row, bool val) {
     str4.append("  ");
     str5.append("  ");
     str6.append("  ");
+    str8.append("  ");
 
     for (int i = 16;i < 24; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -137,6 +144,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(QString::number(global.DIinput[i].value));
         str5.append(QString::number(global.DIinput[i + 32].value));
         str6.append(QString::number(global.DIinput[i + 64].value));
+        str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
         str1.append(", ");
         str2.append(", ");
@@ -144,6 +152,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(", ");
         str5.append(", ");
         str6.append(", ");
+        str8.append(", ");
     }
 
     str1.append("  ");
@@ -152,6 +161,7 @@ void HWService::updateDataDi(int row, bool val) {
     str4.append("  ");
     str5.append("  ");
     str6.append("  ");
+        str8.append("  ");
 
     for (int i = 24;i < 32; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -160,6 +170,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(QString::number(global.DIinput[i].value));
         str5.append(QString::number(global.DIinput[i + 32].value));
         str6.append(QString::number(global.DIinput[i + 64].value));
+        str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
         str1.append(", ");
         str2.append(", ");
@@ -167,6 +178,7 @@ void HWService::updateDataDi(int row, bool val) {
         str4.append(", ");
         str5.append(", ");
         str6.append(", ");
+        str8.append(", ");
     }
 
 
@@ -177,6 +189,7 @@ void HWService::updateDataDi(int row, bool val) {
     ui->label_row4->setText(str4);
     ui->label_row5->setText(str5);
     ui->label_row6->setText(str6);
+    ui->label_row8->setText(str8);
 
     QString str = "M8 ETA: ";
     str.append(QString::number(global.DIoutput[drive_M8_status].value,16));    // hex
@@ -225,18 +238,6 @@ void HWService::timerEvent(QTimerEvent* event) {
     noteTxt.append("bit15  = 0: forvard direction 1: revers direction\n");
 
     ui->textEdit->append(noteTxt);
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     if(global.dev3ConnectStatus){
