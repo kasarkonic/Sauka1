@@ -423,13 +423,13 @@ void Modbus485::timerEvent(QTimerEvent* event) {
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
-        /*
+
         param.boardAdr = 20;    // read pressure level sensor
         param.regAdr = 0;    //  for testing ERRD;
         param.len = 12;  // for testing 1;
         param.cmd = RD_IN_REG;          // ta tomer md 3
         global.rs485WrList.append(param);
-*/
+
 
 
     }
@@ -535,7 +535,7 @@ void Modbus485::onReadReady() {     // RS485 handler
 
     qDebug() << "";
     qDebug() << "onReadReady from addres" << reply->serverAddress()<< "type"<< reply->result().registerType() << reply->error() <<  global.getTick()
-             << reply->rawResult().data() ;    // 0 => no error
+        <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
 
     //  qDebug() << QString::number(reply->result().registerType(),16)   // 4
     //           << QString::number(reply->result().startAddress())      //192 if address -1 Error
@@ -764,20 +764,23 @@ void Modbus485::onReadReady() {     // RS485 handler
 
 
 
+16 bitu dati!!!!
 
-                reply->result().value(0)
 
-
+onReadReady from addres 20 type 4 QModbusDevice::NoError 23591 "\x18\xE0\xD2\xDD\xE6\xC2\x01\xFF\xFF\x03\xF9\x00\x10\x00\x0F\x03\xFB\x05\xF9\x07\xEE\x07\xEE\xA1v"
+len:  25 Data: "\x18\xE0\xD2\xDD\xE6\xC2\x01\xFF\xFF\x03\xF9\x00\x10\x00\x0F\x03\xFB\x05\xF9\x07\xEE\x07\xEE\xA1v"
+ Modbus Id:20 lenght error 25
 
 
 
 
                 */
+            //16
 
-            if(datalen != 12){
-                qDebug() << " Modbus Id:20 lenght error" << datalen;
-            }
-            else{
+          //  if(datalen != 12){
+         //       qDebug() << " Modbus Id:20 lenght error" << datalen;
+          //  }
+          //  else{
                 global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
                 global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
                 global.DIinput[TVERTNE3LEVEL].value = reply->result().value(2);
@@ -792,13 +795,19 @@ void Modbus485::onReadReady() {     // RS485 handler
                 global.DIinput[TVERTNE4TEMP].value = reply->result().value(11);
 
                 qDebug() << " Modbus Id:20 Data"
-                         << TVERTNE1LEVEL << TVERTNE2LEVEL
-                         << TVERTNE3LEVEL << TVERTNE4LEVEL
-                         << TVERTNE1FULL << TVERTNE2FULL
-                         << TVERTNE3FULL << TVERTNE4FULL
-                         << TVERTNE1TEMP << TVERTNE2TEMP
-                         << TVERTNE3TEMP << TVERTNE4TEMP ;
-            }
+                         << global.DIinput[TVERTNE1LEVEL].value
+                         << global.DIinput[TVERTNE2LEVEL].value
+                         << global.DIinput[TVERTNE3LEVEL].value
+                         << global.DIinput[TVERTNE4LEVEL].value
+                         << global.DIinput[TVERTNE1FULL].value
+                         << global.DIinput[TVERTNE2FULL].value
+                         << global.DIinput[TVERTNE3FULL].value
+                         << global.DIinput[TVERTNE4FULL].value
+                         << global.DIinput[TVERTNE1TEMP].value
+                         << global.DIinput[TVERTNE2TEMP].value
+                         << global.DIinput[TVERTNE3TEMP].value
+                         << global.DIinput[TVERTNE4TEMP].value ;
+          //  }
 
             break;
 
@@ -1148,7 +1157,7 @@ void Modbus485::runTaskCycle() {
                 //rdDrivem(2, 0, 4);
                 break;
             case RD_IN_REG:
-                rd24DIB32(global.rs485WrList[0].boardAdr,global.rs485WrList[0].regAdr) ;    // for testing
+                rdDrivem(global.rs485WrList[0].boardAdr, global.rs485WrList[0].regAdr, global.rs485WrList[0].len);
                 break;
             default:
                 break;

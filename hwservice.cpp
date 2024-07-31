@@ -94,22 +94,22 @@ void HWService::updateDataDi(int row, bool val) {
         str6.append(QString::number(global.DIinput[i + 64].value));
         str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
-        str1.append(", ");
-        str2.append(", ");
-        str3.append(", ");
-        str4.append(", ");
-        str5.append(", ");
-        str6.append(", ");
-        str8.append(", ");
+        str1.append(" ");
+        str2.append(" ");
+        str3.append(" ");
+        str4.append(" ");
+        str5.append(" ");
+        str6.append(" ");
+        str8.append(" ");
     }
 
-    str1.append("  ");
-    str2.append("  ");
-    str3.append("  ");
-    str4.append("  ");
-    str5.append("  ");
-    str6.append("  ");
-    str8.append("  ");
+    str1.append("    ");
+    str2.append("    ");
+    str3.append("    ");
+    str4.append("    ");
+    str5.append("    ");
+    str6.append("    ");
+    str8.append("    ");
 
     for (int i = 9; i < 16; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -120,22 +120,22 @@ void HWService::updateDataDi(int row, bool val) {
         str6.append(QString::number(global.DIinput[i + 64].value));
         str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
-        str1.append(", ");
-        str2.append(", ");
-        str3.append(", ");
-        str4.append(", ");
-        str5.append(", ");
-        str6.append(", ");
-        str8.append(", ");
+        str1.append(" ");
+        str2.append(" ");
+        str3.append(" ");
+        str4.append(" ");
+        str5.append(" ");
+        str6.append(" ");
+        str8.append(" ");
     }
 
-    str1.append("  ");
-    str2.append("  ");
-    str3.append("  ");
-    str4.append("  ");
-    str5.append("  ");
-    str6.append("  ");
-    str8.append("  ");
+    str1.append("    ");
+    str2.append("    ");
+    str3.append("    ");
+    str4.append("    ");
+    str5.append("    ");
+    str6.append("    ");
+    str8.append("    ");
 
     for (int i = 16;i < 24; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -146,22 +146,22 @@ void HWService::updateDataDi(int row, bool val) {
         str6.append(QString::number(global.DIinput[i + 64].value));
         str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
-        str1.append(", ");
-        str2.append(", ");
-        str3.append(", ");
-        str4.append(", ");
-        str5.append(", ");
-        str6.append(", ");
-        str8.append(", ");
+        str1.append(" ");
+        str2.append(" ");
+        str3.append(" ");
+        str4.append(" ");
+        str5.append(" ");
+        str6.append(" ");
+        str8.append(" ");
     }
 
-    str1.append("  ");
-    str2.append("  ");
-    str3.append("  ");
-    str4.append("  ");
-    str5.append("  ");
-    str6.append("  ");
-        str8.append("  ");
+    str1.append("    ");
+    str2.append("    ");
+    str3.append("    ");
+    str4.append("    ");
+    str5.append("    ");
+    str6.append("    ");
+    str8.append("    ");
 
     for (int i = 24;i < 32; i++) {
         str1.append(QString::number(global.DIoutput[i].value));
@@ -172,13 +172,13 @@ void HWService::updateDataDi(int row, bool val) {
         str6.append(QString::number(global.DIinput[i + 64].value));
         str8.append(QString::number(global.DIinput[i + MAX_DIinput - VIRUAL_PORTS].value));
 
-        str1.append(", ");
-        str2.append(", ");
-        str3.append(", ");
-        str4.append(", ");
-        str5.append(", ");
-        str6.append(", ");
-        str8.append(", ");
+        str1.append(" ");
+        str2.append(" ");
+        str3.append(" ");
+        str4.append(" ");
+        str5.append(" ");
+        str6.append(" ");
+        str8.append(" ");
     }
 
 
@@ -469,19 +469,19 @@ void HWService::on_pushButton_get_error_code_clicked()
     param.boardAdr = testMotorAddres;
 
     if(param.boardAdr != 20){
-    param.regAdr = RFRD_REG;    //  for testing ERRD;
-    param.value = 0;
-    param.len = 3;  // for testing 1;
-    param.cmd = RD_REG;
-    global.rs485WrList.append(param);
+        param.regAdr = RFRD_REG;    //  for testing ERRD;
+        param.value = 0;
+        param.len = 3;  // for testing 1;
+        param.cmd = RD_REG;
+        global.rs485WrList.append(param);
 
 
-    param.regAdr = SAF1;
-    //param.value = 0;
-    param.len = 14;
-    param.cmd = RD_REG;
-    global.rs485WrList.append(param);
-}
+        param.regAdr = SAF1;
+        //param.value = 0;
+        param.len = 14;
+        param.cmd = RD_REG;
+        global.rs485WrList.append(param);
+    }
 
     else{
         param.regAdr = 0;    //  for testing ERRD;
