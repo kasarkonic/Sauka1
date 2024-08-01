@@ -684,7 +684,7 @@ void Modbus485::onReadReady() {     // RS485 handler
             break;
 
 
-        case 18:     // Drive Motor M8
+        case M8:     // Drive Motor M8
 
 
             qDebug() << "M8: "<< QString::number(replayDataArray.length())   // 4
@@ -752,7 +752,7 @@ void Modbus485::onReadReady() {     // RS485 handler
 
             break;
 
-        case 20:     // collect sensors from external box
+        case SENSOR_BOARD:     // collect sensors from external box
 
             /*
 
