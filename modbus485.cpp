@@ -409,22 +409,13 @@ void Modbus485::timerEvent(QTimerEvent* event) {
 
 
         param.boardAdr = M9;
-        //    global.rs485WrList.append(param);
+        global.rs485WrList.append(param);
 
         param.boardAdr = M4;
-        //    global.rs485WrList.append(param);
-
-
-
-        param.boardAdr = M8;
-        param.regAdr = RFRD_REG;    //  for testing ERRD;
-        param.value = 0;
-        param.len = 1;  // for testing 1;
-        param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
 
-        param.boardAdr = 20;    // read pressure level sensor
+        param.boardAdr = SENSOR_BOARD;    // read pressure level sensor
         param.regAdr = 0;    //  for testing ERRD;
         param.len = 12;  // for testing 1;
         param.cmd = RD_IN_REG;          // ta tomer md 3

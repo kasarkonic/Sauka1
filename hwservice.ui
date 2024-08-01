@@ -447,7 +447,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Set Output</string>
+           <string>Iestatīt izejas</string>
           </property>
          </widget>
         </item>
@@ -480,16 +480,34 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_Out_write">
-          <property name="text">
-           <string>Send</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QPushButton" name="pushButton_Out_write">
+            <property name="text">
+             <string>Sūtīt</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_Out_1">
+            <property name="text">
+             <string>Sūtīt 1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_Out_0">
+            <property name="text">
+             <string>Sūtīt 0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>TextLabel</string>
+           <string>Tekst</string>
           </property>
          </widget>
         </item>
@@ -532,7 +550,7 @@
      <x>0</x>
      <y>0</y>
      <width>1214</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

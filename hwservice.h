@@ -77,6 +77,10 @@ private slots:
 
     void on_lineEdit_enter_reg_editingFinished();
 
+    void on_pushButton_Out_0_clicked();
+
+    void on_pushButton_Out_1_clicked();
+
 private:
 
     Global& global;

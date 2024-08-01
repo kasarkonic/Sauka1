@@ -284,12 +284,13 @@ void HWService::on_pushButton_measure_clicked()
 
 void HWService::on_pushButton_Out_write_clicked() {
     //int id = 4;
-    if (out_value >= 1 && out_address < 96) { // 96,97.. inverter
+    if (out_value >= 1 && out_address <= MAX_DIoutput) { // 96,97.. inverter
         out_value = 1;
+
     }
-    if (out_address >= MAX_DIoutput) {
+    if (out_address > MAX_DIoutput) {
         ui->lineEdit_Out_address->setText("ERROR!");
-        out_address = 63;//
+        out_address = MAX_DIoutput;//
     }
 
 
@@ -308,6 +309,27 @@ void HWService::on_pushButton_Out_write_clicked() {
 
 
 }
+
+void HWService::on_pushButton_Out_0_clicked()
+{
+
+    global.DIoutput[out_address].value = 0;
+    global.DIoutput[out_address].update = true;
+    //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
+    emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
+    ui->lineEdit_Out_value->setText("0");
+}
+
+
+void HWService::on_pushButton_Out_1_clicked()
+{
+    global.DIoutput[out_address].value = 1;
+    global.DIoutput[out_address].update = true;
+    //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
+    emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
+    ui->lineEdit_Out_value->setText("1");
+}
+
 
 
 void HWService::on_lineEdit_Out_address_editingFinished() {
@@ -345,7 +367,7 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
         testMotorAddres = M4;
         break;
     case 3:
-        testMotorAddres = SENSORS;
+        testMotorAddres = SENSOR_BOARD;
         break;
         testMotorAddres = 0;
     }
@@ -516,4 +538,3 @@ void HWService::on_lineEdit_enter_reg_editingFinished()
         readRegTest = 0;
     }
 }
-

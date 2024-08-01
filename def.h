@@ -10,7 +10,7 @@
 #define M8 18
 #define M9 19   // ??
 #define M4 14  // ??
-#define SENSORS 20 // tvertnĒm sensori
+#define SENSOR_BOARD 20 // tvertnĒm sensori
 
 // defines drive registers
 #define CMD_REG  8501   // command reg
