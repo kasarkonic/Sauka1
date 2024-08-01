@@ -534,8 +534,8 @@ void Modbus485::onReadReady() {     // RS485 handler
     // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
     qDebug() << "";
-    qDebug() << "onReadReady from addres" << reply->serverAddress()<< "type"<< reply->result().registerType() << reply->error() <<  global.getTick()
-        <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
+    qDebug() << "onReadReady from addres" << reply->serverAddress()<< "type"<< reply->result().registerType() << reply->error() << "tic:"<< global.getTick()
+             <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
 
     //  qDebug() << QString::number(reply->result().registerType(),16)   // 4
     //           << QString::number(reply->result().startAddress())      //192 if address -1 Error
@@ -768,52 +768,65 @@ void Modbus485::onReadReady() {     // RS485 handler
 
 
 onReadReady from addres 20 type 4 QModbusDevice::NoError 23591 "\x18\xE0\xD2\xDD\xE6\xC2\x01\xFF\xFF\x03\xF9\x00\x10\x00\x0F\x03\xFB\x05\xF9\x07\xEE\x07\xEE\xA1v"
-len:  25 Data: "\x18\xE0\xD2\xDD\xE6\xC2\x01\xFF\xFF\x03\xF9\x00\x10\x00\x0F\x03\xFB\x05\xF9\x07\xEE\x07\xEE\xA1v"
+len:  25 Data: "\x18    \xE0 \xD2\    xDD\ xE6    \xC2\x01     \xFF\xFF\   x03 \xF9\     x00 \x10\     x00 \x0F     \x03 \xFB   \x05 \xF9 \x07 \xEE \x07 \xEE \xA1v"
  Modbus Id:20 lenght error 25
 
+e0D2   57554
+DDE6   56806
+C201   49665
+FFFF   65535
+
+03F9  1017
+0010  16
+000F  15
+03FB  959
+
+05F9    1529
+07EE    2030
+07EE    2030
+A1V
 
 
 
                 */
-            //16
 
-          //  if(datalen != 12){
-         //       qDebug() << " Modbus Id:20 lenght error" << datalen;
-          //  }
-          //  else{
-                global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
-                global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
-                global.DIinput[TVERTNE3LEVEL].value = reply->result().value(2);
-                global.DIinput[TVERTNE4LEVEL].value = reply->result().value(3);
-                global.DIinput[TVERTNE1FULL].value = reply->result().value(4);
-                global.DIinput[TVERTNE2FULL].value = reply->result().value(5);
-                global.DIinput[TVERTNE3FULL].value = reply->result().value(6);
-                global.DIinput[TVERTNE4FULL].value = reply->result().value(7);
-                global.DIinput[TVERTNE1TEMP].value = reply->result().value(8);
-                global.DIinput[TVERTNE2TEMP].value = reply->result().value(9);
-                global.DIinput[TVERTNE3TEMP].value = reply->result().value(10);
-                global.DIinput[TVERTNE4TEMP].value = reply->result().value(11);
 
-                qDebug() << " Modbus Id:20 Data"
-                         << global.DIinput[TVERTNE1LEVEL].value
-                         << global.DIinput[TVERTNE2LEVEL].value
-                         << global.DIinput[TVERTNE3LEVEL].value
-                         << global.DIinput[TVERTNE4LEVEL].value
-                         << global.DIinput[TVERTNE1FULL].value
-                         << global.DIinput[TVERTNE2FULL].value
-                         << global.DIinput[TVERTNE3FULL].value
-                         << global.DIinput[TVERTNE4FULL].value
-                         << global.DIinput[TVERTNE1TEMP].value
-                         << global.DIinput[TVERTNE2TEMP].value
-                         << global.DIinput[TVERTNE3TEMP].value
-                         << global.DIinput[TVERTNE4TEMP].value ;
-          //  }
+            if(datalen == 25){
+
+                global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(3) << 8) + reply->result().value(4);
+                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(5) << 8) + reply->result().value(6);
+                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(7) << 8) + reply->result().value(8);
+                global.DIinput[TVERTNE1FULL].value = (reply->result().value(9) << 8) + reply->result().value(10);
+                global.DIinput[TVERTNE2FULL].value = (reply->result().value(11) << 8) + reply->result().value(12);
+                global.DIinput[TVERTNE3FULL].value = (reply->result().value(13) << 8) + reply->result().value(14);
+                global.DIinput[TVERTNE4FULL].value = (reply->result().value(15) << 8) + reply->result().value(16);
+                global.DIinput[TVERTNE1TEMP].value = (reply->result().value(17) << 8) + reply->result().value(18);
+                global.DIinput[TVERTNE2TEMP].value = (reply->result().value(19) << 8) + reply->result().value(20);
+                global.DIinput[TVERTNE3TEMP].value = (reply->result().value(21) << 8) + reply->result().value(22);
+                global.DIinput[TVERTNE4TEMP].value = (reply->result().value(23) << 8) + reply->result().value(24);
+            }
+
+            qDebug() << " Modbus Id:20 Data"
+                     << global.DIinput[TVERTNE1LEVEL].value
+                     << global.DIinput[TVERTNE2LEVEL].value
+                     << global.DIinput[TVERTNE3LEVEL].value
+                     << global.DIinput[TVERTNE4LEVEL].value
+                     << global.DIinput[TVERTNE1FULL].value
+                     << global.DIinput[TVERTNE2FULL].value
+                     << global.DIinput[TVERTNE3FULL].value
+                     << global.DIinput[TVERTNE4FULL].value
+                     << global.DIinput[TVERTNE1TEMP].value
+                     << global.DIinput[TVERTNE2TEMP].value
+                     << global.DIinput[TVERTNE3TEMP].value
+                     << global.DIinput[TVERTNE4TEMP].value ;
+
 
             break;
 
 
         default:
-            qDebug() << "Receive Msg from uncnown Modbus addres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+            qDebug() << "Receive Msg from uncnown Modbus addres " << reply->serverAddress() << "??????????????????????????????";
             break;
 
             //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
