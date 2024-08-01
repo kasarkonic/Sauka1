@@ -525,7 +525,10 @@ void Modbus485::onReadReady() {     // RS485 handler
     // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
 
     qDebug() << "";
-    qDebug() << "onReadReady from addres" << reply->serverAddress()<< "type"<< reply->result().registerType() << reply->error() << "tic:"<< global.getTick()
+    qDebug() << "onReadReady from addres" << reply->serverAddress()
+             << "start addres"<< reply->result().startAddress()
+             << "type"<< reply->result().registerType()
+             << reply->error() << "tic:"<< global.getTick()
              <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
 
     //  qDebug() << QString::number(reply->result().registerType(),16)   // 4

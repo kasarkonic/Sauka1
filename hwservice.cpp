@@ -40,6 +40,9 @@ HWService::HWService(Global& global, Rs232&  rs232, QWidget* parent)
     //updateTimer = new QElapsedTimer();
     //updateTimer->start();
 
+    out_address = 0;
+    ui->lineEdit_Out_address->setText("0");
+
 }
 
 HWService::~HWService() {
