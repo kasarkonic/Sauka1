@@ -23,7 +23,7 @@ Scale::Scale(Global& global, QWidget* parent) :
     sc_serial = new QSerialPort(this);
     if (!initPort()) {
         qDebug() << "start timemark 1000";
-        timerInit = startTimer(10000, Qt::CoarseTimer);
+      //  timerInit = startTimer(10000, Qt::CoarseTimer);
     }
     connect(sc_serial, &QSerialPort::readyRead, this, &Scale::readSerial);   //readyRead
     connect(this, SIGNAL(newData(QStringList)), this, SLOT(newDataUpdate(QStringList)), Qt::UniqueConnection);
@@ -49,7 +49,9 @@ void Scale::initUI() {
 }
 
 bool Scale::initPort() {
-    qDebug() << "\ninitPort() scale" << global.dev2;
+    qDebug() << "\ninitPort() scale !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << global.dev2;
+
+
     QString str;
 
     corectPort = global.dev2;

@@ -53,20 +53,20 @@ HWService::~HWService() {
 
 void HWService::updateDataAn(int row, int val) {
     qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
-    sensListsForm.updateData(row);
-    actListForm.updateData(row);
+   // sensListsForm.updateData(row);
+   // actListForm.updateData(row);
 
     QString str = "An in 0-16   ";
 
     for (int i = 0;i < 8; i++) {
         str.append(QString::number(global.ANinput4_20[i].value));
-        str.append(", ");
+        str.append(" ");
     }
-    str.append("  ");
+    str.append("   ");
 
     for (int i = 8;i < 16; i++) {
         str.append(QString::number(global.ANinput4_20[i].value));
-        str.append(", ");
+        str.append(" ");
     }
 
     ui->label_row7->setText(str);
@@ -372,7 +372,7 @@ void HWService::on_comboBox_use_motor_currentIndexChanged(int index)
     case 3:
         testMotorAddres = SENSOR_BOARD;
         break;
-        testMotorAddres = 0;
+
     }
 
     qDebug() << "Motor test address" << index << testMotorAddres;

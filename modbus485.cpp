@@ -818,6 +818,47 @@ A1V
 
             break;
 
+        case M4:     // Drive Motor M8
+
+
+            qDebug() << "M4: "<< QString::number(replayDataArray.length())   // 4
+                     << QString::number(reply->result().registerType(),16)   // 4
+                     << QString::number(reply->result().startAddress()) ;     //192
+
+
+            qDebug() << "Adr Id: "
+                     <<  reply->serverAddress()
+                     << "reg:"
+                     <<  reply->result().startAddress()
+                     << "data" ;
+            for(int i = 0; i < replayDataArray.length(); i++){  // 0,1,2
+                qDebug() << reply->result().value(i);
+            }
+            qDebug() << " -------------------";
+
+             break;
+
+        case M9:     // Drive Motor M8
+
+
+            qDebug() << "M9: "<< QString::number(replayDataArray.length())   // 4
+                     << QString::number(reply->result().registerType(),16)   // 4
+                     << QString::number(reply->result().startAddress()) ;     //192
+
+
+            qDebug() << "Adr Id: "
+                     <<  reply->serverAddress()
+                     << "reg:"
+                     <<  reply->result().startAddress()
+                     << "data" ;
+            for(int i = 0; i < replayDataArray.length(); i++){  // 0,1,2
+                qDebug() << reply->result().value(i);
+            }
+            qDebug() << " -------------------";
+
+            break;
+
+
 
         default:
             qDebug() << "Receive Msg from uncnown Modbus addres " << reply->serverAddress() << "??????????????????????????????";
@@ -1062,7 +1103,7 @@ void Modbus485::runTaskCycle() {
         // qDebug() << "runTaskCycle()" << task_state << stateStartTime;
     }
     oldtask_state = task_state;
-    int interval = 25;  // 25 arI strādā
+    int interval = 30;  // 25 arI strādā
     quint16 dat1;
     quint16 dat2;
 
