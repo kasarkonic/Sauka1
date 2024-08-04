@@ -24,6 +24,7 @@
 #include "runprocess.h"
 
 
+
 //#include "componentcard.h"
 //#include "recipet.h"
 
@@ -94,7 +95,6 @@ private:
     // Scale scale;
     Rs232 rs232;
     HWService hwService;
-    //Rs232 rs232;
     // ParMani *parmani;
 
 

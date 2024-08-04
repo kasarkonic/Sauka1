@@ -35,16 +35,16 @@ private slots:
     void on_pushButton_Stop_clicked();
 
 private:
-    Dyno* dynoA;
-    Mix* mixA;
-    Tvertne* tvertneA;
-    Pump* pumpA;
-    Dispax* dispax;
-    Label* label;
-    Pipe* pipeA;
-    Valve* valveA;
-    ScalesBase* scalesBase;
-    ScalesMass* scalesMass;
+   // Dyno* dynoA;
+   // Mix* mixA;
+   // Tvertne* tvertneA;
+   // Pump* pumpA;
+   // Dispax* dispax;
+   // Label* label;
+   // Pipe* pipeA;
+   // Valve* valveA;
+   // ScalesBase* scalesBase;
+   // ScalesMass* scalesMass;
 
     Global& global;
     Ui::ProcUI2* ui;

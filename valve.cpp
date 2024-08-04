@@ -1,5 +1,6 @@
 #include "valve.h"
 
+//#include <QSettings>
 //#include <QPainter>
 
 

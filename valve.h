@@ -6,6 +6,7 @@
 #include "widgetdiagramelement.h"
 
 
+
 namespace ValveStatus {
     enum {
         Close,  // 0

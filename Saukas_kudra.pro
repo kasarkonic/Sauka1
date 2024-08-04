@@ -16,6 +16,7 @@ CONFIG += c++17
 SOURCES += \
     actlistform.cpp \
     acttablemodel.cpp \
+    ballvalve.cpp \
     componentcard.cpp \
     def.cpp \
     dispax.cpp \
@@ -49,6 +50,7 @@ SOURCES += \
 HEADERS += \
     actlistform.h \
     acttablemodel.h \
+    ballvalve.h \
     componentcard.h \
     def.h \
     dispax.h \

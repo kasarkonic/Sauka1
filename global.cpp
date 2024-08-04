@@ -2,6 +2,7 @@
 #include <Qdebug>
 #include <QTimer>
 #include <QElapsedTimer>
+//#include "ballvalve.h"
 
 
 
@@ -88,6 +89,7 @@ Global::Global() {
     createPressSensList();
     tick = 0;
     waitTx = 0;
+    createBallValve();
 
     tickTimer.start();
 
@@ -267,6 +269,13 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres) {
     // data.digital = 0; VALUE
     sensList.append(data);
     sensList[addres] = data;
+}
+
+void Global::createBallValve()
+{
+   BallValve* ballvalveTest = new BallValve(this,0,1,0,1);
+    ballvalveTest->close();
+
 }
 
 void Global::needUpdateDIoutputs(int row, int val) {

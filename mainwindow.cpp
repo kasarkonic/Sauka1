@@ -20,9 +20,9 @@
 
 
 
+
 MainWindow::MainWindow(Global& global, QWidget* parent)
     : QMainWindow(parent)
-    //, global(global)
     , scale(global, this)
     , global(global)
     , ui(new Ui::MainWindow)
@@ -33,6 +33,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     // , hwService(global, this)
     , rs232 (global, this)
     , hwService(global,rs232, this)
+
 
 {
     modbus485.start();

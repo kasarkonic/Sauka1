@@ -11,6 +11,8 @@
 #include "def.h"
 #include <QMessageBox>
 #include <QElapsedTimer>
+#include "ballvalve.h"
+
 
 /*
 #define DI_IN_START_ADDRESS 0   // MODBUSS ADDRESS 4  DIinput
@@ -27,6 +29,8 @@
 */
 class WidgetService;
 class WidgetDiagramElement;
+class BallValve;
+
 namespace ActuatorType {
     enum actT {
         Invertor,
@@ -297,6 +301,9 @@ public:
     void setwaitTx(int val);
     QString    getDriveErrorTxt(int errCode);
 
+
+   BallValve *ballvalveTest;
+
 private:
 
     QElapsedTimer tickTimer;
@@ -313,6 +320,7 @@ private:
     // 0 bit 23DI 0 board address 4 , data adress 0-31
     // 1 bit 23DI 1 board address 5 , data adress 32-63
     int waitTx;
+    void createBallValve();
 
 };
 
