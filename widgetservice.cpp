@@ -30,6 +30,9 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
     qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
 
+    ui->label_0_1->setText("ieeja/izeja");
+    ui->label_0_2->setText("adrese");
+    ui->label_0_3->setText("vērtība");
 
     updateFormData();   // data from global. ...
 }
@@ -75,36 +78,36 @@ void WidgetService::updateFormData()        // read data from global and display
     // addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
 
     //qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
-   // bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
+    // bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
 
 
 
-    ui->label_AddressDI->setText("Q" + QString::number(addresAct + 1));
-    ui->label_AddressAI1->setText("IN" + QString::number(addresSens1 + 1));
-    ui->label_AddressAI2->setText("IN" + QString::number(addresSens2 + 1));
+    // ui->label_AddressDI->setText("Q" + QString::number(addresAct + 1));
+    //  ui->label_AddressAI1->setText("IN" + QString::number(addresSens1 + 1));
+    //  ui->label_AddressAI2->setText("IN" + QString::number(addresSens2 + 1));
 
-    ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
+    // ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
 
     switch (widgetElement->global.widHash[currentWid].type) {
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Pump:
     case WidgetType::widgT::Mix:
-        ui->lineEdit_AddresAN1->setText(QString::number(global.DIoutput[addresSens1].value));
+        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIoutput[addresSens1].value));
         break;
     case WidgetType::widgT::Tvertne:
     case WidgetType::widgT::Valve:
-        ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
+        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
         break;
 
     case WidgetType::widgT::ScalesMass:
-        ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
+        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
         break;
 
     default:
         break;
     }
 
-    ui->lineEdit_AddresAN2->setText(QString::number(global.DIinput[addresSens2].value));
+    // ui->lineEdit_AddresAN2->setText(QString::number(global.DIinput[addresSens2].value));
 
 
     widgetElement->updateSettings();
@@ -118,7 +121,15 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts elements \"Dynamill\"\n";
         str.append("Aktuators maina motora griežšanās ātrumu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->horizontalSlider_2->setEnabled(false);
+
+        ui->label1_1->setText("Ātrume");
+        ui->label2_1->setText("Statuss");
+        ui->label3_1->setText("Kļūda");
+        ui->label4_1->setText("-");
+        ui->label5_1->setText("Ieslēgt");
+        ui->label6_1->setText("Izslēgt");
+
+
         break;
 
     case WidgetType::widgT::Tvertne:
@@ -134,13 +145,13 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts elements \"TVERTNE \"\n";
         str.append("IN1 tvertnes līmenis\n");
         str.append("IN2 drošības līmeņa devējs\n");
-        ui->horizontalSlider->setEnabled(false);
 
-        // ui->horizontalSlider->setDisabled(false);
-
-        //  ui->label_Di->setText("DI addr."+QString::number(addresAct));
-        //  ui->label_AN1->setText("AN1 addr."+QString::number(addresAN1));
-        //  ui->label_AN2->setText("AN2 addr."+QString::number(addresAN2));
+        ui->label1_1->setText("Līmenis tvertnē %");
+        ui->label2_1->setText("Pilnas TV. devējs");
+        ui->label3_1->setText("Temperatūra");
+        ui->label4_1->setText("-");
+        ui->label5_1->setText("Kalibrēt pilnu TV.");
+        ui->label6_1->setText("Kalibrēt tukšu TV");
         break;
 
     case WidgetType::widgT::Valve:  //??????????????????????????
@@ -161,6 +172,16 @@ void WidgetService::updateFormData()        // read data from global and display
         str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
         //str.append(strDeg);
         //str.append(" .\n");
+
+        ui->label1_1->setText("In vārsts vaļā");
+        ui->label2_1->setText("In vārsts ciet");
+        ui->label3_1->setText("Out atvērt vārstu");
+        ui->label4_1->setText("Out aizvērt vārstu");
+        ui->label5_1->setText("Aizvēršanās laiks");
+        ui->label6_1->setText("Atvēršanās laiks");
+
+
+
         break;
 
     case WidgetType::widgT::Pump:
@@ -175,9 +196,12 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts sūknis \"Pump \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->horizontalSlider_2->setEnabled(false);
-        ui->horizontalSlider->setMaximum(100);
-        ui->horizontalSlider->setMinimum(-100);
+        ui->label1_1->setText("Ātrume");
+        ui->label2_1->setText("Statuss");
+        ui->label3_1->setText("Kļūda");
+        ui->label4_1->setText("-");
+        ui->label5_1->setText("Ieslēgt");
+        ui->label6_1->setText("Izslēgt");
 
         break;
 
@@ -193,29 +217,48 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts maisītājs \"Mix \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->horizontalSlider_2->setEnabled(false);
+        ui->label1_1->setText("Ātrume");
+        ui->label2_1->setText("Statuss");
+        ui->label3_1->setText("Kļūda");
+        ui->label4_1->setText("-");
+        ui->label5_1->setText("Ieslēgt");
+        ui->label6_1->setText("Izslēgt");
 
         break;
     case WidgetType::widgT::Pipe:
         str = "Izvēlēta savienojošā caurule \"Pipe \"\n";
         str.append("Options = 0 vertikala, \n");
         str.append("Options = 90 horizontāla, \n");
-        ui->horizontalSlider->setEnabled(false);
-        ui->horizontalSlider_1->setEnabled(false);
-        ui->horizontalSlider_2->setEnabled(false);
+        //  ui->horizontalSlider->setEnabled(false);
+        //  ui->horizontalSlider_1->setEnabled(false);
+        //  ui->horizontalSlider_2->setEnabled(false);
         break;
     case WidgetType::widgT::ScalesBase:
         str = "Izvēlēta svaru pamatne \"ScalesBase \"\n";
-        ui->horizontalSlider->setEnabled(false);
-        ui->horizontalSlider_1->setEnabled(false);
-        ui->horizontalSlider_2->setEnabled(false);
+        //  ui->horizontalSlider->setEnabled(false);
+        //  ui->horizontalSlider_1->setEnabled(false);
+        // ui->horizontalSlider_2->setEnabled(false);
         break;
     case WidgetType::widgT::ScalesMass:
         str = "Izvēlēta svaru atsvars \"ScalesMass \"\n";
         str.append("IN1 masas lielums, \n");
-        ui->horizontalSlider->setEnabled(false);
-        ui->horizontalSlider_2->setEnabled(false);
+        // ui->horizontalSlider->setEnabled(false);
+        //  ui->horizontalSlider_2->setEnabled(false);
         break;
+    case WidgetType::widgT::Label:
+        str = "Izvēlēta svaru atsvars \"ScalesMass \"\n";
+        str.append("IN1 masas lielums, \n");
+        ui->label1_1->setText("Label TXT");
+        ui->label2_1->setText("-");
+        ui->label3_1->setText("-");
+        ui->label4_1->setText("-");
+        ui->label5_1->setText("-");
+        ui->label6_1->setText("-");
+
+        break;
+
+
+
 
     default:
         break;
@@ -255,14 +298,14 @@ void WidgetService::mouseMoveEvent(QMouseEvent* event) {
     // event->accept();
 
     // get the cursor position of this event
-   // const QPoint& pos = event->pos();
+    // const QPoint& pos = event->pos();
 
-   // int pointX = (mouseStartPointX - pos.x()) / -100;
-   // int pointY = (mouseStartPointY - pos.y()) / -100;
+    // int pointX = (mouseStartPointX - pos.x()) / -100;
+    // int pointY = (mouseStartPointY - pos.y()) / -100;
     //qDebug() << " WidgetService mouseMoveEvent dx:dy" << pointX << pointY;
     //  widgetElement->global.widHash[currentWid].startX += pointX;
     //  widgetElement->global.widHash[currentWid].startY += pointY;
-   //   updateFormData();
+    //   updateFormData();
 }
 
 void WidgetService::mouseDoubleClickEvent(QMouseEvent* event) {
@@ -377,6 +420,7 @@ void WidgetService::on_pushButton_ON_clicked()
 }
 
 */
+/*
 void WidgetService::on_horizontalSlider_valueChanged(int value) {
     //qDebug() << "on_horizontalSlider_valueChanged " << addresAct << " <- " << value;
     //global.DIoutput[addresAct].value = value;
@@ -420,11 +464,11 @@ void WidgetService::on_horizontalSlider_2_valueChanged(int value) {
     updateSensorVal();
 }
 
+*/
 
 
 
-
-
+/*
 
 void WidgetService::on_lineEdit_AddresAN1_editingFinished() {
     bool ok = true;
@@ -457,3 +501,4 @@ void WidgetService::on_lineEdit_AddresDI_editingFinished() {
     qDebug() << "on_lineEdit_AddresDI_editingFinished " << actValueDi;
     updateSensorVal();
 }
+*/

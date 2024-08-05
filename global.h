@@ -302,7 +302,10 @@ public:
     QString    getDriveErrorTxt(int errCode);
 
 
-   BallValve *ballvalveTest;
+   BallValve* ballvalveTest0;
+   BallValve* ballvalveTest1;
+   BallValve* ballvalveTest2;
+   BallValve* ballvalveTest3;
 
 private:
 

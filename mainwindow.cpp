@@ -35,9 +35,14 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     , hwService(global,rs232, this)
 
 
+
 {
-    modbus485.start();
+   // modbus485.start();  in thread
     //modbus485.run();
+
+
+
+
 
     ui->setupUi(this);
     procUI2.show();
@@ -122,6 +127,9 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     qDebug() << "-------------------modbus485.init()";
     modbus485.init();
     att = 1;
+
+    qDebug() << "global.ballvalveTest->close();" << global.getTick();
+    global.ballvalveTest0->close();
 }
 
 MainWindow::~MainWindow() {

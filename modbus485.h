@@ -11,7 +11,7 @@
 
 
 
-class Modbus485 : public QThread //  public QMainWindow
+class Modbus485 :/* public QThread */  public QMainWindow
 {
     Q_OBJECT
 public:

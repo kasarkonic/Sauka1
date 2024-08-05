@@ -11,6 +11,7 @@
 //using namespace inputSens;
 
 Global::Global() {
+    tickTimer.start();
     appSwVers = "vers: 0.1   ";
     zoomKoef = zoomKoefPf1 = zoomKoefPf2 = 1.0;
     UIXsize = UIXsizePf1 = UIXsizePf2 = 1000;
@@ -91,7 +92,6 @@ Global::Global() {
     waitTx = 0;
     createBallValve();
 
-    tickTimer.start();
 
 }
 
@@ -273,8 +273,11 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres) {
 
 void Global::createBallValve()
 {
-   BallValve* ballvalveTest = new BallValve(this,0,1,0,1);
-    ballvalveTest->close();
+    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,1,0,1);
+    ballvalveTest1 = new BallValve(this,"ballvalveTest1",0,1,0,1);
+    ballvalveTest2 = new BallValve(this,"ballvalveTest2",0,1,0,1);
+    ballvalveTest3 = new BallValve(this,"ballvalveTest3",0,1,0,1);
+    // ballvalveTest->close();
 
 }
 

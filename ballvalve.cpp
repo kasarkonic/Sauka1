@@ -1,52 +1,37 @@
 #include "ballvalve.h"
-//#include "global.h"
-//#include "inout.h"
-#include <QTimer>
+#include "global.h"
 
-BallValve::BallValve(Global* global, int outOpern, int outClose, int inOpen, int inClose)
-    //: QMainWindow(parent)
-    : global(global)
-    , outOpern (outOpern)
+
+BallValve::BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent )
+    : QObject(parent)
+    , global(global)
+    , name(name)
+    , outOpen (outOpen)
     , outClose (outClose)
     , inOpen (inOpen)
     , inClose (inClose)
 
 
 {
-
-    qDebug() <<"App sw vers:"<<  global->appSwVers;
-
-    runTimer = new QTimer();
-    //etimer.start();
-    btimer.start(1000,this);
-   connect(runTimer, SIGNAL(timeout()),this, SLOT(timerEvent()));
-
-   // runTimer->start(1000);
+    qDebug() <<"App sw vers:"<<  global->appSwVers<< global->getTick();
 }
 
 void BallValve::open()
 {
-qDebug() <<"close alve";
-    global->DIoutput[outOpern].value = 1;
-    global->DIoutput[outOpern].update = true;
-   // startTime = global->getTick();
+    qDebug() <<"open valve";
+    global->DIoutput[outOpen].value = 1;
+    global->DIoutput[outOpen].update = true;
+    startOpenTime = global->getTick();
     startTim();
-
-
-
-    /*
-    1. ieslēdz out
-            2 paņem laiku
-            sagaida rezultātu
-            izslēdz out
-            izrēkina laiku.
-            */
 
 }
 
 void BallValve::close()
 {
-    qDebug() <<"close alve";
+    qDebug() <<"close valve";
+    global->DIoutput[outClose].value = 1;
+    global->DIoutput[outClose].update = true;
+    StartCloseTime = global->getTick();
     startTim();
 
 }
@@ -61,6 +46,11 @@ bool BallValve::isClose()
     return status == valveStatus::Close;
 }
 
+QString BallValve::getName()
+{
+    return name;
+}
+
 int BallValve::getOpenTime()
 {
     return openTime;
@@ -71,47 +61,71 @@ int BallValve::getCloseTime()
     return closeTime;
 }
 
-int BallValve::initbattValve(bool stat)  // close/oprn if unknow status 0 close,  1 open.
+int BallValve::initbattValve(bool stat)  // close if unknow status,
 {
-    if((global->DIinput[inOpen].value > 0) && (global->DIinput[inClose].value > 0)){
+    if((global->DIinput[inOpen].value > 0) && (global->DIinput[inClose].value > 0)) {
         status = valveStatus::Unknow;
-        if(stat){
-            open();
-        }
-        else{
-            close();
-        }
+        close();
     }
-    else if((global->DIinput[inOpen].value > 0)){
+    else if(global->DIinput[inOpen].value > 0) {
         status = valveStatus::Open;
+        close();
     }
-    else if((global->DIinput[inClose].value > 0)){
-        status = valveStatus::Close;
-    }
+    else {
+            status = valveStatus::Close;
+        }
     return status;
-
-
-
-}
-
-void BallValve::startTim(int t)
-{
-    qDebug() <<"startTim" << t;
-   // runTimer->start(1000);
-//runTimer->start(t);
-//connect(runTimer, SIGNAL(timeout()),
- //       this, SLOT(runTimer()));
 }
 
 void BallValve::timerEvent(QTimerEvent *event)
 {
-    qDebug() << " BallValve timer event" << global->getTick();
-//runTimer->start(1000);
+    //qDebug() << " BallValve TimerEvent" << global->getTick();
+
+    if(startOpenTime){
+        if(global->DIinput[inOpen].value > 0){
+            global->DIoutput[outOpen].value = 0;
+            global->DIoutput[outOpen].update = true;
+            openTime =  global->getTick() - startOpenTime;
+            startOpenTime = 0;
+            status = valveStatus::Open;
+            killTimer(timerId);
+        }
+        if((global->getTick() - startOpenTime) > 10000){ // 12s.  ERROR!!!
+            global->DIoutput[outOpen].value = 0;
+            global->DIoutput[outOpen].update = true;
+            qDebug() << "ERROR!!! not open in 10s " ;
+            status = valveStatus::Unknow;
+            qDebug() << "ERROR!!! not open in 10s " ;
+            killTimer(timerId);
+        }
+    }
+    if(StartCloseTime){
+        if(global->DIinput[inClose].value > 0){
+            global->DIoutput[outClose].value = 0;
+            global->DIoutput[outClose].update = true;
+            closeTime =  global->getTick() - StartCloseTime;
+            StartCloseTime = 0;
+            status = valveStatus::Close;
+            killTimer(timerId);
+        }
+        if((global->getTick() - StartCloseTime) > 12000){ // 12s.  ERROR!!!
+            global->DIoutput[outClose].value = 0;
+            global->DIoutput[outClose].update = true;
+            status = valveStatus::Unknow;
+            qDebug() << "ERROR!!! not close in 12s " ;
+            killTimer(timerId);
+        }
+    }
 }
 
-void BallValve::timerEvent()
+void BallValve::startTim(int t)
 {
-     qDebug() << " BallValve timerEvent" << global->getTick();
-//runTimer->start(1000);
+    qDebug() <<"startTim" << t;   //<< global->getTick();
+    if(timerId != -1){
+        killTimer(timerId);
+    }
+    timerId = startTimer(100);
 }
+
+
 

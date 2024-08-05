@@ -8,8 +8,8 @@
 
 
 Modbus485::Modbus485(Global& global, QWidget* parent)
-    //: QMainWindow(parent)
-    : QThread(parent)
+    : QMainWindow(parent)
+    //: QThread(parent)
     , global(global)
 
 {

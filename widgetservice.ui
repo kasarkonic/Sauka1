@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>472</height>
+    <width>445</width>
+    <height>846</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,5,0,0,3,0,3">
+  <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,5,0,0,0,0,3,0,3">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
@@ -58,9 +58,9 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="label_0_1">
        <property name="text">
-        <string>Mainīt vērtību</string>
+        <string>0.1</string>
        </property>
       </widget>
      </item>
@@ -79,9 +79,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_11">
+      <widget class="QLabel" name="label_0_2">
        <property name="text">
-        <string>Adrese</string>
+        <string>0.2</string>
        </property>
       </widget>
      </item>
@@ -100,9 +100,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_13">
+      <widget class="QLabel" name="label_0_3">
        <property name="text">
-        <string>Sensoru vērtība</string>
+        <string>0.3</string>
        </property>
       </widget>
      </item>
@@ -122,25 +122,32 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0,0">
+          <layout class="QVBoxLayout" name="verticalLayout_12" stretch="0,0,0,0">
            <item>
-            <widget class="QSlider" name="horizontalSlider">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+            <widget class="QLabel" name="label1_1">
+             <property name="text">
+              <string>1.1</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="horizontalSlider_1">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+            <widget class="QLabel" name="label2_1">
+             <property name="text">
+              <string>2.1</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSlider" name="horizontalSlider_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+            <widget class="QLabel" name="label3_1">
+             <property name="text">
+              <string>3.1</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label4_1">
+             <property name="text">
+              <string>4.1</string>
              </property>
             </widget>
            </item>
@@ -163,60 +170,34 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
+        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_11">
-           <item>
-            <widget class="QLabel" name="label_Di">
-             <property name="text">
-              <string>Aktuators   </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_AddressDI">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label1_2">
+           <property name="text">
+            <string>1.2</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
-           <item>
-            <widget class="QLabel" name="label_AN1">
-             <property name="text">
-              <string>Devējs   </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_AddressAI1">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label2_2">
+           <property name="text">
+            <string>2.2</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <widget class="QLabel" name="label_AN2">
-             <property name="text">
-              <string>Devējs   </string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_AddressAI2">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label3_2">
+           <property name="text">
+            <string>3.2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label4_2">
+           <property name="text">
+            <string>4.2</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -237,21 +218,90 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_16" stretch="2,2,2">
+          <layout class="QVBoxLayout" name="verticalLayout_16" stretch="0,0,0,0">
            <item>
-            <widget class="QLineEdit" name="lineEdit_AddresDI"/>
+            <widget class="QLabel" name="label1_3">
+             <property name="text">
+              <string>1.3</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_AddresAN1"/>
+            <widget class="QLabel" name="label2_3">
+             <property name="text">
+              <string>2.3</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="lineEdit_AddresAN2"/>
+            <widget class="QLabel" name="label3_3">
+             <property name="text">
+              <string>3.3</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label4_3">
+             <property name="text">
+              <string>4.3</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
         </layout>
        </item>
       </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_11">
+     <item>
+      <widget class="QLabel" name="label5_1">
+       <property name="text">
+        <string>5.1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_5_2">
+       <property name="text">
+        <string>5.2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5_3">
+       <property name="text">
+        <string>5.3</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_12">
+     <item>
+      <widget class="QLabel" name="label6_1">
+       <property name="text">
+        <string>6_1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_6_2">
+       <property name="text">
+        <string>6.2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_6_3">
+       <property name="text">
+        <string>6.3</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

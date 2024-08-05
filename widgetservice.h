@@ -55,17 +55,17 @@ private slots:
 
     // void on_pushButton_ON_clicked();
 
-    void on_horizontalSlider_valueChanged(int value);
+   // void on_horizontalSlider_valueChanged(int value);
 
-    void on_lineEdit_AddresAN2_editingFinished();
+   // void on_lineEdit_AddresAN2_editingFinished();
 
-    void on_lineEdit_AddresAN1_editingFinished();
+   // void on_lineEdit_AddresAN1_editingFinished();
 
-    void on_lineEdit_AddresDI_editingFinished();
+   // void on_lineEdit_AddresDI_editingFinished();
 
-    void on_horizontalSlider_2_valueChanged(int value);
+   // void on_horizontalSlider_2_valueChanged(int value);
 
-    void on_horizontalSlider_1_valueChanged(int value);
+   // void on_horizontalSlider_1_valueChanged(int value);
 
 private:
     // WidgetDiagramElement::widDataStruct &wsettings;
