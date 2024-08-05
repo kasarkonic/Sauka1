@@ -39,9 +39,10 @@ public:
         int currY = 0;
         int currSize = 0;
         int currSizeWi = 0;
-        int act_Addres1 = 0;
-        int sensAddres1 = 0;
-        int sensAddres2 = 0;
+        int var1 = 0;
+        int var2 = 0;
+        //int sensAddres1 = 0;
+        //int sensAddres2 = 0;
 
 
     } settings;

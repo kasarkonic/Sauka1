@@ -30,9 +30,9 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
     qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
 
-    ui->label_0_1->setText("ieeja/izeja");
-    ui->label_0_2->setText("adrese");
-    ui->label_0_3->setText("vērtība");
+    ui->label_0_1->setText("Ieejas/izejas nosaukums");
+    ui->label_0_2->setText("Adrese");
+    ui->label_0_3->setText("Vērtība");
 
     updateFormData();   // data from global. ...
 }
@@ -246,14 +246,28 @@ void WidgetService::updateFormData()        // read data from global and display
         //  ui->horizontalSlider_2->setEnabled(false);
         break;
     case WidgetType::widgT::Label:
-        str = "Izvēlēta svaru atsvars \"ScalesMass \"\n";
-        str.append("IN1 masas lielums, \n");
+        str = "teksta Lauks\n";
+
         ui->label1_1->setText("Label TXT");
-        ui->label2_1->setText("-");
-        ui->label3_1->setText("-");
-        ui->label4_1->setText("-");
-        ui->label5_1->setText("-");
-        ui->label6_1->setText("-");
+        ui->label2_1->setText("");
+        ui->label3_1->setText("");
+        ui->label4_1->setText("");
+        ui->label5_1->setText("");
+        ui->label6_1->setText("");
+
+        ui->label1_2->setText("");
+        ui->label2_2->setText("");
+        ui->label3_2->setText("");
+        ui->label4_2->setText("");
+        ui->lineEdit_5_2->hide();
+        ui->lineEdit_6_2->hide();
+
+        ui->label1_3->setText("");
+        ui->label2_3->setText("");
+        ui->label3_3->setText("");
+        ui->label4_3->setText("");
+        ui->pushButton_5_3->hide();
+        ui->pushButton_6_3->hide();
 
         break;
 

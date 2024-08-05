@@ -256,7 +256,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_11">
+    <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="5,0,0,5,0,0,5">
      <item>
       <widget class="QLabel" name="label5_1">
        <property name="text">
@@ -265,9 +265,37 @@
       </widget>
      </item>
      <item>
+      <widget class="Line" name="line_15">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_14">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="lineEdit_5_2">
        <property name="text">
         <string>5.2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_16">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_17">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -281,7 +309,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_12">
+    <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="5,0,0,5,0,0,5">
      <item>
       <widget class="QLabel" name="label6_1">
        <property name="text">
@@ -290,9 +318,37 @@
       </widget>
      </item>
      <item>
+      <widget class="Line" name="line_18">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_19">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="lineEdit_6_2">
        <property name="text">
         <string>6.2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_20">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line_21">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>

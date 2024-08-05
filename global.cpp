@@ -273,11 +273,30 @@ void Global::addSensList(QString name, SensorType::sensT tp, int addres) {
 
 void Global::createBallValve()
 {
-    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,1,0,1);
-    ballvalveTest1 = new BallValve(this,"ballvalveTest1",0,1,0,1);
-    ballvalveTest2 = new BallValve(this,"ballvalveTest2",0,1,0,1);
-    ballvalveTest3 = new BallValve(this,"ballvalveTest3",0,1,0,1);
-    // ballvalveTest->close();
+    bvalve bv;
+    //BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent = nullptr);
+
+    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,1,2,3);
+    bv.npk = 0;
+    bv.bValvePtr = ballvalveTest0;
+    ballValveList.append(bv);
+
+    ballvalveTest1 = new BallValve(this,"ballvalveTest1",10,11,12,13);
+    bv.npk = 1;
+    bv.bValvePtr = ballvalveTest1;
+    ballValveList.append(bv);
+
+    ballvalveTest2 = new BallValve(this,"ballvalveTest2",20,21,22,23);
+    bv.npk = 2;
+    bv.bValvePtr = ballvalveTest2;
+    ballValveList.append(bv);
+
+    ballvalveTest3 = new BallValve(this,"ballvalveTest3",30,31,32,33);
+    bv.npk = 3;
+    bv.bValvePtr = ballvalveTest3;
+    ballValveList.append(bv);
+
+    qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
 }
 
@@ -349,15 +368,20 @@ startY
 Widget size
 startSize
 
-
+for DIZPAX:
+act_sensAddres act  address
+    var1   - speed	// cik ātri
+    var2 -
 
 for MIX:
 act_sensAddres act  address
-    digital  - on/off	// griežas
-    analog   - speed	// cik ātri
-sensAddres   - no
-sensAddres2  - no
+    var1   - speed	// cik ātri
+    var2 -
 
+for DINO:
+act_sensAddres act  address
+    var1   - speed	// cik ātri
+    var2 -
 
 
 for  Pipe :
@@ -407,146 +431,127 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //      WidgetType::widgT ty,    name,       page, X,       Y,  size, options,  actAdr1, sensAdr1,  sensAdr2)
 
-    addWidgList(WidgetType::Mix, "MIX", 1, 496, 27, 120, 0, set_mix_speed, set_mix_On_Off, 0);
-    addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   393,  123,   172,  0, 0, 0, 0);
-    addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    389,  48,   77, 0,0,scales_mass, 0);
+    addWidgList(WidgetType::Mix, 0, 1, 496, 27, 120, set_mix_speed, set_mix_On_Off);
+    addWidgList(WidgetType::ScalesBase,    0, 1,   393,  123,   172,  0, 0);
+    addWidgList(WidgetType::ScalesMass,    0,1,    389,  48,   77, 0,scales_mass);
 
-    addWidgList(WidgetType::Dispax, "DISPAX", 1, 400, 330, 120, 0, set_dino_speed, set_dino_On_Off, 0);
-    addWidgList(WidgetType::Label, "LABEL1", 1, 1644, 230, 250, 0, 0, 0, 0);
-    addWidgList(WidgetType::Label, "LABEL2", 1, 233, 251, 250, 0, 0, 0, 0);
-    addWidgList(WidgetType::Label, "LABEL3", 1, 243, 1, 250, 0, 0, 0, 0);
+    addWidgList(WidgetType::Dispax, 0, 1, 400, 330, 120, set_dino_speed, set_dino_On_Off);
+    addWidgList(WidgetType::Label, 0, 1, 1644, 230, 250, 0, 0);
+    addWidgList(WidgetType::Label, 1, 1, 233, 251, 250, 0, 0);
+    addWidgList(WidgetType::Label, 2, 1, 243, 1, 250, 0, 0);
 
-    addWidgList(WidgetType::Tvertne, "T2", 1, 1598, 1, 120, 0, 0, TVERTNE2LEVEL, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne, "T3", 1, 700, 310, 120, 0, 0, TVERTNE3LEVEL, TVERTNE3FULL);
-    addWidgList(WidgetType::Tvertne, "T4", 1, 1000, 310, 120, 0, 0, TVERTNE4LEVEL, TVERTNE4FULL);
-    addWidgList(WidgetType::Tvertne, "T5", 1, 1300, 310, 120, 0, 0, TVERTNE5LEVEL, TVERTNE5FULL);
+    addWidgList(WidgetType::Tvertne,0, 1, 1598, 1, 120, TVERTNE2LEVEL, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,1, 1, 700, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,2, 1, 1000, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne, 3, 1, 1300, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
 
-    addWidgList(WidgetType::Pump, "PUMP S4", 1, 433, 483, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
-    addWidgList(WidgetType::Pump, "PUMP S5", 1, 744, 61, 50, 0, set_pump1_speed, set_pump1_On_Off, 0);
-
-
-    addWidgList(WidgetType::Valve, "Valve 2.1", 1, 608, 7, 25, 0, VALVE1ACT, Y2_1_open, Y2_1_close);
-    addWidgList(WidgetType::Valve, "Valve 2.2", 1, 608, 147, 25, 0, VALVE1ACT, Y2_2_open, Y2_2_close);
-    addWidgList(WidgetType::Valve, "Valve 2.3", 1, 1524, 124, 25, 0, VALVE1ACT, Y2_3_open, Y2_3_close);
-    addWidgList(WidgetType::Valve, "Valve 2.4", 1, 1452, 124, 25, 0, VALVE1ACT, Y2_4_open, Y2_4_close);
-
-    addWidgList(WidgetType::Valve, "Valve 3.1", 1, 709, 273, 25, 0, VALVE1ACT, Y3_1_open, Y3_1_close);
-    addWidgList(WidgetType::Valve, "Valve 3.2", 1, 782, 275, 25, 0, VALVE1ACT, Y3_2_open, Y3_2_close);
-    addWidgList(WidgetType::Valve, "Valve 3.3", 1, 710, 458, 25, 0, VALVE1ACT, Y3_3_open, Y3_3_close);
-    addWidgList(WidgetType::Valve, "Valve 3.4", 1, 781, 458, 25, 0, VALVE1ACT, Y3_4_open, Y3_4_close);
-
-    addWidgList(WidgetType::Valve, "Valve 4.1", 1, 1009, 225, 25, 0, VALVE1ACT, Y4_1_open, Y4_1_close);
-    addWidgList(WidgetType::Valve, "Valve 4.2", 1, 1080, 224, 25, 0, VALVE1ACT, Y4_2_open, Y4_2_close);
-    addWidgList(WidgetType::Valve, "Valve 4.3", 1, 1382, 563, 25, 0, VALVE1ACT, Y4_3_open, Y4_3_close);
-    addWidgList(WidgetType::Valve, "Valve 4.4", 1, 1310, 563, 25, 0, VALVE1ACT, Y4_4_open, Y4_4_close);
-
-    addWidgList(WidgetType::Valve, "Valve 5.1", 1, 1307, 174, 25, 0, VALVE1ACT, Y5_1_open, Y5_1_close);
-    addWidgList(WidgetType::Valve, "Valve 5.2", 1, 1379, 173, 25, 0, VALVE1ACT, Y5_2_open, Y5_2_close);
-    addWidgList(WidgetType::Valve, "Valve 5.3", 1, 1010, 514, 25, 0, VALVE1ACT, Y5_3_open, Y5_3_close);
-    addWidgList(WidgetType::Valve, "Valve 5.4", 1, 1081, 513, 25, 0, VALVE1ACT, Y5_4_open, Y5_4_close);
+    addWidgList(WidgetType::Pump, 0, 1, 433, 483, 50, 0, set_pump1_speed);
+    addWidgList(WidgetType::Pump, 1, 1, 744, 61, 50, 0, set_pump1_speed);
 
 
-    addWidgList(WidgetType::Valve, "Valve 6.2", 1, 468, 273, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
-    addWidgList(WidgetType::Valve, "Valve 6.3", 1, 408, 273, 25, 0, VALVE1ACT, VALVE1SWOPEN, VALVE1SWCLOSE);
+    addWidgList(WidgetType::Valve, 0, 1, 608, 7, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 1, 1, 608, 147, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 2, 1, 1524, 124, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 3, 1, 1452, 124, 25, 0, 0);
+
+    addWidgList(WidgetType::Valve, 4, 1, 709, 273, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 5, 1, 782, 275, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 6, 1, 710, 458, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 7, 1, 781, 458, 25, 0, 0);
+
+    addWidgList(WidgetType::Valve, 8, 1, 1009, 225, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 9, 1, 1080, 224, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 10, 1, 1382, 563, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 11, 1, 1310, 563, 25, 0, 0);
+
+    addWidgList(WidgetType::Valve, 12, 1, 1307, 174, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 13, 1, 1379, 173, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 14, 1, 1010, 514, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 15, 1, 1081, 513, 25, 0, 0);
+
+
+    addWidgList(WidgetType::Valve, 16, 1, 468, 273, 25, 0, 0);
+    addWidgList(WidgetType::Valve, 17, 1, 408, 273, 25, 0, 0);
 
 
     // PIPE
 
-    addWidgList(WidgetType::Pipe, "Pipe 1", 1, 1480, 130, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 2", 1, 662, 80, 75, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 3", 1, 650, 13, 153, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 4", 1, 800, 80, 694, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 0, 1, 1480, 130, 41, 90, 0);
+    addWidgList(WidgetType::Pipe, 1, 1, 662, 80, 75, 90, 0);
+    addWidgList(WidgetType::Pipe, 2, 1, 650, 13, 153, 0, 0);
+    addWidgList(WidgetType::Pipe, 3, 1, 800, 80, 694, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 5", 1, 570, 133, 27,  0, 0,0,0);
-    addWidgList(WidgetType::Pipe, "Pipe 6", 1, 750, 282, 36, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 7", 1, 736, 280, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 8", 1, 1335, 180, 41, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 4, 1, 570, 133, 27,  0, 0);
+    addWidgList(WidgetType::Pipe, 5, 1, 750, 282, 36, 0, 0);
+    addWidgList(WidgetType::Pipe, 6, 1, 736, 280, 41, 90, 0);
+    addWidgList(WidgetType::Pipe, 7, 1, 1335, 180, 41, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 9", 1, 1150, 138, 37, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 10", 1, 1551, 130, 90, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 11", 1, 1050, 230, 88, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 12", 1, 635, 13, 23, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 8, 1, 1150, 138, 37, 0, 0);
+    addWidgList(WidgetType::Pipe, 9, 1, 1551, 130, 90, 90, 0);
+    addWidgList(WidgetType::Pipe, 10, 1, 1050, 230, 88, 0, 0);
+    addWidgList(WidgetType::Pipe, 11, 1, 635, 13, 23, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 13", 1, 1493, 80, 56, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 14", 1, 495, 280, 211, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 15", 1, 1036, 230, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 16", 1, 246,  32, 243,  90, 0,0,0);
+    addWidgList(WidgetType::Pipe, 12, 1, 1493, 80, 56, 0, 0);
+    addWidgList(WidgetType::Pipe, 13, 1, 495, 280, 211, 90, 0);
+    addWidgList(WidgetType::Pipe, 14, 1, 1036, 230, 41, 90, 0);
+    addWidgList(WidgetType::Pipe, 15, 1, 246,  32, 243,  90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 17", 1, 1108, 230, 57, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 18", 1, 1037, 520, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 19", 1, 450, 570, 856, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 20", 1, 854, 620, 799, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 16, 1, 1108, 230, 57, 90, 0);
+    addWidgList(WidgetType::Pipe, 17, 1, 1037, 520, 41, 90, 0);
+    addWidgList(WidgetType::Pipe, 18, 1, 450, 570, 856, 90, 0);
+    addWidgList(WidgetType::Pipe, 19, 1, 854, 620, 799, 90, 0);
 
+    addWidgList(WidgetType::Pipe, 20, 1, 450, 288, 38, 0, 0);
+    addWidgList(WidgetType::Pipe, 21, 1, 570, 13, 35, 90, 0);
+    addWidgList(WidgetType::Pipe, 22, 1, 650, 180, 100, 0, 0);
+    addWidgList(WidgetType::Pipe, 23, 1, 660, 230, 344, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 21", 1, 450, 288, 38, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 22", 1, 570, 13, 35, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 24, 1, 1350, 428, 148, 0, 0);
+    addWidgList(WidgetType::Pipe, 25, 1, 810, 281, 46, 90, 0);
+    addWidgList(WidgetType::Pipe, 26, 1, 1050, 428, 97, 0, 0);
+    addWidgList(WidgetType::Pipe, 27, 1, 736, 464, 41, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 23", 1, 650, 180, 100, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 24", 1, 660, 230, 344, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 25", 1, 1350, 428, 148, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 26", 1, 810, 281, 46, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 28, 1, 1337, 570, 41, 90, 0);
+    addWidgList(WidgetType::Pipe, 29, 1, 750, 428, 44, 0, 0);
+    addWidgList(WidgetType::Pipe, 30, 1, 660, 180, 643, 90, 0);
+    addWidgList(WidgetType::Pipe, 31, 1, 435, 280, 30, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 27", 1, 1050, 428, 97, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 28", 1, 736, 464, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 29", 1, 1337, 570, 41, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 30", 1, 750, 428, 44, 0, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 32, 1, 246, 280, 156, 90, 0);
+    addWidgList(WidgetType::Pipe, 33, 1, 808, 464, 57, 90, 0);
+    addWidgList(WidgetType::Pipe, 34, 1, 450, 427, 50, 0, 0);
+    addWidgList(WidgetType::Pipe, 35, 1, 623, 475, 103, 0, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 31", 1, 660, 180, 643, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 32", 1, 435, 280, 30, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 33", 1, 246, 280, 156, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 34", 1, 808, 464, 57, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 36, 1, 850, 536, 29, 0, 0);
+    addWidgList(WidgetType::Pipe, 37, 1, 623, 464, 84, 90, 0);
+    addWidgList(WidgetType::Pipe, 38, 1, 850, 470, 45, 0, 0);
+    addWidgList(WidgetType::Pipe, 39, 1, 624, 520, 383, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 35", 1, 450, 427, 50, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 36", 1, 623, 475, 103, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 37", 1, 850, 536, 29, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 38", 1, 623, 464, 84, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 40, 1, 570, 18, 27, 0, 0);
+    addWidgList(WidgetType::Pipe, 41, 1, 850, 246, 46, 0, 0);
+    addWidgList(WidgetType::Pipe, 42, 1, 850, 587, 44, 0, 0);
+    addWidgList(WidgetType::Pipe, 43, 1, 1410, 568, 22, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 39", 1, 850, 470, 45, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 40", 1, 624, 520, 383, 90, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 44, 1, 1150, 527, 38, 0, 0);
+    addWidgList(WidgetType::Pipe, 45, 1, 1151, 586, 40, 0, 0);
+    addWidgList(WidgetType::Pipe, 46, 1, 850, 130, 598, 90, 0);
+    addWidgList(WidgetType::Pipe, 47, 1, 570, 154, 35, 90, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 41", 1, 570, 18, 27, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 42", 1, 850, 246, 46, 0, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 48, 1, 1109, 520, 56, 90, 0);
+    addWidgList(WidgetType::Pipe, 49, 1, 1650, 287, 344, 0, 0);
+    addWidgList(WidgetType::Pipe, 50, 1, 1627, 116, 17, 0, 0);
+    addWidgList(WidgetType::Pipe, 51, 1, 850, 196, 29, 0, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 43", 1, 850, 587, 44, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 44", 1, 1410, 568, 22, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 45", 1, 1150, 527, 38, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 46", 1, 1151, 586, 40, 0, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 52, 1, 850, 130, 48, 0, 0);
+    addWidgList(WidgetType::Pipe, 53, 1, 1407, 180, 22, 90, 0);
+    addWidgList(WidgetType::Pipe, 54, 1, 1150, 196, 45, 0, 0);
+    addWidgList(WidgetType::Pipe, 55, 1, 1418, 130, 61, 0, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 47", 1, 850, 130, 598, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 48", 1, 570, 154, 35, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 49", 1, 1109, 520, 56, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 50", 1, 1650, 287, 344, 0, 0, 0, 0);
+    addWidgList(WidgetType::Pipe, 56, 1, 1350, 180, 138, 0, 0);
+    addWidgList(WidgetType::Pipe, 57, 1, 1651, 280, 104, 90, 0);
+    addWidgList(WidgetType::Pipe, 58, 1, 1418, 575, 55, 0, 0);
+    addWidgList(WidgetType::Pipe, 59, 1, 450, 539, 42, 0, 0);
 
-    addWidgList(WidgetType::Pipe, "Pipe 51", 1, 1627, 116, 17, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 52", 1, 850, 196, 29, 0, 0, 0, 0);
-
-    addWidgList(WidgetType::Pipe, "Pipe 53", 1, 850, 130, 48, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 54", 1, 1407, 180, 22, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 55", 1, 1150, 196, 45, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 56", 1, 1418, 130, 61, 0, 0, 0, 0);
-
-    addWidgList(WidgetType::Pipe, "Pipe 57", 1, 1350, 180, 138, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 58", 1, 1651, 280, 104, 90, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 59", 1, 1418, 575, 55, 0, 0, 0, 0);
-    addWidgList(WidgetType::Pipe, "Pipe 60", 1, 450, 539, 42, 0, 0, 0, 0);
-
-    addWidgList(WidgetType::Pipe, "Pipe 61", 1, 635, 154, 23, 90, 0, 0, 0);
-
-
-
-
-
-
-    // addWidgList(WidgetType::ScalesBase,    "Scales Base", 1,   772,  142,    100,  0,     0,   0, 0);
-    // addWidgList(WidgetType::ScalesMass,    "Scales Mass",1,    770,  30,   100, 0,    0,   scales_mass, 0);
-
-
-    /*
-
-     addWidgList(WidgetType::ScalesBase,    "Scales Base",    413,        545,    250,   15, 0,   0,  0,0,0,0);
-     addWidgList(WidgetType::ScalesMass,    "Scales Mass",    584,       485,     62,   0,  0,   0,  0,11,0,0);
-
- */
+    addWidgList(WidgetType::Pipe, 60, 1, 635, 154, 23, 90, 0);
 
 
     qDebug() << "create " << widHash.size() << "widgets";
@@ -554,18 +559,62 @@ void Global::creatWidgList() {
 
 
 
-void Global::addWidgList(WidgetType::widgT ty, QString name, int page, int X, int Y, int size, int options, int actAdr1, int sensAdr1, int sensAdr2) {
+void Global::addWidgList(WidgetType::widgT ty, int npk, int page, int X, int Y, int size, int var1, int var2) {
     wdataStruct data;
     data.type = ty;     // widget type
-    data.name = name;   // neme
+    data.npk = npk;   // neme
     data.page = page;   // page Nr procUI1 = 1 procUI2 = 2
 
     data.startX = X;    // coordinate X
     data.startY = Y;    // coordinate Y
     data.startSize = size;  // size zoom
-    data.options = options; // valve angle, pipe angle
-    data.act_Addres1 = actAdr1; // actuator address
-    data.sensAddres1 = sensAdr1; // sensor address1, for pipe angle, for valve angle / on off/
-    data.sensAddres2 = sensAdr2; // sensor address2
+    data.var1 = var1; // valve angle, pipe angle
+    data.var2 = var2; // actuator address
+
+
+    QString name = "";
+
+
+    if (ty == WidgetType::Dyno){
+        name.append("Dyno ");
+        name.append(QString::number(npk));
+    }
+
+    if (ty == WidgetType::Mix){
+        name.append("Mikseris ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Pipe){
+        name.append("Caurule ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Pump){
+        name.append("Sūknis ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Tvertne){
+        name.append("Tvertne ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Valve){
+        name = ballValveList[npk].bValvePtr->name;
+    }
+    if (ty == WidgetType::ScalesBase){
+        name.append("ScalesBase ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::ScalesMass){
+        name.append("ScalesMass ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Dispax){
+        name.append("Dispax ");
+        name.append(QString::number(npk));
+    }
+    if (ty == WidgetType::Label){
+        name.append("Label ");
+        name.append(QString::number(npk));
+    }
+
     widHash.insert(name, data);
 }

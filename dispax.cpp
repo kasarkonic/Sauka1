@@ -22,7 +22,7 @@ void Dispax::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     // qDebug() << "Mix updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
-    speed = (int)global.DIoutput[settings.act_Addres1].value;
+    speed = (int)global.DIoutput[settings.var1].value;
     killTimer(timerIdUpd);
     if (speed) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate

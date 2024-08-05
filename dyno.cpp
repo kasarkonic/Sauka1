@@ -24,7 +24,7 @@ void Dyno::updateSettings() {
     // qDebug() << "Dino updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
     killTimer(timerIdUpd);
-    if (global.DIoutput[settings.act_Addres1].value) {
+    if (global.DIoutput[settings.var1].value) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
     } else {
         timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate

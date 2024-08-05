@@ -42,10 +42,10 @@ void WidgetDiagramElement::updateSettings() {
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
-    settings.options = global.widHash[settings.name].options;
-    settings.act_Addres1 = global.widHash[settings.name].act_Addres1;
-    settings.sensAddres1 = global.widHash[settings.name].sensAddres1;
-    settings.sensAddres2 = global.widHash[settings.name].sensAddres2;
+    settings.var1 = global.widHash[settings.name].var1;
+    settings.var2 = global.widHash[settings.name].var2;
+    //sensAddres1 = global.widHash[settings.name].sensAddres1;
+    //settings.sensAddres2 = global.widHash[settings.name].sensAddres2;
     settings.currSize = settings.startSize;        //Hi
     settings.currSizeWi = settings.startSizeWi;
 

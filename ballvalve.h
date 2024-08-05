@@ -10,6 +10,11 @@ class BallValve :  public QObject
 public:
     explicit BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent = nullptr);
 
+    QString name;
+    int outOpen = 0;    // output address
+    int outClose = 0;
+    int inOpen = 0; // input address
+    int inClose = 0;
 
     void open();
     void close();
@@ -33,12 +38,6 @@ private:
 
     //  QTimer* runTimer;
     Global* global;
-    QString name;
-    int outOpen = 0;    // output address
-    int outClose = 0;
-    int inOpen = 0; // input address
-    int inClose = 0;
-
 
     void startTim(int t = 100);
     int startOpenTime = 0;
