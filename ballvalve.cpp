@@ -86,13 +86,15 @@ int BallValve::getStatus()
 
 void BallValve::timerEvent(QTimerEvent *event)
 {
+    Q_UNUSED (event)
     //qDebug() << " BallValve TimerEvent" << global->getTick();
 
     if(startOpenTime){
-        if(global->DIinput[inOpen].value > 0){
+        openTime =  (global->getTick() - startOpenTime)/100;
+        if(global->DIinput[inOpen].value > 0){ 
             global->DIoutput[outOpen].value = 0;
             global->DIoutput[outOpen].update = true;
-            openTime =  global->getTick() - startOpenTime;
+            //openTime =  global->getTick() - startOpenTime;
             startOpenTime = 0;
             status = valveStatus::Open;
             killTimer(timerId);
@@ -107,10 +109,11 @@ void BallValve::timerEvent(QTimerEvent *event)
         }
     }
     if(StartCloseTime){
+        closeTime =  (global->getTick() - StartCloseTime)/100;
         if(global->DIinput[inClose].value > 0){
             global->DIoutput[outClose].value = 0;
             global->DIoutput[outClose].update = true;
-            closeTime =  global->getTick() - StartCloseTime;
+            //closeTime =  global->getTick() - StartCloseTime;
             StartCloseTime = 0;
             status = valveStatus::Close;
             killTimer(timerId);
@@ -127,7 +130,7 @@ void BallValve::timerEvent(QTimerEvent *event)
 
 void BallValve::startTim(int t)
 {
-    qDebug() <<"startTim" << t;   //<< global->getTick();
+   // qDebug() <<"startTim" << t;   //<< global->getTick();
     if(timerId != -1){
         killTimer(timerId);
     }

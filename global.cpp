@@ -72,6 +72,10 @@ Global::Global() {
         sensList.append(sdata);
         //    actList.append(sact);
     }
+    for (int i = 0; i < 10; i++) {    // 10 = max nr of Tvertne
+        tvertneTemp.append(i);
+    }
+
     qDebug() << sensList.size() << actList.size();
 
     createBallValve();

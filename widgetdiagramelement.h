@@ -59,9 +59,9 @@ protected:
     //virtual void updateSettings();
     // QString widName;
 
-    int addresAct;  // global.widHash[].act_sensAddres  ok
-    int addresSens1;  // global.widHash[].act_sensAddres  ok
-    int addresSens2;  // global.widHash[].act_sensAddres  ok
+    //int addresAct;  // global.widHash[].act_sensAddres  ok
+    //int addresSens1;  // global.widHash[].act_sensAddres  ok
+    //int addresSens2;  // global.widHash[].act_sensAddres  ok
 
     int timerIdUpd = 0;
 

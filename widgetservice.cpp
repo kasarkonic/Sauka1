@@ -29,7 +29,7 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     // addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
     //addresSens1 = widgetElement->global.widHash[currentWid].sensAddres1;
     // addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
-    qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
+    //qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
 
     ui->label_0_1->setText("Ieejas/izejas nosaukums");
     ui->label_0_2->setText("Adrese");
@@ -37,6 +37,7 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     ui->horizontalSlider_speed->setValue(50);
 
     updateFormData();   // data from global. ...
+    timerId = startTimer(100);
 }
 void WidgetService::openWidgetServiceForm() {
     qDebug() << "WidgetSrv Open service pipe ??? : ";
@@ -60,9 +61,6 @@ WidgetService::~WidgetService() {
     delete ui;
 }
 
-void WidgetService::updateUIvalue() {
-
-}
 
 void WidgetService::updateFormData()        // read data from global and display in to UI
 {
@@ -75,18 +73,9 @@ void WidgetService::updateFormData()        // read data from global and display
 
     // sensor data
 
-    // addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
-    // addresSens1 = widgetElement->global.widHash[currentWid].sensAddres1;
-    // addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
-
-    //qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
-    // bool isValve = widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve;
 
 
 
-    // ui->label_AddressDI->setText("Q" + QString::number(addresAct + 1));
-    //  ui->label_AddressAI1->setText("IN" + QString::number(addresSens1 + 1));
-    //  ui->label_AddressAI2->setText("IN" + QString::number(addresSens2 + 1));
 
     // ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
     /*
@@ -159,13 +148,35 @@ void WidgetService::updateFormData()        // read data from global and display
         str.append("Aktuators maina motora griežšanās ātrumu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
 
-        ui->label1_1->setText("Ātrume");
+        ui->label1_1->setText("Ātrums");
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
         ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt");
-        ui->label6_1->setText("Izslēgt");
+        ui->label5_1->setText("Ieslēgt mikseri");
+        ui->label6_1->setText("Izslēgt mikseri");
 
+        ui->label1_2->setText(QString::number(12));
+        ui->label2_2->setText(QString::number(22));
+        ui->label3_2->setText(QString::number(32));
+        ui->label4_2->setText("");
+        ui->lineEdit_5_2->hide();
+        ui->lineEdit_6_2->hide();
+
+        ui->label1_3->setText(QString::number(13));
+        ui->label2_3->setText(QString::number(23));
+        ui->label3_3->setText(QString::number(33));
+        ui->label4_3->setText("");
+        ui->pushButton_5_3->setText("Ieslēgt");
+        ui->pushButton_6_3->setText("Izslēgt");
+
+        ui->line_14->hide();
+        ui->line_15->hide();
+        ui->line_16->hide();
+        ui->line_17->hide();
+        ui->line_18->hide();
+        ui->line_19->hide();
+        ui->line_20->hide();
+        ui->line_21->hide();
 
         break;
 
@@ -191,26 +202,26 @@ void WidgetService::updateFormData()        // read data from global and display
             str.append("IN2 drošības līmeņa devējs\n");
 
             ui->label1_1->setText("Līmenis tvertnē %");
-            ui->label2_1->setText("Pilnas TV. devējs");
+            ui->label2_1->setText("Pilnas Tv. devējs");
             ui->label3_1->setText("Temperatūra");
-            ui->label4_1->setText("-");
-            ui->label5_1->setText("Kalibrēt pilnu TV.");
-            ui->label6_1->setText("Kalibrēt tukšu TV");
+            ui->label4_1->setText("Sensoru kalibrēšana");
+            ui->label5_1->setText("Kalibrēt pilnu Tv.");
+            ui->label6_1->setText("Kalibrēt tukšu Tv");
 
             ui->label1_2->setText(QString::number(level));
             ui->label2_2->setText(QString::number(full));
 
             ui->label3_2->setText("-");
-            ui->label4_2->setText("");
-            ui->lineEdit_5_2->hide();
-            ui->lineEdit_6_2->hide();
+            ui->label4_2->setText("Pašreizējā vērtība");
+            //ui->lineEdit_5_2->hide();
+            //ui->lineEdit_6_2->hide();
 
             ui->label1_3->setText(QString::number(levelv));
             ui->label2_3->setText(QString::number(fullv));
             ui->label3_3->setText(QString::number(global.tvertneTemp[currentWidnpk]));
-            ui->label4_3->setText("");
-            ui->pushButton_5_3->hide();
-            ui->pushButton_6_3->hide();
+            ui->label4_3->setText("Saglabāt");
+            ui->pushButton_5_3->setText("Pilna Tv.");
+            ui->pushButton_6_3->setText("Tukša Tv.");
 
         }
 
@@ -219,13 +230,7 @@ void WidgetService::updateFormData()        // read data from global and display
 
     case WidgetType::widgT::Valve:  //??????????????????????????
 
-        /*
-         * Widget Valve
-         *
-         * vārsta gala slēdži sensList[sensor address1].digital.
-         * vārsta gala slēdži sensList[sensor address1].digital.
-         *
-         */
+
 
         {
             int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
@@ -252,10 +257,10 @@ void WidgetService::updateFormData()        // read data from global and display
             ui->label3_3->setText(QString::number(outOpenv));
             ui->label4_3->setText(QString::number(outClosev));
 
-            ui->lineEdit_5_2->setText(" ");
-            ui->lineEdit_6_2->setText(" ");
-            ui->pushButton_5_3->setText(QString::number(openTime));
-            ui->pushButton_6_3->setText(QString::number(closeTime));
+            ui->lineEdit_5_2->setText(QString::number(openTime));
+            ui->lineEdit_6_2->setText(QString::number(openTime));
+            ui->pushButton_5_3->setText(" Aizvērt vārstu");
+            ui->pushButton_6_3->setText("Atvērt vārstu");
 
 
         }
@@ -292,12 +297,35 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts sūknis \"Pump \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->label1_1->setText("Ātrume");
+        ui->label1_1->setText("Ātrums");
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
         ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt");
-        ui->label6_1->setText("Izslēgt");
+        ui->label5_1->setText("Ieslēgt mikseri");
+        ui->label6_1->setText("Izslēgt mikseri");
+
+        ui->label1_2->setText(QString::number(12));
+        ui->label2_2->setText(QString::number(22));
+        ui->label3_2->setText(QString::number(32));
+        ui->label4_2->setText("");
+        ui->lineEdit_5_2->hide();
+        ui->lineEdit_6_2->hide();
+
+        ui->label1_3->setText(QString::number(13));
+        ui->label2_3->setText(QString::number(23));
+        ui->label3_3->setText(QString::number(33));
+        ui->label4_3->setText("");
+        ui->pushButton_5_3->setText("Ieslēgt");
+        ui->pushButton_6_3->setText("Izslēgt");
+
+        ui->line_14->hide();
+        ui->line_15->hide();
+        ui->line_16->hide();
+        ui->line_17->hide();
+        ui->line_18->hide();
+        ui->line_19->hide();
+        ui->line_20->hide();
+        ui->line_21->hide();
 
         break;
 
@@ -313,12 +341,35 @@ void WidgetService::updateFormData()        // read data from global and display
         str = "Izvēlēts maisītājs \"Mix \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->label1_1->setText("Ātrume");
+        ui->label1_1->setText("Ātrums");
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
         ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt");
-        ui->label6_1->setText("Izslēgt");
+        ui->label5_1->setText("Ieslēgt mikseri");
+        ui->label6_1->setText("Izslēgt mikseri");
+
+        ui->label1_2->setText(QString::number(12));
+        ui->label2_2->setText(QString::number(22));
+        ui->label3_2->setText(QString::number(32));
+        ui->label4_2->setText("");
+        ui->lineEdit_5_2->hide();
+        ui->lineEdit_6_2->hide();
+
+        ui->label1_3->setText(QString::number(13));
+        ui->label2_3->setText(QString::number(23));
+        ui->label3_3->setText(QString::number(33));
+        ui->label4_3->setText("");
+        ui->pushButton_5_3->setText("Ieslēgt");
+        ui->pushButton_6_3->setText("Izslēgt");
+
+        ui->line_14->hide();
+        ui->line_15->hide();
+        ui->line_16->hide();
+        ui->line_17->hide();
+        ui->line_18->hide();
+        ui->line_19->hide();
+        ui->line_20->hide();
+        ui->line_21->hide();
 
         break;
     case WidgetType::widgT::Pipe:
@@ -342,9 +393,16 @@ void WidgetService::updateFormData()        // read data from global and display
         //  ui->horizontalSlider_2->setEnabled(false);
         break;
     case WidgetType::widgT::Label:
+
+
+        ui->label_0_1->setText("Teksta lauks");
+        ui->label_0_2->setText("Nekādas manipulācijas nav paredzētas.");
+        ui->label_0_3->setText("");
+
+
         str = "teksta Lauks\n";
 
-        ui->label1_1->setText("Label TXT");
+        ui->label1_1->setText("");
         ui->label2_1->setText("");
         ui->label3_1->setText("");
         ui->label4_1->setText("");
@@ -364,6 +422,14 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label4_3->setText("");
         ui->pushButton_5_3->hide();
         ui->pushButton_6_3->hide();
+        ui->line_14->hide();
+        ui->line_15->hide();
+        ui->line_16->hide();
+        ui->line_17->hide();
+        ui->line_18->hide();
+        ui->line_19->hide();
+        ui->line_20->hide();
+        ui->line_21->hide();
 
         break;
 
@@ -512,8 +578,14 @@ void WidgetService::on_pushButton_5_3_clicked()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
         // open valve
-        global.ballValveList[currentWidnpk].bValvePtr->open();
+        global.ballValveList[currentWidnpk].bValvePtr->close();
     }
+
+            if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+                // save calibration full
+
+            }
+
 }
 
 
@@ -521,7 +593,11 @@ void WidgetService::on_pushButton_6_3_clicked()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
         // close valve
-        global.ballValveList[currentWidnpk].bValvePtr->close();
+        global.ballValveList[currentWidnpk].bValvePtr->open();
+    }
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+        // save calibration empty
+
     }
 
 }
@@ -541,5 +617,12 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
 
 
     }
+}
+
+void WidgetService::timerEvent(QTimerEvent *event)
+{
+ Q_UNUSED (event)
+    updateFormData();
+
 }
 

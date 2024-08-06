@@ -75,15 +75,16 @@ private slots:
 
     void on_lineEdit_6_2_editingFinished();
 
+protected:
+    void timerEvent(QTimerEvent* event) ;
+
 private:
     // WidgetDiagramElement::widDataStruct &wsettings;
     WidgetDiagramElement* widgetElement;
     //Global &global;
     QObject obj;
     //Ui::WidgetService *ui;
-    // Pipe pipe;
 
-    void updateUIvalue();
     int mouseStartPointX;
     int mouseStartPointY;
     //void updateSettings();
@@ -92,18 +93,14 @@ private:
     QString currentWid;
     int   currentWidnpk;
 
-    int addresAct;  // global.widHash[].act_sensAddres  ok
-    int addresSens1;  // global.widHash[].act_sensAddres  ok
-    int addresSens2;  // global.widHash[].act_sensAddres  ok
 
-    //int addresAN1;  // global.widHash[].sensAddres1
-   // int addresAN2;  // global.widHash[].sensAddres2
 
     int actValueDi; // push button value == lineedit DI value
     int actValueAn1;
     int actValueAn2;
     //int an1Value;
     //int an2Value;
+    int timerId;
 };
 
 

@@ -10,7 +10,8 @@ class BallValve :  public QObject
 public:
     explicit BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent = nullptr);
 
-    QString name;
+    Global* global;
+   QString name;
     int outOpen = 0;    // output address
     int outClose = 0;
     int inOpen = 0; // input address
@@ -39,8 +40,9 @@ protected:
 private:
 
 
+
     //  QTimer* runTimer;
-    Global* global;
+    //
 
     void startTim(int t = 100);
     int startOpenTime = 0;
