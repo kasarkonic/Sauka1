@@ -143,10 +143,8 @@ void MainWindow::changeInputVal(int row, int val) {
     foreach(Global::wdataStruct widData, global.widHash) {
 
 
-        if ((widData.act_Addres1 == row) |
-            // (widData.act_Addres2 == row) |
-            (widData.sensAddres1 == row) |
-            (widData.sensAddres2 == row)) {
+        if ((widData.var1 == row) |
+            (widData.var2 == row) ) {
             qDebug() << "hange inputs, update " << widData.name;
             widData.ptrCurrWidget->updateSettings();
         }

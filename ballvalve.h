@@ -24,17 +24,20 @@ public:
     int getOpenTime();
     int getCloseTime();
     int initbattValve( bool stat ); // close/oprn if unknow status 0 close,  1 open.
+    int getStatus();
 
 
-protected:
-    void timerEvent(QTimerEvent* event) ;
-
-private:
     enum valveStatus {
         Open,
         Close,
         Unknow,
     };
+
+protected:
+    void timerEvent(QTimerEvent* event) ;
+
+private:
+
 
     //  QTimer* runTimer;
     Global* global;

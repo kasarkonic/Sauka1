@@ -23,6 +23,7 @@ void BallValve::open()
     global->DIoutput[outOpen].update = true;
     startOpenTime = global->getTick();
     startTim();
+    status = valveStatus::Unknow;
 
 }
 
@@ -33,6 +34,7 @@ void BallValve::close()
     global->DIoutput[outClose].update = true;
     StartCloseTime = global->getTick();
     startTim();
+    status = valveStatus::Unknow;
 
 }
 
@@ -74,6 +76,11 @@ int BallValve::initbattValve(bool stat)  // close if unknow status,
     else {
             status = valveStatus::Close;
         }
+    return status;
+}
+
+int BallValve::getStatus()
+{
     return status;
 }
 

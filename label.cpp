@@ -41,20 +41,25 @@ void Label::paintEvent(QPaintEvent* event) {
     bold.setBold(false);
     painter.setFont(bold);
 
-    if (settings.name == "LABEL1") {
+    width = 0;
+    height = 0;
+    dest = QRect(0, 0, width, height);
+    str = "l";
+
+
+    if (settings.npk == 0) {
         width = 100;
         height = 45;
         dest = QRect(0, 0, width, height);
-        // str = "Uz\ndinamill";
         str = "Uz dinamill";
     }
-    if (settings.name == "LABEL2") {
+    if (settings.npk == 1) {
         width = 150;
         height = 20;
         dest = QRect(0, 0, width, height);
         str = "Iztukšošana";
     }
-    if (settings.name == "LABEL3") {
+    if (settings.npk == 2) {
         width = 150;
         height = 20;
         dest = QRect(0, 0, width, height);

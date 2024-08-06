@@ -19,20 +19,22 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     this->setPalette(pal);
 
     currentWid = widgetElement->settings.name;
+    currentWidnpk = widgetElement->settings.npk;
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = this;
 
     qDebug() << "currentWid name " << currentWid << widgetElement->global.widHash[currentWid].ptrCurrWidgetService;
     ui->setupUi(this);
     //qDebug() << "???" << widgetElement->global.widHash[currentWid].startX << widgetElement->global.widHash[currentWid].startY  ;
     setWindowTitle(currentWid);
-    addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
-    addresSens1 = widgetElement->global.widHash[currentWid].sensAddres1;
-    addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
+    // addresAct = widgetElement->global.widHash[currentWid].act_Addres1;
+    //addresSens1 = widgetElement->global.widHash[currentWid].sensAddres1;
+    // addresSens2 = widgetElement->global.widHash[currentWid].sensAddres2;
     qDebug() << "addresAct,sens1,sens2" << addresAct << addresSens1 << addresSens2;
 
     ui->label_0_1->setText("Ieejas/izejas nosaukums");
     ui->label_0_2->setText("Adrese");
     ui->label_0_3->setText("Vērtība");
+    ui->horizontalSlider_speed->setValue(50);
 
     updateFormData();   // data from global. ...
 }
@@ -69,7 +71,7 @@ void WidgetService::updateFormData()        // read data from global and display
     ui->lineEdit_Xpos->setText(QString::number(widgetElement->global.widHash[currentWid].startX));
     ui->lineEdit_Ypos->setText(QString::number(widgetElement->global.widHash[currentWid].startY));
     ui->lineEdit_startSize->setText(QString::number(widgetElement->global.widHash[currentWid].startSize));
-    ui->lineEdit_options->setText(QString::number(widgetElement->global.widHash[currentWid].options));
+    // ui->lineEdit_options->setText(QString::number(widgetElement->global.widHash[currentWid].options));
 
     // sensor data
 
@@ -87,16 +89,46 @@ void WidgetService::updateFormData()        // read data from global and display
     //  ui->label_AddressAI2->setText("IN" + QString::number(addresSens2 + 1));
 
     // ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
-
+    /*
     switch (widgetElement->global.widHash[currentWid].type) {
-    case WidgetType::widgT::Dyno:
-    case WidgetType::widgT::Pump:
-    case WidgetType::widgT::Mix:
-        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIoutput[addresSens1].value));
-        break;
-    case WidgetType::widgT::Tvertne:
+
     case WidgetType::widgT::Valve:
         //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
+
+        {
+        int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
+        int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
+        int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
+        int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
+
+        int outOpenv = global.DIoutput[outOpen].value;    // output address
+        int outClosev = global.DIoutput[outClose].value;
+        int inOpenv = global.DIinput[inOpen].value;
+        int inClosev = global.DIinput[inClose].value;
+
+        int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
+        int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
+
+
+        ui->label1_2->setText(QString::number(inOpen));
+        ui->label2_2->setText(QString::number(inClose));
+        ui->label3_2->setText(QString::number(outOpen));
+        ui->label4_2->setText(QString::number(outClose));
+
+        ui->label1_3->setText(QString::number(inOpenv));
+        ui->label2_3->setText(QString::number(inClosev));
+        ui->label3_3->setText(QString::number(outOpenv));
+        ui->label4_3->setText(QString::number(outClosev));
+
+        ui->lineEdit_5_2->setText(" ");
+        ui->lineEdit_6_2->setText(" ");
+        ui->pushButton_5_3->setText(QString::number(openTime));
+        ui->pushButton_6_3->setText(QString::number(closeTime));
+
+
+        }
+
+
         break;
 
     case WidgetType::widgT::ScalesMass:
@@ -106,6 +138,9 @@ void WidgetService::updateFormData()        // read data from global and display
     default:
         break;
     }
+
+   */
+
 
     // ui->lineEdit_AddresAN2->setText(QString::number(global.DIinput[addresSens2].value));
 
@@ -117,7 +152,9 @@ void WidgetService::updateFormData()        // read data from global and display
     QString strDeg = QChar(0x00b0);
 
     switch (widgetElement->global.widHash[currentWid].type) {
+
     case WidgetType::widgT::Dyno:
+
         str = "Izvēlēts elements \"Dynamill\"\n";
         str.append("Aktuators maina motora griežšanās ātrumu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
@@ -141,17 +178,43 @@ void WidgetService::updateFormData()        // read data from global and display
          * līmeņa sensors sensList[sensor address].analog.
          *
          */
+        {
+            currentWidnpk = widgetElement->settings.npk;
+            int level = widgetElement->settings.var1;
+            int full = widgetElement->settings.var2;
 
-        str = "Izvēlēts elements \"TVERTNE \"\n";
-        str.append("IN1 tvertnes līmenis\n");
-        str.append("IN2 drošības līmeņa devējs\n");
+            int levelv = global.DIinput[level].value;
+            int fullv =  global.DIinput[full].value;
 
-        ui->label1_1->setText("Līmenis tvertnē %");
-        ui->label2_1->setText("Pilnas TV. devējs");
-        ui->label3_1->setText("Temperatūra");
-        ui->label4_1->setText("-");
-        ui->label5_1->setText("Kalibrēt pilnu TV.");
-        ui->label6_1->setText("Kalibrēt tukšu TV");
+            str = "Izvēlēts elements \"TVERTNE \"\n";
+            str.append("IN1 tvertnes līmenis\n");
+            str.append("IN2 drošības līmeņa devējs\n");
+
+            ui->label1_1->setText("Līmenis tvertnē %");
+            ui->label2_1->setText("Pilnas TV. devējs");
+            ui->label3_1->setText("Temperatūra");
+            ui->label4_1->setText("-");
+            ui->label5_1->setText("Kalibrēt pilnu TV.");
+            ui->label6_1->setText("Kalibrēt tukšu TV");
+
+            ui->label1_2->setText(QString::number(level));
+            ui->label2_2->setText(QString::number(full));
+
+            ui->label3_2->setText("-");
+            ui->label4_2->setText("");
+            ui->lineEdit_5_2->hide();
+            ui->lineEdit_6_2->hide();
+
+            ui->label1_3->setText(QString::number(levelv));
+            ui->label2_3->setText(QString::number(fullv));
+            ui->label3_3->setText(QString::number(global.tvertneTemp[currentWidnpk]));
+            ui->label4_3->setText("");
+            ui->pushButton_5_3->hide();
+            ui->pushButton_6_3->hide();
+
+        }
+
+
         break;
 
     case WidgetType::widgT::Valve:  //??????????????????????????
@@ -163,6 +226,39 @@ void WidgetService::updateFormData()        // read data from global and display
          * vārsta gala slēdži sensList[sensor address1].digital.
          *
          */
+
+        {
+            int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
+            int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
+            int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
+            int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
+
+            int outOpenv = global.DIoutput[outOpen].value;    // output address
+            int outClosev = global.DIoutput[outClose].value;
+            int inOpenv = global.DIinput[inOpen].value;
+            int inClosev = global.DIinput[inClose].value;
+
+            int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
+            int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
+
+
+            ui->label1_2->setText(QString::number(inOpen));
+            ui->label2_2->setText(QString::number(inClose));
+            ui->label3_2->setText(QString::number(outOpen));
+            ui->label4_2->setText(QString::number(outClose));
+
+            ui->label1_3->setText(QString::number(inOpenv));
+            ui->label2_3->setText(QString::number(inClosev));
+            ui->label3_3->setText(QString::number(outOpenv));
+            ui->label4_3->setText(QString::number(outClosev));
+
+            ui->lineEdit_5_2->setText(" ");
+            ui->lineEdit_6_2->setText(" ");
+            ui->pushButton_5_3->setText(QString::number(openTime));
+            ui->pushButton_6_3->setText(QString::number(closeTime));
+
+
+        }
 
         str = "Izvēlēts elements \"Valve \"\n";
         str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
@@ -283,7 +379,7 @@ void WidgetService::updateFormData()        // read data from global and display
 
 void WidgetService::updateSensorVal()  // take data from UI and update global. ....
 {
-    QColor col;
+    //  QColor col;
     QString qss1;
     QString qss2;
 
@@ -370,14 +466,14 @@ void WidgetService::on_pushButton_sizeMinus_clicked() {
 
 
 void WidgetService::on_pushButton_OptionsMinus_clicked() {
-    if (widgetElement->global.widHash[currentWid].options > 0)
-        widgetElement->global.widHash[currentWid].options -= 1;
-    updateFormData();
+    //  if (widgetElement->global.widHash[currentWid].options > 0)
+    //      widgetElement->global.widHash[currentWid].options -= 1;
+    //  updateFormData();
 }
 
 
 void WidgetService::on_pushButton_OptionsPlus_clicked() {
-    widgetElement->global.widHash[currentWid].options += 1;
+    widgetElement->global.widHash[currentWid].var1 += 1;
     updateFormData();
 }
 
@@ -405,114 +501,45 @@ void WidgetService::on_lineEdit_startSize_editingFinished() {
 
 void WidgetService::on_lineEdit_options_editingFinished() {
     int val = ui->lineEdit_options->text().toInt();
-    widgetElement->global.widHash[currentWid].options = val;
+    widgetElement->global.widHash[currentWid].var1 = val;
     updateSensorVal();
 }
 
 
-/*
-void WidgetService::on_pushButton_ON_clicked()
+
+
+void WidgetService::on_pushButton_5_3_clicked()
 {
-    bool ok = true;
-    actValueDi = ui->lineEdit_AddresDI->text().toInt(&ok,10);
-    if(!ok){
-        actValueDi = 0;
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
+        // open valve
+        global.ballValveList[currentWidnpk].bValvePtr->open();
+    }
+}
+
+
+void WidgetService::on_pushButton_6_3_clicked()
+{
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
+        // close valve
+        global.ballValveList[currentWidnpk].bValvePtr->close();
     }
 
+}
 
-    if(actValueDi){
-        actValueDi = 0;
+
+void WidgetService::on_lineEdit_5_2_editingFinished()
+{
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+
     }
-    else{
-        actValueDi = 1;}
-
-    qDebug() << "on_pushButton_ON_clicked " << actValueDi;
-
-
-    updateSensorVal();
-
-}
-
-*/
-/*
-void WidgetService::on_horizontalSlider_valueChanged(int value) {
-    //qDebug() << "on_horizontalSlider_valueChanged " << addresAct << " <- " << value;
-    //global.DIoutput[addresAct].value = value;
-    DIOUT(addresAct, value)
-        updateSensorVal();
 }
 
 
-void WidgetService::on_horizontalSlider_1_valueChanged(int value) {
-    qDebug() << "on_horizontalSlider_1_valueChanged " << value << addresSens1;
+void WidgetService::on_lineEdit_6_2_editingFinished()
+{
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
 
-    switch (widgetElement->global.widHash[currentWid].type) {
-    case WidgetType::widgT::Dyno:
-    case WidgetType::widgT::Pump:
-    case WidgetType::widgT::Mix:
-        //global.DIoutput[addresSens1].value = value;
-        DIOUT(addresSens1, value)
-            break;
-    case WidgetType::widgT::Tvertne:
-    case WidgetType::widgT::Valve:
-        global.DIinput[addresSens1].value = value;
-        break;
 
-    case WidgetType::widgT::ScalesMass:
-        global.DIinput[addresSens1].value = value;
-        break;
-
-    default:
-        break;
     }
-
-    updateSensorVal();
-
 }
 
-
-void WidgetService::on_horizontalSlider_2_valueChanged(int value) {
-    //actValueAn2 = value;
-    qDebug() << "on_horizontalSlider_2_valueChanged " << value;
-    global.DIinput[addresSens2].value = value;
-    updateSensorVal();
-}
-
-*/
-
-
-
-/*
-
-void WidgetService::on_lineEdit_AddresAN1_editingFinished() {
-    bool ok = true;
-    actValueAn1 = ui->lineEdit_AddresAN1->text().toInt(&ok, 10);
-    if (!ok) {
-        actValueAn1 = 0;
-    }
-    qDebug() << "on_lineEdit_AddresAN1_editingFinished " << actValueAn1;
-
-    updateSensorVal();
-}
-
-void WidgetService::on_lineEdit_AddresAN2_editingFinished() {
-    bool ok = true;
-    actValueAn2 = ui->lineEdit_AddresAN1->text().toInt(&ok, 10);
-    if (!ok) {
-        actValueAn2 = 0;
-    }
-    qDebug() << "on_lineEdit_AddresAN1_editingFinished " << actValueAn2;
-
-    updateSensorVal();
-}
-
-void WidgetService::on_lineEdit_AddresDI_editingFinished() {
-    bool ok = true;
-    actValueDi = ui->lineEdit_AddresDI->text().toInt(&ok, 10);
-    if (!ok) {
-        actValueDi = 0;
-    }
-    qDebug() << "on_lineEdit_AddresDI_editingFinished " << actValueDi;
-    updateSensorVal();
-}
-*/

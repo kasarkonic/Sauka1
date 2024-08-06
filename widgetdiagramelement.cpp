@@ -22,7 +22,7 @@ void WidgetDiagramElement::setNewPosition(float koef)
 //    settings.currX = global.widHash[settings.name].startX/koef;
  //   settings.currY = global.widHash[settings.name].startY/koef;
  //   settings.currSize = global.widHash[settings.name].startSize/koef;
- //   settings.options = global.widHash[settings.name].options;
+ //   settings.options = global.widHash[settings.name].var1;
  //   qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
  //   settings.currX<<settings.currY << koef ;
 
@@ -38,12 +38,13 @@ void WidgetDiagramElement::updateSettings() {
     // qDebug() << "WidgetDiagramElement::updateSettings()";
 
     float koef = global.zoomKoefPf1;
-
+    settings.npk = global.widHash[settings.name].npk;
     settings.startX = global.widHash[settings.name].startX;
     settings.startY = global.widHash[settings.name].startY;
     settings.startSize = global.widHash[settings.name].startSize;
     settings.var1 = global.widHash[settings.name].var1;
     settings.var2 = global.widHash[settings.name].var2;
+
     //sensAddres1 = global.widHash[settings.name].sensAddres1;
     //settings.sensAddres2 = global.widHash[settings.name].sensAddres2;
     settings.currSize = settings.startSize;        //Hi

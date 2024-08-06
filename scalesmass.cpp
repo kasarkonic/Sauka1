@@ -18,7 +18,7 @@ ScalesMass::ScalesMass(Global& global, QString name, QWidget* parent)
 
 void ScalesMass::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
-    massValue = global.DIinput[settings.sensAddres1].value;
+    massValue = global.DIinput[settings.var1].value;
     killTimer(timerIdUpd);update();
     timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
     update();

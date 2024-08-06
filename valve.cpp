@@ -24,7 +24,7 @@ Valve::Valve(Global& global, QString name, QWidget* parent)
 }
 
 void Valve::updateSettings() {
-    // qDebug() << "Valve updateSettings" << settings.options;
+    // qDebug() << "Valve updateSettings" << settings.var1;
     WidgetDiagramElement::updateSettings();
 
     killTimer(timerIdUpd);
@@ -35,10 +35,19 @@ void Valve::updateSettings() {
         att = 0;
         changeDirections = 0;
     }
-    int openPos = settings.options;//  0 vai 90
-    motorOn = (bool)(global.DIoutput[settings.act_Addres1].value > 0);
-    swOpen = (bool)(global.DIinput[settings.sensAddres1].value > 0);
-    swClose = (bool)(global.DIinput[settings.sensAddres2].value > 0);
+    int openPos = settings.var1;//  0 vai 90
+
+    motorOn = global.ballValveList[settings.npk].bValvePtr->getStatus() == 2 ; //valveStatus::Unknow = 2
+
+   // in/out pin:
+    int outOpen = global.ballValveList[settings.npk].bValvePtr->outOpen;    // output address
+    int outClose = global.ballValveList[settings.npk].bValvePtr->outClose;
+    int inOpen = global.ballValveList[settings.npk].bValvePtr->inOpen;
+    int inClose = global.ballValveList[settings.npk].bValvePtr->inClose;
+
+
+    swOpen = (bool)(global.DIinput[inOpen].value > 0);
+    swClose = (bool)(global.DIinput[inClose].value > 0);
 
 
 
@@ -82,7 +91,7 @@ void Valve::updateSettings() {
          changeDirections = 0;
      }
      */
-     //qDebug() << settings.name<<" stat,Om,Off" << currentAngle << settings.options << swOpen <<swClose << att <<changeDirections;
+     //qDebug() << settings.name<<" stat,Om,Off" << currentAngle << settings.var1 << swOpen <<swClose << att <<changeDirections;
 
     update();
 }
@@ -119,7 +128,7 @@ void Valve::setNewPosition(float koef)
 void Valve::paintEvent(QPaintEvent* event) {
     Q_UNUSED(event);
 
-    //qDebug() << "Valve::paintEvent" <<settings.status <<settings.options ;
+    //qDebug() << "Valve::paintEvent" <<settings.status <<settings.var1 ;
     // qDebug() << "Valve paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
 

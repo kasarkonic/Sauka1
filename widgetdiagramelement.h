@@ -18,7 +18,7 @@ public:
     struct  widDataStruct {
         int type = 4; // Dyno
         QString name = "";
-
+        int npk;
         int startX = 100;
         int startY = 100;
         int startSize = 100;
@@ -26,7 +26,7 @@ public:
 
         //valve |- angle
         // pipe angle
-        int options = 0;
+       // int options = 0;
 
         // līmenis, ātrums
         int value = 0;

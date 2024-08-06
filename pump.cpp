@@ -18,11 +18,11 @@ Pump::Pump(Global& global, QString name, QWidget* parent)
 void Pump::updateSettings() {
 
     WidgetDiagramElement::updateSettings(); // base class
-    //qDebug() << "Pump updateSettings" << settings.options;
+    //qDebug() << "Pump updateSettings" << settings.var1;
 
-    speed = (int)global.DIoutput[settings.act_Addres1].value;
+    speed = (int)global.DIoutput[settings.var1].value;
     step = (int)(speed) / 10;
-    if (global.DIoutput[settings.sensAddres1].value == 0) {
+    if (global.DIoutput[settings.var2].value == 0) {
         step = 0;
     }
 

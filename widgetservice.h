@@ -67,6 +67,14 @@ private slots:
 
    // void on_horizontalSlider_1_valueChanged(int value);
 
+    void on_pushButton_5_3_clicked();
+
+    void on_pushButton_6_3_clicked();
+
+    void on_lineEdit_5_2_editingFinished();
+
+    void on_lineEdit_6_2_editingFinished();
+
 private:
     // WidgetDiagramElement::widDataStruct &wsettings;
     WidgetDiagramElement* widgetElement;
@@ -82,6 +90,7 @@ private:
     void updateFormData();
     void updateSensorVal();
     QString currentWid;
+    int   currentWidnpk;
 
     int addresAct;  // global.widHash[].act_sensAddres  ok
     int addresSens1;  // global.widHash[].act_sensAddres  ok

@@ -795,10 +795,13 @@ A1V
                 global.DIinput[TVERTNE2FULL].value = (reply->result().value(11) << 8) + reply->result().value(12);
                 global.DIinput[TVERTNE3FULL].value = (reply->result().value(13) << 8) + reply->result().value(14);
                 global.DIinput[TVERTNE4FULL].value = (reply->result().value(15) << 8) + reply->result().value(16);
-                global.DIinput[TVERTNE1TEMP].value = (reply->result().value(17) << 8) + reply->result().value(18);
-                global.DIinput[TVERTNE2TEMP].value = (reply->result().value(19) << 8) + reply->result().value(20);
-                global.DIinput[TVERTNE3TEMP].value = (reply->result().value(21) << 8) + reply->result().value(22);
-                global.DIinput[TVERTNE4TEMP].value = (reply->result().value(23) << 8) + reply->result().value(24);
+
+
+
+                        global.tvertneTemp.append((reply->result().value(17) << 8) + reply->result().value(18));
+                global.tvertneTemp.append((reply->result().value(19) << 8) + reply->result().value(20));
+                global.tvertneTemp.append ((reply->result().value(21) << 8) + reply->result().value(22));
+                global.tvertneTemp.append ((reply->result().value(23) << 8) + reply->result().value(24));
             }
 
             qDebug() << " Modbus Id:20 Data"
@@ -810,10 +813,10 @@ A1V
                      << global.DIinput[TVERTNE2FULL].value
                      << global.DIinput[TVERTNE3FULL].value
                      << global.DIinput[TVERTNE4FULL].value
-                     << global.DIinput[TVERTNE1TEMP].value
-                     << global.DIinput[TVERTNE2TEMP].value
-                     << global.DIinput[TVERTNE3TEMP].value
-                     << global.DIinput[TVERTNE4TEMP].value ;
+                     << global.tvertneTemp[0]
+                     << global.tvertneTemp[1]
+                     << global.tvertneTemp[2]
+                     << global.tvertneTemp[3];
 
 
             break;

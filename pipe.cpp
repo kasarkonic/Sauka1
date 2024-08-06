@@ -14,7 +14,7 @@ Pipe::Pipe(Global& global, QString name, QWidget* parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 #endif
-    angle = settings.options;
+    angle = settings.var1;
 
     timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
 
@@ -67,26 +67,26 @@ void Pipe::paintEvent(QPaintEvent* event) {
     int hi = settings.currSize;        //Hi
     int wi = settings.currSizeWi;
 
-    settings.options %= 360;
-    float an = settings.options * M_PI / 180;
+    settings.var1 %= 360;
+    float an = settings.var1 * M_PI / 180;
 
 
-    if (settings.options >= 0 && settings.options <= 90) {
+    if (settings.var1 >= 0 && settings.var1 <= 90) {
         stY = wi * sin(an);
         stX = 0;
         // resize(wi * cos(an) + hi * sin(an),hi * cos(an)  + wi * sin(an));
     }
-    if (settings.options > 90 && settings.options <= 180) {
+    if (settings.var1 > 90 && settings.var1 <= 180) {
         stX = wi * sin(an - M_PI / 2);
         stY = hi * cos(M_PI - an) + wi * cos(an - M_PI / 2);
         // resize(wi * sin(an-M_PI/2) + hi * cos(an-M_PI/2),stY);
     }
-    if (settings.options > 180 && settings.options <= 270) {
+    if (settings.var1 > 180 && settings.var1 <= 270) {
         stX = hi * sin(an - M_PI) + wi * cos(an - M_PI);
         stY = settings.startY = hi * cos(an - M_PI);
         // resize(stX ,hi * cos(an - M_PI) + wi * sin(an-M_PI));
     }
-    if (settings.options > 270 && settings.options <= 360) {
+    if (settings.var1 > 270 && settings.var1 <= 360) {
         stX = hi * cos(an - 3 * M_PI / 2);
         stY = 0;
         // resize(stX +  wi * sin( an - 3*M_PI/2) , diog * cos( 2* M_PI - (an + diogAngle) ));

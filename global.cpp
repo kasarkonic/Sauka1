@@ -74,7 +74,7 @@ Global::Global() {
     }
     qDebug() << sensList.size() << actList.size();
 
-
+    createBallValve();
     creatWidgList();
 
     creatActList();
@@ -90,7 +90,7 @@ Global::Global() {
     createPressSensList();
     tick = 0;
     waitTx = 0;
-    createBallValve();
+
 
 
 }
@@ -296,6 +296,80 @@ void Global::createBallValve()
     bv.bValvePtr = ballvalveTest3;
     ballValveList.append(bv);
 
+
+    ballvalveTest4 = new BallValve(this,"ballvalveTest4",0,1,2,3);
+    bv.npk = 4;
+    bv.bValvePtr = ballvalveTest4;
+    ballValveList.append(bv);
+
+    ballvalveTest5 = new BallValve(this,"ballvalveTest5",10,11,12,13);
+    bv.npk = 5;
+    bv.bValvePtr = ballvalveTest5;
+    ballValveList.append(bv);
+
+    ballvalveTest6 = new BallValve(this,"ballvalveTest6",20,21,22,23);
+    bv.npk = 6;
+    bv.bValvePtr = ballvalveTest6;
+    ballValveList.append(bv);
+
+    ballvalveTest7 = new BallValve(this,"ballvalveTest7",30,31,32,33);
+    bv.npk = 7;
+    bv.bValvePtr = ballvalveTest7;
+    ballValveList.append(bv);
+
+
+    ballvalveTest8 = new BallValve(this,"ballvalveTest8",0,1,2,3);
+    bv.npk = 8;
+    bv.bValvePtr = ballvalveTest8;
+    ballValveList.append(bv);
+
+    ballvalveTest9 = new BallValve(this,"ballvalveTest9",10,11,12,13);
+    bv.npk = 9;
+    bv.bValvePtr = ballvalveTest9;
+    ballValveList.append(bv);
+
+    ballvalveTest10 = new BallValve(this,"ballvalveTest10",20,21,22,23);
+    bv.npk = 10;
+    bv.bValvePtr = ballvalveTest10;
+    ballValveList.append(bv);
+
+    ballvalveTest11 = new BallValve(this,"ballvalveTest11",30,31,32,33);
+    bv.npk = 11;
+    bv.bValvePtr = ballvalveTest11;
+    ballValveList.append(bv);
+
+    ballvalveTest12 = new BallValve(this,"ballvalveTest12",0,1,2,3);
+    bv.npk = 12;
+    bv.bValvePtr = ballvalveTest12;
+    ballValveList.append(bv);
+
+    ballvalveTest13 = new BallValve(this,"ballvalveTest13",10,11,12,13);
+    bv.npk = 13;
+    bv.bValvePtr = ballvalveTest13;
+    ballValveList.append(bv);
+
+    ballvalveTest14 = new BallValve(this,"ballvalveTest14",20,21,22,23);
+    bv.npk = 14;
+    bv.bValvePtr = ballvalveTest14;
+    ballValveList.append(bv);
+
+    ballvalveTest15 = new BallValve(this,"ballvalveTest15",30,31,32,33);
+    bv.npk = 15;
+    bv.bValvePtr = ballvalveTest15;
+    ballValveList.append(bv);
+
+
+    ballvalveTest16 = new BallValve(this,"ballvalveTest16",20,21,22,23);
+    bv.npk = 16;
+    bv.bValvePtr = ballvalveTest16;
+    ballValveList.append(bv);
+
+    ballvalveTest17 = new BallValve(this,"ballvalveTest17",30,31,32,33);
+    bv.npk = 17;
+    bv.bValvePtr = ballvalveTest17;
+    ballValveList.append(bv);
+
+
     qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
 }
@@ -421,6 +495,15 @@ for tvertne:
     analog   - level
 
 
+for ScalesMass:
+act_sensAddres act  address
+    var1   - massValue	// cik ātri
+    var2 -
+
+for Tvertne:
+act_sensAddres act  address
+    var1   - fill value in %	// cik ātri
+    var2 -  full
 
 page = 0   draw on "Mix" page
 page = 1   draw on "Dyno" page
@@ -429,7 +512,7 @@ page = 3   draw on all pages
     */
 
 void Global::creatWidgList() {
-    //      WidgetType::widgT ty,    name,       page, X,       Y,  size, options,  actAdr1, sensAdr1,  sensAdr2)
+    //      WidgetType::widgT ty,    name,       page, X,       Y,  size, options,  actAdr1)
 
     addWidgList(WidgetType::Mix, 0, 1, 496, 27, 120, set_mix_speed, set_mix_On_Off);
     addWidgList(WidgetType::ScalesBase,    0, 1,   393,  123,   172,  0, 0);
@@ -616,5 +699,6 @@ void Global::addWidgList(WidgetType::widgT ty, int npk, int page, int X, int Y, 
         name.append(QString::number(npk));
     }
 
+    data.name = name;
     widHash.insert(name, data);
 }

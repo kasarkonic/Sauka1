@@ -28,7 +28,7 @@ void Tvertne::updateSettings()
     //qDebug() << "Tvertne::updateSettings()" << ;
     WidgetDiagramElement::updateSettings();
 
-    int fval = global.DIinput[settings.sensAddres1].value; // fill value in %
+    int fval = global.DIinput[settings.var1].value; // fill value in %
 
     // fill = 10 * qRound(24*100.0/fval);
     if (fill > 100)
@@ -36,7 +36,7 @@ void Tvertne::updateSettings()
     fill = 100 - fval;
     //qDebug() << "fill"  << fval << settings.sensAddres1 << (24*100.0/fval);
 
-    full = global.DIinput[settings.sensAddres2].value;
+    full = global.DIinput[settings.var2].value;
     //qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
 
     update();

@@ -62,10 +62,6 @@ enum widgT {
 
 
 
-
-
-
-
 class Global {
 
 public:
@@ -110,13 +106,14 @@ public:
     };
     QList<bvalve>ballValveList;
 
-
+    QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!
 
 
     void createPressSensList();
 
     struct wdataStruct {
         WidgetType::widgT type;
+        QString name = "";
         int npk;
         int page = 0;
         int startX = 100;   // left upp corner
@@ -313,6 +310,21 @@ public:
     BallValve* ballvalveTest1;
     BallValve* ballvalveTest2;
     BallValve* ballvalveTest3;
+    BallValve* ballvalveTest4;
+    BallValve* ballvalveTest5;
+    BallValve* ballvalveTest6;
+    BallValve* ballvalveTest7;
+    BallValve* ballvalveTest8;
+    BallValve* ballvalveTest9;
+    BallValve* ballvalveTest10;
+    BallValve* ballvalveTest11;
+    BallValve* ballvalveTest12;
+    BallValve* ballvalveTest13;
+    BallValve* ballvalveTest14;
+    BallValve* ballvalveTest15;
+    BallValve* ballvalveTest16;
+    BallValve* ballvalveTest17;
+
 
 private:
 
