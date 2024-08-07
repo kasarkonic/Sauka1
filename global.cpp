@@ -301,63 +301,63 @@ void Global::createBallValve()
     ballValveList.append(bv);
 
 
-    ballvalveTest4 = new BallValve(this,"ballvalveTest4",0,1,2,3);
+    ballvalveTest4 = new BallValve(this,"Y4.1",0,1,2,3);
     bv.npk = 4;
     bv.bValvePtr = ballvalveTest4;
     ballValveList.append(bv);
 
-    ballvalveTest5 = new BallValve(this,"ballvalveTest5",10,11,12,13);
+    ballvalveTest5 = new BallValve(this,"Y4.2",10,11,12,13);
     bv.npk = 5;
     bv.bValvePtr = ballvalveTest5;
     ballValveList.append(bv);
 
-    ballvalveTest6 = new BallValve(this,"ballvalveTest6",20,21,22,23);
+    ballvalveTest6 = new BallValve(this,"Y4.3",20,21,22,23);
     bv.npk = 6;
     bv.bValvePtr = ballvalveTest6;
     ballValveList.append(bv);
 
-    ballvalveTest7 = new BallValve(this,"ballvalveTest7",30,31,32,33);
+    ballvalveTest7 = new BallValve(this,"Y4.4",30,31,32,33);
     bv.npk = 7;
     bv.bValvePtr = ballvalveTest7;
     ballValveList.append(bv);
 
 
-    ballvalveTest8 = new BallValve(this,"ballvalveTest8",0,1,2,3);
+    ballvalveTest8 = new BallValve(this,"Y3.1",0,1,2,3);
     bv.npk = 8;
     bv.bValvePtr = ballvalveTest8;
     ballValveList.append(bv);
 
-    ballvalveTest9 = new BallValve(this,"ballvalveTest9",10,11,12,13);
+    ballvalveTest9 = new BallValve(this,"Y3.2",10,11,12,13);
     bv.npk = 9;
     bv.bValvePtr = ballvalveTest9;
     ballValveList.append(bv);
 
-    ballvalveTest10 = new BallValve(this,"ballvalveTest10",20,21,22,23);
+    ballvalveTest10 = new BallValve(this,"Y2.4",22,23,7,6);
     bv.npk = 10;
     bv.bValvePtr = ballvalveTest10;
     ballValveList.append(bv);
 
-    ballvalveTest11 = new BallValve(this,"ballvalveTest11",30,31,32,33);
+    ballvalveTest11 = new BallValve(this,"Y2.3",30,31,32,33);
     bv.npk = 11;
     bv.bValvePtr = ballvalveTest11;
     ballValveList.append(bv);
 
-    ballvalveTest12 = new BallValve(this,"ballvalveTest12",0,1,2,3);
+    ballvalveTest12 = new BallValve(this,"Y2.1",0,1,2,3);
     bv.npk = 12;
     bv.bValvePtr = ballvalveTest12;
     ballValveList.append(bv);
 
-    ballvalveTest13 = new BallValve(this,"ballvalveTest13",10,11,12,13);
+    ballvalveTest13 = new BallValve(this,"Y2.2",10,11,12,13);
     bv.npk = 13;
     bv.bValvePtr = ballvalveTest13;
     ballValveList.append(bv);
 
-    ballvalveTest14 = new BallValve(this,"ballvalveTest14",20,21,22,23);
+    ballvalveTest14 = new BallValve(this,"Y3.3",20,21,22,23);
     bv.npk = 14;
     bv.bValvePtr = ballvalveTest14;
     ballValveList.append(bv);
 
-    ballvalveTest15 = new BallValve(this,"ballvalveTest15",30,31,32,33);
+    ballvalveTest15 = new BallValve(this,"3.4",30,31,32,33);
     bv.npk = 15;
     bv.bValvePtr = ballvalveTest15;
     ballValveList.append(bv);
@@ -680,8 +680,24 @@ void Global::addWidgList(WidgetType::widgT ty, int npk, int page, int X, int Y, 
         name.append(QString::number(npk));
     }
     if (ty == WidgetType::Tvertne){
-        name.append("Tvertne ");
-        name.append(QString::number(npk));
+        switch (npk) {
+        case 0:
+            name.append("? Tvertne");
+            break;
+        case 1:
+            name.append("3. Tvertne");
+            break;
+        case 2:
+            name.append("2. Tvertne");
+            break;
+        case 3:
+            name.append("1. Tvertne");
+            break;
+        default:
+            break;
+        }
+
+        //name.append(QString::number(npk));
     }
     if (ty == WidgetType::Valve){
         name = ballValveList[npk].bValvePtr->name;

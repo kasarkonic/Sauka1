@@ -407,7 +407,6 @@ void Modbus485::timerEvent(QTimerEvent* event) {
         param.cmd = RD_REG;
         global.rs485WrList.append(param);
 
-
         param.boardAdr = M9;
         global.rs485WrList.append(param);
 
@@ -782,10 +781,27 @@ A1V
 
 
 
+
+YAT   (20:12:18.083) 14h 03h 18h 57h 03h 5Dh 12h E2h 94h 9Eh 0Ch 00h 0Eh 03h F2h 00h 0Fh 03h FFh 07h E7h 08h
+
+onReadReady from addres 20 start addres 0 type 4 QModbusDevice::NoError tic: 10823 "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
+len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
+
+
                 */
 
 
-            if(datalen == 25){
+            qDebug() << " Modbus Id:20 Data"
+                    << "------------------------------------------------------------------------------"
+                     << (reply->result().value(1) << 8) + reply->result().value(2)
+                     << (reply->result().value(3) << 8) + reply->result().value(4)
+                     << (reply->result().value(5) << 8) + reply->result().value(6)
+                     << (reply->result().value(7) << 8) + reply->result().value(8);
+
+
+
+
+                                                          if(datalen == 25){
 
 
                 global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
@@ -804,9 +820,9 @@ A1V
                 float range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
                 float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].value - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
                 global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
-             ////
+                ////
 
-                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(3) << 8) + reply->result().value(4);
                 global.DIinput[TVERTNE2LEVEL].update += global.DIinput[TVERTNE2LEVEL].value;
                 global.DIinput[TVERTNE2LEVEL].count ++;
 
@@ -820,7 +836,7 @@ A1V
                 global.DIinput[TVERTNE2LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(5) << 8) + reply->result().value(6);
                 global.DIinput[TVERTNE3LEVEL].update += global.DIinput[TVERTNE3LEVEL].value;
                 global.DIinput[TVERTNE3LEVEL].count ++;
 
@@ -834,7 +850,7 @@ A1V
                 global.DIinput[TVERTNE3LEVELPROC].value = (int)res;
 
                 ////
-                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(7) << 8) + reply->result().value(8);
                 global.DIinput[TVERTNE4LEVEL].update += global.DIinput[TVERTNE4LEVEL].value;
                 global.DIinput[TVERTNE4LEVEL].count ++;
 
@@ -859,7 +875,7 @@ A1V
                 global.DIinput[TVERTNE4TEMP].value = ((reply->result().value(23) << 8) + reply->result().value(24))/10;
 
 
-              //  global.DIinput[TVERTNE1LEVEL]
+                //  global.DIinput[TVERTNE1LEVEL]
 
 
 
@@ -903,7 +919,7 @@ A1V
             }
             qDebug() << " -------------------";
 
-             break;
+            break;
 
         case M9:     // Drive Motor M8
 
@@ -1052,7 +1068,7 @@ void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr) {
         if (!reply->isFinished()) {
             //if error
             //qDebug() << "error boards address:" << boardAdr ;
-           // ?? connect(reply, &QModbusReply::finished, this, [this, reply]() {
+            // ?? connect(reply, &QModbusReply::finished, this, [this, reply]() {
             connect(reply, &QModbusReply::finished, this, [ reply]() {
                 const auto error = reply->error();
                 //qDebug() << "error:" << error ;
@@ -1171,7 +1187,7 @@ void Modbus485::runTaskCycle() {
         // qDebug() << "runTaskCycle()" << task_state << stateStartTime;
     }
     oldtask_state = task_state;
-    int interval = 30;  // 25 arI strādā
+    int interval = 50;  // 25 arI strādā
     quint16 dat1;
     quint16 dat2;
 
