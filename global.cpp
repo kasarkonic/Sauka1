@@ -301,63 +301,63 @@ void Global::createBallValve()
     ballValveList.append(bv);
 
 
-    ballvalveTest4 = new BallValve(this,"Y4.1",0,1,2,3);
+    ballvalveTest4 = new BallValve(this,"Y4.1",32,33,49,48);
     bv.npk = 4;
     bv.bValvePtr = ballvalveTest4;
     ballValveList.append(bv);
 
-    ballvalveTest5 = new BallValve(this,"Y4.2",10,11,12,13);
+    ballvalveTest5 = new BallValve(this,"Y4.2",34,35,51,50);
     bv.npk = 5;
     bv.bValvePtr = ballvalveTest5;
     ballValveList.append(bv);
 
-    ballvalveTest6 = new BallValve(this,"Y4.3",20,21,22,23);
+    ballvalveTest6 = new BallValve(this,"Y4.3",36,37,53,52);
     bv.npk = 6;
     bv.bValvePtr = ballvalveTest6;
     ballValveList.append(bv);
 
-    ballvalveTest7 = new BallValve(this,"Y4.4",30,31,32,33);
+    ballvalveTest7 = new BallValve(this,"Y4.4",38,39,55,54);
     bv.npk = 7;
     bv.bValvePtr = ballvalveTest7;
     ballValveList.append(bv);
 
 
-    ballvalveTest8 = new BallValve(this,"Y3.1",0,1,2,3);
+    ballvalveTest8 = new BallValve(this,"Y3.1",24,25,41,40);
     bv.npk = 8;
     bv.bValvePtr = ballvalveTest8;
     ballValveList.append(bv);
 
-    ballvalveTest9 = new BallValve(this,"Y3.2",10,11,12,13);
+    ballvalveTest9 = new BallValve(this,"Y3.2",26,27,43,42);
     bv.npk = 9;
     bv.bValvePtr = ballvalveTest9;
     ballValveList.append(bv);
 
-    ballvalveTest10 = new BallValve(this,"Y2.4",22,23,7,6);
+    ballvalveTest10 = new BallValve(this,"Y2.4",22,23,39,38);
     bv.npk = 10;
     bv.bValvePtr = ballvalveTest10;
     ballValveList.append(bv);
 
-    ballvalveTest11 = new BallValve(this,"Y2.3",30,31,32,33);
+    ballvalveTest11 = new BallValve(this,"Y2.3",20,21,37,36);
     bv.npk = 11;
     bv.bValvePtr = ballvalveTest11;
     ballValveList.append(bv);
 
-    ballvalveTest12 = new BallValve(this,"Y2.1",0,1,2,3);
+    ballvalveTest12 = new BallValve(this,"Y2.1",16,17,33,32);
     bv.npk = 12;
     bv.bValvePtr = ballvalveTest12;
     ballValveList.append(bv);
 
-    ballvalveTest13 = new BallValve(this,"Y2.2",10,11,12,13);
+    ballvalveTest13 = new BallValve(this,"Y2.2",18,19,35,34);
     bv.npk = 13;
     bv.bValvePtr = ballvalveTest13;
     ballValveList.append(bv);
 
-    ballvalveTest14 = new BallValve(this,"Y3.3",20,21,22,23);
+    ballvalveTest14 = new BallValve(this,"Y3.3",28,29,45,44);
     bv.npk = 14;
     bv.bValvePtr = ballvalveTest14;
     ballValveList.append(bv);
 
-    ballvalveTest15 = new BallValve(this,"3.4",30,31,32,33);
+    ballvalveTest15 = new BallValve(this,"3.4",30,31,47,46);
     bv.npk = 15;
     bv.bValvePtr = ballvalveTest15;
     ballValveList.append(bv);

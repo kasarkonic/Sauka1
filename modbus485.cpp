@@ -764,27 +764,32 @@ onReadReady from addres 20 type 4 QModbusDevice::NoError 23591 "\x18\xE0\xD2\xDD
 len:  25 Data: "\x18    \xE0 \xD2\    xDD\ xE6    \xC2\x01     \xFF\xFF\   x03 \xF9\     x00 \x10\     x00 \x0F     \x03 \xFB   \x05 \xF9 \x07 \xEE \x07 \xEE \xA1v"
  Modbus Id:20 lenght error 25
 
-e0D2   57554
-DDE6   56806
-C201   49665
-FFFF   65535
+  holdingRegisters[0] = (int)reading_1;
+  holdingRegisters[1] = (int)reading_2;
+  holdingRegisters[2] = (int)reading_3;
+  holdingRegisters[3] = (int)reading_4;
+  holdingRegisters[4] = (int)top1;
+  holdingRegisters[5] = (int)top2;
+  holdingRegisters[6] = (int)top3;
+  holdingRegisters[7] = (int)top4;
+  holdingRegisters[8] = (int)t1;
+  holdingRegisters[9] = (int)t2;
+  holdingRegisters[10] = (int)t3;
+  holdingRegisters[11] = (int)t4;
 
-03F9  1017
-0010  16
-000F  15
-03FB  959
 
-05F9    1529
-07EE    2030
-07EE    2030
-A1V
+
+YAT 14h 03h 18h  57h 03h 5Dh 12h E2h 94h 9Eh 0Ch 00h 0Eh 03h F2h 00h 0Fh 03h FFh 07h E7h 08h
+
+NoError t "\x18W\    x03]   \x12\xE2\x94\x9E\  f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
 
 
 
 
 YAT   (20:12:18.083) 14h 03h 18h 57h 03h 5Dh 12h E2h 94h 9Eh 0Ch 00h 0Eh 03h F2h 00h 0Fh 03h FFh 07h E7h 08h
 
-onReadReady from addres 20 start addres 0 type 4 QModbusDevice::NoError tic: 10823 "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
+onReadReady from addres 20 start addres 0 type 4 QModbusDevice::NoError
+ tic: 10823 "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
 len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
 
 
