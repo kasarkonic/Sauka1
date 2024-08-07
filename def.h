@@ -3,7 +3,7 @@
 
 #include <QList>
 
-#define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = true;
+#define DIOUT(adr,val)  global.DIoutput[adr].value = val; global.DIoutput[adr].update = 1;
 
 
 // define rive adress
@@ -78,6 +78,23 @@ enum virtualInputs
     TVERTNE3TEMP,
     TVERTNE4TEMP,
     TVERTNE5TEMP,
+
+    TVERTNE1LEVELPROC,
+    TVERTNE2LEVELPROC,
+    TVERTNE3LEVELPROC,
+    TVERTNE4LEVELPROC,
+    TVERTNE5LEVELPROC,
+
+    TVERTNE1KALIBEMPTY,
+    TVERTNE1KALIBFULL,
+    TVERTNE2KALIBEMPTY,
+    TVERTNE2KALIBFULL,
+    TVERTNE3KALIBEMPTY,
+    TVERTNE3KALIBFULL,
+    TVERTNE4KALIBEMPTY,
+    TVERTNE4KALIBFULL,
+    TVERTNE5KALIBEMPTY,
+    TVERTNE5KALIBFULL,
 
 
 };

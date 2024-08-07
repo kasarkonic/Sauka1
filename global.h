@@ -135,9 +135,10 @@ public:
     };
 
     struct inOut {
-        int value;
+        int value = 0;
         QString name;
-        bool update;
+        int update = true;
+        int count = 0;
     };
 
     struct rs485WrPar {

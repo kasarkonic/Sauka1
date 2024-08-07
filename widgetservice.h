@@ -10,7 +10,7 @@
 
 
 namespace Ui {
-    class WidgetService;
+class WidgetService;
 }
 
 class WidgetService : public  QWidget {
@@ -55,17 +55,17 @@ private slots:
 
     // void on_pushButton_ON_clicked();
 
-   // void on_horizontalSlider_valueChanged(int value);
+    // void on_horizontalSlider_valueChanged(int value);
 
-   // void on_lineEdit_AddresAN2_editingFinished();
+    // void on_lineEdit_AddresAN2_editingFinished();
 
-   // void on_lineEdit_AddresAN1_editingFinished();
+    // void on_lineEdit_AddresAN1_editingFinished();
 
-   // void on_lineEdit_AddresDI_editingFinished();
+    // void on_lineEdit_AddresDI_editingFinished();
 
-   // void on_horizontalSlider_2_valueChanged(int value);
+    // void on_horizontalSlider_2_valueChanged(int value);
 
-   // void on_horizontalSlider_1_valueChanged(int value);
+    // void on_horizontalSlider_1_valueChanged(int value);
 
     void on_pushButton_5_3_clicked();
 
@@ -74,6 +74,8 @@ private slots:
     void on_lineEdit_5_2_editingFinished();
 
     void on_lineEdit_6_2_editingFinished();
+
+    void on_horizontalSlider_speed_valueChanged(int value);
 
 protected:
     void timerEvent(QTimerEvent* event) ;
@@ -101,6 +103,9 @@ private:
     //int an1Value;
     //int an2Value;
     int timerId;
+    bool ok;
+    Global::rs485WrPar param;
+    int rpm;
 };
 
 

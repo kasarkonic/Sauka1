@@ -328,7 +328,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val1 += (global.DIoutput[k].value > 0);
             // val1ch |= global.DIoutput[k].update;
             //  qDebug() << k << i << val1 << val1ch << (global.DIoutput[k].value > 0);
-            global.DIoutput[k].update = false;
+            global.DIoutput[k].update = 0;
         }
         retval = val1;
         // qDebug() << "retval0" << i << retval;
@@ -341,7 +341,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val2 += (global.DIoutput[k].value > 0);
             //val2ch |= global.DIoutput[k].update;
             //  qDebug()<< k << i << val2 << val1ch << (global.DIoutput[k].value > 0);
-            global.DIoutput[k].update = false;
+            global.DIoutput[k].update = 0;
         }
         retval = val2;
     }
@@ -354,7 +354,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val3 += (global.DIoutput[k].value > 0);
             // val3ch |= global.DIoutput[k].update;
             //  qDebug()<< k << i << val3 << val1ch << (global.DIoutput[k].value > 0);
-            global.DIoutput[k].update = false;
+            global.DIoutput[k].update = 0;
         }
         retval = val3;
     }
@@ -366,7 +366,7 @@ quint16 Modbus485::updateDIOut(int i) {
             val4 += (global.DIoutput[k].value > 0);
             //val4ch |= global.DIoutput[k].update;
             //  qDebug()<< k << i << val4 << val1ch << (global.DIoutput[k].value > 0);
-            global.DIoutput[k].update = false;
+            global.DIoutput[k].update = 0;
         }
         retval = val4;
     }
@@ -560,7 +560,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                     if (global.ANinput4_20[i].value != reply->result().value(i)) {
                         //  qDebug() << "emit valChangeAn(i)"<< i  << global.ANinput4_20[i].value << reply->result().value(i);
                         global.ANinput4_20[i].value = reply->result().value(i);
-                        global.ANinput4_20[i].update = true;
+                        global.ANinput4_20[i].update = 1;
                         emit valChangeAn(i, global.ANinput4_20[i].value);// for testing
                     }
                 }
@@ -573,7 +573,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                     if (global.ANinput4_20[i].value != reply->result().value(i)) {
                         //  qDebug() << "emit valChangeAn(i)"<< i  << global.ANinput4_20[i].value << reply->result().value(i);
                         global.ANinput4_20[i].value = reply->result().value(i);
-                        global.ANinput4_20[i].update = true;
+                        global.ANinput4_20[i].update = 1;
                         emit valChangeAn(i, global.ANinput4_20[i].value);// for testing
                     }
                 }
@@ -601,7 +601,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i].value != (bool)(reply->result().value(0) & (1 << i))) {
                         global.DIinput[i].value = (bool)(reply->result().value(0) & (1 << i));
-                        global.DIinput[i].update = true;
+                        global.DIinput[i].update = 1;
                         qDebug() << "emit valChangeDi(" << i << ")" << global.DIinput[i].value;
                         emit valChangeDi(i, (bool)global.DIinput[i].value);
                     }
@@ -609,7 +609,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i + 16].value != (bool)(reply->result().value(1) & (1 << i))) {
                         global.DIinput[i + 16].value = (bool)(reply->result().value(1) & (1 << i));
-                        global.DIinput[i + 16].update = true;
+                        global.DIinput[i + 16].update = 1;
                         qDebug() << "emit valChangeDi(" << i << ")" << global.DIinput[i + 16].value;
                         emit valChangeDi(i + 16, (bool)global.DIinput[i + 16].value);
                     }
@@ -633,7 +633,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i + 32].value != (bool)(reply->result().value(0) & (1 << i))) {
                         global.DIinput[i + 32].value = (bool)(reply->result().value(0) & (1 << i));
-                        global.DIinput[i + 32].update = true;
+                        global.DIinput[i + 32].update = 1;
                         qDebug() << "emit valChangeDi(" << i + 32 << ")" << global.DIinput[i + 32].value;
                         emit valChangeDi(i + 32, (bool)global.DIinput[i + 32].value);
                     }
@@ -641,7 +641,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i + 32 + 16].value != (bool)(reply->result().value(1) & (1 << i))) {
                         global.DIinput[i + 32 + 16].value = (bool)(reply->result().value(1) & (1 << i));
-                        global.DIinput[i + 32 + 16].update = true;
+                        global.DIinput[i + 32 + 16].update = 1;
                         qDebug() << "emit valChangeDi(" << i + 32 + 16 << ")" << global.DIinput[i + 32 + 16].value;
                         emit valChangeDi(i + 32 + 16, (bool)global.DIinput[i + 32 + 16].value);
                     }
@@ -665,7 +665,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i + 64].value != (bool)(reply->result().value(0) & (1 << i))) {
                         global.DIinput[i + 64].value = (bool)(reply->result().value(0) & (1 << i));
-                        global.DIinput[i + 64].update = true;
+                        global.DIinput[i + 64].update = 1;
                         qDebug() << "emit valChangeDi(" << i + 64 << ")" << global.DIinput[i + 64].value;
                         emit valChangeDi(i + 64, (bool)global.DIinput[i + 64].value);
                     }
@@ -673,7 +673,7 @@ void Modbus485::onReadReady() {     // RS485 handler
                 for (int i = 0; i < 16; i++) {
                     if ((bool)global.DIinput[i + 64 + 16].value != (bool)(reply->result().value(1) & (1 << i))) {
                         global.DIinput[i + 64 + 16].value = (bool)(reply->result().value(1) & (1 << i));
-                        global.DIinput[i + 64 + 16].update = true;
+                        global.DIinput[i + 64 + 16].update = 1;
                         qDebug() << "emit valChangeDi(" << i + 64 + 16 << ")" << global.DIinput[i + 64 + 16].value;
                         emit valChangeDi(i + 64 + 16, (bool)global.DIinput[i + 64 + 16].value);
                     }
@@ -787,21 +787,85 @@ A1V
 
             if(datalen == 25){
 
+
                 global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
-                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(3) << 8) + reply->result().value(4);
-                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(5) << 8) + reply->result().value(6);
-                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(7) << 8) + reply->result().value(8);
+                global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
+                global.DIinput[TVERTNE1LEVEL].count ++;
+
+                if(global.DIinput[TVERTNE1LEVEL].count > 9){
+                    global.DIinput[TVERTNE1LEVEL].count = 9;
+                    global.DIinput[TVERTNE1LEVEL].value = global.DIinput[TVERTNE1LEVEL].update /10;
+                    global.DIinput[TVERTNE1LEVEL].update -= global.DIinput[TVERTNE1LEVEL].value;
+                }
+
+                if(global.DIinput[TVERTNE1KALIBFULL].value <= global.DIinput[TVERTNE1KALIBEMPTY].value){
+                    global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value +1;
+                }
+                float range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
+                float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].value - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
+                global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
+             ////
+
+                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE2LEVEL].update += global.DIinput[TVERTNE2LEVEL].value;
+                global.DIinput[TVERTNE2LEVEL].count ++;
+
+                if(global.DIinput[TVERTNE2LEVEL].count > 9){
+                    global.DIinput[TVERTNE2LEVEL].count = 9;
+                    global.DIinput[TVERTNE2LEVEL].value = global.DIinput[TVERTNE2LEVEL].update /10;
+                    global.DIinput[TVERTNE2LEVEL].update -= global.DIinput[TVERTNE2LEVEL].value;
+                }
+                range = global.DIinput[TVERTNE2KALIBFULL].value - global.DIinput[TVERTNE2KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE2LEVEL].value - global.DIinput[TVERTNE2KALIBEMPTY].value)/range;
+                global.DIinput[TVERTNE2LEVELPROC].value = (int)res;
+                ////
+
+                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE3LEVEL].update += global.DIinput[TVERTNE3LEVEL].value;
+                global.DIinput[TVERTNE3LEVEL].count ++;
+
+                if(global.DIinput[TVERTNE3LEVEL].count > 9){
+                    global.DIinput[TVERTNE3LEVEL].count = 9;
+                    global.DIinput[TVERTNE3LEVEL].value = global.DIinput[TVERTNE3LEVEL].update /10;
+                    global.DIinput[TVERTNE3LEVEL].update -= global.DIinput[TVERTNE3LEVEL].value;
+                }
+                range = global.DIinput[TVERTNE3KALIBFULL].value - global.DIinput[TVERTNE3KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE3LEVEL].value - global.DIinput[TVERTNE3KALIBEMPTY].value)/range;
+                global.DIinput[TVERTNE3LEVELPROC].value = (int)res;
+
+                ////
+                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE4LEVEL].update += global.DIinput[TVERTNE4LEVEL].value;
+                global.DIinput[TVERTNE4LEVEL].count ++;
+
+                if(global.DIinput[TVERTNE4LEVEL].count > 9){
+                    global.DIinput[TVERTNE4LEVEL].count = 9;
+                    global.DIinput[TVERTNE4LEVEL].value = global.DIinput[TVERTNE4LEVEL].update /10;
+                    global.DIinput[TVERTNE4LEVEL].update -= global.DIinput[TVERTNE4LEVEL].value;
+                }
+                range = global.DIinput[TVERTNE4KALIBFULL].value - global.DIinput[TVERTNE4KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE4LEVEL].value - global.DIinput[TVERTNE4KALIBEMPTY].value)/range;
+                global.DIinput[TVERTNE4LEVELPROC].value = (int)res;
+                ////
+
                 global.DIinput[TVERTNE1FULL].value = (reply->result().value(9) << 8) + reply->result().value(10);
                 global.DIinput[TVERTNE2FULL].value = (reply->result().value(11) << 8) + reply->result().value(12);
                 global.DIinput[TVERTNE3FULL].value = (reply->result().value(13) << 8) + reply->result().value(14);
                 global.DIinput[TVERTNE4FULL].value = (reply->result().value(15) << 8) + reply->result().value(16);
 
+                global.DIinput[TVERTNE1TEMP].value = ((reply->result().value(17) << 8) + reply->result().value(18))/10;
+                global.DIinput[TVERTNE2TEMP].value = ((reply->result().value(19) << 8) + reply->result().value(20))/10;
+                global.DIinput[TVERTNE3TEMP].value = ((reply->result().value(21) << 8) + reply->result().value(22))/10;
+                global.DIinput[TVERTNE4TEMP].value = ((reply->result().value(23) << 8) + reply->result().value(24))/10;
 
 
-                        global.tvertneTemp.append((reply->result().value(17) << 8) + reply->result().value(18));
-                global.tvertneTemp.append((reply->result().value(19) << 8) + reply->result().value(20));
-                global.tvertneTemp.append ((reply->result().value(21) << 8) + reply->result().value(22));
-                global.tvertneTemp.append ((reply->result().value(23) << 8) + reply->result().value(24));
+              //  global.DIinput[TVERTNE1LEVEL]
+
+
+
+
+
+
             }
 
             qDebug() << " Modbus Id:20 Data"
@@ -988,7 +1052,8 @@ void Modbus485::writeDat(QModbusDataUnit writeUnit, int boardAdr) {
         if (!reply->isFinished()) {
             //if error
             //qDebug() << "error boards address:" << boardAdr ;
-            connect(reply, &QModbusReply::finished, this, [this, reply]() {
+           // ?? connect(reply, &QModbusReply::finished, this, [this, reply]() {
+            connect(reply, &QModbusReply::finished, this, [ reply]() {
                 const auto error = reply->error();
                 //qDebug() << "error:" << error ;
                 if (error == QModbusDevice::ProtocolError) {

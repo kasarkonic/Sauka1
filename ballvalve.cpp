@@ -13,7 +13,6 @@ BallValve::BallValve(Global* global,QString name, int outOpen, int outClose, int
 
 
 {
-    qDebug() <<"App sw vers:"<<  global->appSwVers<< global->getTick();
 }
 
 void BallValve::open()
@@ -130,6 +129,7 @@ void BallValve::timerEvent(QTimerEvent *event)
 
 void BallValve::startTim(int t)
 {
+    Q_UNUSED(t)
    // qDebug() <<"startTim" << t;   //<< global->getTick();
     if(timerId != -1){
         killTimer(timerId);

@@ -527,10 +527,10 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label, 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label, 2, 1, 243, 1, 250, 0, 0);
 
-    addWidgList(WidgetType::Tvertne,0, 1, 1598, 1, 120, TVERTNE2LEVEL, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne,1, 1, 700, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne,2, 1, 1000, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne, 3, 1, 1300, 310, 120, TVERTNE2LEVEL, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,0, 1, 1598, 1, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne,1, 1, 700, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,2, 1, 1000, 310, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
+    addWidgList(WidgetType::Tvertne, 3, 1, 1300, 310, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
 
     addWidgList(WidgetType::Pump, 0, 1, 433, 483, 50, 0, set_pump1_speed);
     addWidgList(WidgetType::Pump, 1, 1, 744, 61, 50, 0, set_pump1_speed);

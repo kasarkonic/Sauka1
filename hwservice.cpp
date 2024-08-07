@@ -306,7 +306,7 @@ void HWService::on_pushButton_Out_write_clicked() {
 
 
     global.DIoutput[out_address].value = out_value;
-    global.DIoutput[out_address].update = true;
+    global.DIoutput[out_address].update = 1;
     //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
     emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
 
@@ -317,7 +317,7 @@ void HWService::on_pushButton_Out_0_clicked()
 {
 
     global.DIoutput[out_address].value = 0;
-    global.DIoutput[out_address].update = true;
+    global.DIoutput[out_address].update = 1;
     //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
     emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
     ui->lineEdit_Out_value->setText("0");
@@ -327,7 +327,7 @@ void HWService::on_pushButton_Out_0_clicked()
 void HWService::on_pushButton_Out_1_clicked()
 {
     global.DIoutput[out_address].value = 1;
-    global.DIoutput[out_address].update = true;
+    global.DIoutput[out_address].update = 1;
     //qDebug() << " DIoutput[" << tempInt << "] = 1" << global.getTick() << "\n";
     emit diOutputChangeSi(out_address, global.DIoutput[out_address].value);
     ui->lineEdit_Out_value->setText("1");

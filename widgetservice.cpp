@@ -212,13 +212,35 @@ void WidgetService::updateFormData()        // read data from global and display
             ui->label2_2->setText(QString::number(full));
 
             ui->label3_2->setText("-");
-            ui->label4_2->setText("Pašreizējā vērtība");
+            ui->label4_2->setText("Kalibrēšanas vērtība");
             //ui->lineEdit_5_2->hide();
             //ui->lineEdit_6_2->hide();
 
             ui->label1_3->setText(QString::number(levelv));
             ui->label2_3->setText(QString::number(fullv));
-            ui->label3_3->setText(QString::number(global.tvertneTemp[currentWidnpk]));
+
+
+            switch (currentWidnpk) {
+            case 0:
+               ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE1TEMP].value));
+                break;
+            case 1:
+                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE2TEMP].value));
+                break;
+            case 2:
+                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE3TEMP].value));
+                break;
+            case 3:
+                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE4TEMP].value));
+                break;
+            case 4:
+                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE5TEMP].value));
+                break;
+            default:
+                break;
+            }
+
+
             ui->label4_3->setText("Saglabāt");
             ui->pushButton_5_3->setText("Pilna Tv.");
             ui->pushButton_6_3->setText("Tukša Tv.");
@@ -581,10 +603,34 @@ void WidgetService::on_pushButton_5_3_clicked()
         global.ballValveList[currentWidnpk].bValvePtr->close();
     }
 
-            if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
-                // save calibration full
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+        // save calibration full
 
-            }
+    }
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
+        // motor On
+        param.boardAdr = M8;//???????????????
+        param.value = 128;          // ??????????????? reset
+        param.regAdr = CMD_REG;
+        param.len = 1;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+
+        param.value = 6;
+        global.rs485WrList.append(param);
+
+        param.value = 7;
+        global.rs485WrList.append(param);
+
+        param.value = 15;
+        global.rs485WrList.append(param);
+
+        param.regAdr = LFRD_REG;
+        param.value = rpm;
+        param.len = 1;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+    }
 
 }
 
@@ -599,6 +645,21 @@ void WidgetService::on_pushButton_6_3_clicked()
         // save calibration empty
 
     }
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
+        // motor Off
+        int value;//  tas nolasīts no slidera!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        int koef = 1;
+        int rpm = value * koef;    // koef for diferrent motors?
+        qDebug() << "Motor speed rpm" << value;
+
+        param.boardAdr = M9;//?????????????
+        param.regAdr = LFRD_REG;
+        param.value = rpm;
+        //if(testMotorAddres == M8){param.value = -param.value;}   // M8 reverse
+        param.len = 1;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+    }
 
 }
 
@@ -607,6 +668,34 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
 
+        int val = ui->lineEdit_5_2->text().toInt(&ok);
+        if (!ok) {
+            ui->lineEdit_5_2->setText("Kļūda!");
+            val = 0;
+        }
+        else{
+            switch (currentWidnpk) {
+            case 0:
+                global.DIoutput[TVERTNE1KALIBEMPTY].value = val;
+                break;
+            case 1:
+                global.DIoutput[TVERTNE2KALIBEMPTY].value = val;
+                break;
+            case 2:
+                global.DIoutput[TVERTNE3KALIBEMPTY].value = val;
+                break;
+            case 3:
+                global.DIoutput[TVERTNE4KALIBEMPTY].value = val;
+                break;
+            case 4:
+                global.DIoutput[TVERTNE5KALIBEMPTY].value = val;
+                break;
+            default:
+                break;
+            }
+
+        }
+
     }
 }
 
@@ -614,6 +703,33 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
 void WidgetService::on_lineEdit_6_2_editingFinished()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+        int val = ui->lineEdit_6_2->text().toInt(&ok);
+        if (!ok) {
+            ui->lineEdit_6_2->setText("Kļūda!");
+            val = 0;
+        }
+        else{
+            switch (currentWidnpk) {
+            case 0:
+                global.DIoutput[TVERTNE1KALIBFULL].value = val;
+                break;
+            case 1:
+                global.DIoutput[TVERTNE2KALIBFULL].value = val;
+                break;
+            case 2:
+                global.DIoutput[TVERTNE3KALIBFULL].value = val;
+                break;
+            case 3:
+                global.DIoutput[TVERTNE4KALIBFULL].value = val;
+                break;
+            case 4:
+                global.DIoutput[TVERTNE5KALIBFULL].value = val;
+                break;
+            default:
+                break;
+            }
+
+        }
 
 
     }
@@ -621,8 +737,42 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
 
 void WidgetService::timerEvent(QTimerEvent *event)
 {
- Q_UNUSED (event)
+    Q_UNUSED (event)
     updateFormData();
 
+}
+
+
+void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
+{
+    rpm = value;
+
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
+        // speed change
+        param.boardAdr = M4;//???????????????
+        param.value = rpm;
+        param.len = 1;
+        param.cmd = WR_REG;
+        param.regAdr = LFRD_REG;
+        global.rs485WrList.append(param);
+    }
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax) {
+        // speed change
+        param.boardAdr = M8;//???????????????
+        param.value = rpm;
+        param.len = 1;
+        param.cmd = WR_REG;
+        param.regAdr = LFRD_REG;
+        global.rs485WrList.append(param);
+    }
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
+        // speed change
+        param.boardAdr = M9;//???????????????
+        param.value = rpm;
+        param.len = 1;
+        param.cmd = WR_REG;
+        param.regAdr = LFRD_REG;
+        global.rs485WrList.append(param);
+    }
 }
 
