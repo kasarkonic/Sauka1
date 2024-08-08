@@ -791,30 +791,40 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
 
             if(datalen == 25){
 
+
+
+
                 qDebug() << " Modbus Id:20 Data"
                          << "------------------------------------------------------------------------------";
-                qDebug()  << "pressure "
-                         << (reply->result().value(0) << 8) + reply->result().value(1)
-                         << (reply->result().value(2) << 8) + reply->result().value(3)
-                         << (reply->result().value(4) << 8) + reply->result().value(5)
-                         << (reply->result().value(6) << 8) + reply->result().value(7);
+
+
+                qDebug() << "rep"
+
+                         << reply->result().value(0)
+                         <<     reply->result().value(1)
+                         << reply->result().value(2)
+                         <<      reply->result().value(3);
+
                 qDebug() << "resistance"
-                         << (reply->result().value(8) << 8) + reply->result().value(9)
-                         << (reply->result().value(10) << 8) + reply->result().value(11)
-                         << (reply->result().value(12) << 8) + reply->result().value(13)
-                         << (reply->result().value(14) << 8) + reply->result().value(15);
+                         << reply->result().value(4)
+                         <<    reply->result().value(5)
+                         << reply->result().value(6)
+                         <<     reply->result().value(7);
                 qDebug() << "temperature"
-                         << (reply->result().value(16) << 8) + reply->result().value(17)
-                         << (reply->result().value(18) << 8) + reply->result().value(19)
-                         << (reply->result().value(20) << 8) + reply->result().value(21)
-                         << (reply->result().value(22) << 8) + reply->result().value(23);
+                         << reply->result().value(8)
+                         <<    reply->result().value(9)
+                         << reply->result().value(10)
+                         <<     reply->result().value(11);
 
 
 
 
-                global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(0) << 8) + reply->result().value(1);
+                global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
                 global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
                 global.DIinput[TVERTNE1LEVEL].count ++;
+
+
+                qDebug() << "sum" << global.DIinput[TVERTNE1LEVEL].update << " / " <<  global.DIinput[TVERTNE1LEVEL].count << " = " << global.DIinput[TVERTNE1LEVEL].update /10;
 
                 if(global.DIinput[TVERTNE1LEVEL].count > 9){
                     global.DIinput[TVERTNE1LEVEL].count = 9;
@@ -823,14 +833,19 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 }
 
                 if(global.DIinput[TVERTNE1KALIBFULL].value <= global.DIinput[TVERTNE1KALIBEMPTY].value){
-                    global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value +1;
+                    global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value + 1;
                 }
                 float range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
                 float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].value - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
                 global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(2) << 8) + reply->result().value(3);
+
+
+
+
+
+                global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
                 global.DIinput[TVERTNE2LEVEL].update += global.DIinput[TVERTNE2LEVEL].value;
                 global.DIinput[TVERTNE2LEVEL].count ++;
 
@@ -844,7 +859,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE2LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(4) << 8) + reply->result().value(5);
+                global.DIinput[TVERTNE3LEVEL].value = reply->result().value(2);
                 global.DIinput[TVERTNE3LEVEL].update += global.DIinput[TVERTNE3LEVEL].value;
                 global.DIinput[TVERTNE3LEVEL].count ++;
 
@@ -858,7 +873,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE3LEVELPROC].value = (int)res;
 
                 ////
-                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(6) << 8) + reply->result().value(7);
+                global.DIinput[TVERTNE4LEVEL].value = reply->result().value(3);
                 global.DIinput[TVERTNE4LEVEL].update += global.DIinput[TVERTNE4LEVEL].value;
                 global.DIinput[TVERTNE4LEVEL].count ++;
 
@@ -872,15 +887,15 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE4LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE1FULL].value = (reply->result().value(8) << 8) + reply->result().value(9);
-                global.DIinput[TVERTNE2FULL].value = (reply->result().value(10) << 8) + reply->result().value(11);
-                global.DIinput[TVERTNE3FULL].value = (reply->result().value(12) << 8) + reply->result().value(13);
-                global.DIinput[TVERTNE4FULL].value = (reply->result().value(14) << 8) + reply->result().value(15);
+                global.DIinput[TVERTNE1FULL].value = reply->result().value(4);
+                global.DIinput[TVERTNE2FULL].value = reply->result().value(5);
+                global.DIinput[TVERTNE3FULL].value = reply->result().value(6);
+                global.DIinput[TVERTNE4FULL].value = reply->result().value(7);
 
-                global.DIinput[TVERTNE1TEMP].value = ((reply->result().value(16) << 8) + reply->result().value(17))/10;
-                global.DIinput[TVERTNE2TEMP].value = ((reply->result().value(18) << 8) + reply->result().value(19))/10;
-                global.DIinput[TVERTNE3TEMP].value = ((reply->result().value(20) << 8) + reply->result().value(21))/10;
-                global.DIinput[TVERTNE4TEMP].value = ((reply->result().value(22) << 8) + reply->result().value(23))/10;
+                global.DIinput[TVERTNE1TEMP].value = reply->result().value(8) / 100;
+                global.DIinput[TVERTNE2TEMP].value = reply->result().value(9) / 100;
+                global.DIinput[TVERTNE3TEMP].value = reply->result().value(10) / 100;
+                global.DIinput[TVERTNE4TEMP].value = reply->result().value(11) / 100;
 
 
                 //  global.DIinput[TVERTNE1LEVEL]
@@ -901,10 +916,10 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                      << global.DIinput[TVERTNE2FULL].value
                      << global.DIinput[TVERTNE3FULL].value
                      << global.DIinput[TVERTNE4FULL].value
-                     << global.tvertneTemp[0]
-                     << global.tvertneTemp[1]
-                     << global.tvertneTemp[2]
-                     << global.tvertneTemp[3];
+                     << global.DIinput[TVERTNE1TEMP].value
+                     << global.DIinput[TVERTNE2TEMP].value
+                     << global.DIinput[TVERTNE3TEMP].value
+                     << global.DIinput[TVERTNE4TEMP].value;
 
 
             break;

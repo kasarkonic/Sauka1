@@ -222,19 +222,26 @@ void WidgetService::updateFormData()        // read data from global and display
 
             switch (currentWidnpk) {
             case 0:
-               ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE1TEMP].value));
+               ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
+
+
                 break;
             case 1:
-                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE2TEMP].value));
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].value));
                 break;
             case 2:
-                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE3TEMP].value));
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].value));
                 break;
             case 3:
-                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE4TEMP].value));
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].value));
                 break;
             case 4:
-                ui->label3_3->setText(QString::number(global.DIoutput[TVERTNE5TEMP].value));
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
                 break;
             default:
                 break;
@@ -279,7 +286,7 @@ void WidgetService::updateFormData()        // read data from global and display
             ui->label3_3->setText(QString::number(outOpenv));
             ui->label4_3->setText(QString::number(outClosev));
 
-            ui->lineEdit_5_2->setText(QString::number(openTime));
+            ui->lineEdit_5_2->setText(QString::number(closeTime));
             ui->lineEdit_6_2->setText(QString::number(openTime));
             ui->pushButton_5_3->setText(" Aizvērt vārstu");
             ui->pushButton_6_3->setText("Atvērt vārstu");
@@ -647,6 +654,32 @@ void WidgetService::on_pushButton_6_3_clicked()
     }
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
         // motor Off
+        param.boardAdr = M8;
+        param.regAdr = CMD_REG;
+        param.value = 7;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+
+  /*
+
+
+
+void HWService::on_pushButton_Reset_clicked()
+{
+    param.boardAdr = testMotorAddres;
+
+    param.regAdr = CMD_REG;
+    param.value = 128;
+    param.len = 1;
+    param.cmd = WR_REG;
+    global.rs485WrList.append(param);
+}
+
+
+
+
+
+
         int value;//  tas nolasīts no slidera!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         int koef = 1;
         int rpm = value * koef;    // koef for diferrent motors?
@@ -659,7 +692,10 @@ void WidgetService::on_pushButton_6_3_clicked()
         param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
-    }
+
+
+
+*/    }
 
 }
 

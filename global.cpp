@@ -493,10 +493,6 @@ act_sensAddres act  address
     digital  - on/off
     analog   - speed
 
-for tvertne:
-
-    digital  - max level
-    analog   - level
 
 
 for ScalesMass:
