@@ -91,6 +91,7 @@ void ProcUI1::drawWidgets() {
             {
                 new Dyno(global, widData.name, ui->desktop);
                 // ui->horizontalLayout_Process->addWidget(dynoA);
+
             }
             break;
 

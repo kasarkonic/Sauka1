@@ -40,8 +40,8 @@ void Valve::updateSettings() {
     motorOn = global.ballValveList[settings.npk].bValvePtr->getStatus() == 2 ; //valveStatus::Unknow = 2
 
    // in/out pin:
-    int outOpen = global.ballValveList[settings.npk].bValvePtr->outOpen;    // output address
-    int outClose = global.ballValveList[settings.npk].bValvePtr->outClose;
+   // int outOpen = global.ballValveList[settings.npk].bValvePtr->outOpen;    // output address
+   // int outClose = global.ballValveList[settings.npk].bValvePtr->outClose;
     int inOpen = global.ballValveList[settings.npk].bValvePtr->inOpen;
     int inClose = global.ballValveList[settings.npk].bValvePtr->inClose;
 
@@ -61,10 +61,11 @@ void Valve::updateSettings() {
         changeDirections = 1;
     }
     if (swClose == 0 && swOpen == 0 && motorOn) {  //process
-
+        changeDirections = 0;
     }
     if (swClose == 0 && swOpen == 0 && !motorOn) {  //process
         currentAngle = 45;   // process
+        changeDirections = 0;
     }
 
     if (swClose == 1 && swOpen == 1) {  //error

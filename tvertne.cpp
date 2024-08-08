@@ -20,6 +20,11 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
 
     fill = 0;
     full = 0;
+
+    //for testing
+
+
+    timer
 }
 
 void Tvertne::updateSettings()
