@@ -520,9 +520,6 @@ void Modbus485::onReadReady() {     // RS485 handler
         return;
     }
 
-    //dataChangeDi = -1;  //if change 1 input    dataChangeDi = input number
-    // dataChangeAn = -1;  //if change more inputs  dataChangeDi = 0xffff
-
     qDebug() << "";
     qDebug() << "onReadReady from addres" << reply->serverAddress()
              << "start addres"<< reply->result().startAddress()
@@ -530,29 +527,22 @@ void Modbus485::onReadReady() {     // RS485 handler
              << reply->error() << "tic:"<< global.getTick()
              <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
 
-    //  qDebug() << QString::number(reply->result().registerType(),16)   // 4
-    //           << QString::number(reply->result().startAddress())      //192 if address -1 Error
-    //           << QString::number(reply->result().valueCount());   // 4
-    //
+
+
     if (reply->error() == QModbusDevice::NoError) {
         const QModbusDataUnit unit = reply->result();
-
         datalen = reply->rawResult().data().length();
         replayDataArray = reply->rawResult().data();
+
         qDebug() << "len: "  << datalen  << "Data:" << replayDataArray;
-    }
 
-
-
-    if (reply->error() == QModbusDevice::NoError) {
-        const QModbusDataUnit unit = reply->result();
-
-        datalen = reply->rawResult().data().length();
-        replayDataArray = reply->rawResult().data();
         //qDebug() << "datalen , reg Type,address" << reply->serverAddress() << replayDataArray.length() << datalen << unit.registerType();
 
         switch (reply->serverAddress()) {
-        case 2:     // rdN4AIB16
+
+
+            ///////////////////////////////////////////////////
+        case 2:     // analog input board    rdN4AIB16
             if (unit.registerType() == 3 && replayDataArray.length() == datalen) {
                 // qDebug() << "rdN4AIB16" << reply->serverAddress() << datalen  << reply->result().values();
                 for (int i = 0; i <= 15; i++) {    // in0 - in14 0-20mA input  in15 30v input
@@ -590,7 +580,12 @@ void Modbus485::onReadReady() {     // RS485 handler
 
 
 
-        case 4:     // rd23IOD32 read data address 4
+
+
+
+
+            ///////////////////////////////////////////////////
+        case 4:     // Digital input/output board A01   rd23IOD32
             if (unit.registerType() == 4 && replayDataArray.length() == datalen) {
                 //qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
                 //        << QString::number(reply->result().value(0), 16)
@@ -622,8 +617,8 @@ void Modbus485::onReadReady() {     // RS485 handler
             //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
-
-        case 5:     // rd23IOD32 read data address5
+            ////////////////////////////////////////////////////////////
+        case 5:     // Digital input/output board A02    rd23IOD32
             if (unit.registerType() == 4 && replayDataArray.length() == datalen) {
                 //qDebug() << "Din rd23IOD32 address:" << reply->serverAddress()
                 //        << QString::number(reply->result().value(0), 16)
@@ -655,7 +650,7 @@ void Modbus485::onReadReady() {     // RS485 handler
             //qDebug() << "imodbus Free " <<reply->serverAddress() <<"t:" <<global.getTick() - starttemp;
             break;
 
-        case 8:     // 24DIB32  DIinput[64-95]
+        case 8:     // 24DIB32  DIinput board
             if (unit.registerType() == 4 && replayDataArray.length() == datalen) {
                 //qDebug() << "Din 24DIB32 address:" << reply->serverAddress()
                 //        << QString::number(reply->result().value(0), 16)
@@ -779,15 +774,11 @@ len:  25 Data: "\x18    \xE0 \xD2\    xDD\ xE6    \xC2\x01     \xFF\xFF\   x03 \
 
 
 
-YAT 14h 03h         18h  57h 03h 5Dh 12h E2h 94h 9Eh 0Ch 00h 0Eh 03h F2h 00h 0Fh 03h FFh 07h E7h 08h
-
-NoError t "\x18W\    x03]   \x12\xE2\x94\x9E\  f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
-
-
-
-
 YAT   (20:12:18.083) 14h 03h 18h 57h 03h 5Dh 12h E2h 94h 9Eh 0Ch 00h 0Eh 03h F2h 00h 0Fh 03h FFh 07h E7h 08h
 
+14h = 20 address
+03h  commant read holdingRegisters
+18h = 24 len
 onReadReady from addres 20 start addres 0 type 4 QModbusDevice::NoError
  tic: 10823 "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
 len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07\xE7\b\xE7\b\xBC\xA1v"
@@ -796,20 +787,32 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 */
 
 
-            qDebug() << " Modbus Id:20 Data"
-                    << "------------------------------------------------------------------------------"
-                     << (reply->result().value(1) << 8) + reply->result().value(2)
-                     << (reply->result().value(3) << 8) + reply->result().value(4)
-                     << (reply->result().value(5) << 8) + reply->result().value(6)
-                     << (reply->result().value(7) << 8) + reply->result().value(8);
+
+
+            if(datalen == 25){
+
+                qDebug() << " Modbus Id:20 Data"
+                         << "------------------------------------------------------------------------------";
+                qDebug()  << "pressure "
+                         << (reply->result().value(0) << 8) + reply->result().value(1)
+                         << (reply->result().value(2) << 8) + reply->result().value(3)
+                         << (reply->result().value(4) << 8) + reply->result().value(5)
+                         << (reply->result().value(6) << 8) + reply->result().value(7);
+                qDebug() << "resistance"
+                         << (reply->result().value(8) << 8) + reply->result().value(9)
+                         << (reply->result().value(10) << 8) + reply->result().value(11)
+                         << (reply->result().value(12) << 8) + reply->result().value(13)
+                         << (reply->result().value(14) << 8) + reply->result().value(15);
+                qDebug() << "temperature"
+                         << (reply->result().value(16) << 8) + reply->result().value(17)
+                         << (reply->result().value(18) << 8) + reply->result().value(19)
+                         << (reply->result().value(20) << 8) + reply->result().value(21)
+                         << (reply->result().value(22) << 8) + reply->result().value(23);
 
 
 
 
-                                                          if(datalen == 25){
-
-
-                global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(1) << 8) + reply->result().value(2);
+                global.DIinput[TVERTNE1LEVEL].value = (reply->result().value(0) << 8) + reply->result().value(1);
                 global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
                 global.DIinput[TVERTNE1LEVEL].count ++;
 
@@ -827,7 +830,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(3) << 8) + reply->result().value(4);
+                global.DIinput[TVERTNE2LEVEL].value = (reply->result().value(2) << 8) + reply->result().value(3);
                 global.DIinput[TVERTNE2LEVEL].update += global.DIinput[TVERTNE2LEVEL].value;
                 global.DIinput[TVERTNE2LEVEL].count ++;
 
@@ -841,7 +844,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE2LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(5) << 8) + reply->result().value(6);
+                global.DIinput[TVERTNE3LEVEL].value = (reply->result().value(4) << 8) + reply->result().value(5);
                 global.DIinput[TVERTNE3LEVEL].update += global.DIinput[TVERTNE3LEVEL].value;
                 global.DIinput[TVERTNE3LEVEL].count ++;
 
@@ -855,7 +858,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE3LEVELPROC].value = (int)res;
 
                 ////
-                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(7) << 8) + reply->result().value(8);
+                global.DIinput[TVERTNE4LEVEL].value = (reply->result().value(6) << 8) + reply->result().value(7);
                 global.DIinput[TVERTNE4LEVEL].update += global.DIinput[TVERTNE4LEVEL].value;
                 global.DIinput[TVERTNE4LEVEL].count ++;
 
@@ -869,15 +872,15 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE4LEVELPROC].value = (int)res;
                 ////
 
-                global.DIinput[TVERTNE1FULL].value = (reply->result().value(9) << 8) + reply->result().value(10);
-                global.DIinput[TVERTNE2FULL].value = (reply->result().value(11) << 8) + reply->result().value(12);
-                global.DIinput[TVERTNE3FULL].value = (reply->result().value(13) << 8) + reply->result().value(14);
-                global.DIinput[TVERTNE4FULL].value = (reply->result().value(15) << 8) + reply->result().value(16);
+                global.DIinput[TVERTNE1FULL].value = (reply->result().value(8) << 8) + reply->result().value(9);
+                global.DIinput[TVERTNE2FULL].value = (reply->result().value(10) << 8) + reply->result().value(11);
+                global.DIinput[TVERTNE3FULL].value = (reply->result().value(12) << 8) + reply->result().value(13);
+                global.DIinput[TVERTNE4FULL].value = (reply->result().value(14) << 8) + reply->result().value(15);
 
-                global.DIinput[TVERTNE1TEMP].value = ((reply->result().value(17) << 8) + reply->result().value(18))/10;
-                global.DIinput[TVERTNE2TEMP].value = ((reply->result().value(19) << 8) + reply->result().value(20))/10;
-                global.DIinput[TVERTNE3TEMP].value = ((reply->result().value(21) << 8) + reply->result().value(22))/10;
-                global.DIinput[TVERTNE4TEMP].value = ((reply->result().value(23) << 8) + reply->result().value(24))/10;
+                global.DIinput[TVERTNE1TEMP].value = ((reply->result().value(16) << 8) + reply->result().value(17))/10;
+                global.DIinput[TVERTNE2TEMP].value = ((reply->result().value(18) << 8) + reply->result().value(19))/10;
+                global.DIinput[TVERTNE3TEMP].value = ((reply->result().value(20) << 8) + reply->result().value(21))/10;
+                global.DIinput[TVERTNE4TEMP].value = ((reply->result().value(22) << 8) + reply->result().value(23))/10;
 
 
                 //  global.DIinput[TVERTNE1LEVEL]
