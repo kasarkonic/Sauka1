@@ -106,8 +106,12 @@ enum virtualOutputs
     set_mix_On_Off,
     set_dino_speed,
     set_dino_On_Off,
+    set_pump0_speed,
+    set_pump0_On_Off,
     set_pump1_speed,
     set_pump1_On_Off,
+    set_dino0_speed,
+    set_dino0_On_Off,
 
 };
 

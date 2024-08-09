@@ -106,6 +106,8 @@ private:
     bool ok;
     Global::rs485WrPar param;
     int rpm;
+    int actualMotorNode = 0;
+    int gearrate = 1;
 };
 
 

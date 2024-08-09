@@ -34,6 +34,7 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     ui->label_0_1->setText("Ieejas/izejas nosaukums");
     ui->label_0_2->setText("Adrese");
     ui->label_0_3->setText("Vērtība");
+    ui->horizontalSlider_speed->setRange(-100,100);
     ui->horizontalSlider_speed->setValue(50);
 
     updateFormData();   // data from global. ...
@@ -75,65 +76,6 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
 
-
-
-    // ui->lineEdit_AddresDI->setText(QString::number(global.DIoutput[addresAct].value));
-    /*
-    switch (widgetElement->global.widHash[currentWid].type) {
-
-    case WidgetType::widgT::Valve:
-        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
-
-        {
-        int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
-        int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
-        int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
-        int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
-
-        int outOpenv = global.DIoutput[outOpen].value;    // output address
-        int outClosev = global.DIoutput[outClose].value;
-        int inOpenv = global.DIinput[inOpen].value;
-        int inClosev = global.DIinput[inClose].value;
-
-        int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
-        int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
-
-
-        ui->label1_2->setText(QString::number(inOpen));
-        ui->label2_2->setText(QString::number(inClose));
-        ui->label3_2->setText(QString::number(outOpen));
-        ui->label4_2->setText(QString::number(outClose));
-
-        ui->label1_3->setText(QString::number(inOpenv));
-        ui->label2_3->setText(QString::number(inClosev));
-        ui->label3_3->setText(QString::number(outOpenv));
-        ui->label4_3->setText(QString::number(outClosev));
-
-        ui->lineEdit_5_2->setText(" ");
-        ui->lineEdit_6_2->setText(" ");
-        ui->pushButton_5_3->setText(QString::number(openTime));
-        ui->pushButton_6_3->setText(QString::number(closeTime));
-
-
-        }
-
-
-        break;
-
-    case WidgetType::widgT::ScalesMass:
-        //    ui->lineEdit_AddresAN1->setText(QString::number(global.DIinput[addresSens1].value));
-        break;
-
-    default:
-        break;
-    }
-
-   */
-
-
-    // ui->lineEdit_AddresAN2->setText(QString::number(global.DIinput[addresSens2].value));
-
-
     widgetElement->updateSettings();
 
 
@@ -141,44 +83,6 @@ void WidgetService::updateFormData()        // read data from global and display
     QString strDeg = QChar(0x00b0);
 
     switch (widgetElement->global.widHash[currentWid].type) {
-
-    case WidgetType::widgT::Dyno:
-
-        str = "Izvēlēts elements \"Dynamill\"\n";
-        str.append("Aktuators maina motora griežšanās ātrumu\n");
-        str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-
-        ui->label1_1->setText("Ātrums");
-        ui->label2_1->setText("Statuss");
-        ui->label3_1->setText("Kļūda");
-        ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt mikseri");
-        ui->label6_1->setText("Izslēgt mikseri");
-
-        ui->label1_2->setText(QString::number(12));
-        ui->label2_2->setText(QString::number(22));
-        ui->label3_2->setText(QString::number(32));
-        ui->label4_2->setText("");
-        ui->lineEdit_5_2->hide();
-        ui->lineEdit_6_2->hide();
-
-        ui->label1_3->setText(QString::number(13));
-        ui->label2_3->setText(QString::number(23));
-        ui->label3_3->setText(QString::number(33));
-        ui->label4_3->setText("");
-        ui->pushButton_5_3->setText("Ieslēgt");
-        ui->pushButton_6_3->setText("Izslēgt");
-
-        ui->line_14->hide();
-        ui->line_15->hide();
-        ui->line_16->hide();
-        ui->line_17->hide();
-        ui->line_18->hide();
-        ui->line_19->hide();
-        ui->line_20->hide();
-        ui->line_21->hide();
-
-        break;
 
     case WidgetType::widgT::Tvertne:
 
@@ -368,6 +272,8 @@ void WidgetService::updateFormData()        // read data from global and display
         break;
 
     case WidgetType::widgT::Mix:
+    case WidgetType::widgT::Dispax:
+    case WidgetType::widgT::Dyno:
 
         /*
          * Widget Mix
@@ -376,20 +282,44 @@ void WidgetService::updateFormData()        // read data from global and display
          * griežšanās ātrums act[actList address1].analog.
          *
          */
-        str = "Izvēlēts maisītājs \"Mix \"\n";
-        str.append("Aktuators maina motora griežšanās ātrumu\n");
-        str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
+
+
+        switch (widgetElement->global.widHash[currentWid].type)  {
+            case WidgetType::widgT::Mix:
+            actualMotorNode = M9;
+                gearrate = 1;
+                 str = "Izvēlēts maisītājs\n";
+        break;
+            case WidgetType::widgT::Dispax:
+                actualMotorNode = M4;
+                gearrate = 1;
+                 str = "Izvēlēts Dispax\n";
+        break;
+            case WidgetType::widgT::Dyno:
+                actualMotorNode = M8;
+                gearrate = 1;
+                 str = "Izvēlēts transportieris\n";
+
+        break;
+    default:
+        break;
+    }
+
+
+        //str = "Izvēlēts maisītājs \"Mix \"\n";
+       // str.append("Aktuators maina motora griežšanās ātrumu\n");
+       // str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
         ui->label1_1->setText("Ātrums");
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
-        ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt mikseri");
-        ui->label6_1->setText("Izslēgt mikseri");
+        ui->label4_1->setText("MODBUS node");
+        ui->label5_1->setText("Ieslēgt ");
+        ui->label6_1->setText("Izslēgt ");
 
         ui->label1_2->setText(QString::number(12));
         ui->label2_2->setText(QString::number(22));
         ui->label3_2->setText(QString::number(32));
-        ui->label4_2->setText("");
+        ui->label4_2->setText(QString::number(actualMotorNode));
         ui->lineEdit_5_2->hide();
         ui->lineEdit_6_2->hide();
 
@@ -410,6 +340,11 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->line_21->hide();
 
         break;
+
+
+
+
+
     case WidgetType::widgT::Pipe:
         str = "Izvēlēta savienojošā caurule \"Pipe \"\n";
         str.append("Options = 0 vertikala, \n");
@@ -790,34 +725,16 @@ void WidgetService::timerEvent(QTimerEvent *event)
 
 void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
 {
-    rpm = value;
+    rpm = value * gearrate;
+    // speed change
+    param.boardAdr = actualMotorNode;
+    param.value = rpm;
+    param.len = 1;
+    param.cmd = WR_REG;
+    param.regAdr = LFRD_REG;
+    global.rs485WrList.append(param);
 
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
-        // speed change
-        param.boardAdr = M4;//???????????????
-        param.value = rpm;
-        param.len = 1;
-        param.cmd = WR_REG;
-        param.regAdr = LFRD_REG;
-        global.rs485WrList.append(param);
-    }
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax) {
-        // speed change
-        param.boardAdr = M8;//???????????????
-        param.value = rpm;
-        param.len = 1;
-        param.cmd = WR_REG;
-        param.regAdr = LFRD_REG;
-        global.rs485WrList.append(param);
-    }
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
-        // speed change
-        param.boardAdr = M9;//???????????????
-        param.value = rpm;
-        param.len = 1;
-        param.cmd = WR_REG;
-        param.regAdr = LFRD_REG;
-        global.rs485WrList.append(param);
-    }
+
+    qDebug() << "horizontalSlider_speed_valueChanged, node:" << actualMotorNode << rpm ;
 }
 

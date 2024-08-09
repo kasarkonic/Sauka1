@@ -513,6 +513,7 @@ page = 3   draw on all pages
 
 void Global::creatWidgList() {
     //      WidgetType::widgT ty,    name,       page, X,       Y,  size, options,  actAdr1)
+    addWidgList(WidgetType::Dyno, 0, 1, 176, 1, 74, set_dino0_speed, set_dino0_On_Off);
 
     addWidgList(WidgetType::Mix, 0, 1, 496, 27, 120, set_mix_speed, set_mix_On_Off);
     addWidgList(WidgetType::ScalesBase,    0, 1,   393,  123,   172,  0, 0);

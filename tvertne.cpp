@@ -24,7 +24,7 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
     //for testing
 
 
-    timer
+    //timer
 }
 
 void Tvertne::updateSettings()
