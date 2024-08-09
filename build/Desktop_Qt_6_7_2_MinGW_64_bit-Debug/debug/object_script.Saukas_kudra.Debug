@@ -1,5 +1,6 @@
 debug/actlistform.o
 debug/acttablemodel.o
+debug/ballvalve.o
 debug/componentcard.o
 debug/def.o
 debug/dispax.o
@@ -31,6 +32,7 @@ debug/widgetdiagramelement.o
 debug/widgetservice.o
 debug/qrc_resource.o
 debug/moc_actlistform.o
+debug/moc_ballvalve.o
 debug/moc_componentcard.o
 debug/moc_dispax.o
 debug/moc_dyno.o

@@ -103,7 +103,9 @@ void WidgetService::updateFormData()        // read data from global and display
 
         str = "Izvēlēts elements \"TVERTNE \"\n";
         str.append("IN1 tvertnes līmenis\n");
-        str.append("IN2 drošības līmeņa devējs\n");
+
+        str.append(QString::number(currentWidnpk));
+        str.append("\nIN2 drošības līmeņa devējs\n");
 
         ui->label1_1->setText("Līmenis tvertnē %");
         ui->label2_1->setText("Pilnas Tv. devējs");
@@ -128,7 +130,6 @@ void WidgetService::updateFormData()        // read data from global and display
         case 0:
             ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
             ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
-
 
             break;
         case 1:
@@ -243,8 +244,8 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
         ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt mikseri");
-        ui->label6_1->setText("Izslēgt mikseri");
+        ui->label5_1->setText("Ieslēgt suknis");
+        ui->label6_1->setText("Izslēgt sukni");
 
         ui->label1_2->setText(QString::number(12));
         ui->label2_2->setText(QString::number(22));
@@ -297,7 +298,7 @@ void WidgetService::updateFormData()        // read data from global and display
         break;
             case WidgetType::widgT::Dyno:
                 actualMotorNode = M8;
-                gearrate = 1;
+                gearrate = 28;
                  str = "Izvēlēts transportieris\n";
 
         break;
@@ -558,10 +559,13 @@ void WidgetService::on_pushButton_5_3_clicked()
         // save calibration full
 
     }
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
+
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix
+        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax
+        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
         // motor On
-        param.boardAdr = M8;//???????????????
-        param.value = 128;          // ??????????????? reset
+        param.boardAdr = actualMotorNode;
+        param.value = 128;
         param.regAdr = CMD_REG;
         param.len = 1;
         param.cmd = WR_REG;
@@ -596,9 +600,13 @@ void WidgetService::on_pushButton_6_3_clicked()
         // save calibration empty
 
     }
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix) {
+
+    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix
+        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax
+        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
         // motor Off
-        param.boardAdr = M8;
+
+        param.boardAdr = actualMotorNode;
         param.regAdr = CMD_REG;
         param.value = 7;
         param.cmd = WR_REG;

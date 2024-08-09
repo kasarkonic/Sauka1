@@ -242,6 +242,7 @@ void Global::addActList(QString name, ActuatorType::actT tp, int addres) {
 
 //addSensList(QString name, SensorType::sensT tp, int addres)
 void Global::creatSensList() {
+    /*
     addSensList("Tvertne 1 sensors DI", SensorType::Digital, 1);
     addSensList("Tvertne 1 sensors AN", SensorType::Analog, 2);
 
@@ -262,6 +263,7 @@ void Global::creatSensList() {
 
 
     qDebug() << "create " << sensList.size() << "sensors";
+*/
 }
 
 void Global::addSensList(QString name, SensorType::sensT tp, int addres) {
@@ -280,22 +282,22 @@ void Global::createBallValve()
     bvalve bv;
     //BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent = nullptr);
 
-    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,1,2,3);
+    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,0,0,0);
     bv.npk = 0;
     bv.bValvePtr = ballvalveTest0;
     ballValveList.append(bv);
 
-    ballvalveTest1 = new BallValve(this,"ballvalveTest1",10,11,12,13);
+    ballvalveTest1 = new BallValve(this,"ballvalveTest1",0,0,0,0);
     bv.npk = 1;
     bv.bValvePtr = ballvalveTest1;
     ballValveList.append(bv);
 
-    ballvalveTest2 = new BallValve(this,"ballvalveTest2",20,21,22,23);
+    ballvalveTest2 = new BallValve(this,"ballvalveTest2",0,0,0,0);
     bv.npk = 2;
     bv.bValvePtr = ballvalveTest2;
     ballValveList.append(bv);
 
-    ballvalveTest3 = new BallValve(this,"ballvalveTest3",30,31,32,33);
+    ballvalveTest3 = new BallValve(this,"ballvalveTest3",0,0,0,0);
     bv.npk = 3;
     bv.bValvePtr = ballvalveTest3;
     ballValveList.append(bv);
@@ -363,12 +365,12 @@ void Global::createBallValve()
     ballValveList.append(bv);
 
 
-    ballvalveTest16 = new BallValve(this,"ballvalveTest16",20,21,22,23);
+    ballvalveTest16 = new BallValve(this,"ballvalveTest16",0,0,0,0);
     bv.npk = 16;
     bv.bValvePtr = ballvalveTest16;
     ballValveList.append(bv);
 
-    ballvalveTest17 = new BallValve(this,"ballvalveTest17",30,31,32,33);
+    ballvalveTest17 = new BallValve(this,"ballvalveTest17",0,0,0,0);
     bv.npk = 17;
     bv.bValvePtr = ballvalveTest17;
     ballValveList.append(bv);
@@ -524,10 +526,14 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label, 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label, 2, 1, 243, 1, 250, 0, 0);
 
-    addWidgList(WidgetType::Tvertne,0, 1, 1598, 1, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne,0, 1, 1598, 1, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
     addWidgList(WidgetType::Tvertne,1, 1, 700, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,2, 1, 1000, 310, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
-    addWidgList(WidgetType::Tvertne, 3, 1, 1300, 310, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
+    addWidgList(WidgetType::Tvertne,3, 1, 1300, 310, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
+
+
+
+
 
     addWidgList(WidgetType::Pump, 0, 1, 433, 483, 50, 0, set_pump1_speed);
     addWidgList(WidgetType::Pump, 1, 1, 744, 61, 50, 0, set_pump1_speed);
@@ -679,7 +685,7 @@ void Global::addWidgList(WidgetType::widgT ty, int npk, int page, int X, int Y, 
     if (ty == WidgetType::Tvertne){
         switch (npk) {
         case 0:
-            name.append("? Tvertne");
+            name.append("4. Tvertne");
             break;
         case 1:
             name.append("3. Tvertne");

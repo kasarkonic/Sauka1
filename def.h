@@ -298,6 +298,7 @@ enum a3DOut
 
 
 // TVERTNE
+/*
 #define  TVERTNE_T2_LEVEL   1// DIinput   ANinput4_20  //
 #define  TVERTNE_T2_FULL  2//  DIinput   //
 
@@ -309,6 +310,7 @@ enum a3DOut
 
 #define  TVERTNE_T5_LEVEL   1// DIinput   ANinput4_20  //
 #define  TVERTNE_T5_FULL  2//  DIinput   //
+
 // VALVE
 #define VALVE2_1ACT   3
 #define VALVE2_1SWOPEN   23
@@ -371,7 +373,7 @@ enum a3DOut
 #define VALVE6_4ACT   3
 #define VALVE6_4SWOPEN   23
 #define VALVE6_4SWCLOSE   24
-
+*/
 #define LEVEL_SENSOR_1   101
 #define LEVEL_SENSOR_2   102
 #define LEVEL_SENSOR_3   103

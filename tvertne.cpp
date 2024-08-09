@@ -19,7 +19,7 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
     timerIdUpd = startTimer(100, Qt::CoarseTimer);  // only for widgetervice position addjust
 
     fill = 0;
-    full = 0;
+    full = false;
 
     //for testing
 
@@ -41,7 +41,7 @@ void Tvertne::updateSettings()
     fill = 100 - fval;
     //qDebug() << "fill"  << fval << settings.sensAddres1 << (24*100.0/fval);
 
-    full = global.DIinput[settings.var2].value;
+    full = global.DIinput[settings.var2].value < 600;
     //qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
 
     update();

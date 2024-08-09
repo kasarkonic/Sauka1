@@ -22,7 +22,7 @@ private:
     QImage* imgBackground;
 
     int fill;
-    int full;
+    bool full;
 
 
 };

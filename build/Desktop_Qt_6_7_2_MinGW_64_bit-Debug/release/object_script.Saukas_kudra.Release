@@ -1,5 +1,6 @@
 release/actlistform.o
 release/acttablemodel.o
+release/ballvalve.o
 release/componentcard.o
 release/def.o
 release/dispax.o
@@ -31,6 +32,7 @@ release/widgetdiagramelement.o
 release/widgetservice.o
 release/qrc_resource.o
 release/moc_actlistform.o
+release/moc_ballvalve.o
 release/moc_componentcard.o
 release/moc_dispax.o
 release/moc_dyno.o
