@@ -57,6 +57,7 @@ enum widgT {
     ScalesMass,
     Dispax,
     Label,
+    Conveyor,
 };
 }
 
@@ -333,7 +334,7 @@ private:
     int tick;
     void create_IN_OUT_list();
     void creatWidgList();
-    void addWidgList(WidgetType::widgT ty, int npk, int page, int X, int Y, int size, int var1, int var2);
+    void addWidgList(WidgetType::widgT ty, QString name, int npk, int page, int X, int Y, int size, int var1, int var2);
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);
 

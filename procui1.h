@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "global.h"
 #include "dyno.h"
+#include "conveyor.h"
 #include "mix.h"
 #include "pipe.h"
 #include "pump.h"
@@ -37,6 +38,7 @@ private slots:
 
 private:
    // Dyno* dynoA;
+   // Conveyor* conveyorA
    // Mix* mixA;
    // Tvertne* tvertneA;
    // Pump* pumpA;

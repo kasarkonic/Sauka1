@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QStringList>
 #include "dyno.h"
+#include "conveyor.h"
 #include "mix.h"
 #include "pipe.h"
 #include "pump.h"
@@ -22,6 +23,7 @@
 #include "modbus485.h"
 #include "scale.h"
 #include "runprocess.h"
+
 
 
 
@@ -79,6 +81,7 @@ private:
     // WidgetData widgetData;
 
     Dyno* dynoA;
+    Conveyor* conveyorA ;
     Mix* mixA;
     Tvertne* tvertneA;
     Pump* pumpA;

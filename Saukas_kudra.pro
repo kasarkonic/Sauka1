@@ -18,6 +18,7 @@ SOURCES += \
     acttablemodel.cpp \
     ballvalve.cpp \
     componentcard.cpp \
+    conveyor.cpp \
     def.cpp \
     dispax.cpp \
     dyno.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     acttablemodel.h \
     ballvalve.h \
     componentcard.h \
+    conveyor.h \
     def.h \
     dispax.h \
     dyno.h \

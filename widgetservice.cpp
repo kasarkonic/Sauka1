@@ -46,16 +46,6 @@ void WidgetService::openWidgetServiceForm() {
     this->show();
 }
 
-//  qDebug() << "Open service pipe ??? : " ;
-//  WidgetService *widgetService = new WidgetService (this,global,sender());
-//  Pipe* pipe = qobject_cast<Pipe*>(sender());
-//  qDebug() << "Open service : " << pipe->settings.name ;
-//  widgetService->show();
-
-
-
-
-
 WidgetService::~WidgetService() {
     widgetElement->global.widHash[currentWid].ptrCurrWidgetService = nullptr;
     qDebug() << "WidgetService::~WidgetService()";
@@ -71,10 +61,6 @@ void WidgetService::updateFormData()        // read data from global and display
     ui->lineEdit_Ypos->setText(QString::number(widgetElement->global.widHash[currentWid].startY));
     ui->lineEdit_startSize->setText(QString::number(widgetElement->global.widHash[currentWid].startSize));
     // ui->lineEdit_options->setText(QString::number(widgetElement->global.widHash[currentWid].options));
-
-    // sensor data
-
-
 
     widgetElement->updateSettings();
 
@@ -109,7 +95,8 @@ void WidgetService::updateFormData()        // read data from global and display
 
         ui->label1_1->setText("Līmenis tvertnē %");
         ui->label2_1->setText("Pilnas Tv. devējs");
-        ui->label3_1->setText("Temperatūra");
+        ui->label3_1->setText("Temperatūra C" + strDeg);
+
         ui->label4_1->setText("Sensoru kalibrēšana");
         ui->label5_1->setText("Kalibrēt pilnu Tv.");
         ui->label6_1->setText("Kalibrēt tukšu Tv");
@@ -196,11 +183,13 @@ void WidgetService::updateFormData()        // read data from global and display
         QString str1 = QString::number((closeTime/10));
         str1.append(".");
         str1.append(QString::number((int)closeTime%10));
+        str1.append(" s");
         ui->lineEdit_5_2->setText(str1);
 
         str1 = QString::number((openTime/10));
         str1.append(".");
         str1.append(QString::number((int)openTime%10));
+        str1.append(" s");
         ui->lineEdit_6_2->setText(str1);
 
         ui->pushButton_5_3->setText(" Aizvērt vārstu");
@@ -232,31 +221,32 @@ void WidgetService::updateFormData()        // read data from global and display
 
         /*
          * Widget Pump
-         *
-         * sūknis act[actList address1].digital.
-         * griežšanās ātrums act[actList address1].analog.
-         *
+         * var1  - on/off  forvard
+         * var2   - on/off   revers
          */
+
         str = "Izvēlēts sūknis \"Pump \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->label1_1->setText("Ātrums");
-        ui->label2_1->setText("Statuss");
-        ui->label3_1->setText("Kļūda");
-        ui->label4_1->setText("-");
-        ui->label5_1->setText("Ieslēgt suknis");
-        ui->label6_1->setText("Izslēgt sukni");
+        ui->label1_1->setText("Ieslēgts turp");
+        ui->label2_1->setText("Ieslēgts atpakaļ");
+        ui->label3_1->setText("");
+        ui->label4_1->setText("");
+        ui->label5_1->setText("Ieslēgt sūkni");
+        ui->label6_1->setText("Izslēgt sūkni");
+        ui->pushButton_5_3->setText("Ieslēgt Turp");
+        ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
 
-        ui->label1_2->setText(QString::number(12));
-        ui->label2_2->setText(QString::number(22));
-        ui->label3_2->setText(QString::number(32));
+        ui->label1_2->setText(QString::number(widgetElement->settings.var1));
+        ui->label2_2->setText(QString::number(widgetElement->settings.var2));
+        ui->label3_2->setText("");
         ui->label4_2->setText("");
         ui->lineEdit_5_2->hide();
         ui->lineEdit_6_2->hide();
 
-        ui->label1_3->setText(QString::number(13));
-        ui->label2_3->setText(QString::number(23));
-        ui->label3_3->setText(QString::number(33));
+        ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
+        ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
+        ui->label3_3->setText("");
         ui->label4_3->setText("");
         ui->pushButton_5_3->setText("Ieslēgt");
         ui->pushButton_6_3->setText("Izslēgt");
@@ -275,6 +265,7 @@ void WidgetService::updateFormData()        // read data from global and display
     case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
     case WidgetType::widgT::Dyno:
+    case WidgetType::widgT::Conveyor:
 
         /*
          * Widget Mix
@@ -286,30 +277,31 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
         switch (widgetElement->global.widHash[currentWid].type)  {
-            case WidgetType::widgT::Mix:
+        case WidgetType::widgT::Mix:
             actualMotorNode = M9;
-                gearrate = 1;
-                 str = "Izvēlēts maisītājs\n";
-        break;
-            case WidgetType::widgT::Dispax:
-                actualMotorNode = M4;
-                gearrate = 1;
-                 str = "Izvēlēts Dispax\n";
-        break;
-            case WidgetType::widgT::Dyno:
-                actualMotorNode = M8;
-                gearrate = 28;
-                 str = "Izvēlēts transportieris\n";
+            gearrate = 1;
+            str = "Izvēlēts maisītājs\n";
+            break;
+        case WidgetType::widgT::Dispax:
+            actualMotorNode = M4;
+            gearrate = 1;
+            str = "Izvēlēts Dispax\n";
+            break;
 
-        break;
-    default:
-        break;
-    }
+        case WidgetType::widgT::Conveyor:
+            actualMotorNode = M8;
+            gearrate = 28;
+            str = "Izvēlēts transportieris\n";
+
+            break;
+        default:
+            break;
+        }
 
 
         //str = "Izvēlēts maisītājs \"Mix \"\n";
-       // str.append("Aktuators maina motora griežšanās ātrumu\n");
-       // str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
+        // str.append("Aktuators maina motora griežšanās ātrumu\n");
+        // str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
         ui->label1_1->setText("Ātrums");
         ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
@@ -427,6 +419,7 @@ void WidgetService::updateSensorVal()  // take data from UI and update global. .
     updateFormData();
 
 }
+
 
 void WidgetService::updateSettings() {
     qDebug() << "WidgetService::updateSettings()";
@@ -550,19 +543,19 @@ void WidgetService::on_lineEdit_options_editingFinished() {
 
 void WidgetService::on_pushButton_5_3_clicked()
 {
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
-        // open valve
+    switch (widgetElement->global.widHash[currentWid].type) {
+    case WidgetType::widgT::Valve:
+        // close valve
         global.ballValveList[currentWidnpk].bValvePtr->close();
-    }
 
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+        break;
+    case WidgetType::widgT::Tvertne:
         // save calibration full
-
-    }
-
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix
-        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax
-        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
+        break;
+    case WidgetType::widgT::Mix:
+    case WidgetType::widgT::Dispax:
+    case WidgetType::widgT::Dyno:
+    case WidgetType::widgT::Conveyor:
         // motor On
         param.boardAdr = actualMotorNode;
         param.value = 128;
@@ -585,25 +578,41 @@ void WidgetService::on_pushButton_5_3_clicked()
         param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
+        break;
+
+    case WidgetType::widgT::Pump:
+        // save calibration full
+
+        if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
+            global.DIoutput[widgetElement->settings.var1].value = 0;
+            global.DIoutput[widgetElement->settings.var2].value = 0;
+        }
+        else{
+            global.DIoutput[widgetElement->settings.var1].value = 1;
+            global.DIoutput[widgetElement->settings.var2].value = 0;
+        }
+
+        break;
+    default:
+        break;
     }
-
 }
-
 
 void WidgetService::on_pushButton_6_3_clicked()
 {
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Valve) {
-        // close valve
+
+    switch (widgetElement->global.widHash[currentWid].type) {
+    case WidgetType::widgT::Valve:
+        // open valve
         global.ballValveList[currentWidnpk].bValvePtr->open();
-    }
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
+        break;
+    case WidgetType::widgT::Tvertne:
         // save calibration empty
-
-    }
-
-    if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Mix
-        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dispax
-        || widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Dyno) {
+        break;
+    case WidgetType::widgT::Mix:
+    case WidgetType::widgT::Dispax:
+    case WidgetType::widgT::Dyno:
+    case WidgetType::widgT::Conveyor:
         // motor Off
 
         param.boardAdr = actualMotorNode;
@@ -612,44 +621,28 @@ void WidgetService::on_pushButton_6_3_clicked()
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
 
-        /*
 
+        break;
+    case WidgetType::widgT::Pump:
+        // save calibration full
 
+        if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
+            global.DIoutput[widgetElement->settings.var1].value = 0;
+            global.DIoutput[widgetElement->settings.var2].value = 0;
+        }
+        else{
+            global.DIoutput[widgetElement->settings.var1].value =0;
+            global.DIoutput[widgetElement->settings.var2].value = 1;
+        }
 
-void HWService::on_pushButton_Reset_clicked()
-{
-    param.boardAdr = testMotorAddres;
+        break;
 
-    param.regAdr = CMD_REG;
-    param.value = 128;
-    param.len = 1;
-    param.cmd = WR_REG;
-    global.rs485WrList.append(param);
-}
-
-
-
-
-
-
-        int value;//  tas nolasīts no slidera!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        int koef = 1;
-        int rpm = value * koef;    // koef for diferrent motors?
-        qDebug() << "Motor speed rpm" << value;
-
-        param.boardAdr = M9;//?????????????
-        param.regAdr = LFRD_REG;
-        param.value = rpm;
-        //if(testMotorAddres == M8){param.value = -param.value;}   // M8 reverse
-        param.len = 1;
-        param.cmd = WR_REG;
-        global.rs485WrList.append(param);
-
-
-
-*/    }
+    default:
+        break;
+    }
 
 }
+
 
 
 void WidgetService::on_lineEdit_5_2_editingFinished()
@@ -719,7 +712,6 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
 
         }
 
-
     }
 }
 
@@ -733,16 +725,30 @@ void WidgetService::timerEvent(QTimerEvent *event)
 
 void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
 {
-    rpm = value * gearrate;
-    // speed change
-    param.boardAdr = actualMotorNode;
-    param.value = rpm;
-    param.len = 1;
-    param.cmd = WR_REG;
-    param.regAdr = LFRD_REG;
-    global.rs485WrList.append(param);
+    switch (widgetElement->global.widHash[currentWid].type) {
 
+    case WidgetType::widgT::Mix:
+    case WidgetType::widgT::Dispax:
+    case WidgetType::widgT::Dyno:
+    case WidgetType::widgT::Conveyor:
+        // motor Off
 
+        rpm = value * gearrate;
+        // speed change
+        param.boardAdr = actualMotorNode;
+        param.value = rpm;
+        param.len = 1;
+        param.cmd = WR_REG;
+        param.regAdr = LFRD_REG;
+        global.rs485WrList.append(param);
+
+        break;
+
+    default:
+        break;
+    }
+
+    ui->_slider_val->setText(QString::number(value));
     qDebug() << "horizontalSlider_speed_valueChanged, node:" << actualMotorNode << rpm ;
 }
 

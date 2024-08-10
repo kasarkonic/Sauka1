@@ -35,7 +35,7 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define VIRUAL_PORTS 32 // Virtual input copy invertor ON/OFF
+#define VIRUAL_PORTS 64 // Virtual input copy invertor ON/OFF
 #define MAX_DIinput     32*3 + VIRUAL_PORTS       // addres [0 , MAX_DIinp] 32*3
 #define MAX_DIoutput     32*3 + VIRUAL_PORTS      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
@@ -158,13 +158,13 @@ enum a1DIn
 enum a1DOut
 {
 
-    brīvs = 0,                  // nr. on board  => Q1
-    Ieslegt_kontaktor_1KM1,
+    NOP = 0,                  // nr. on board  => Q1
+    On_Pump_1_RW,
     Ieslegt_kontaktoru_2KM1,
     Ieslegt_kontaktoru_3KM1,
     Ieslegt_kontaktoru_5KM1,
-    Ieslegt_kontaktoru_6KM1,
-    Ieslegt_kontaktoru_7KM1,
+    On_Pump_1_FW,
+    On_Pump_2_FW,
     Luksofors_sirena,
 
 

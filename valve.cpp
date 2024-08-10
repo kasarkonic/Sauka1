@@ -53,12 +53,13 @@ void Valve::updateSettings() {
 
     if (swClose == 1 && swOpen == 0) {  //close
         currentAngle = openPos + 90;    // close
-        changeDirections = -1;
+        changeDirections = 0;
+        //changeDirections = -1;
     }
     if (swClose == 0 && swOpen == 1) {  //open
         currentAngle = openPos;    // open
-
-        changeDirections = 1;
+        changeDirections = 0;
+        //changeDirections = 1;
     }
     if (swClose == 0 && swOpen == 0 && motorOn) {  //process
         changeDirections = 0;

@@ -40,11 +40,11 @@ void Mix::paintEvent(QPaintEvent* event) {
     //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
 
     QPainter painter(this);
-    QPen pen;
-    pen.setWidth(4);    //draw mix
-    pen.setColor(Qt::red);
-    painter.setBrush(Qt::red);
-    painter.setPen(pen);
+  //  QPen pen;
+  //  pen.setWidth(4);    //draw mix
+  //  pen.setColor(Qt::red);
+  //  painter.setBrush(Qt::red);
+  //  painter.setPen(pen);
 
     imgBackground = new QImage();
     imgBackground->load(":/pictures/mixeris31.png");
@@ -52,16 +52,16 @@ void Mix::paintEvent(QPaintEvent* event) {
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-
+  /*
     QPoint points[4];
-    /*
+
     points[0] = QPoint(0 + settings.currX,0 + settings.currY);
     points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
     points[3] = QPoint(0 + settings.currX,settings.currSize + settings.currY);
 
    // painter.drawPolygon(points,4);/  nezinu kas parsarkanu kluci ????
-*/
+
     int rad = settings.currSize - 4;// minus pen
     rad = (int)settings.currSize / 5;
 
@@ -77,7 +77,7 @@ void Mix::paintEvent(QPaintEvent* event) {
     painter.setPen(pen);
     painter.drawPolygon(points, 3);
 
-
+*/
     //  imgBackground= new QImage();
     //  imgBackground->load(":/pictures/mixeris3.png");
 

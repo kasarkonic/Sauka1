@@ -1,9 +1,7 @@
-#include "dyno.h"
+#include "conveyor.h"
 
 
-
-
-Dyno::Dyno(Global& global, QString name, QWidget* parent)
+Conveyor::Conveyor(Global& global, QString name, QWidget* parent)
     : WidgetDiagramElement(global, name, parent) {
     global.widHash[settings.name].ptrCurrWidget = this;
     ///*
@@ -19,9 +17,9 @@ Dyno::Dyno(Global& global, QString name, QWidget* parent)
 
 }
 
-void Dyno::updateSettings() {
+void Conveyor::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
-    // qDebug() << "Dino updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
+    // qDebug() << "Conveyor updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
 
     killTimer(timerIdUpd);
     if (global.DIoutput[settings.var1].value) {
@@ -33,12 +31,12 @@ void Dyno::updateSettings() {
     update();
 }
 
-void Dyno::paintEvent(QPaintEvent* event) {
+void Conveyor::paintEvent(QPaintEvent* event) {
     Q_UNUSED(event);
-    //qDebug() << "DYNO paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
-    //   qDebug() << "Dyno::paintEvent";
+    //qDebug() << "Conveyor paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+    //   qDebug() << "Conveyor::paintEvent";
     QPainter painter(this);
-/*     QPen pen;
+ /*   QPen pen;
     pen.setWidth(4);    //draw pipe
     pen.setColor(Qt::red);
     painter.setBrush(Qt::red);
@@ -54,14 +52,14 @@ void Dyno::paintEvent(QPaintEvent* event) {
     painter.drawPolygon(points, 4);
 */
     imgBackground = new QImage();
-    imgBackground->load(":/pictures/dino_mili.png"); // nepatīk krāsas png failam ???????????????????????????????
+    imgBackground->load(":/pictures/conveyor1.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
     resize(settings.currSize, settings.currSize);
 }
-void Dyno::timerEvent(QTimerEvent* event) {
+void Conveyor::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
         if (event->timerId() == timerIdUpd) {
             updateSettings();
@@ -69,13 +67,13 @@ void Dyno::timerEvent(QTimerEvent* event) {
 }
 
 /*
-void Dyno::mousePressEvent(QMouseEvent *event){
+void Conveyor::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
-        // qDebug() << "dyno mousePressEvent" ;
+        // qDebug() << "Conveyor mousePressEvent" ;
         // updateSettings();
     }
 }
-void Dyno::mouseMoveEvent(QMouseEvent *event)
+void Conveyor::mouseMoveEvent(QMouseEvent *event)
 {
     event->accept();
 
@@ -92,10 +90,10 @@ void Dyno::mouseMoveEvent(QMouseEvent *event)
 //qDebug() << "Pump mouseMoveEvent dx:dy" << pointX - mouseStartPointX << pointY - mouseStartPointY ;
 }
 
-void Dyno::mouseDoubleClickEvent(QMouseEvent *event)
+void Conveyor::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        qDebug() << "Dyno mouseDoubleClickEvent" ;
+        qDebug() << "Conveyor mouseDoubleClickEvent" ;
         // emit openServicePump();
         //emit openServicePipe();
 

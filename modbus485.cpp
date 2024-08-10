@@ -817,11 +817,11 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                          <<     reply->result().value(11);
 
 
-
-
                 global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
                 global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
                 global.DIinput[TVERTNE1LEVEL].count ++;
+
+
 
 
                 qDebug() << "sum" << global.DIinput[TVERTNE1LEVEL].update << " / " <<  global.DIinput[TVERTNE1LEVEL].count << " = " << global.DIinput[TVERTNE1LEVEL].update /10;
@@ -1210,7 +1210,7 @@ void Modbus485::runTaskCycle() {
         // qDebug() << "runTaskCycle()" << task_state << stateStartTime;
     }
     oldtask_state = task_state;
-    int interval = 50;  // 25 arI strādā
+    int interval = 30;  // 25 arI strādā pādējais  bija 50
     quint16 dat1;
     quint16 dat2;
 

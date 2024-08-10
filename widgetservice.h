@@ -108,6 +108,8 @@ private:
     int rpm;
     int actualMotorNode = 0;
     int gearrate = 1;
+
+
 };
 
 

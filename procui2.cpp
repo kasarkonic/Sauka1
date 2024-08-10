@@ -80,6 +80,11 @@ void ProcUI2::drawWidgets() {
         if (widData.page == 2) {    // all pages
             // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
+            case WidgetType::widgT::Conveyor:
+            {
+                new Conveyor(global, widData.name, ui->desktop);
+                // ui->horizontalLayout_Process->addWidget(ConveyorA);
+            }
             case WidgetType::widgT::Dyno:
             {
                 new Dyno(global, widData.name, ui->desktop);
