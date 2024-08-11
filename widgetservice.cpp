@@ -232,10 +232,25 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_1->setText("Ieslēgts atpakaļ");
         ui->label3_1->setText("");
         ui->label4_1->setText("");
-        ui->label5_1->setText("Ieslēgt sūkni");
-        ui->label6_1->setText("Izslēgt sūkni");
-        ui->pushButton_5_3->setText("Ieslēgt Turp");
-        ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
+        if( currentWidnpk == 0){
+        ui->label5_1->setText("Ieslēgt/Izslēgt Turp");
+        ui->label6_1->setText("Ieslēgt/Izslēgt Atpakaļ");
+
+        ui->pushButton_5_3->setText("Turp");
+        ui->pushButton_6_3->setText("Atpakaļ");
+
+
+
+        }
+        else{
+            ui->label5_1->setText("Ieslēgt sūkni");
+            ui->label6_1->setText("Izslēgt sūkni");
+            ui->pushButton_5_3->setText("Ieslēgt");
+            ui->pushButton_6_3->setText("Izslēgt");
+        }
+
+       // ui->pushButton_5_3->setText("Ieslēgt Turp");
+       // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
@@ -248,8 +263,8 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
         ui->label3_3->setText("");
         ui->label4_3->setText("");
-        ui->pushButton_5_3->setText("Ieslēgt");
-        ui->pushButton_6_3->setText("Izslēgt");
+       // ui->pushButton_5_3->setText("Ieslēgt");
+       // ui->pushButton_6_3->setText("Izslēgt");
 
         ui->line_14->hide();
         ui->line_15->hide();
