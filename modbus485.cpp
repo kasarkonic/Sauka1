@@ -821,41 +821,47 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
                 global.DIinput[TVERTNE1LEVEL].count ++;
 
-
-
-
-                qDebug() << "sum" << global.DIinput[TVERTNE1LEVEL].update << " / " <<  global.DIinput[TVERTNE1LEVEL].count << " = " << global.DIinput[TVERTNE1LEVEL].update /10;
+                global.DIinput[TVERTNE1LEVEL].avr =  global.DIinput[TVERTNE1LEVEL].update / global.DIinput[TVERTNE1LEVEL].count;
 
                 if(global.DIinput[TVERTNE1LEVEL].count > 9){
                     global.DIinput[TVERTNE1LEVEL].count = 9;
-                    global.DIinput[TVERTNE1LEVEL].value = global.DIinput[TVERTNE1LEVEL].update /10;
-                    global.DIinput[TVERTNE1LEVEL].update -= global.DIinput[TVERTNE1LEVEL].value;
+                    global.DIinput[TVERTNE1LEVEL].update -= global.DIinput[TVERTNE1LEVEL].avr;
                 }
 
                 if(global.DIinput[TVERTNE1KALIBFULL].value <= global.DIinput[TVERTNE1KALIBEMPTY].value){
                     global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value + 1;
+                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
                 }
-                float range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
-                float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].value - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
+
+                int range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
+                float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].avr - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
+                if(res > 110){
+                    res = 110.0;
+                }
                 global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
                 ////
-
-
-
-
-
 
                 global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
                 global.DIinput[TVERTNE2LEVEL].update += global.DIinput[TVERTNE2LEVEL].value;
                 global.DIinput[TVERTNE2LEVEL].count ++;
 
+                global.DIinput[TVERTNE2LEVEL].avr =  global.DIinput[TVERTNE2LEVEL].update / global.DIinput[TVERTNE2LEVEL].count;
+
                 if(global.DIinput[TVERTNE2LEVEL].count > 9){
                     global.DIinput[TVERTNE2LEVEL].count = 9;
-                    global.DIinput[TVERTNE2LEVEL].value = global.DIinput[TVERTNE2LEVEL].update /10;
-                    global.DIinput[TVERTNE2LEVEL].update -= global.DIinput[TVERTNE2LEVEL].value;
+                    global.DIinput[TVERTNE2LEVEL].update -= global.DIinput[TVERTNE2LEVEL].avr;
                 }
-                range = global.DIinput[TVERTNE2KALIBFULL].value - global.DIinput[TVERTNE2KALIBEMPTY].value;
-                res = 100.0 * ( global.DIinput[TVERTNE2LEVEL].value - global.DIinput[TVERTNE2KALIBEMPTY].value)/range;
+
+                if(global.DIinput[TVERTNE2KALIBFULL].value <= global.DIinput[TVERTNE2KALIBEMPTY].value){
+                    global.DIinput[TVERTNE2KALIBFULL].value = global.DIinput[TVERTNE2KALIBEMPTY].value + 1;
+                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
+                }
+
+                 range = global.DIinput[TVERTNE2KALIBFULL].value - global.DIinput[TVERTNE2KALIBEMPTY].value;
+                 res = 100.0 * ( global.DIinput[TVERTNE2LEVEL].avr - global.DIinput[TVERTNE2KALIBEMPTY].value)/range;
+                if(res > 110){
+                    res = 110.0;
+                }
                 global.DIinput[TVERTNE2LEVELPROC].value = (int)res;
                 ////
 
@@ -863,28 +869,50 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 global.DIinput[TVERTNE3LEVEL].update += global.DIinput[TVERTNE3LEVEL].value;
                 global.DIinput[TVERTNE3LEVEL].count ++;
 
+                global.DIinput[TVERTNE3LEVEL].avr =  global.DIinput[TVERTNE3LEVEL].update / global.DIinput[TVERTNE3LEVEL].count;
+
                 if(global.DIinput[TVERTNE3LEVEL].count > 9){
                     global.DIinput[TVERTNE3LEVEL].count = 9;
-                    global.DIinput[TVERTNE3LEVEL].value = global.DIinput[TVERTNE3LEVEL].update /10;
-                    global.DIinput[TVERTNE3LEVEL].update -= global.DIinput[TVERTNE3LEVEL].value;
+                    global.DIinput[TVERTNE3LEVEL].update -= global.DIinput[TVERTNE3LEVEL].avr;
                 }
-                range = global.DIinput[TVERTNE3KALIBFULL].value - global.DIinput[TVERTNE3KALIBEMPTY].value;
-                res = 100.0 * ( global.DIinput[TVERTNE3LEVEL].value - global.DIinput[TVERTNE3KALIBEMPTY].value)/range;
+
+                if(global.DIinput[TVERTNE3KALIBFULL].value <= global.DIinput[TVERTNE3KALIBEMPTY].value){
+                    global.DIinput[TVERTNE3KALIBFULL].value = global.DIinput[TVERTNE3KALIBEMPTY].value + 1;
+                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
+                }
+
+                 range = global.DIinput[TVERTNE3KALIBFULL].value - global.DIinput[TVERTNE3KALIBEMPTY].value;
+                 res = 100.0 * ( global.DIinput[TVERTNE3LEVEL].avr - global.DIinput[TVERTNE3KALIBEMPTY].value)/range;
+                if(res > 110){
+                    res = 110.0;
+                }
                 global.DIinput[TVERTNE3LEVELPROC].value = (int)res;
+
 
                 ////
                 global.DIinput[TVERTNE4LEVEL].value = reply->result().value(3);
                 global.DIinput[TVERTNE4LEVEL].update += global.DIinput[TVERTNE4LEVEL].value;
                 global.DIinput[TVERTNE4LEVEL].count ++;
 
+                global.DIinput[TVERTNE4LEVEL].avr =  global.DIinput[TVERTNE4LEVEL].update / global.DIinput[TVERTNE4LEVEL].count;
+
                 if(global.DIinput[TVERTNE4LEVEL].count > 9){
                     global.DIinput[TVERTNE4LEVEL].count = 9;
-                    global.DIinput[TVERTNE4LEVEL].value = global.DIinput[TVERTNE4LEVEL].update /10;
-                    global.DIinput[TVERTNE4LEVEL].update -= global.DIinput[TVERTNE4LEVEL].value;
+                    global.DIinput[TVERTNE4LEVEL].update -= global.DIinput[TVERTNE4LEVEL].avr;
                 }
-                range = global.DIinput[TVERTNE4KALIBFULL].value - global.DIinput[TVERTNE4KALIBEMPTY].value;
-                res = 100.0 * ( global.DIinput[TVERTNE4LEVEL].value - global.DIinput[TVERTNE4KALIBEMPTY].value)/range;
+
+                if(global.DIinput[TVERTNE4KALIBFULL].value <= global.DIinput[TVERTNE4KALIBEMPTY].value){
+                    global.DIinput[TVERTNE4KALIBFULL].value = global.DIinput[TVERTNE4KALIBEMPTY].value + 1;
+                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
+                }
+
+                 range = global.DIinput[TVERTNE4KALIBFULL].value - global.DIinput[TVERTNE4KALIBEMPTY].value;
+                 res = 100.0 * ( global.DIinput[TVERTNE4KALIBFULL].avr - global.DIinput[TVERTNE4KALIBEMPTY].value)/range;
+                if(res > 110){
+                    res = 110.0;
+                }
                 global.DIinput[TVERTNE4LEVELPROC].value = (int)res;
+
                 ////
 
                 global.DIinput[TVERTNE1FULL].value = reply->result().value(4);

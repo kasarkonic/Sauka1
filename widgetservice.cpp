@@ -79,72 +79,75 @@ void WidgetService::updateFormData()        // read data from global and display
          * līmeņa sensors sensList[sensor address].analog.
          *
          */
-    {
-        currentWidnpk = widgetElement->settings.npk;
-        int level = widgetElement->settings.var1;
-        int full = widgetElement->settings.var2;
+        {
+            currentWidnpk = widgetElement->settings.npk;
+            int level = widgetElement->settings.var1;
+            int full = widgetElement->settings.var2;
 
-        int levelv = global.DIinput[level].value;
-        int fullv =  global.DIinput[full].value;
+            int levelv = global.DIinput[level].value;
+            int fullv =  global.DIinput[full].value;
+            //int avr =  global.DIinput[full].value;
 
-        str = "Izvēlēts elements \"TVERTNE \"\n";
-        str.append("IN1 tvertnes līmenis\n");
+            str = "Izvēlēts elements \"TVERTNE \"\n";
+            str.append("IN1 tvertnes līmenis\n");
 
-        str.append(QString::number(currentWidnpk));
-        str.append("\nIN2 drošības līmeņa devējs\n");
+            str.append(QString::number(currentWidnpk));
+            str.append("\nIN2 drošības līmeņa devējs\n");
 
-        ui->label1_1->setText("Līmenis tvertnē %");
-        ui->label2_1->setText("Pilnas Tv. devējs");
-        ui->label3_1->setText("Temperatūra C" + strDeg);
+            ui->label1_1->setText("Līmenis tvertnē %");
+            ui->label2_1->setText("Pilnas Tv. devējs");
+            ui->label3_1->setText("Temperatūra C" + strDeg);
 
-        ui->label4_1->setText("Sensoru kalibrēšana");
-        ui->label5_1->setText("Kalibrēt pilnu Tv.");
-        ui->label6_1->setText("Kalibrēt tukšu Tv");
+            ui->label4_1->setText("Sensoru kalibrēšana");
+            ui->label5_1->setText("Kalibrēt pilnu Tv.");
+            ui->label6_1->setText("Kalibrēt tukšu Tv");
 
-        ui->label1_2->setText(QString::number(level));
-        ui->label2_2->setText(QString::number(full));
+            ui->label1_2->setText(QString::number(level));
+            ui->label2_2->setText(QString::number(full));
 
-        ui->label3_2->setText("-");
-        ui->label4_2->setText("Kalibrēšanas vērtība");
-        //ui->lineEdit_5_2->hide();
-        //ui->lineEdit_6_2->hide();
+            ui->label3_2->setText("-");
+            ui->label4_2->setText("Kalibrēšanas vērtība");
+            //ui->lineEdit_5_2->setText("0");
+            //ui->lineEdit_6_2->setText("0");
+            //ui->lineEdit_5_2->hide();
+            //ui->lineEdit_6_2->hide();
 
-        ui->label1_3->setText(QString::number(levelv));
-        ui->label2_3->setText(QString::number(fullv));
+            ui->label1_3->setText(QString::number(levelv));
+            ui->label2_3->setText(QString::number(fullv));
 
 
-        switch (currentWidnpk) {
-        case 0:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
+            switch (currentWidnpk) {
+            case 0:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].avr));
 
-            break;
-        case 1:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].value));
-            break;
-        case 2:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].value));
-            break;
-        case 3:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].value));
-            break;
-        case 4:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
-            break;
-        default:
-            break;
+                break;
+            case 1:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].avr));
+                break;
+            case 2:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].avr));
+                break;
+            case 3:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].avr));
+                break;
+            case 4:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE5LEVEL].avr));
+                break;
+            default:
+                break;
+            }
+
+
+            ui->label4_3->setText("Saglabāt");
+            ui->pushButton_5_3->setText("Pilna Tv.");
+            ui->pushButton_6_3->setText("Tukša Tv.");
+
         }
-
-
-        ui->label4_3->setText("Saglabāt");
-        ui->pushButton_5_3->setText("Pilna Tv.");
-        ui->pushButton_6_3->setText("Tukša Tv.");
-
-    }
 
 
         break;
@@ -153,67 +156,67 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
 
-    {
-        int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
-        int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
-        int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
-        int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
+        {
+            int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
+            int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
+            int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
+            int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
 
-        int outOpenv = global.DIoutput[outOpen].value;    // output address
-        int outClosev = global.DIoutput[outClose].value;
-        int inOpenv = global.DIinput[inOpen].value;
-        int inClosev = global.DIinput[inClose].value;
+            int outOpenv = global.DIoutput[outOpen].value;    // output address
+            int outClosev = global.DIoutput[outClose].value;
+            int inOpenv = global.DIinput[inOpen].value;
+            int inClosev = global.DIinput[inClose].value;
 
-        int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
-        int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
-
-
-        ui->label1_2->setText(QString::number(inOpen));
-        ui->label2_2->setText(QString::number(inClose));
-        ui->label3_2->setText(QString::number(outOpen));
-        ui->label4_2->setText(QString::number(outClose));
-
-        ui->label1_3->setText(QString::number(inOpenv));
-        ui->label2_3->setText(QString::number(inClosev));
-        ui->label3_3->setText(QString::number(outOpenv));
-        ui->label4_3->setText(QString::number(outClosev));
+            int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
+            int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
 
 
+            ui->label1_2->setText(QString::number(inOpen));
+            ui->label2_2->setText(QString::number(inClose));
+            ui->label3_2->setText(QString::number(outOpen));
+            ui->label4_2->setText(QString::number(outClose));
 
-        QString str1 = QString::number((closeTime/10));
-        str1.append(".");
-        str1.append(QString::number((int)closeTime%10));
-        str1.append(" s");
-        ui->lineEdit_5_2->setText(str1);
+            ui->label1_3->setText(QString::number(inOpenv));
+            ui->label2_3->setText(QString::number(inClosev));
+            ui->label3_3->setText(QString::number(outOpenv));
+            ui->label4_3->setText(QString::number(outClosev));
 
-        str1 = QString::number((openTime/10));
-        str1.append(".");
-        str1.append(QString::number((int)openTime%10));
-        str1.append(" s");
-        ui->lineEdit_6_2->setText(str1);
 
-        ui->pushButton_5_3->setText(" Aizvērt vārstu");
-        ui->pushButton_6_3->setText("Atvērt vārstu");
 
-        str = "Izvēlēts elements \"Valve \"\n";
-        str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
-        str.append("DI1 atvērta vārsta gala slēdzis.\n");
-        str.append("DI2 aizvērta vārsta gala slēdzis.\n");
-        str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
-        str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
-        str.append(str1);
+            QString str1 = QString::number((closeTime/10));
+            str1.append(".");
+            str1.append(QString::number((int)closeTime%10));
+            str1.append(" s");
+            ui->lineEdit_5_2->setText(str1);
 
-        //str.append(strDeg);
-        //str.append(" .\n");
+            str1 = QString::number((openTime/10));
+            str1.append(".");
+            str1.append(QString::number((int)openTime%10));
+            str1.append(" s");
+            ui->lineEdit_6_2->setText(str1);
 
-        ui->label1_1->setText("In vārsts vaļā");
-        ui->label2_1->setText("In vārsts ciet");
-        ui->label3_1->setText("Out atvērt vārstu");
-        ui->label4_1->setText("Out aizvērt vārstu");
-        ui->label5_1->setText("Aizvēršanās laiks");
-        ui->label6_1->setText("Atvēršanās laiks");
+            ui->pushButton_5_3->setText(" Aizvērt vārstu");
+            ui->pushButton_6_3->setText("Atvērt vārstu");
 
-    }
+            str = "Izvēlēts elements \"Valve \"\n";
+            str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
+            str.append("DI1 atvērta vārsta gala slēdzis.\n");
+            str.append("DI2 aizvērta vārsta gala slēdzis.\n");
+            str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
+            str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
+            str.append(str1);
+
+            //str.append(strDeg);
+            //str.append(" .\n");
+
+            ui->label1_1->setText("In vārsts vaļā");
+            ui->label2_1->setText("In vārsts ciet");
+            ui->label3_1->setText("Out atvērt vārstu");
+            ui->label4_1->setText("Out aizvērt vārstu");
+            ui->label5_1->setText("Aizvēršanās laiks");
+            ui->label6_1->setText("Atvēršanās laiks");
+
+        }
 
         break;
 
@@ -550,7 +553,7 @@ void WidgetService::on_pushButton_5_3_clicked()
 
         break;
     case WidgetType::widgT::Tvertne:
-        // save calibration full
+        // save calibration full ??????????????????????????????????????????
         break;
     case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
@@ -654,28 +657,29 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
             ui->lineEdit_5_2->setText("Kļūda!");
             val = 0;
         }
-        else{
-            switch (currentWidnpk) {
-            case 0:
-                global.DIoutput[TVERTNE1KALIBEMPTY].value = val;
-                break;
-            case 1:
-                global.DIoutput[TVERTNE2KALIBEMPTY].value = val;
-                break;
-            case 2:
-                global.DIoutput[TVERTNE3KALIBEMPTY].value = val;
-                break;
-            case 3:
-                global.DIoutput[TVERTNE4KALIBEMPTY].value = val;
-                break;
-            case 4:
-                global.DIoutput[TVERTNE5KALIBEMPTY].value = val;
-                break;
-            default:
-                break;
-            }
-
+        // else{
+        switch (currentWidnpk) {
+        case 0:
+            global.DIinput[TVERTNE4KALIBFULL].value = val;
+            break;
+        case 1:
+            global.DIinput[TVERTNE3KALIBFULL].value = val;
+            break;
+        case 2:
+            global.DIinput[TVERTNE2KALIBFULL].value = val;
+            break;
+        case 3:
+            global.DIinput[TVERTNE1KALIBFULL].value = val;
+            // qDebug() <<  ui->lineEdit_5_2->text() <<  val <<  " kalib value: "  << global.DIinput[TVERTNE1KALIBEMPTY].value << global.DIinput[TVERTNE1KALIBFULL].value ;
+            break;
+        case 4:
+            global.DIinput[TVERTNE5KALIBFULL].value = val;
+            break;
+        default:
+            break;
         }
+
+        //  }
 
     }
 }
@@ -689,28 +693,29 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
             ui->lineEdit_6_2->setText("Kļūda!");
             val = 0;
         }
-        else{
-            switch (currentWidnpk) {
-            case 0:
-                global.DIoutput[TVERTNE1KALIBFULL].value = val;
-                break;
-            case 1:
-                global.DIoutput[TVERTNE2KALIBFULL].value = val;
-                break;
-            case 2:
-                global.DIoutput[TVERTNE3KALIBFULL].value = val;
-                break;
-            case 3:
-                global.DIoutput[TVERTNE4KALIBFULL].value = val;
-                break;
-            case 4:
-                global.DIoutput[TVERTNE5KALIBFULL].value = val;
-                break;
-            default:
-                break;
-            }
-
+        // else{
+        switch (currentWidnpk) {
+        case 0:
+            global.DIinput[TVERTNE4KALIBEMPTY].value = val;
+            break;
+        case 1:
+            global.DIinput[TVERTNE3KALIBEMPTY].value = val;
+            break;
+        case 2:
+            global.DIinput[TVERTNE2KALIBEMPTY].value = val;
+            break;
+        case 3:
+            global.DIinput[TVERTNE1KALIBEMPTY].value = val;
+            qDebug() <<  ui->lineEdit_6_2->text() <<  val <<  " kalib value: "  << global.DIinput[TVERTNE1KALIBEMPTY].value << global.DIinput[TVERTNE1KALIBFULL].value ;
+            break;
+        case 4:
+            global.DIinput[TVERTNE5KALIBEMPTY].value = val;
+            break;
+        default:
+            break;
         }
+
+        // }
 
     }
 }

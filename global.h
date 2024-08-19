@@ -140,6 +140,7 @@ public:
         QString name;
         int update = true;
         int count = 0;
+        int avr = 0;
     };
 
     struct rs485WrPar {

@@ -24,6 +24,9 @@ private:
     int fill;
     bool full;
 
+    int testtim = 0;
+    int test1 = 0;
+
 
 };
 

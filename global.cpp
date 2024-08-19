@@ -519,8 +519,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
 
     addWidgList(WidgetType::Tvertne,"4. Tvertne",0, 1, 1598, 1, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
-    addWidgList(WidgetType::Tvertne,"3. Tvertne",1, 1, 700, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne,"2. Tvertne",2, 1, 1000, 310, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
+    addWidgList(WidgetType::Tvertne,"3. Tvertne",1, 1, 700, 310, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
+    addWidgList(WidgetType::Tvertne,"2. Tvertne",2, 1, 1000, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 310, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
     addWidgList(WidgetType::Pump,"Sūknis 1",0, 1, 744, 61, 50, On_Pump_1_FW, On_Pump_1_RW);

@@ -30,10 +30,63 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
 void Tvertne::updateSettings()
 
 {
-    //qDebug() << "Tvertne::updateSettings()" << ;
+
+    /////////////////////////////////////// only for testing
+/*
+
+    testtim++;
+
+    if(testtim  == 10 && settings.name == "1. Tvertne"){
+        testtim = 0;
+        test1++;
+//--------------
+        global.DIinput[TVERTNE1LEVEL].value = test1 * 10 + 20000;
+        global.DIinput[TVERTNE1LEVEL].update += global.DIinput[TVERTNE1LEVEL].value;
+        global.DIinput[TVERTNE1LEVEL].count ++;
+
+        global.DIinput[TVERTNE1LEVEL].avr =  global.DIinput[TVERTNE1LEVEL].update / global.DIinput[TVERTNE1LEVEL].count;
+
+        if(global.DIinput[TVERTNE1LEVEL].count > 9){
+            global.DIinput[TVERTNE1LEVEL].count = 9;
+           global.DIinput[TVERTNE1LEVEL].update -= global.DIinput[TVERTNE1LEVEL].avr;
+        }
+
+        if(global.DIinput[TVERTNE1KALIBFULL].value <= global.DIinput[TVERTNE1KALIBEMPTY].value){
+            global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value + 1;
+            qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
+        }
+
+        int range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
+        float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].avr - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
+        if(res > 110){
+            res = 110.0;
+        }
+        global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
+//-------------
+
+
+
+
+    qDebug()  << settings.name  <<  " Calibration error more 100% !!!! ";
+
+
+    //qDebug() <<  "avr" << global.DIinput[TVERTNE1LEVEL].avr << " | " << global.DIinput[TVERTNE1KALIBEMPTY].value <<  " | " << global.DIinput[TVERTNE1KALIBFULL].value ;
+
+        ////
+        if(test1 > 10){
+            test1 = 0;
+        }
+    }
+
+*/
+    /////////////////////////////////////
+
+
+    // qDebug() << "Tvertne::updateSettings()" ;
     WidgetDiagramElement::updateSettings();
 
     int fval = global.DIinput[settings.var1].value; // fill value in %
+
 
     // fill = 10 * qRound(24*100.0/fval);
     if (fill > 100)
