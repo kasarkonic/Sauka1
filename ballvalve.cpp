@@ -64,6 +64,7 @@ int BallValve::getCloseTime()
 
 int BallValve::initbattValve(bool stat)  // close if unknow status,
 {
+    Q_UNUSED(stat)
     if((global->DIinput[inOpen].value > 0) && (global->DIinput[inClose].value > 0)) {
         status = valveStatus::Unknow;
         close();
