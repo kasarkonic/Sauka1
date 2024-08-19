@@ -79,72 +79,72 @@ void WidgetService::updateFormData()        // read data from global and display
          * līmeņa sensors sensList[sensor address].analog.
          *
          */
-    {
-        currentWidnpk = widgetElement->settings.npk;
-        int level = widgetElement->settings.var1;
-        int full = widgetElement->settings.var2;
+        {
+            currentWidnpk = widgetElement->settings.npk;
+            int level = widgetElement->settings.var1;
+            int full = widgetElement->settings.var2;
 
-        int levelv = global.DIinput[level].value;
-        int fullv =  global.DIinput[full].value;
+            int levelv = global.DIinput[level].value;
+            int fullv =  global.DIinput[full].value;
 
-        str = "Izvēlēts elements \"TVERTNE \"\n";
-        str.append("IN1 tvertnes līmenis\n");
+            str = "Izvēlēts elements \"TVERTNE \"\n";
+            str.append("IN1 tvertnes līmenis\n");
 
-        str.append(QString::number(currentWidnpk));
-        str.append("\nIN2 drošības līmeņa devējs\n");
+            str.append(QString::number(currentWidnpk));
+            str.append("\nIN2 drošības līmeņa devējs\n");
 
-        ui->label1_1->setText("Līmenis tvertnē %");
-        ui->label2_1->setText("Pilnas Tv. devējs");
-        ui->label3_1->setText("Temperatūra C" + strDeg);
+            ui->label1_1->setText("Līmenis tvertnē %");
+            ui->label2_1->setText("Pilnas Tv. devējs");
+            ui->label3_1->setText("Temperatūra C" + strDeg);
 
-        ui->label4_1->setText("Sensoru kalibrēšana");
-        ui->label5_1->setText("Kalibrēt pilnu Tv.");
-        ui->label6_1->setText("Kalibrēt tukšu Tv");
+            ui->label4_1->setText("Sensoru kalibrēšana");
+            ui->label5_1->setText("Kalibrēt pilnu Tv.");
+            ui->label6_1->setText("Kalibrēt tukšu Tv");
 
-        ui->label1_2->setText(QString::number(level));
-        ui->label2_2->setText(QString::number(full));
+            ui->label1_2->setText(QString::number(level));
+            ui->label2_2->setText(QString::number(full));
 
-        ui->label3_2->setText("-");
-        ui->label4_2->setText("Kalibrēšanas vērtība");
-        //ui->lineEdit_5_2->hide();
-        //ui->lineEdit_6_2->hide();
+            ui->label3_2->setText("-");
+            ui->label4_2->setText("Kalibrēšanas vērtība");
+            //ui->lineEdit_5_2->hide();
+            //ui->lineEdit_6_2->hide();
 
-        ui->label1_3->setText(QString::number(levelv));
-        ui->label2_3->setText(QString::number(fullv));
+            ui->label1_3->setText(QString::number(levelv));
+            ui->label2_3->setText(QString::number(fullv));
 
 
-        switch (currentWidnpk) {
-        case 0:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
+            switch (currentWidnpk) {
+            case 0:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
 
-            break;
-        case 1:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].value));
-            break;
-        case 2:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].value));
-            break;
-        case 3:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].value));
-            break;
-        case 4:
-            ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
-            ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
-            break;
-        default:
-            break;
+                break;
+            case 1:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].value));
+                break;
+            case 2:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].value));
+                break;
+            case 3:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].value));
+                break;
+            case 4:
+                ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
+                ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].value));
+                break;
+            default:
+                break;
+            }
+
+
+            ui->label4_3->setText("Saglabāt");
+            ui->pushButton_5_3->setText("Pilna Tv.");
+            ui->pushButton_6_3->setText("Tukša Tv.");
+
         }
-
-
-        ui->label4_3->setText("Saglabāt");
-        ui->pushButton_5_3->setText("Pilna Tv.");
-        ui->pushButton_6_3->setText("Tukša Tv.");
-
-    }
 
 
         break;
@@ -153,67 +153,67 @@ void WidgetService::updateFormData()        // read data from global and display
 
 
 
-    {
-        int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
-        int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
-        int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
-        int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
+        {
+            int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
+            int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
+            int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
+            int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
 
-        int outOpenv = global.DIoutput[outOpen].value;    // output address
-        int outClosev = global.DIoutput[outClose].value;
-        int inOpenv = global.DIinput[inOpen].value;
-        int inClosev = global.DIinput[inClose].value;
+            int outOpenv = global.DIoutput[outOpen].value;    // output address
+            int outClosev = global.DIoutput[outClose].value;
+            int inOpenv = global.DIinput[inOpen].value;
+            int inClosev = global.DIinput[inClose].value;
 
-        int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
-        int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
-
-
-        ui->label1_2->setText(QString::number(inOpen));
-        ui->label2_2->setText(QString::number(inClose));
-        ui->label3_2->setText(QString::number(outOpen));
-        ui->label4_2->setText(QString::number(outClose));
-
-        ui->label1_3->setText(QString::number(inOpenv));
-        ui->label2_3->setText(QString::number(inClosev));
-        ui->label3_3->setText(QString::number(outOpenv));
-        ui->label4_3->setText(QString::number(outClosev));
+            int openTime = global.ballValveList[currentWidnpk].bValvePtr->getOpenTime();
+            int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
 
 
+            ui->label1_2->setText(QString::number(inOpen));
+            ui->label2_2->setText(QString::number(inClose));
+            ui->label3_2->setText(QString::number(outOpen));
+            ui->label4_2->setText(QString::number(outClose));
 
-        QString str1 = QString::number((closeTime/10));
-        str1.append(".");
-        str1.append(QString::number((int)closeTime%10));
-        str1.append(" s");
-        ui->lineEdit_5_2->setText(str1);
+            ui->label1_3->setText(QString::number(inOpenv));
+            ui->label2_3->setText(QString::number(inClosev));
+            ui->label3_3->setText(QString::number(outOpenv));
+            ui->label4_3->setText(QString::number(outClosev));
 
-        str1 = QString::number((openTime/10));
-        str1.append(".");
-        str1.append(QString::number((int)openTime%10));
-        str1.append(" s");
-        ui->lineEdit_6_2->setText(str1);
 
-        ui->pushButton_5_3->setText(" Aizvērt vārstu");
-        ui->pushButton_6_3->setText("Atvērt vārstu");
 
-        str = "Izvēlēts elements \"Valve \"\n";
-        str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
-        str.append("DI1 atvērta vārsta gala slēdzis.\n");
-        str.append("DI2 aizvērta vārsta gala slēdzis.\n");
-        str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
-        str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
-        str.append(str1);
+            QString str1 = QString::number((closeTime/10));
+            str1.append(".");
+            str1.append(QString::number((int)closeTime%10));
+            str1.append(" s");
+            ui->lineEdit_5_2->setText(str1);
 
-        //str.append(strDeg);
-        //str.append(" .\n");
+            str1 = QString::number((openTime/10));
+            str1.append(".");
+            str1.append(QString::number((int)openTime%10));
+            str1.append(" s");
+            ui->lineEdit_6_2->setText(str1);
 
-        ui->label1_1->setText("In vārsts vaļā");
-        ui->label2_1->setText("In vārsts ciet");
-        ui->label3_1->setText("Out atvērt vārstu");
-        ui->label4_1->setText("Out aizvērt vārstu");
-        ui->label5_1->setText("Aizvēršanās laiks");
-        ui->label6_1->setText("Atvēršanās laiks");
+            ui->pushButton_5_3->setText(" Aizvērt vārstu");
+            ui->pushButton_6_3->setText("Atvērt vārstu");
 
-    }
+            str = "Izvēlēts elements \"Valve \"\n";
+            str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
+            str.append("DI1 atvērta vārsta gala slēdzis.\n");
+            str.append("DI2 aizvērta vārsta gala slēdzis.\n");
+            str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
+            str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
+            str.append(str1);
+
+            //str.append(strDeg);
+            //str.append(" .\n");
+
+            ui->label1_1->setText("In vārsts vaļā");
+            ui->label2_1->setText("In vārsts ciet");
+            ui->label3_1->setText("Out atvērt vārstu");
+            ui->label4_1->setText("Out aizvērt vārstu");
+            ui->label5_1->setText("Aizvēršanās laiks");
+            ui->label6_1->setText("Atvēršanās laiks");
+
+        }
 
         break;
 
@@ -233,15 +233,50 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label3_1->setText("");
         ui->label4_1->setText("");
         if( currentWidnpk == 0){
-        ui->label5_1->setText("Ieslēgt/Izslēgt Turp");
-        ui->label6_1->setText("Ieslēgt/Izslēgt Atpakaļ");
+            ui->label5_1->setText("Ieslēgt/Izslēgt Turp");
+            ui->label6_1->setText("Ieslēgt/Izslēgt Atpakaļ");
 
-        ui->pushButton_5_3->setText("Turp");
-        ui->pushButton_6_3->setText("Atpakaļ");
-
+            ui->pushButton_5_3->setText("Turp");
+            ui->pushButton_6_3->setText("Atpakaļ");
 
 
         }
+
+        else if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+            gearrate = 10;
+            ui->label1_1->setText("Ātrums");
+            ui->label2_1->setText("Statuss");
+            ui->label3_1->setText("Kļūda");
+            ui->label4_1->setText("MODBUS node");
+            ui->label5_1->setText("Ieslēgt ");
+            ui->label6_1->setText("Izslēgt ");
+
+            ui->label1_2->setText(QString::number(On_Pump_2_speed));
+            ui->label2_2->setText(QString::number(0));
+            ui->label3_2->setText(QString::number(0));
+            ui->label4_2->setText(QString::number(actualMotorNode));
+            ui->lineEdit_5_2->hide();
+            ui->lineEdit_6_2->hide();
+
+            ui->label1_3->setText(QString::number(13));
+            ui->label2_3->setText(QString::number(23));
+            ui->label3_3->setText(QString::number(33));
+            ui->label4_3->setText("");
+            ui->pushButton_5_3->setText("Ieslēgt");
+            ui->pushButton_6_3->setText("Izslēgt");
+
+            ui->line_14->hide();
+            ui->line_15->hide();
+            ui->line_16->hide();
+            ui->line_17->hide();
+            ui->line_18->hide();
+            ui->line_19->hide();
+            ui->line_20->hide();
+            ui->line_21->hide();
+
+        }
+
         else{
             ui->label5_1->setText("Ieslēgt sūkni");
             ui->label6_1->setText("Izslēgt sūkni");
@@ -249,13 +284,13 @@ void WidgetService::updateFormData()        // read data from global and display
             ui->pushButton_6_3->setText("Izslēgt");
         }
 
-       // ui->pushButton_5_3->setText("Ieslēgt Turp");
-       // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
+        // ui->pushButton_5_3->setText("Ieslēgt Turp");
+        // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
         ui->label3_2->setText("");
-        ui->label4_2->setText("");
+        //ui->label4_2->setText("");
         ui->lineEdit_5_2->hide();
         ui->lineEdit_6_2->hide();
 
@@ -263,8 +298,8 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
         ui->label3_3->setText("");
         ui->label4_3->setText("");
-       // ui->pushButton_5_3->setText("Ieslēgt");
-       // ui->pushButton_6_3->setText("Izslēgt");
+        // ui->pushButton_5_3->setText("Ieslēgt");
+        // ui->pushButton_6_3->setText("Izslēgt");
 
         ui->line_14->hide();
         ui->line_15->hide();
@@ -277,8 +312,54 @@ void WidgetService::updateFormData()        // read data from global and display
 
         break;
 
-    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
+
+
+        //set_dispax_speed
+
+
+        str = "Izvēlēts sūknis \"DISPAX 3D\"\n";
+        //str.append("Ieslēdz / Izslēdz\n");
+        str.append("IN1 = 0 ieslēgt / izslēgt motoru");
+        ui->label1_1->setText("IN1  ");
+        ui->label2_1->setText("");
+        ui->label3_1->setText("");
+        ui->label4_1->setText("");
+        if( currentWidnpk == 0){
+            ui->label5_1->setText("Ieslēgt");
+            ui->label6_1->setText("Izslēgt");
+
+            ui->label2_2->setText("");
+            ui->label3_2->setText("");
+            ui->label4_2->setText("");
+
+            ui->label2_3->setText("");
+            ui->label3_3->setText("");
+            ui->label4_3->setText("");
+
+            ui->pushButton_5_3->setText("ieslēgt");
+            ui->pushButton_6_3->setText("izslēgt");
+            ui->lineEdit_5_2->setText("");
+            ui->lineEdit_6_2->setText("");
+            ui->lineEdit_5_2->setDisabled(true);
+            ui->lineEdit_6_2->setDisabled(true);
+            ui->horizontalSlider_speed->setDisabled(true);
+
+
+
+
+
+
+
+
+
+        }
+
+
+        break;
+
+
+    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
 
@@ -294,18 +375,13 @@ void WidgetService::updateFormData()        // read data from global and display
         switch (widgetElement->global.widHash[currentWid].type)  {
         case WidgetType::widgT::Mix:
             actualMotorNode = M9;
-            gearrate = 1;
+            gearrate = 9;
             str = "Izvēlēts maisītājs\n";
-            break;
-        case WidgetType::widgT::Dispax:
-            actualMotorNode = M4;
-            gearrate = 1;
-            str = "Izvēlēts Dispax\n";
             break;
 
         case WidgetType::widgT::Conveyor:
             actualMotorNode = M8;
-            gearrate = 28;
+            gearrate = -28;
             str = "Izvēlēts transportieris\n";
 
             break;
@@ -567,8 +643,12 @@ void WidgetService::on_pushButton_5_3_clicked()
     case WidgetType::widgT::Tvertne:
         // save calibration full
         break;
-    case WidgetType::widgT::Mix:
+
     case WidgetType::widgT::Dispax:
+        // off
+        global.DIoutput[widgetElement->settings.var1].value = 1;
+        break;
+    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
         // motor On
@@ -597,16 +677,42 @@ void WidgetService::on_pushButton_5_3_clicked()
 
     case WidgetType::widgT::Pump:
         // save calibration full
+        if(currentWidnpk == 1){ // pump 2.2
+            // motor On
+            actualMotorNode = M4;
+            param.boardAdr = actualMotorNode;
+            param.value = 128;
+            param.regAdr = CMD_REG;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
 
-        if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
-        }
-        else{
-            global.DIoutput[widgetElement->settings.var1].value = 1;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
-        }
+            param.value = 6;
+            global.rs485WrList.append(param);
 
+            param.value = 7;
+            global.rs485WrList.append(param);
+
+            param.value = 15;
+            global.rs485WrList.append(param);
+
+            param.regAdr = LFRD_REG;
+            param.value = rpm;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
+
+        }
+        else {
+            if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
+                global.DIoutput[widgetElement->settings.var1].value = 0;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+            else{
+                global.DIoutput[widgetElement->settings.var1].value = 1;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+        }
         break;
     default:
         break;
@@ -624,8 +730,12 @@ void WidgetService::on_pushButton_6_3_clicked()
     case WidgetType::widgT::Tvertne:
         // save calibration empty
         break;
-    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
+        // off
+        global.DIoutput[widgetElement->settings.var1].value = 0;
+        break;
+    case WidgetType::widgT::Mix:
+
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
         // motor Off
@@ -639,17 +749,27 @@ void WidgetService::on_pushButton_6_3_clicked()
 
         break;
     case WidgetType::widgT::Pump:
-        // save calibration full
+        // motor off
 
-        if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
+        if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+            param.boardAdr = actualMotorNode;
+            param.regAdr = CMD_REG;
+            param.value = 7;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
         }
         else{
-            global.DIoutput[widgetElement->settings.var1].value =0;
-            global.DIoutput[widgetElement->settings.var2].value = 1;
-        }
 
+            if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
+                global.DIoutput[widgetElement->settings.var1].value = 0;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+            else{
+                global.DIoutput[widgetElement->settings.var1].value =0;
+                global.DIoutput[widgetElement->settings.var2].value = 1;
+            }
+        }
         break;
 
     default:
@@ -746,7 +866,7 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
     case WidgetType::widgT::Dispax:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor Off
+
 
         rpm = value * gearrate;
         // speed change
@@ -758,6 +878,24 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
         global.rs485WrList.append(param);
 
         break;
+
+    case WidgetType::widgT::Pump:
+        if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+
+            rpm = value * gearrate;
+            // speed change
+            param.boardAdr = actualMotorNode;
+            param.value = rpm;
+            param.len = 1;
+            param.cmd = WR_REG;
+            param.regAdr = LFRD_REG;
+            global.rs485WrList.append(param);
+        }
+        break;
+
+
+
 
     default:
         break;

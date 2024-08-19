@@ -104,12 +104,13 @@ enum virtualOutputs
 
     set_mix_speed = MAX_DIoutput - VIRUAL_PORTS,
     set_mix_On_Off,
-    set_dino_speed,
-    set_dino_On_Off,
-    set_pump0_speed,
-    set_pump0_On_Off,
+
+    set_dispax_speed  = 5,
+    set_dispax_On_Off,
+
+
+    set_pump1_On_Off = 7,
     set_pump1_speed,
-    set_pump1_On_Off,
     set_dino0_speed,
     set_dino0_On_Off,
 
@@ -163,8 +164,10 @@ enum a1DOut
     Ieslegt_kontaktoru_2KM1,
     Ieslegt_kontaktoru_3KM1,
     Ieslegt_kontaktoru_5KM1,
-    On_Pump_1_FW,
-    On_Pump_2_FW,
+    On_Pump_1_speed,       //
+    On_Pump_1_ONOFF,
+    On_Pump_2_speed,
+    On_Pump_2_ONOFF,
     Luksofors_sirena,
 
 

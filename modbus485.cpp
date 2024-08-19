@@ -823,6 +823,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
 
 
 
+                qDebug() << "sum" << global.DIinput[TVERTNE1LEVEL].update << " / " <<  global.DIinput[TVERTNE1LEVEL].count << " = " << global.DIinput[TVERTNE1LEVEL].update /10;
 
                 qDebug() << "sum" << global.DIinput[TVERTNE1LEVEL].update << " / " <<  global.DIinput[TVERTNE1LEVEL].count << " = " << global.DIinput[TVERTNE1LEVEL].update /10;
 
