@@ -86,7 +86,6 @@ void WidgetService::updateFormData()        // read data from global and display
 
             int levelv = global.DIinput[level].value;
             int fullv =  global.DIinput[full].value;
-            //int avr =  global.DIinput[full].value;
 
             str = "Izvēlēts elements \"TVERTNE \"\n";
             str.append("IN1 tvertnes līmenis\n");
@@ -98,17 +97,15 @@ void WidgetService::updateFormData()        // read data from global and display
             ui->label2_1->setText("Pilnas Tv. devējs");
             ui->label3_1->setText("Temperatūra C" + strDeg);
 
-            ui->label4_1->setText("Sensoru kalibrēšana");
-            ui->label5_1->setText("Kalibrēt pilnu Tv.");
-            ui->label6_1->setText("Kalibrēt tukšu Tv");
+            ui->label4_1->setText("Sensora vertiba");
+            ui->label5_1->setText("Pilnu Tv. sensors");
+            ui->label6_1->setText("Tuksas Tv. sensors");
 
             ui->label1_2->setText(QString::number(level));
             ui->label2_2->setText(QString::number(full));
 
             ui->label3_2->setText("-");
             ui->label4_2->setText("Kalibrēšanas vērtība");
-            //ui->lineEdit_5_2->setText("0");
-            //ui->lineEdit_6_2->setText("0");
             //ui->lineEdit_5_2->hide();
             //ui->lineEdit_6_2->hide();
 
@@ -143,9 +140,9 @@ void WidgetService::updateFormData()        // read data from global and display
             }
 
 
-            ui->label4_3->setText("Saglabāt");
-            ui->pushButton_5_3->setText("Pilna Tv.");
-            ui->pushButton_6_3->setText("Tukša Tv.");
+            ui->label4_3->setText("Kalibresana");
+            ui->pushButton_5_3->setText("Saglabat pilna");
+            ui->pushButton_6_3->setText("Saglabat tuksa");
 
         }
 
@@ -235,15 +232,65 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_1->setText("Ieslēgts atpakaļ");
         ui->label3_1->setText("");
         ui->label4_1->setText("");
-        ui->label5_1->setText("Ieslēgt sūkni");
-        ui->label6_1->setText("Izslēgt sūkni");
-        ui->pushButton_5_3->setText("Ieslēgt Turp");
-        ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
+        if( currentWidnpk == 0){
+            ui->label5_1->setText("Ieslēgt/Izslēgt Turp");
+            ui->label6_1->setText("Ieslēgt/Izslēgt Atpakaļ");
+
+            ui->pushButton_5_3->setText("Turp");
+            ui->pushButton_6_3->setText("Atpakaļ");
+
+
+        }
+
+        else if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+            gearrate = 10;
+            ui->label1_1->setText("Ātrums");
+            ui->label2_1->setText("Statuss");
+            ui->label3_1->setText("Kļūda");
+            ui->label4_1->setText("MODBUS node");
+            ui->label5_1->setText("Ieslēgt ");
+            ui->label6_1->setText("Izslēgt ");
+
+            ui->label1_2->setText(QString::number(On_Pump_2_speed));
+            ui->label2_2->setText(QString::number(0));
+            ui->label3_2->setText(QString::number(0));
+            ui->label4_2->setText(QString::number(actualMotorNode));
+            ui->lineEdit_5_2->hide();
+            ui->lineEdit_6_2->hide();
+
+            ui->label1_3->setText(QString::number(13));
+            ui->label2_3->setText(QString::number(23));
+            ui->label3_3->setText(QString::number(33));
+            ui->label4_3->setText("");
+            ui->pushButton_5_3->setText("Ieslēgt");
+            ui->pushButton_6_3->setText("Izslēgt");
+
+            ui->line_14->hide();
+            ui->line_15->hide();
+            ui->line_16->hide();
+            ui->line_17->hide();
+            ui->line_18->hide();
+            ui->line_19->hide();
+            ui->line_20->hide();
+            ui->line_21->hide();
+
+        }
+
+        else{
+            ui->label5_1->setText("Ieslēgt sūkni");
+            ui->label6_1->setText("Izslēgt sūkni");
+            ui->pushButton_5_3->setText("Ieslēgt");
+            ui->pushButton_6_3->setText("Izslēgt");
+        }
+
+        // ui->pushButton_5_3->setText("Ieslēgt Turp");
+        // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
         ui->label3_2->setText("");
-        ui->label4_2->setText("");
+        //ui->label4_2->setText("");
         ui->lineEdit_5_2->hide();
         ui->lineEdit_6_2->hide();
 
@@ -251,8 +298,8 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
         ui->label3_3->setText("");
         ui->label4_3->setText("");
-        ui->pushButton_5_3->setText("Ieslēgt");
-        ui->pushButton_6_3->setText("Izslēgt");
+        // ui->pushButton_5_3->setText("Ieslēgt");
+        // ui->pushButton_6_3->setText("Izslēgt");
 
         ui->line_14->hide();
         ui->line_15->hide();
@@ -265,8 +312,56 @@ void WidgetService::updateFormData()        // read data from global and display
 
         break;
 
-    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
+
+
+        //set_dispax_speed
+
+
+        str = "Izvēlēts sūknis \"DISPAX 3D\"\n";
+        //str.append("Ieslēdz / Izslēdz\n");
+        str.append("IN1 = 0 ieslēgt / izslēgt motoru");
+        ui->label1_1->setText("IN1  ");
+        ui->label1_2->setText(QString::number(set_dispax_speed));
+         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
+        ui->label2_1->setText("");
+        ui->label3_1->setText("");
+        ui->label4_1->setText("");
+        if( currentWidnpk == 0){
+            ui->label5_1->setText("Ieslēgt");
+            ui->label6_1->setText("Izslēgt");
+
+            ui->label2_2->setText("");
+            ui->label3_2->setText("");
+            ui->label4_2->setText("");
+
+            ui->label2_3->setText("");
+            ui->label3_3->setText("");
+            ui->label4_3->setText("");
+
+            ui->pushButton_5_3->setText("ieslēgt");
+            ui->pushButton_6_3->setText("izslēgt");
+            ui->lineEdit_5_2->setText("");
+            ui->lineEdit_6_2->setText("");
+            ui->lineEdit_5_2->hide();
+            ui->lineEdit_6_2->hide();
+            ui->horizontalSlider_speed->setDisabled(true);
+
+
+
+
+
+
+
+
+
+        }
+
+
+        break;
+
+
+    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
 
@@ -282,18 +377,13 @@ void WidgetService::updateFormData()        // read data from global and display
         switch (widgetElement->global.widHash[currentWid].type)  {
         case WidgetType::widgT::Mix:
             actualMotorNode = M9;
-            gearrate = 1;
+            gearrate = 9;
             str = "Izvēlēts maisītājs\n";
-            break;
-        case WidgetType::widgT::Dispax:
-            actualMotorNode = M4;
-            gearrate = 1;
-            str = "Izvēlēts Dispax\n";
             break;
 
         case WidgetType::widgT::Conveyor:
             actualMotorNode = M8;
-            gearrate = 28;
+            gearrate = -28;
             str = "Izvēlēts transportieris\n";
 
             break;
@@ -553,10 +643,14 @@ void WidgetService::on_pushButton_5_3_clicked()
 
         break;
     case WidgetType::widgT::Tvertne:
-        // save calibration full ??????????????????????????????????????????
+        // save calibration full
+        break;
+
+    case WidgetType::widgT::Dispax:
+        // off
+        global.DIoutput[widgetElement->settings.var1].value = 1;
         break;
     case WidgetType::widgT::Mix:
-    case WidgetType::widgT::Dispax:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
         // motor On
@@ -585,16 +679,42 @@ void WidgetService::on_pushButton_5_3_clicked()
 
     case WidgetType::widgT::Pump:
         // save calibration full
+        if(currentWidnpk == 1){ // pump 2.2
+            // motor On
+            actualMotorNode = M4;
+            param.boardAdr = actualMotorNode;
+            param.value = 128;
+            param.regAdr = CMD_REG;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
 
-        if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
-        }
-        else{
-            global.DIoutput[widgetElement->settings.var1].value = 1;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
-        }
+            param.value = 6;
+            global.rs485WrList.append(param);
 
+            param.value = 7;
+            global.rs485WrList.append(param);
+
+            param.value = 15;
+            global.rs485WrList.append(param);
+
+            param.regAdr = LFRD_REG;
+            param.value = rpm;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
+
+        }
+        else {
+            if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
+                global.DIoutput[widgetElement->settings.var1].value = 0;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+            else{
+                global.DIoutput[widgetElement->settings.var1].value = 1;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+        }
         break;
     default:
         break;
@@ -612,8 +732,12 @@ void WidgetService::on_pushButton_6_3_clicked()
     case WidgetType::widgT::Tvertne:
         // save calibration empty
         break;
-    case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dispax:
+        // off
+        global.DIoutput[widgetElement->settings.var1].value = 0;
+        break;
+    case WidgetType::widgT::Mix:
+
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
         // motor Off
@@ -627,17 +751,27 @@ void WidgetService::on_pushButton_6_3_clicked()
 
         break;
     case WidgetType::widgT::Pump:
-        // save calibration full
+        // motor off
 
-        if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            global.DIoutput[widgetElement->settings.var2].value = 0;
+        if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+            param.boardAdr = actualMotorNode;
+            param.regAdr = CMD_REG;
+            param.value = 7;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
         }
         else{
-            global.DIoutput[widgetElement->settings.var1].value =0;
-            global.DIoutput[widgetElement->settings.var2].value = 1;
-        }
 
+            if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
+                global.DIoutput[widgetElement->settings.var1].value = 0;
+                global.DIoutput[widgetElement->settings.var2].value = 0;
+            }
+            else{
+                global.DIoutput[widgetElement->settings.var1].value =0;
+                global.DIoutput[widgetElement->settings.var2].value = 1;
+            }
+        }
         break;
 
     default:
@@ -657,29 +791,25 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
             ui->lineEdit_5_2->setText("Kļūda!");
             val = 0;
         }
-        // else{
-        switch (currentWidnpk) {
-        case 0:
-            global.DIinput[TVERTNE4KALIBFULL].value = val;
-            break;
-        case 1:
-            global.DIinput[TVERTNE3KALIBFULL].value = val;
-            break;
-        case 2:
-            global.DIinput[TVERTNE2KALIBFULL].value = val;
-            break;
-        case 3:
-            global.DIinput[TVERTNE1KALIBFULL].value = val;
-            // qDebug() <<  ui->lineEdit_5_2->text() <<  val <<  " kalib value: "  << global.DIinput[TVERTNE1KALIBEMPTY].value << global.DIinput[TVERTNE1KALIBFULL].value ;
-            break;
-        case 4:
-            global.DIinput[TVERTNE5KALIBFULL].value = val;
-            break;
-        default:
-            break;
-        }
-
-        //  }
+            switch (currentWidnpk) {
+            case 0:
+                global.DIinput[TVERTNE4KALIBFULL].value = val;
+                break;
+            case 1:
+                global.DIinput[TVERTNE3KALIBFULL].value = val;
+                break;
+            case 2:
+                global.DIinput[TVERTNE2KALIBFULL].value = val;
+                break;
+            case 3:
+                global.DIinput[TVERTNE1KALIBFULL].value = val;
+                break;
+            case 4:
+                global.DIinput[TVERTNE5KALIBFULL].value = val;
+                break;
+            default:
+                break;
+            }
 
     }
 }
@@ -693,29 +823,25 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
             ui->lineEdit_6_2->setText("Kļūda!");
             val = 0;
         }
-        // else{
-        switch (currentWidnpk) {
-        case 0:
-            global.DIinput[TVERTNE4KALIBEMPTY].value = val;
-            break;
-        case 1:
-            global.DIinput[TVERTNE3KALIBEMPTY].value = val;
-            break;
-        case 2:
-            global.DIinput[TVERTNE2KALIBEMPTY].value = val;
-            break;
-        case 3:
-            global.DIinput[TVERTNE1KALIBEMPTY].value = val;
-            qDebug() <<  ui->lineEdit_6_2->text() <<  val <<  " kalib value: "  << global.DIinput[TVERTNE1KALIBEMPTY].value << global.DIinput[TVERTNE1KALIBFULL].value ;
-            break;
-        case 4:
-            global.DIinput[TVERTNE5KALIBEMPTY].value = val;
-            break;
-        default:
-            break;
-        }
-
-        // }
+            switch (currentWidnpk) {
+            case 0:
+                global.DIinput[TVERTNE4KALIBEMPTY].value = val;
+                break;
+            case 1:
+                global.DIinput[TVERTNE3KALIBEMPTY].value = val;
+                break;
+            case 2:
+                global.DIinput[TVERTNE2KALIBEMPTY].value = val;
+                break;
+            case 3:
+                global.DIinput[TVERTNE1KALIBEMPTY].value = val;
+                break;
+            case 4:
+                global.DIinput[TVERTNE5KALIBEMPTY].value = val;
+                break;
+            default:
+                break;
+            }
 
     }
 }
@@ -736,7 +862,7 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
     case WidgetType::widgT::Dispax:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor Off
+
 
         rpm = value * gearrate;
         // speed change
@@ -748,6 +874,24 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
         global.rs485WrList.append(param);
 
         break;
+
+    case WidgetType::widgT::Pump:
+        if ( currentWidnpk == 1){       // pump 2.2
+            actualMotorNode = M4;
+
+            rpm = value * gearrate;
+            // speed change
+            param.boardAdr = actualMotorNode;
+            param.value = rpm;
+            param.len = 1;
+            param.cmd = WR_REG;
+            param.regAdr = LFRD_REG;
+            global.rs485WrList.append(param);
+        }
+        break;
+
+
+
 
     default:
         break;

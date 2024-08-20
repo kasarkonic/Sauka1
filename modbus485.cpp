@@ -795,26 +795,26 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
 
 
                 qDebug() << " Modbus Id:20 Data"
-                         << "------------------------------------------------------------------------------";
+                         << "------------------------------------------------------------------------------ SENSOR_BOARD";
 
 
                 qDebug() << "rep"
 
                          << reply->result().value(0)
-                         <<     reply->result().value(1)
+                         << reply->result().value(1)
                          << reply->result().value(2)
-                         <<      reply->result().value(3);
+                         << reply->result().value(3);
 
                 qDebug() << "resistance"
                          << reply->result().value(4)
-                         <<    reply->result().value(5)
+                         << reply->result().value(5)
                          << reply->result().value(6)
                          <<     reply->result().value(7);
                 qDebug() << "temperature"
                          << reply->result().value(8)
-                         <<    reply->result().value(9)
+                         << reply->result().value(9)
                          << reply->result().value(10)
-                         <<     reply->result().value(11);
+                         << reply->result().value(11);
 
 
                 global.DIinput[TVERTNE1LEVEL].value = reply->result().value(0);
@@ -823,22 +823,38 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
 
                 global.DIinput[TVERTNE1LEVEL].avr =  global.DIinput[TVERTNE1LEVEL].update / global.DIinput[TVERTNE1LEVEL].count;
 
+
+                qDebug() <<  "avr" << global.DIinput[TVERTNE1LEVEL].avr << " | " << global.DIinput[TVERTNE1KALIBEMPTY].value <<  " | " << global.DIinput[TVERTNE1KALIBFULL].value ;
+
+
+
                 if(global.DIinput[TVERTNE1LEVEL].count > 9){
                     global.DIinput[TVERTNE1LEVEL].count = 9;
                     global.DIinput[TVERTNE1LEVEL].update -= global.DIinput[TVERTNE1LEVEL].avr;
                 }
 
-                if(global.DIinput[TVERTNE1KALIBFULL].value <= global.DIinput[TVERTNE1KALIBEMPTY].value){
-                    global.DIinput[TVERTNE1KALIBFULL].value = global.DIinput[TVERTNE1KALIBEMPTY].value + 1;
-                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
-                }
+
 
                 int range = global.DIinput[TVERTNE1KALIBFULL].value - global.DIinput[TVERTNE1KALIBEMPTY].value;
+                if(range <= 0){
+                     qDebug() <<    " kalib value error !!!!!!!!!!!!! " << range;
+                   range = 1;
+                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " << range;
+                }
+
+
                 float res = 100.0 * ( global.DIinput[TVERTNE1LEVEL].avr - global.DIinput[TVERTNE1KALIBEMPTY].value)/range;
                 if(res > 110){
                     res = 110.0;
                 }
                 global.DIinput[TVERTNE1LEVELPROC].value = (int)res;
+
+                qDebug() <<  "% " << range << " | " << res <<  " | " << global.DIinput[TVERTNE1LEVEL].count ;
+
+
+
+
+
                 ////
 
                 global.DIinput[TVERTNE2LEVEL].value = reply->result().value(1);
@@ -857,8 +873,8 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                     qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
                 }
 
-                 range = global.DIinput[TVERTNE2KALIBFULL].value - global.DIinput[TVERTNE2KALIBEMPTY].value;
-                 res = 100.0 * ( global.DIinput[TVERTNE2LEVEL].avr - global.DIinput[TVERTNE2KALIBEMPTY].value)/range;
+                range = global.DIinput[TVERTNE2KALIBFULL].value - global.DIinput[TVERTNE2KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE2LEVEL].avr - global.DIinput[TVERTNE2KALIBEMPTY].value)/range;
                 if(res > 110){
                     res = 110.0;
                 }
@@ -881,8 +897,8 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                     qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
                 }
 
-                 range = global.DIinput[TVERTNE3KALIBFULL].value - global.DIinput[TVERTNE3KALIBEMPTY].value;
-                 res = 100.0 * ( global.DIinput[TVERTNE3LEVEL].avr - global.DIinput[TVERTNE3KALIBEMPTY].value)/range;
+                range = global.DIinput[TVERTNE3KALIBFULL].value - global.DIinput[TVERTNE3KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE3LEVEL].avr - global.DIinput[TVERTNE3KALIBEMPTY].value)/range;
                 if(res > 110){
                     res = 110.0;
                 }
@@ -906,8 +922,8 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                     qDebug() <<    " kalib value error !!!!!!!!!!!!! " ;
                 }
 
-                 range = global.DIinput[TVERTNE4KALIBFULL].value - global.DIinput[TVERTNE4KALIBEMPTY].value;
-                 res = 100.0 * ( global.DIinput[TVERTNE4KALIBFULL].avr - global.DIinput[TVERTNE4KALIBEMPTY].value)/range;
+                range = global.DIinput[TVERTNE4KALIBFULL].value - global.DIinput[TVERTNE4KALIBEMPTY].value;
+                res = 100.0 * ( global.DIinput[TVERTNE4KALIBFULL].avr - global.DIinput[TVERTNE4KALIBEMPTY].value)/range;
                 if(res > 110){
                     res = 110.0;
                 }
