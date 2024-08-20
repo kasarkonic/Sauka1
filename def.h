@@ -105,11 +105,13 @@ enum virtualOutputs
     set_mix_speed = MAX_DIoutput - VIRUAL_PORTS,
     set_mix_On_Off,
 
-    set_dispax_speed  = 5,
-    set_dispax_On_Off,
+    //set_dispax_On_Off,
 
 
-    set_pump1_On_Off = 7,
+    set_pump1_On_Off = 4,
+    set_dispax_On_Off = 5,
+    set_dispax_speed  ,
+
     set_pump1_speed,
     set_dino0_speed,
     set_dino0_On_Off,

@@ -232,17 +232,18 @@ void WidgetService::updateFormData()        // read data from global and display
         ui->label2_1->setText("Ieslēgts atpakaļ");
         ui->label3_1->setText("");
         ui->label4_1->setText("");
+        ui->label4_2->setText("");
         if( currentWidnpk == 0){
-            ui->label5_1->setText("Ieslēgt/Izslēgt Turp");
-            ui->label6_1->setText("Ieslēgt/Izslēgt Atpakaļ");
+            ui->label5_1->setText("Ieslēgt");
+            ui->label6_1->setText("Izslēgt");
 
-            ui->pushButton_5_3->setText("Turp");
-            ui->pushButton_6_3->setText("Atpakaļ");
+            ui->pushButton_5_3->setText("Ieslegt");
+            ui->pushButton_6_3->setText("Izslegt");
 
 
         }
 
-        else if ( currentWidnpk == 1){       // pump 2.2
+        else if ( currentWidnpk == 1){       // pump MOHNO 5.5
             actualMotorNode = M4;
             gearrate = 10;
             ui->label1_1->setText("Ātrums");
@@ -322,7 +323,7 @@ void WidgetService::updateFormData()        // read data from global and display
         //str.append("Ieslēdz / Izslēdz\n");
         str.append("IN1 = 0 ieslēgt / izslēgt motoru");
         ui->label1_1->setText("IN1  ");
-        ui->label1_2->setText(QString::number(set_dispax_speed));
+        ui->label1_2->setText(QString::number(set_dispax_On_Off));
          ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
         ui->label2_1->setText("");
         ui->label3_1->setText("");
@@ -706,6 +707,7 @@ void WidgetService::on_pushButton_5_3_clicked()
 
         }
         else {
+            /*
             if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
                 global.DIoutput[widgetElement->settings.var1].value = 0;
                 global.DIoutput[widgetElement->settings.var2].value = 0;
@@ -714,6 +716,8 @@ void WidgetService::on_pushButton_5_3_clicked()
                 global.DIoutput[widgetElement->settings.var1].value = 1;
                 global.DIoutput[widgetElement->settings.var2].value = 0;
             }
+            */
+            global.DIoutput[widgetElement->settings.var1].value = 1;
         }
         break;
     default:
@@ -753,7 +757,7 @@ void WidgetService::on_pushButton_6_3_clicked()
     case WidgetType::widgT::Pump:
         // motor off
 
-        if ( currentWidnpk == 1){       // pump 2.2
+        if ( currentWidnpk == 1){       // pump 5.5 MOHNO
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
             param.regAdr = CMD_REG;
@@ -762,7 +766,7 @@ void WidgetService::on_pushButton_6_3_clicked()
             global.rs485WrList.append(param);
         }
         else{
-
+/*
             if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
                 global.DIoutput[widgetElement->settings.var1].value = 0;
                 global.DIoutput[widgetElement->settings.var2].value = 0;
@@ -771,6 +775,9 @@ void WidgetService::on_pushButton_6_3_clicked()
                 global.DIoutput[widgetElement->settings.var1].value =0;
                 global.DIoutput[widgetElement->settings.var2].value = 1;
             }
+            */
+            global.DIoutput[widgetElement->settings.var1].value = 0;
+
         }
         break;
 
@@ -859,7 +866,7 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
     switch (widgetElement->global.widHash[currentWid].type) {
 
     case WidgetType::widgT::Mix:
-    case WidgetType::widgT::Dispax:
+   // case WidgetType::widgT::Dispax:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
 

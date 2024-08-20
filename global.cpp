@@ -514,7 +514,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",    0, 1,   393,  123,   172,  0, 0);
     addWidgList(WidgetType::ScalesMass,"Svars", 0,1,    389,  48,   77, 0,scales_mass);
 
-    addWidgList(WidgetType::Dispax,"Dispax 3D", 0, 1, 400, 330, 120, set_dispax_speed, set_dispax_speed);
+    addWidgList(WidgetType::Dispax,"Dispax 3D", 0, 1, 400, 330, 120, set_dispax_On_Off, set_dispax_On_Off);
     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 2", 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
@@ -524,8 +524,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"2. Tvertne",2, 1, 1000, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 310, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
-    addWidgList(WidgetType::Pump,"Sūknis 1",0, 1, 744, 61, 50, set_pump1_On_Off, set_pump1_On_Off);
-    addWidgList(WidgetType::Pump,"Sūknis 2.2",1, 1, 433, 483, 50, On_Pump_2_speed, On_Pump_2_ONOFF);
+    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 744, 61, 50, set_pump1_On_Off, set_pump1_On_Off);
+    addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, On_Pump_2_speed, On_Pump_2_ONOFF);
 
 
 
