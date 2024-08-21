@@ -512,7 +512,7 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Mix,"Mixeris", 0, 1, 496, 27, 120, set_mix_speed, set_mix_On_Off);
     addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",    0, 1,   393,  123,   172,  0, 0);
-    addWidgList(WidgetType::ScalesMass,"Svars", 0,1,    389,  48,   77, 0,scales_mass);
+    addWidgList(WidgetType::ScalesMass,"Svars", 0,1,    389,  48,   77, scales_mass,scales_mass);
 
     addWidgList(WidgetType::Dispax,"Dispax 3D", 0, 1, 400, 330, 120, set_dispax_On_Off, set_dispax_On_Off);
     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);

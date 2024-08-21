@@ -1,4 +1,5 @@
 #include "tvertne.h"
+#include <QSettings>
 
 
 Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
@@ -6,8 +7,7 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
 
 {
     global.widHash[settings.name].ptrCurrWidget = this;
-    //widName = name;
-    //*
+
 #ifdef ENABLE_WIDGET_SIZE
     QPalette pal = QPalette();
     pal.setColor(QPalette::Window, Qt::lightGray); //QColor(255, 0, 0, 127)
@@ -20,11 +20,8 @@ Tvertne::Tvertne(Global& global, QString name, QWidget* parent)
 
     fill = 0;
     full = false;
+  //  loadSettings();
 
-    //for testing
-
-
-    //timer
 }
 
 void Tvertne::updateSettings()
@@ -32,7 +29,7 @@ void Tvertne::updateSettings()
 {
 
     /////////////////////////////////////// only for testing
-/*
+    /*
 
     testtim++;
 
@@ -98,6 +95,121 @@ void Tvertne::updateSettings()
     //qDebug() << "Tvertne::updateSettings()" <<fill<< "="  <<global.DIinput[settings.sensAddres1].value << full<<"=" <<global.DIinput[settings.sensAddres2].value;
 
     update();
+}
+
+void Tvertne::loadSettings() // move tomainwindows.cpp
+{
+    int val;
+    bool ok;
+    QString str;
+
+
+    QString settingsFile = global.settingsFileName;
+    QSettings settings(settingsFile, QSettings::IniFormat);
+    settings.beginGroup("Tvertne_calibrate_level_sensor");
+
+    //11111111111
+    val = settings.value("TVERTNE1KALIBEMPTY", "").toInt(&ok);
+
+
+    qDebug() << "settings.value(TVERTNE1KALIBEMPTY)" << val;
+
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE1KALIBEMPTY !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE1KALIBEMPTY].value = val;
+
+    val = settings.value("TVERTNE1KALIBFULL", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE1KALIBFULL !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE1KALIBFULL].value = val;
+        //222222222
+    val = settings.value("TVERTNE2KALIBEMPTY", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE2KALIBEMPTY !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE2KALIBEMPTY].value = val;
+
+    val = settings.value("TVERTNE2KALIBFULL", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE2KALIBFULL !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE2KALIBFULL].value = val;
+
+    //33333333
+    val = settings.value("TVERTNE3KALIBEMPTY", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE3KALIBEMPTY !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE3KALIBEMPTY].value = val;
+
+    val = settings.value("TVERTNE3KALIBFULL", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE3KALIBFULL !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE3KALIBFULL].value = val;
+
+
+    //44444444
+    val = settings.value("TVERTNE4KALIBEMPTY", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE4KALIBEMPTY !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE4KALIBEMPTY].value = val;
+
+    val = settings.value("TVERTNE4KALIBFULL", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE4KALIBFULL !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE4KALIBFULL].value = val;
+    //55555555
+    val = settings.value("TVERTNE5KALIBEMPTY", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE5KALIBEMPTY !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE5KALIBEMPTY].value = val;
+
+    val = settings.value("TVERTNE5KALIBFULL", "").toInt(&ok);
+    if (!ok) {
+        str = QString("Kļūda Init failā TVERTNE5KALIBFULL !!!").arg(val);
+        qDebug() << str;
+        val = 0;
+    }
+    global.DIinput[TVERTNE5KALIBFULL].value = val;
+    settings.endGroup();
+
+    qDebug() << "loadSettings() TVERTNE kalib,"
+             << global.DIinput[TVERTNE1KALIBEMPTY].value
+             << global.DIinput[TVERTNE1KALIBFULL].value
+             << global.DIinput[TVERTNE2KALIBEMPTY].value
+             << global.DIinput[TVERTNE2KALIBFULL].value
+             << global.DIinput[TVERTNE3KALIBEMPTY].value
+             << global.DIinput[TVERTNE3KALIBFULL].value
+             << global.DIinput[TVERTNE4KALIBEMPTY].value
+             << global.DIinput[TVERTNE4KALIBFULL].value
+             << global.DIinput[TVERTNE5KALIBEMPTY].value
+             << global.DIinput[TVERTNE5KALIBFULL].value
+        ;
+
 }
 
 void Tvertne::timerEvent(QTimerEvent* event) {

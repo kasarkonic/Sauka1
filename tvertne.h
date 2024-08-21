@@ -20,12 +20,14 @@ protected:
     //     void setNewPosition(float koef) ;
 private:
     QImage* imgBackground;
+    void loadSettings();
 
     int fill;
     bool full;
 
     int testtim = 0;
     int test1 = 0;
+
 
 
 };

@@ -150,7 +150,7 @@ void Scale::timerEvent(QTimerEvent* event) {
     if (event->timerId() == timerRead) {
         // qDebug()<< "Event Id";
         att++;
-        sendData("READ\r\n");
+        sendData("01READ\r\n");
     }
 
     if (event->timerId() == timerInit) {
@@ -177,7 +177,7 @@ void Scale::on_pushButton_Tare_clicked() {
 
 
 void Scale::on_pushButton_Read_clicked() {
-    sendData("READ\r\n");
+    sendData("01READ\r\n");
 }
 
 void Scale::newDataUpdate(QStringList currSdata) {
@@ -203,6 +203,9 @@ void Scale::newDataUpdate(QStringList currSdata) {
         // t1 = currSdata[2].toFloat(&ok);
         t1 = 10.0 * t1;
         ui->label_Value->setText(QString::number(t1));
+        global.DIinput[scales_mass].value = t1;
+        global.DIinput[scales_mass].name = currSdata[0];
+
 
         global.sensList[11].analog = (int)t1;
         qDebug() << "save data sensor 11 AN" << (int)t1;

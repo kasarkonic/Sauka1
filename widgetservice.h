@@ -89,7 +89,7 @@ private:
 
     int mouseStartPointX;
     int mouseStartPointY;
-    //void updateSettings();
+    void initUI();
     void updateFormData();
     void updateSensorVal();
     QString currentWid;
@@ -108,7 +108,9 @@ private:
     int rpm;
     int actualMotorNode = 0;
     int gearrate = 1;
-
+    void saveSettings(QString par, int val);
+    QString par;
+    int val;
 
 };
 
