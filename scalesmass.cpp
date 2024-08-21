@@ -18,7 +18,7 @@ ScalesMass::ScalesMass(Global& global, QString name, QWidget* parent)
 
 void ScalesMass::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
-    massValue = global.DIinput[settings.var1].value;
+    massValue = global.DIinput[settings.var1].value / 10.0;
     killTimer(timerIdUpd);update();
     timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
     update();
@@ -43,12 +43,15 @@ void ScalesMass::paintEvent(QPaintEvent* event) {
     painter.drawImage(QPoint(), *imgBackground);
 
     QString str = QString::number(massValue);
+    if(massValue > 2000){
+        str = "ERROR";
+    }
     // qDebug() << massValue << str;
 
-    QFont font("times", settings.currSize / 8);
+    QFont font("times", settings.currSize / 6);
     painter.setFont(font);
     // qDebug() << "scalesM = " << settings.name <<settings.currSize << settings.startX << settings.currX << settings.startY << settings.currY;
-    painter.drawText(QRect(0, settings.currSize / 8, settings.currSize, settings.currSize), Qt::AlignCenter, str);
+    painter.drawText(QRect(0, settings.currSize / 6, settings.currSize, settings.currSize), Qt::AlignCenter, str);
     resize(settings.currSize, settings.currSize);
 }
 

@@ -524,7 +524,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"2. Tvertne",2, 1, 1000, 310, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 310, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
-    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 744, 61, 50, set_pump1_On_Off, set_pump1_On_Off);
+    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 744, 61, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
     addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, On_Pump_2_speed, On_Pump_2_ONOFF);
 
 

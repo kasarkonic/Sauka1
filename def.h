@@ -108,8 +108,8 @@ enum virtualOutputs
     //set_dispax_On_Off,
 
 
-    set_pump1_On_Off = 4,
-    set_dispax_On_Off = 5,
+   // set_pump2_2_On_Off_FW = 4,              set_pump2_2_On_Off_rw = 0
+    //set_dispax_On_Off = 5,
     set_dispax_speed  ,
 
     set_pump1_speed,
@@ -161,21 +161,21 @@ enum a1DIn
 enum a1DOut
 {
 
-    NOP = 0,                  // nr. on board  => Q1
+    set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
     On_Pump_1_RW,
     Ieslegt_kontaktoru_2KM1,
     Ieslegt_kontaktoru_3KM1,
-    Ieslegt_kontaktoru_5KM1,
-    On_Pump_1_speed,       //
-    On_Pump_1_ONOFF,
+    set_pump2_2_On_Off_RW = 4,
+    set_dispax_On_Off = 5,
     On_Pump_2_speed,
+    On_Pump_2_speed1,
     On_Pump_2_ONOFF,
     Luksofors_sirena,
 
 
     VFD_Reset,
     brīvs1,
-    Y1_1_atvērt,
+    Y1_1_atvērt = 12,
     Y1_2_atvērt,
     Y1_3_atvērt,
     brīvs2,
