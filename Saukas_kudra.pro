@@ -32,6 +32,7 @@ SOURCES += \
     modbus485.cpp \
     parmani.cpp \
     pipe.cpp \
+    processteps.cpp \
     procui1.cpp \
     procui2.cpp \
     pump.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     modbus485.h \
     parmani.h \
     pipe.h \
+    processteps.h \
     procui1.h \
     procui2.h \
     pump.h \
@@ -89,6 +91,7 @@ FORMS += \
     hwservice.ui \
     mainwindow.ui \
     parmani.ui \
+    processteps.ui \
     procui1.ui \
     procui2.ui \
     recipet.ui \

@@ -307,6 +307,7 @@ public:
     int getwaitTx();
     void setwaitTx(int val);
     QString    getDriveErrorTxt(int errCode);
+    QStringList   pipeItems;
 
 
     BallValve* ballvalveTest0;
@@ -346,6 +347,7 @@ private:
     // 1 bit 23DI 1 board address 5 , data adress 32-63
     int waitTx;
     void createBallValve();
+    void createComboxlist();
 
 };
 

@@ -55,7 +55,7 @@ void Pump::paintEvent(QPaintEvent* event) {
 
     rad = (int)settings.currSize / 2;
 
-    float an = att * M_PI / 180;
+    float an = att * M_PI / 180 ;
     QPoint points[3];
     points[0] = QPoint(rad * cos(an) + rad, rad * sin(an) + rad);
     points[1] = QPoint(rad * cos(an + 2 * M_PI / 3) + rad, rad * sin(an + 2 * M_PI / 3) + rad);

@@ -25,7 +25,7 @@ protected:
       // void setNewPosition(float koef) ;
     void updateSettings() override;
 
-    int att = 360;
+    int att = 60;
     int speed = 0;
     int step = 0;
     //int timerIdUpd = 0;

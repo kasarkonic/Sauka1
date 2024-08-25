@@ -1,7 +1,7 @@
 #ifndef HWSERVICE_H
 #define HWSERVICE_H
 
-#include <QWidget>
+//#include <QWidget>
 //#include "global.h"
 //#include "senslistsform.h"
 #include <QMainWindow>

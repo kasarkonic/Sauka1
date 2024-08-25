@@ -58,7 +58,7 @@ protected:
     QPoint pipePoints[4];
     QPoint arrowPoints[40];
     QPoint pipemiddle[2];
-    int arrTop = 20;
+    int arrTop = 2;
     int mouseStartPointX;
     int mouseStartPointY;
 

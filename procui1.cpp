@@ -1,6 +1,18 @@
 #include "procui1.h"
 #include "ui_procui1.h"
 
+#include "dyno.h"
+#include "conveyor.h"
+#include "mix.h"
+#include "pipe.h"
+#include "pump.h"
+#include "dispax.h"
+#include "label.h"
+#include "tvertne.h"
+#include "global.h"
+#include "valve.h"
+#include "scalesbase.h"
+#include "scalesmass.h"
 
 
 ProcUI1::ProcUI1(Global& global, QWidget* parent) :

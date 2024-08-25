@@ -1,6 +1,18 @@
 #include "procui2.h"
 #include "ui_procui2.h"
 
+#include "dyno.h"
+#include "conveyor.h"
+#include "mix.h"
+#include "pipe.h"
+#include "pump.h"
+#include "dispax.h"
+#include "label.h"
+#include "tvertne.h"
+#include "valve.h"
+#include "scalesbase.h"
+#include "scalesmass.h"
+
 
 ProcUI2::ProcUI2(Global& global, QWidget* parent) :
     QMainWindow(parent)

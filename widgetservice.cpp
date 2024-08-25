@@ -513,13 +513,13 @@ void WidgetService::initUI() //  not update
 
 void WidgetService::updateFormData()        // update each 100 ms
 {
-    /*
+
     //geometry data
     ui->labelName->setText(widgetElement->global.widHash[currentWid].name);
     ui->lineEdit_Xpos->setText(QString::number(widgetElement->global.widHash[currentWid].startX));
     ui->lineEdit_Ypos->setText(QString::number(widgetElement->global.widHash[currentWid].startY));
     ui->lineEdit_startSize->setText(QString::number(widgetElement->global.widHash[currentWid].startSize));
-*/
+
 
     widgetElement->updateSettings();
 

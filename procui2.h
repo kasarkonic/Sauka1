@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "global.h"
+/*
 #include "dyno.h"
 #include "conveyor.h"
 #include "mix.h"
@@ -11,11 +12,10 @@
 #include "dispax.h"
 #include "label.h"
 #include "tvertne.h"
-#include "global.h"
 #include "valve.h"
 #include "scalesbase.h"
 #include "scalesmass.h"
-
+*/
 namespace Ui {
     class ProcUI2;
 }

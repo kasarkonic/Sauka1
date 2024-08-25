@@ -30,23 +30,20 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     , procUI2(global, this)
     , modbus485(global, this)
     , runprocess(global, this)
-    // , hwService(global, this)
     , rs232 (global, this)
     , hwService(global,rs232, this)
-
+    , procesSteps(global, this)
 
 
 {
-   // modbus485.start();  in thread
+    // modbus485.start();  in thread
     //modbus485.run();
-
-
-
-
 
     ui->setupUi(this);
     procUI2.show();
     procUI1.show();
+    procesSteps.show();
+
     //global.scalePtr = *scale;
 
     QString settingsFile = QApplication::applicationDirPath() + "/settings.ini";
@@ -136,7 +133,9 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     loadSettings();
     // only for testing:
     Scale* scale = new Scale(global, this);
-  //  scale->show();
+    //  scale->show();
+   // processStepsWindow.show();
+
 }
 
 MainWindow::~MainWindow() {
@@ -228,7 +227,7 @@ void MainWindow::timerEvent(QTimerEvent* event) {
 
 void MainWindow::loadSettings() {
 
-//settings from file settings.ini
+    //settings from file settings.ini
     int val;
     bool ok;
     QString str;

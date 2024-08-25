@@ -23,7 +23,7 @@
 #include "modbus485.h"
 #include "scale.h"
 #include "runprocess.h"
-
+#include "processteps.h"
 
 
 
@@ -98,6 +98,7 @@ private:
     // Scale scale;
     Rs232 rs232;
     HWService hwService;
+    ProcesSteps procesSteps;
     // ParMani *parmani;
 
 

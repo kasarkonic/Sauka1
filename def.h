@@ -7,9 +7,10 @@
 
 
 // define rive adress
-#define M8 18
-#define M9 19   // ??
-#define M4 14  // ??
+#define M8 18   // conveyor
+#define M9 19   // MIX
+#define M4 14  // Pump Mohno 5.5kw
+
 #define SENSOR_BOARD 20 // tvertnĒm sensori
 
 // defines drive registers
@@ -35,7 +36,7 @@
 #define AN_IN_START_ADDRESS DI_IN_START_ADDRESS + MAX_DIinput // modbuss address 2  ANinput 1-15
 #define AN_VIRTUAL_IN_START_ADDRESS AN_IN_START_ADDRESS + MAX_AN_INPUT4_20 // modbuss address 2  ANinput 1-15
 
-#define VIRUAL_PORTS 64 // Virtual input copy invertor ON/OFF
+#define VIRUAL_PORTS 128 // Virtual input copy invertor ON/OFF
 #define MAX_DIinput     32*3 + VIRUAL_PORTS       // addres [0 , MAX_DIinp] 32*3
 #define MAX_DIoutput     32*3 + VIRUAL_PORTS      // addres [0 , MAX_DIinp] + MAX_AN_VIRUAL_INPUT invertor speed, on/off...
 #define MAX_ACTUATOR    64  // addres [0 , MAX_DIoutput]
@@ -43,6 +44,91 @@
 
 
 // defines virtual inputs
+
+
+//defines analog inputs
+
+#define  SUPLAY_24V  15 // ANinput4_20[SUPLAY_24V]
+
+//*********** INPUTS ****************
+enum A1DIn
+{
+    empty = 0,  // array starts from 0 pins from 1
+    Fazu_relejs_RF1,    // nr. on board  => IN1
+    Automatsledzi,
+    Mot_aizs_1Q1,
+    Mot_aizs_2Q1,
+    Mot_aizs_3Q1,
+    Mot_aizs_5Q1,
+    Mot_aizs_6Q1,
+    Mot_aizs_7Q1,
+    dInomill_10Q1,
+    VFD_4U1_ready,
+    VFD_8U1_ready,
+    VFD_9U1_ready,
+    Rot_kontrole_snekam,
+    Sneks_auto_run,
+    Sneks_manual_run,
+    Sneks_MAN_FWD,
+    Sneks_MAN_REV,
+    Kontaktors_1KM1_ieslegts,
+    Kontaktors_2KM1_ieslegts,
+    Kontaktors_3KM1_ieslegts,
+    Kontaktors_5KM1_ieslegts,
+    Kontaktors_6KM1_ieslegts,
+    Kontaktors_7KM1_ieslegts,
+
+    kontrolbarosana_T2_Murr = 31,   // nr. on board  => IN32
+
+};
+
+
+enum A2DIn
+{
+    Y2_1_close = 32, // nr. on board  => IN1
+    Y2_1_open,
+    Y2_2_close,
+    Y2_2_open,
+    Y2_3_close,
+    Y2_3_open,
+    Y2_4_close,
+    Y2_4_open,
+    Y3_1_close,
+    Y3_1_open,
+    Y3_2_close,
+    Y3_2_open,
+    Y3_3_close,
+    Y3_3_open,
+    Y3_4_close,
+    Y3_4_open,
+    Y4_1_close,
+    Y4_1_open,
+    Y4_2_close,
+    Y4_2_open,
+    Y4_3_close,
+    Y4_3_open,
+    Y4_4_close,
+    Y4_4_open,
+    Y5_1_close,
+    Y5_1_open,
+    Y5_2_close,
+    Y5_2_open,
+    Y5_3_close,
+    Y5_3_open,
+    Y5_4_close,
+    Y5_4_open,
+
+};
+
+
+enum A3DIn
+{
+    Y6_1_ciet = 64, // nr. on board  => IN1
+    Y6_1_vaļā,
+    Y6_2_ciet,
+    Y6_2_vaļā,
+
+};
 
 
 enum virtualInputs
@@ -99,66 +185,9 @@ enum virtualInputs
 
 };
 
-enum virtualOutputs
-{
+//*********** OUTPUTS ****************
 
-    set_mix_speed = MAX_DIoutput - VIRUAL_PORTS,
-    set_mix_On_Off,
-
-    //set_dispax_On_Off,
-
-
-   // set_pump2_2_On_Off_FW = 4,              set_pump2_2_On_Off_rw = 0
-    //set_dispax_On_Off = 5,
-    set_dispax_speed  ,
-
-    set_pump1_speed,
-    set_dino0_speed,
-    set_dino0_On_Off,
-
-};
-
-
-
-//defines analog inputs
-
-#define  SUPLAY_24V  15 // ANinput4_20[SUPLAY_24V]
-
-enum a1DIn
-{
-    empty = 0,  // array starts from 0 pins from 1
-    Fazu_relejs_RF1,    // nr. on board  => IN1
-    Automatsledzi,
-    Mot_aizs_1Q1,
-    Mot_aizs_2Q1,
-    Mot_aizs_3Q1,
-    Mot_aizs_5Q1,
-    Mot_aizs_6Q1,
-    Mot_aizs_7Q1,
-    dInomill_10Q1,
-    VFD_4U1_ready,
-    VFD_8U1_ready,
-    VFD_9U1_ready,
-    Rot_kontrole_snekam,
-    Sneks_auto_run,
-    Sneks_manual_run,
-    Sneks_MAN_FWD,
-    Sneks_MAN_REV,
-    Kontaktors_1KM1_ieslegts,
-    Kontaktors_2KM1_ieslegts,
-    Kontaktors_3KM1_ieslegts,
-    Kontaktors_5KM1_ieslegts,
-    Kontaktors_6KM1_ieslegts,
-    Kontaktors_7KM1_ieslegts,
-
-    kontrolbarosana_T2_Murr = 31,   // nr. on board  => IN32
-
-
-
-
-};
-
-enum a1DOut
+enum A1DOut
 {
 
     set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
@@ -197,45 +226,7 @@ enum a1DOut
     Y3_4_aizv,
 
 };
-
-enum a2DIn
-{
-    Y2_1_close = 32, // nr. on board  => IN1
-    Y2_1_open,
-    Y2_2_close,
-    Y2_2_open,
-    Y2_3_close,
-    Y2_3_open,
-    Y2_4_close,
-    Y2_4_open,
-    Y3_1_close,
-    Y3_1_open,
-    Y3_2_close,
-    Y3_2_open,
-    Y3_3_close,
-    Y3_3_open,
-    Y3_4_close,
-    Y3_4_open,
-    Y4_1_close,
-    Y4_1_open,
-    Y4_2_close,
-    Y4_2_open,
-    Y4_3_close,
-    Y4_3_open,
-    Y4_4_close,
-    Y4_4_open,
-    Y5_1_close,
-    Y5_1_open,
-    Y5_2_close,
-    Y5_2_open,
-    Y5_3_close,
-    Y5_3_open,
-    Y5_4_close,
-    Y5_4_open,
-
-};
-
-enum a2DOut
+enum A2DOut
 {
     Y4_1_atvērt_4KY1 = 32,  // nr. on board  => Q1
     Y4_1_aizv_4KY2,
@@ -255,27 +246,187 @@ enum a2DOut
     Y5_4_aizv_5KY8,
 
 };
-enum a3DIn
-{
-    Y6_1_ciet = 64, // nr. on board  => IN1
-    Y6_1_vaļā,
-    Y6_2_ciet,
-    Y6_2_vaļā,
-
-};
 
 enum a3DOut
 {
     Outx = 64,  // nr. on board  => Q1
 };
 
+enum virtualOutputs
+{
+
+    set_mix_speed = MAX_DIoutput - VIRUAL_PORTS,
+    set_mix_On_Off,
+
+    //set_dispax_On_Off,
+
+
+    // set_pump2_2_On_Off_FW = 4,              set_pump2_2_On_Off_rw = 0
+    //set_dispax_On_Off = 5,
+    set_dispax_speed  ,
+
+    set_pump1_speed,
+    set_dino0_speed,
+    set_dino0_On_Off,
+
+    pipe_dir0,
+    pipe_dir1,
+    pipe_dir2,
+    pipe_dir3,
+    pipe_dir4,
+    pipe_dir5,
+    pipe_dir6,
+    pipe_dir7,
+    pipe_dir8,
+    pipe_dir9,
+    pipe_dir10,
+    pipe_dir11,
+    pipe_dir12,
+    pipe_dir13,
+    pipe_dir14,
+    pipe_dir15,
+    pipe_dir16,
+    pipe_dir17,
+    pipe_dir18,
+    pipe_dir19,
+    pipe_dir20,
+    pipe_dir21,
+    pipe_dir22,
+    pipe_dir23,
+    pipe_dir24,
+    pipe_dir25,
+    pipe_dir26,
+    pipe_dir27,
+    pipe_dir28,
+    pipe_dir29,
+    pipe_dir30,
+    pipe_dir31,
+    pipe_dir32,
+    pipe_dir33,
+    pipe_dir34,
+    pipe_dir35,
+    pipe_dir36,
+    pipe_dir37,
+    pipe_dir38,
+    pipe_dir39,
+    pipe_dir40,
+    pipe_dir41,
+    pipe_dir42,
+    pipe_dir43,
+    pipe_dir44,
+    pipe_dir45,
+    pipe_dir46,
+    pipe_dir47,
+    pipe_dir48,
+    pipe_dir49,
+    pipe_dir50,
+    pipe_dir51,
+    pipe_dir52,
+    pipe_dir53,
+    pipe_dir54,
+    pipe_dir55,
+    pipe_dir56,
+    pipe_dir57,
+    pipe_dir58,
+    pipe_dir59,
+    pipe_dir60,
+    pipe_dir61,
+    pipe_dir62,
+    pipe_dir63,
+    pipe_dir64,
+    pipe_dir65,
+    pipe_dir66,
+    pipe_dir67,
+    pipe_dir68,
+    pipe_dir69,
+    pipe_dir70,
+
+};
+
+//QStringList   pipeItems;
+ //   pipeItems << "pipe_dir0";
+
+  /*
+
+  << "pipe_dir0"
+    << " pipe_dir1 " ;
 
 
 
 
+   " pipe_dir2" +
+   " pipe_dir3" +
+   " pipe_dir4" +
+    "pipe_dir5" +
+    "pipe_dir6" +
+    "pipe_dir7" +
+    "pipe_dir8,
+    "pipe_dir9,
+    "pipe_dir10,
+    "pipe_dir11,
+    "pipe_dir12,
+    "pipe_dir13,
+    "pipe_dir14,
+    "pipe_dir15,
+    "pipe_dir16,
+    "pipe_dir17,
+    "pipe_dir18,
+    "pipe_dir19,
+    "pipe_dir20,
+    "pipe_dir21,
+    "pipe_dir22,
+    "pipe_dir23,
+    "pipe_dir24,
+    "pipe_dir25,
+    "pipe_dir26,
+    "pipe_dir27,
+    "pipe_dir28,
+    "pipe_dir29,
+    "pipe_dir30,
+    "pipe_dir31,
+    "pipe_dir32,
+    "pipe_dir33,
+    "pipe_dir34,
+    "pipe_dir35,
+    "pipe_dir36,
+    "pipe_dir37,
+    "pipe_dir38,
+    "pipe_dir39,
+    "pipe_dir40,
+    "pipe_dir41,
+    "pipe_dir42,
+    "pipe_dir43,
+    "pipe_dir44,
+    "pipe_dir45,
+    "pipe_dir46,
+    "pipe_dir47,
+    "pipe_dir48,
+    "pipe_dir49,
+    "pipe_dir50,
+    "pipe_dir51,
+    "pipe_dir52,
+    "pipe_dir53,
+    "pipe_dir54,
+    "pipe_dir55,
+    "pipe_dir56,
+    "pipe_dir57,
+    "pipe_dir58,
+    "pipe_dir59,
+    "pipe_dir60,
+    "pipe_dir61,
+    "pipe_dir62,
+    "pipe_dir63,
+    "pipe_dir64,
+    "pipe_dir65,
+    "pipe_dir66,
+    "pipe_dir67,
+    "pipe_dir68,
+    "pipe_dir69,
+    pipe_dir70";
 
 
 
+*/
 
 
 
@@ -389,6 +540,8 @@ enum a3DOut
 class Def {
 public:
     Def();
+   // QStringList   pipeItems;
 };
+
 
 #endif // DEF_H
