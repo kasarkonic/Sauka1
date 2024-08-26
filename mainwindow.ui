@@ -27,7 +27,7 @@
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -52,7 +52,7 @@
       <item>
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -65,21 +65,21 @@
       <item>
        <widget class="QPushButton" name="pushButton_Mix">
         <property name="text">
-         <string>Mix</string>
+         <string>Dozēšana</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_Dyno">
         <property name="text">
-         <string>Dyno</string>
+         <string>Reaktori</string>
         </property>
        </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -101,7 +101,7 @@
     <item>
      <widget class="Line" name="line_2">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
     </item>
@@ -163,7 +163,7 @@
       <item>
        <widget class="Line" name="line">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -202,7 +202,7 @@
      <x>0</x>
      <y>0</y>
      <width>987</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

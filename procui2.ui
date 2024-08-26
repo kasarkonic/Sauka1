@@ -29,7 +29,7 @@
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -47,14 +47,14 @@
            </font>
           </property>
           <property name="text">
-           <string>Procesa vadības shēma 2</string>
+           <string>Dozēšana</string>
           </property>
          </widget>
         </item>
         <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -76,21 +76,30 @@
       <item>
        <widget class="Line" name="line_2">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_Process">
         <item>
-         <widget class="QWidget" name="desktop" native="true"/>
+         <widget class="QWidget" name="desktop" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="10,3">
+           <item>
+            <widget class="QWidget" name="desktop_2" native="true"/>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_Table" native="true"/>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
        <widget class="Line" name="line">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
        </widget>
       </item>

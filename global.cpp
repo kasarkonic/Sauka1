@@ -396,6 +396,22 @@ void Global::createBallValve()
     ballValveList.append(bv);
 
 
+    ballvalveTest18 = new BallValve(this,"ballvalveTest18",0,0,0,0);
+    bv.npk = 18;
+    bv.bValvePtr = ballvalveTest18;
+    ballValveList.append(bv);
+
+    ballvalveTest19 = new BallValve(this,"ballvalveTest19",0,0,0,0);
+    bv.npk = 19;
+    bv.bValvePtr = ballvalveTest19;
+    ballValveList.append(bv);
+
+    ballvalveTest20 = new BallValve(this,"ballvalveTest20",0,0,0,0);
+    bv.npk = 20;
+    bv.bValvePtr = ballvalveTest20;
+    ballValveList.append(bv);
+
+
     qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
 }
@@ -535,16 +551,16 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //addWidgList(WidgetType::widgT ty,QString name, int npk, int page, int X, int Y, int size, int var1, int var2) {
 
-    addWidgList(WidgetType::Dyno, "Dinamill", 0, 1, 1716, 253, 70, set_dino0_speed, set_dino0_On_Off);
+    addWidgList(WidgetType::Dyno, "Dinamill", 0, 1, 1743, 253, 70, set_dino0_speed, set_dino0_On_Off);
     addWidgList(WidgetType::Conveyor, "Šneka konveijer", 0, 1, 385, 1, 146, set_dino0_speed, set_dino0_On_Off);
 
 
     addWidgList(WidgetType::Mix,"Mixeris", 0, 1, 519, 73, 120, set_mix_speed, set_mix_On_Off);
-    addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",    0, 1,   234,  166,   312,  0, 0);
+    addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",  0, 1,   234,  166,   312,  0, 0);
     addWidgList(WidgetType::ScalesMass,"Svars", 0,1,    218,  77,   77, scales_mass,scales_mass);
 
     addWidgList(WidgetType::Dispax,"Dispax 3D", 0, 1, 400, 330, 120, set_dispax_On_Off, set_dispax_On_Off);
-    // addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
+     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 2", 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
 
@@ -555,7 +571,7 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 1128, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
     addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, On_Pump_2_speed, On_Pump_2_ONOFF);
-    addWidgList(WidgetType::Pump,"Sūknis Dinamill",0, 1, 1324, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis Dinamill",2, 1, 1324, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
 
 
     addWidgList(WidgetType::Valve,"ballvalveTest0", 0, 1, 705, 67, 30, 0, 0);
@@ -667,6 +683,62 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 65, 1, 1255, 535, 44, 90, pipe_dir65);
     addWidgList(WidgetType::Pipe,"Caurule", 66, 1, 1150, 233, 53, 0, pipe_dir66);
     addWidgList(WidgetType::Pipe,"Caurule", 67, 1, 1252, 330, 49, 90, pipe_dir67);
+
+  // 2 lapa
+
+    addWidgList(WidgetType::Conveyor, "Šneka konveijer 1", 1, 2, 406, 368, 204, set_dino0_speed, set_dino0_On_Off);
+    addWidgList(WidgetType::Mix,"Mixeris 1", 1, 2, 600, 439, 163, set_mix_speed, set_mix_On_Off);
+
+    addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",    1,2,   665,  577,   312,  0, 0);
+    addWidgList(WidgetType::ScalesMass,"Svars", 1,2,    895,  500,   77, scales_mass,scales_mass);
+
+    addWidgList(WidgetType::Label,"Uzraksts 4", 4, 2, 272, 20, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 5", 5, 2, 572, 20, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 6", 6, 2, 872, 20, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 7", 7, 2, 136, 250, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 8", 8, 2, 136, 300, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 9", 9, 2, 330, 387, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 10", 10, 2, 1055, 376, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 11", 11, 2, 570, 624, 250, 0, 0);
+
+    addWidgList(WidgetType::Tvertne,"H2o Tvertne",5, 2, 300, 50, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
+    addWidgList(WidgetType::Tvertne,"B Tvertne",6, 2, 600, 50, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,"Na Tvertne",7, 2, 900, 50, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
+
+    addWidgList(WidgetType::Pump,"Sūknis H2o",3, 2, 330, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis B",4, 2, 630, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis Na",5, 2, 930, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2 2",6, 2, 930, 391, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+
+    addWidgList(WidgetType::Valve,"18 valve", 18, 2, 344, 310, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"19 valve", 19, 2, 644, 310, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"20 valve", 20, 2, 944, 310, 30, 0, 0);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 68, 2, 610, 441, 28, 0, pipe_dir60);
+    addWidgList(WidgetType::Pipe,"Caurule", 69, 2, 630, 368, 102, 0, pipe_dir61);
+    addWidgList(WidgetType::Pipe,"Caurule", 70, 2, 650, 347, 122, 0, pipe_dir62);
+    addWidgList(WidgetType::Pipe,"Caurule", 71, 2, 670, 368, 102, 0, pipe_dir63);
+    addWidgList(WidgetType::Pipe,"Caurule", 72, 2, 690, 410, 60, 0, pipe_dir64);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 73, 2, 350, 168, 27, 0, pipe_dir65);
+    addWidgList(WidgetType::Pipe,"Caurule", 74, 2, 650, 168, 27, 0, pipe_dir66);
+    addWidgList(WidgetType::Pipe,"Caurule", 75, 2, 950, 168, 27, 0, pipe_dir67);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 76, 2, 350, 257, 50, 0, pipe_dir65);
+    addWidgList(WidgetType::Pipe,"Caurule", 77, 2, 650, 257, 50, 0, pipe_dir66);
+    addWidgList(WidgetType::Pipe,"Caurule", 78, 2, 950, 257, 50, 0, pipe_dir67);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 79, 2, 350, 368, 282, 90, pipe_dir65);
+    addWidgList(WidgetType::Pipe,"Caurule", 80, 2, 673, 368, 290, 90, pipe_dir66);
+    addWidgList(WidgetType::Pipe,"Caurule", 81, 2, 690, 409, 233, 90, pipe_dir67);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 82, 2, 644, 555, 69, 0, pipe_dir67);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 83, 2, 350, 345, 32, 0, pipe_dir65);
+    addWidgList(WidgetType::Pipe,"Caurule", 84, 2, 950, 345, 32, 0, pipe_dir67);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 85, 2, 990, 409, 300, 90, pipe_dir66);
+    addWidgList(WidgetType::Pipe,"Caurule", 86, 2, 154, 283, 200, 90, pipe_dir65);
 
     qDebug() << "create " << widHash.size() << "widgets";
 }
@@ -832,7 +904,24 @@ void Global::createComboxlist()
         << "pipe_dir67"
         << "pipe_dir68"
         << "pipe_dir69"
-        << "pipe_dir70";
+        << "pipe_dir70"
+        << "pipe_dir70"
+        << "pipe_dir71"
+        << "pipe_dir72"
+        << "pipe_dir73"
+        << "pipe_dir74"
+        << "pipe_dir75"
+        << "pipe_dir76"
+        << "pipe_dir77"
+        << "pipe_dir78"
+        << "pipe_dir79"
+        << "pipe_dir80"
+        << "pipe_dir81"
+        << "pipe_dir82"
+        << "pipe_dir83"
+        << "pipe_dir84"
+        << "pipe_dir85"
+        << "pipe_dir86";
 
 
 

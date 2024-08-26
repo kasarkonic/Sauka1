@@ -36,6 +36,7 @@ SOURCES += \
     procui1.cpp \
     procui2.cpp \
     pump.cpp \
+    recipeform.cpp \
     recipet.cpp \
     rs232.cpp \
     runprocess.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     procui1.h \
     procui2.h \
     pump.h \
+    recipeform.h \
     recipet.h \
     rs232.h \
     runprocess.h \
@@ -94,6 +96,7 @@ FORMS += \
     processteps.ui \
     procui1.ui \
     procui2.ui \
+    recipeform.ui \
     recipet.ui \
     rs232.ui \
     runprocess.ui \

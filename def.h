@@ -340,6 +340,22 @@ enum virtualOutputs
     pipe_dir68,
     pipe_dir69,
     pipe_dir70,
+    pipe_dir71,
+    pipe_dir72,
+    pipe_dir73,
+    pipe_dir74,
+    pipe_dir75,
+    pipe_dir76,
+    pipe_dir77,
+    pipe_dir78,
+    pipe_dir79,
+    pipe_dir80,
+    pipe_dir81,
+    pipe_dir82,
+    pipe_dir83,
+    pipe_dir84,
+    pipe_dir85,
+    pipe_dir86,
 
 };
 

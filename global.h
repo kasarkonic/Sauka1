@@ -328,6 +328,9 @@ public:
     BallValve* ballvalveTest15;
     BallValve* ballvalveTest16;
     BallValve* ballvalveTest17;
+    BallValve* ballvalveTest18;
+    BallValve* ballvalveTest19;
+    BallValve* ballvalveTest20;
 
 
 private:

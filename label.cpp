@@ -47,24 +47,88 @@ void Label::paintEvent(QPaintEvent* event) {
     str = "l";
 
 
-    if (settings.npk == 0) {
+
+    switch (settings.npk) {
+    case 0:
         width = 100;
         height = 45;
         dest = QRect(0, 0, width, height);
         str = "Uz dinamill";
-    }
-    if (settings.npk == 1) {
+        break;
+    case 1:
         width = 150;
         height = 20;
         dest = QRect(0, 0, width, height);
         str = "Iztukšošana";
-    }
-    if (settings.npk == 2) {
+        break;
+    case 2:
         width = 150;
         height = 20;
         dest = QRect(0, 0, width, height);
         str = "Komponentes";
+        break;
+
+    case 3:
+        width = 100;
+        height = 45;
+        dest = QRect(0, 0, width, height);
+        str = "Uz dinamill";
+        break;
+    case 4:
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "H2o";
+        break;
+    case 5:
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "B";
+        break;
+    case 6:
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "Na";
+        break;
+    case 7:
+        width = 150;
+        height = 30;
+        dest = QRect(0, 0, width, height);
+        str = "Mazgāšana";
+        break;
+    case 8:
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "Dozēšana";
+        break;
+    case 9:
+        width = 150;
+        height = 50;
+        dest = QRect(0, 0, width, height);
+        str = "Sausās komponentes";
+        break;
+    case 10:
+        width = 150;
+        height = 25;
+        dest = QRect(0, 0, width, height);
+        str = "Sapropelis";
+        break;
+    case 11:
+        width = 150;
+        height = 20;
+        dest = QRect(0, 0, width, height);
+        str = "Uz reaktoru";
+        break;
+
+
+
+    default:
+        break;
     }
+
 
 
     painter.drawText(dest, Qt::TextWordWrap | Qt::AlignCenter, str);

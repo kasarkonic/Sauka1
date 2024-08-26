@@ -314,9 +314,9 @@ quint16 Modbus485::updateDIOut(int i) {
     //qDebug() << "updateDIOut----------------------" << global.getTick();
     //int res = 0;
     quint16 val1, val2, val3, val4;
-    bool val1ch, val2ch, val3ch, val4ch;
+    bool  val2ch, val3ch, val4ch; // val1ch,
     val1 = val2 = val3 = val4 = 0;
-    val1ch = val2ch = val3ch = val4ch = false;
+    val2ch = val3ch = val4ch = false;
 
     // printDIoutput();
 
