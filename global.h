@@ -107,6 +107,16 @@ public:
     };
     QList<bvalve>ballValveList;
 
+    struct  recipeT {
+        QString name = "Komponent";
+        int val1 = 0;
+        int val2 = 0; //VALUE
+    };
+
+    QList<recipeT> recipeTab;
+
+
+
     QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!
 
 

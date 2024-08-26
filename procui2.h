@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "global.h"
+#include "recipeform.h"
 /*
 #include "dyno.h"
 #include "conveyor.h"
@@ -11,6 +12,7 @@
 #include "pump.h"
 #include "dispax.h"
 #include "label.h"
+#include "recipeform.h"
 #include "tvertne.h"
 #include "valve.h"
 #include "scalesbase.h"
@@ -50,6 +52,7 @@ private:
 
     Global& global;
     Ui::ProcUI2* ui;
+    RecipeForm* recipeForm;
     void initUI();
     void drawWidgets();
 };

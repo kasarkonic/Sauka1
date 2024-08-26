@@ -12,7 +12,7 @@
 #include "valve.h"
 #include "scalesbase.h"
 #include "scalesmass.h"
-#include "recipeform.h"
+
 
 
 ProcUI2::ProcUI2(Global& global, QWidget* parent) :
@@ -52,7 +52,9 @@ void ProcUI2::initUI() {
     ui->textEdit_Info->setPalette(pal);
     ui->statusbar->showMessage("Process flow 2");
     //RecipeForm new recipetForm
-    new RecipeForm(ui->widget_Table);
+    //recipeForm = new RecipeForm(this);
+    recipeForm = new RecipeForm(global, ui->widget_Table);
+
     //new Conveyor(global, widData.name, ui->desktop);
 
 }
