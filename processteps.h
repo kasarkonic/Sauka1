@@ -83,6 +83,8 @@ private:
 
     void UpdateTable();
 
+    QList<QString>saveProcesList;
+    QList<QString>loadProcesList;
 
 };
 
