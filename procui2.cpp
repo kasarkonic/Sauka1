@@ -54,8 +54,30 @@ void ProcUI2::initUI() {
     //RecipeForm new recipetForm
     //recipeForm = new RecipeForm(this);
     recipeForm = new RecipeForm(global, ui->widget_Table);
+    //recipeFormSetComponents(QList<Global::recipeT> recKomp)
 
-    //new Conveyor(global, widData.name, ui->desktop);
+
+
+
+
+    //for testing
+    QList<Global::recipeT> testL;
+    Global::recipeT t;
+    for(int i = 0; i < 8; i++){
+        t.name = QString::number(i) + ". name";
+        t.val1 = i;
+        t.val2 = i * 10;
+        testL.append(t);
+    }
+    t.name = "Summa";
+    t.val1 = 1000;
+    t.val2 = 10000;
+    testL.append(t);
+
+
+    recipeForm->recipeFormSetComponents(testL);
+    recipeForm->setRecipeName("Receptes nosaukums");
+
 
 }
 

@@ -16,11 +16,20 @@ class RecipeForm : public QWidget
 public:
     explicit RecipeForm(Global& global, QWidget *parent = nullptr);
     ~RecipeForm();
-   // void recipeFormSetComponents(QList<recipeT> recKomp);
+    void recipeFormSetComponents(QList<Global::recipeT> recKomp);
+    void setRecipeName(QString name);
 
 private:
     Ui::RecipeForm *ui;
     Global& global;
+    void initUi();
+
+    struct  tPtr {
+        QLabel *label_komp;
+        QLabel *label_var1;
+        QLabel *label_var2;
+    };
+    QList<tPtr>tabPtr;
 };
 
 #endif // RECIPEFORM_H

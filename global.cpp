@@ -690,7 +690,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Mix,"Mixeris 1", 1, 2, 600, 439, 163, set_mix_speed, set_mix_On_Off);
 
     addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",    1,2,   665,  577,   312,  0, 0);
-    addWidgList(WidgetType::ScalesMass,"Svars", 1,2,    895,  500,   77, scales_mass,scales_mass);
+    addWidgList(WidgetType::ScalesMass,"Svars", 1,2,    895,  500,  77, scales_mass,scales_mass);
 
     addWidgList(WidgetType::Label,"Uzraksts 4", 4, 2, 272, 20, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 5", 5, 2, 572, 20, 250, 0, 0);
@@ -705,9 +705,9 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"B Tvertne",6, 2, 600, 50, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,"Na Tvertne",7, 2, 900, 50, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
 
-    addWidgList(WidgetType::Pump,"Sūknis H2o",3, 2, 330, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
-    addWidgList(WidgetType::Pump,"Sūknis B",4, 2, 630, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
-    addWidgList(WidgetType::Pump,"Sūknis Na",5, 2, 930, 200, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis H2o",3, 2, 330, 200, 50, On_pilda_H2o, On_pilda_H2o);
+    addWidgList(WidgetType::Pump,"Sūknis B",4, 2, 630, 200, 50, On_pilda_B, On_pilda_B);
+    addWidgList(WidgetType::Pump,"Sūknis Na",5, 2, 930, 200, 50, On_pilda_Na, On_pilda_Na);
     addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2 2",6, 2, 930, 391, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
 
     addWidgList(WidgetType::Valve,"18 valve", 18, 2, 344, 310, 30, 0, 0);

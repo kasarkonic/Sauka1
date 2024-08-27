@@ -191,9 +191,9 @@ enum A1DOut
 {
 
     set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
-    On_Pump_1_RW,
-    Ieslegt_kontaktoru_2KM1,
-    Ieslegt_kontaktoru_3KM1,
+    On_pilda_H2o,
+    On_pilda_Na,
+    On_pilda_B,
     set_pump2_2_On_Off_RW = 4,
     set_dispax_On_Off = 5,
     On_Pump_2_speed,
@@ -360,9 +360,9 @@ enum virtualOutputs
 };
 
 //QStringList   pipeItems;
- //   pipeItems << "pipe_dir0";
+//   pipeItems << "pipe_dir0";
 
-  /*
+/*
 
   << "pipe_dir0"
     << " pipe_dir1 " ;
@@ -556,7 +556,7 @@ enum virtualOutputs
 class Def {
 public:
     Def();
-   // QStringList   pipeItems;
+    // QStringList   pipeItems;
 };
 
 
