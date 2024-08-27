@@ -102,7 +102,7 @@ void Label::paintEvent(QPaintEvent* event) {
         width = 150;
         height = 20;
         dest = QRect(0, 0, width, height);
-        str = "Dozēšana";
+        str = "Dzesēšana";
         break;
     case 9:
         width = 150;
@@ -121,6 +121,12 @@ void Label::paintEvent(QPaintEvent* event) {
         height = 20;
         dest = QRect(0, 0, width, height);
         str = "Uz reaktoru";
+        break;
+    case 12:
+        width = 150;
+        height = 25;
+        dest = QRect(0, 0, width, height);
+        str = "Sapropelis";
         break;
 
 

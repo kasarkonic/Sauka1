@@ -263,7 +263,7 @@ void WidgetService::initUI() //  not update
             ui->label5_1->setText("Ieslēgt ");
             ui->label6_1->setText("Izslēgt ");
 
-            ui->label1_2->setText(QString::number(On_Pump_2_speed));
+            ui->label1_2->setText(QString::number(drive_M4_speed));
             ui->label2_2->setText(QString::number(0));
             ui->label3_2->setText(QString::number(0));
             ui->label4_2->setText(QString::number(actualMotorNode));
@@ -636,11 +636,6 @@ void WidgetService::updateFormData()        // update each 100 ms
             int closeTime = global.ballValveList[currentWidnpk].bValvePtr->getCloseTime();
 
 
-            //    ui->label1_2->setText(QString::number(inOpen));
-            //    ui->label2_2->setText(QString::number(inClose));
-            //    ui->label3_2->setText(QString::number(outOpen));
-            //    ui->label4_2->setText(QString::number(outClose));
-
             ui->label1_3->setText(QString::number(inOpenv));
             ui->label2_3->setText(QString::number(inClosev));
             ui->label3_3->setText(QString::number(outOpenv));
@@ -660,48 +655,13 @@ void WidgetService::updateFormData()        // update each 100 ms
             str1.append(" s");
             ui->lineEdit_6_2->setText(str1);
 
-            //    ui->pushButton_5_3->setText(" Aizvērt vārstu");
-            //    ui->pushButton_6_3->setText("Atvērt vārstu");
-            /*
-            str = "Izvēlēts elements \"Valve \"\n";
-            str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
-            str.append("DI1 atvērta vārsta gala slēdzis.\n");
-            str.append("DI2 aizvērta vārsta gala slēdzis.\n");
-            str.append("Options iestāda vārsta leņķi 0-90\u00B0.\n");
-            str.append("0\u00B0 horizontāls, 90\u00B0n vertilāls\n");
-            str.append(str1);
-
-            //str.append(strDeg);
-            //str.append(" .\n");
-
-            ui->label1_1->setText("In vārsts vaļā");
-            ui->label2_1->setText("In vārsts ciet");
-            ui->label3_1->setText("Out atvērt vārstu");
-            ui->label4_1->setText("Out aizvērt vārstu");
-            ui->label5_1->setText("Aizvēršanās laiks");
-            ui->label6_1->setText("Atvēršanās laiks");
-*/
         }
 
         break;
 
     case WidgetType::widgT::Pump:
 
-        /*
-         * Widget Pump
-         * var1  - on/off  forvard
-         * var2   - on/off   revers
-         */
 
-        /*    str = "Izvēlēts sūknis \"Pump \"\n";
-        str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
-        str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->label1_1->setText("Ieslēgts turp");
-        ui->label2_1->setText("Ieslēgts atpakaļ");
-        ui->label3_1->setText("");
-        ui->label4_1->setText("");
-        ui->label4_2->setText("");
-*/
         if( currentWidnpk == 0){
             //        ui->label5_1->setText("Ieslēgt");
             //        ui->label6_1->setText("Izslēgt");
@@ -714,43 +674,11 @@ void WidgetService::updateFormData()        // update each 100 ms
         else if ( currentWidnpk == 1){       // pump MOHNO 5.5
             actualMotorNode = M4;
             gearrate = 10;
-            /*       ui->label1_1->setText("Ātrums");
-            ui->label2_1->setText("Statuss");
-            ui->label3_1->setText("Kļūda");
-            ui->label4_1->setText("MODBUS node");
-            ui->label5_1->setText("Ieslēgt ");
-            ui->label6_1->setText("Izslēgt ");
 
-            ui->label1_2->setText(QString::number(On_Pump_2_speed));
-            ui->label2_2->setText(QString::number(0));
-            ui->label3_2->setText(QString::number(0));
-            ui->label4_2->setText(QString::number(actualMotorNode));
-            ui->lineEdit_5_2->hide();
-            ui->lineEdit_6_2->hide();
-
-            ui->label1_3->setText(QString::number(13));
-            ui->label2_3->setText(QString::number(23));
-            ui->label3_3->setText(QString::number(33));
-            ui->label4_3->setText("");
-            ui->pushButton_5_3->setText("Ieslēgt");
-            ui->pushButton_6_3->setText("Izslēgt");
-
-            ui->line_14->hide();
-            ui->line_15->hide();
-            ui->line_16->hide();
-            ui->line_17->hide();
-            ui->line_18->hide();
-            ui->line_19->hide();
-            ui->line_20->hide();
-            ui->line_21->hide();
-       */
         }
 
         else{
-            //    ui->label5_1->setText("Ieslēgt sūkni");
-            //    ui->label6_1->setText("Izslēgt sūkni");
-            //    ui->pushButton_5_3->setText("Ieslēgt");
-            //    ui->pushButton_6_3->setText("Izslēgt");
+
         }
 
         // ui->pushButton_5_3->setText("Ieslēgt Turp");
@@ -758,27 +686,12 @@ void WidgetService::updateFormData()        // update each 100 ms
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
-        //   ui->label3_2->setText("");
-        //ui->label4_2->setText("");
-        //    ui->lineEdit_5_2->hide();
-        //    ui->lineEdit_6_2->hide();
+
 
         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
         ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
-        //    ui->label3_3->setText("");
-        //    ui->label4_3->setText("");
-        // ui->pushButton_5_3->setText("Ieslēgt");
-        // ui->pushButton_6_3->setText("Izslēgt");
 
-        /*    ui->line_14->hide();
-        ui->line_15->hide();
-        ui->line_16->hide();
-        ui->line_17->hide();
-        ui->line_18->hide();
-        ui->line_19->hide();
-        ui->line_20->hide();
-        ui->line_21->hide();
-    */
+
         break;
 
     case WidgetType::widgT::Dispax:
@@ -797,26 +710,6 @@ void WidgetService::updateFormData()        // update each 100 ms
         // ui->label3_1->setText("");
         // ui->label4_1->setText("");
         if( currentWidnpk == 0){
-            //     ui->label5_1->setText("Ieslēgt");
-            //     ui->label6_1->setText("Izslēgt");
-
-            //     ui->label2_2->setText("");
-            //     ui->label3_2->setText("");
-            //     ui->label4_2->setText("");
-
-            //     ui->label2_3->setText("");
-            //     ui->label3_3->setText("");
-            //     ui->label4_3->setText("");
-
-            //     ui->pushButton_5_3->setText("ieslēgt");
-            //     ui->pushButton_6_3->setText("izslēgt");
-            //     ui->lineEdit_5_2->setText("");
-            //     ui->lineEdit_6_2->setText("");
-            //     ui->lineEdit_5_2->hide();
-            //     ui->lineEdit_6_2->hide();
-            //    ui->horizontalSlider_speed->setDisabled(true);
-
-
 
         }
 
@@ -854,39 +747,7 @@ void WidgetService::updateFormData()        // update each 100 ms
             break;
         }
 
-
-        //str = "Izvēlēts maisītājs \"Mix \"\n";
-        // str.append("Aktuators maina motora griežšanās ātrumu\n");
-        // str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        //    ui->label1_1->setText("Ātrums");
-        //    ui->label2_1->setText("Statuss");
         ui->label3_1->setText("Kļūda");
-        //    ui->label4_1->setText("MODBUS node");
-        //    ui->label5_1->setText("Ieslēgt ");
-        //    ui->label6_1->setText("Izslēgt ");
-
-        //    ui->label1_2->setText(QString::number(12));
-        //    ui->label2_2->setText(QString::number(22));
-        //    ui->label3_2->setText(QString::number(32));
-        //     ui->label4_2->setText(QString::number(actualMotorNode));
-        //     ui->lineEdit_5_2->hide();
-        //    ui->lineEdit_6_2->hide();
-
-        //     ui->label1_3->setText(QString::number(13));
-        //     ui->label2_3->setText(QString::number(23));
-        //     ui->label3_3->setText(QString::number(33));
-        //     ui->label4_3->setText("");
-        //     ui->pushButton_5_3->setText("Ieslēgt");
-        //    ui->pushButton_6_3->setText("Izslēgt");
-
-        //    ui->line_14->hide();
-        //     ui->line_15->hide();
-        //     ui->line_16->hide();
-        //     ui->line_17->hide();
-        //     ui->line_18->hide();
-        //     ui->line_19->hide();
-        //      ui->line_20->hide();
-        //      ui->line_21->hide();
 
         break;
 
@@ -914,42 +775,6 @@ void WidgetService::updateFormData()        // update each 100 ms
         break;
     case WidgetType::widgT::Label:
 
-
-        //     ui->label_0_1->setText("Teksta lauks");
-        //     ui->label_0_2->setText("Nekādas manipulācijas nav paredzētas.");
-        //     ui->label_0_3->setText("");
-
-
-        //     str = "teksta Lauks\n";
-
-        //    ui->label1_1->setText("");
-        //    ui->label2_1->setText("");
-        //    ui->label3_1->setText("");
-        //    ui->label4_1->setText("");
-        //    ui->label5_1->setText("");
-        //    ui->label6_1->setText("");
-
-        //     ui->label1_2->setText("");
-        //    ui->label2_2->setText("");
-        //     ui->label3_2->setText("");
-        //    ui->label4_2->setText("");
-        //    ui->lineEdit_5_2->hide();
-        //     ui->lineEdit_6_2->hide();
-
-        //     ui->label1_3->setText("");
-        //     ui->label2_3->setText("");
-        //    ui->label3_3->setText("");
-        //     ui->label4_3->setText("");
-        //     ui->pushButton_5_3->hide();
-        //     ui->pushButton_6_3->hide();
-        //     ui->line_14->hide();
-        //     ui->line_15->hide();
-        //      ui->line_16->hide();
-        //      ui->line_17->hide();
-        //     ui->line_18->hide();
-        //     ui->line_19->hide();
-        //      ui->line_20->hide();
-        //      ui->line_21->hide();
 
         break;
 

@@ -45,7 +45,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Procesa vadības shēma</string>
+         <string>Reaktori</string>
         </property>
        </widget>
       </item>
@@ -65,14 +65,14 @@
       <item>
        <widget class="QPushButton" name="pushButton_Mix">
         <property name="text">
-         <string>Dozēšana</string>
+         <string>Reaktori</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_Dyno">
         <property name="text">
-         <string>Reaktori</string>
+         <string>Dozēšana</string>
         </property>
        </widget>
       </item>

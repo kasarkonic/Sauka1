@@ -53,7 +53,6 @@
 //*********** INPUTS ****************
 enum A1DIn
 {
-    empty = 0,  // array starts from 0 pins from 1
     Fazu_relejs_RF1,    // nr. on board  => IN1
     Automatsledzi,
     Mot_aizs_1Q1,
@@ -66,7 +65,7 @@ enum A1DIn
     VFD_4U1_ready,
     VFD_8U1_ready,
     VFD_9U1_ready,
-    Rot_kontrole_snekam,
+    Mot_aiz_11Q1,
     Sneks_auto_run,
     Sneks_manual_run,
     Sneks_MAN_FWD,
@@ -77,9 +76,15 @@ enum A1DIn
     Kontaktors_5KM1_ieslegts,
     Kontaktors_6KM1_ieslegts,
     Kontaktors_7KM1_ieslegts,
-
-    kontrolbarosana_T2_Murr = 31,   // nr. on board  => IN32
-
+    Kontaktors_5KM2_ieslēgts,
+    Kontaktors_12KM1_ieslēgts,
+    Motora_aizsardzība_12Q1,
+    Nop,
+    Y6_1_close,
+    Y6_1_open,
+    Y6_2_close,
+    Y6_2_open,
+    kontrolbarosana_T2_Murr,   // nr. on board  => IN32
 };
 
 
@@ -123,11 +128,6 @@ enum A2DIn
 
 enum A3DIn
 {
-    Y6_1_ciet = 64, // nr. on board  => IN1
-    Y6_1_vaļā,
-    Y6_2_ciet,
-    Y6_2_vaļā,
-
 };
 
 
@@ -189,21 +189,20 @@ enum virtualInputs
 
 enum A1DOut
 {
-
     set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
     On_pilda_H2o,
     On_pilda_Na,
     On_pilda_B,
     set_pump2_2_On_Off_RW = 4,
     set_dispax_On_Off = 5,
-    On_Pump_2_speed,
-    On_Pump_2_speed1,
-    On_Pump_2_ONOFF,
-    Luksofors_sirena,
-
-
+    On_MOHNO_5_5_On_Off,
+    H3,
+    H4,
+    H5,
     VFD_Reset,
-    brīvs1,
+    Dispax_2_On,         // jaunais/ 11kW Dispax 2.
+
+
     Y1_1_atvērt = 12,
     Y1_2_atvērt,
     Y1_3_atvērt,
@@ -224,32 +223,34 @@ enum A1DOut
     Y3_3_aizv,
     Y3_4_atvērt,
     Y3_4_aizv,
-
 };
 enum A2DOut
 {
-    Y4_1_atvērt_4KY1 = 32,  // nr. on board  => Q1
-    Y4_1_aizv_4KY2,
-    Y4_2_atvērt_4KY3,
-    Y4_2_aizv_4KY4,
-    Y4_3_atvērt_4KY5,
-    Y4_3_aizv_4KY6,
-    Y4_4_atvērt_4KY7,
-    Y4_4_aizv_4KY8,
-    Y5_1_atvērt_5KY1,
-    Y5_1_aizv_5KY2,
-    Y5_2_atvērt_5KY3,
-    Y5_2_aizv_5KY4,
-    Y5_3_atvērt_5KY5,
-    Y5_3_aizv_5KY6,
-    Y5_4_atvērt_5KY7,
-    Y5_4_aizv_5KY8,
+    Y4_1_atvērt = 32,  // nr. on board  => Q1
+    Y4_1_aizv,
+    Y4_2_atvērt,
+    Y4_2_aizv,
+    Y4_3_atvērt,
+    Y4_3_aizv,
+    Y4_4_atvērt,
+    Y4_4_aizv,
+    Y5_1_atvērt,
+    Y5_1_aizv,
+    Y5_2_atvērt,
+    Y5_2_aizv,
+    Y5_3_atvērt,
+    Y5_3_aizv,
+    Y5_4_atvērt,
+    Y5_4_aizv,
+    Y6_1_atvērt,
+    Y6_1_aizv,
+    Y6_2_atvērt,
+    Y6_2_aizv,
 
 };
 
 enum a3DOut
 {
-    Outx = 64,  // nr. on board  => Q1
 };
 
 enum virtualOutputs

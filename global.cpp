@@ -302,43 +302,43 @@ void Global::createBallValve()
     bvalve bv;
     //BallValve(Global* global,QString name, int outOpen, int outClose, int inOpen, int inClose, QObject* parent = nullptr);
 
-    ballvalveTest0 = new BallValve(this,"ballvalveTest0",0,0,0,0);
+    ballvalveTest0 = new BallValve(this,"Y5.1",Y5_1_atvērt,Y5_1_aizv,Y5_1_open,Y5_1_close);
     bv.npk = 0;
     bv.bValvePtr = ballvalveTest0;
     ballValveList.append(bv);
 
-    ballvalveTest1 = new BallValve(this,"ballvalveTest1",0,0,0,0);
+    ballvalveTest1 = new BallValve(this,"Y5.2",Y5_2_atvērt,Y5_2_aizv,Y5_2_open,Y5_2_close);
     bv.npk = 1;
     bv.bValvePtr = ballvalveTest1;
     ballValveList.append(bv);
 
-    ballvalveTest2 = new BallValve(this,"ballvalveTest2",0,0,0,0);
+    ballvalveTest2 = new BallValve(this,"Y5.4",Y5_4_atvērt,Y5_4_aizv,Y5_4_open,Y5_4_close);
     bv.npk = 2;
     bv.bValvePtr = ballvalveTest2;
     ballValveList.append(bv);
 
-    ballvalveTest3 = new BallValve(this,"ballvalveTest3",0,0,0,0);
+    ballvalveTest3 = new BallValve(this,"Y5.3",Y5_3_atvērt,Y5_3_aizv,Y5_3_open,Y5_3_close);
     bv.npk = 3;
     bv.bValvePtr = ballvalveTest3;
     ballValveList.append(bv);
 
 
-    ballvalveTest4 = new BallValve(this,"Y4.1",Y4_1_atvērt_4KY1,Y4_1_aizv_4KY2,Y4_1_open,Y4_1_close);
+    ballvalveTest4 = new BallValve(this,"Y4.1",Y4_1_atvērt,Y4_1_aizv,Y4_1_open,Y4_1_close);
     bv.npk = 4;
     bv.bValvePtr = ballvalveTest4;
     ballValveList.append(bv);
 
-    ballvalveTest5 = new BallValve(this,"Y4.2",Y4_2_atvērt_4KY3,Y4_2_aizv_4KY4,Y4_2_open,Y4_2_close);
+    ballvalveTest5 = new BallValve(this,"Y4.2",Y4_2_atvērt,Y4_2_aizv,Y4_2_open,Y4_2_close);
     bv.npk = 5;
     bv.bValvePtr = ballvalveTest5;
     ballValveList.append(bv);
 
-    ballvalveTest6 = new BallValve(this,"Y4.3",Y4_3_atvērt_4KY5,Y4_3_aizv_4KY6,Y4_3_open,Y4_3_close);
+    ballvalveTest6 = new BallValve(this,"Y4.3",Y4_3_atvērt,Y4_3_aizv,Y4_3_open,Y4_3_close);
     bv.npk = 6;
     bv.bValvePtr = ballvalveTest6;
     ballValveList.append(bv);
 
-    ballvalveTest7 = new BallValve(this,"Y4.4",Y4_4_atvērt_4KY7,Y4_4_aizv_4KY8,Y4_4_open,Y4_4_close);
+    ballvalveTest7 = new BallValve(this,"Y4.4",Y4_4_atvērt,Y4_4_aizv,Y4_4_open,Y4_4_close);
     bv.npk = 7;
     bv.bValvePtr = ballvalveTest7;
     ballValveList.append(bv);
@@ -379,18 +379,18 @@ void Global::createBallValve()
     bv.bValvePtr = ballvalveTest14;
     ballValveList.append(bv);
 
-    ballvalveTest15 = new BallValve(this,"3.4",Y3_4_atvērt,Y3_4_aizv,Y3_4_open,Y3_4_close);
+    ballvalveTest15 = new BallValve(this,"Y3.4",Y3_4_atvērt,Y3_4_aizv,Y3_4_open,Y3_4_close);
     bv.npk = 15;
     bv.bValvePtr = ballvalveTest15;
     ballValveList.append(bv);
 
 
-    ballvalveTest16 = new BallValve(this,"ballvalveTest16",0,0,0,0);
+    ballvalveTest16 = new BallValve(this,"Y6.2",Y6_2_atvērt,Y6_2_aizv,Y6_2_open,Y6_2_close);
     bv.npk = 16;
     bv.bValvePtr = ballvalveTest16;
     ballValveList.append(bv);
 
-    ballvalveTest17 = new BallValve(this,"ballvalveTest17",0,0,0,0);
+    ballvalveTest17 = new BallValve(this,"Y6.1",Y6_1_atvērt,Y6_1_aizv,Y6_1_open,Y6_1_close);
     bv.npk = 17;
     bv.bValvePtr = ballvalveTest17;
     ballValveList.append(bv);
@@ -563,6 +563,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 2", 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 12", 12, 1, 1647, 136, 250, 0, 0);
 
     addWidgList(WidgetType::Tvertne,"4. Tvertne",0, 1, 1598, 1, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
     addWidgList(WidgetType::Tvertne,"3. Tvertne",1, 1, 700, 370, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
@@ -570,14 +571,14 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 370, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
     addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 1128, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
-    addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, On_Pump_2_speed, On_Pump_2_ONOFF);
+    addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, drive_M4_speed, drive_M4_speed);
     addWidgList(WidgetType::Pump,"Sūknis Dinamill",2, 1, 1324, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
 
 
-    addWidgList(WidgetType::Valve,"ballvalveTest0", 0, 1, 705, 67, 30, 0, 0);
-    addWidgList(WidgetType::Valve,"ballvalveTest1", 1, 1, 782, 67, 30, 0, 0);
-    addWidgList(WidgetType::Valve,"ballvalveTest2", 2, 1, 1524, 160, 30, 0, 0);
-    addWidgList(WidgetType::Valve,"ballvalveTest3", 3, 1, 1452, 160, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.1", 0, 1, 705, 67, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.2", 1, 1, 782, 67, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.4", 2, 1, 1524, 160, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.3", 3, 1, 1452, 160, 30, 0, 0);
 
     addWidgList(WidgetType::Valve,"Y4.1", 4, 1, 705, 320, 30, 0, 0);
     addWidgList(WidgetType::Valve,"Y4.2", 5, 1, 782, 320, 30, 0, 0);
@@ -594,8 +595,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Valve,"Y2.3", 11, 1, 1303, 529, 30, 0, 0);
     addWidgList(WidgetType::Valve,"Y2.4", 10, 1, 1382, 529, 30, 0, 0);
 
-    addWidgList(WidgetType::Valve,"ballvalveTest16", 16, 1, 487, 283, 30, 0, 0);
-    addWidgList(WidgetType::Valve,"ballvalveTest17", 17, 1, 408, 283, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y6.2", 16, 1, 487, 283, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y6.1", 17, 1, 408, 283, 30, 0, 0);
 
 
     // PIPE
@@ -671,7 +672,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 55, 1, 1350, 335, 38, 0, pipe_dir55);
 
     addWidgList(WidgetType::Pipe,"Caurule", 56, 1, 1493, 231, 111, 0, pipe_dir56);
-    addWidgList(WidgetType::Pipe,"Caurule", 57, 1, 1651, 280, 50, 90, pipe_dir57);
+    addWidgList(WidgetType::Pipe,"Caurule", 57, 1, 1651, 280, 86, 90, pipe_dir57);
     addWidgList(WidgetType::Pipe,"Caurule", 58, 1, 1493, 535, 123, 0, pipe_dir58);
     addWidgList(WidgetType::Pipe,"Caurule", 59, 1, 450, 539, 68, 0, pipe_dir59);
 
@@ -693,8 +694,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::ScalesMass,"Svars", 1,2,    895,  500,  77, scales_mass,scales_mass);
 
     addWidgList(WidgetType::Label,"Uzraksts 4", 4, 2, 272, 20, 250, 0, 0);
-    addWidgList(WidgetType::Label,"Uzraksts 5", 5, 2, 572, 20, 250, 0, 0);
-    addWidgList(WidgetType::Label,"Uzraksts 6", 6, 2, 872, 20, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 5", 5, 2, 872, 20, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 6", 6, 2, 572, 20, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 7", 7, 2, 136, 250, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 8", 8, 2, 136, 300, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 9", 9, 2, 330, 387, 250, 0, 0);
