@@ -116,6 +116,81 @@ public:
     QList<recipeT> recipeTab;
 
 
+    struct  tVal {
+        int npk = 0; //QLabel *label_npk;
+        int cmbGroupItem = 0; //QComboBox *cmbGroup = nullptr;
+        int cmbObjectItem = 0;// QComboBox *cmbObject = nullptr;
+        int  val = 0;      //QLineEdit *linEditVal = nullptr;
+        QString  notes = ""; //    QLineEdit *linEditNote = nullptr;
+    };
+    QList<tVal>tabVal;
+
+    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause","Test","Pipe","Command" };
+    QStringList procesObjestItemsValve  = {
+        "Y1_1_atvērt"
+        ,"Y1_2_atvērt"
+        ,"Y1_3_atvērt"
+        ,"brīvs2"
+        ,"Y2_1_atvērt"
+        ,"Y2_1_aizv"
+        ,"Y2_2_atvērt"
+        ,"Y2_2_aizv"
+        ,"Y2_3_atvērt"
+        ,"Y2_3_aizv"
+        ,"Y2_4_atvērt"
+        ,"Y2_4_aizv"
+        ,"Y3_1_atvērt"
+        ,"Y3_1_aizv"
+        ,"Y3_2_atvērt"
+        ,"Y3_2_aizv"
+        ,"Y3_3_atvērt"
+        ,"Y3_3_aizv"
+        ,"Y3_4_atvērt"
+        ,"Y3_4_aizv"
+        ,"Y4_1_atvērt"
+        ,"Y4_1_aizv"
+        ,"Y4_2_atvērt"
+        ,"Y4_2_aizv"
+        ,"Y4_3_atvērt"
+        ,"Y4_3_aizv"
+        ,"Y4_4_atvērt"
+        ,"Y4_4_aizv"
+        ,"Y5_1_atvērt"
+        ,"Y5_1_aizv"
+        ,"Y5_2_atvērt"
+        ,"Y5_2_aizv"
+        ,"Y5_3_atvērt"
+        ,"Y5_3_aizv"
+        ,"Y5_4_atvērt"
+        ,"Y5_4_aizv"
+        ,"Y6_1_atvērt"
+        ,"Y6_1_aizv"
+        ,"Y6_2_atvērt"
+        ,"Y6_2_aizv"
+    };
+
+    QStringList procesObjestItemsPump  = { "Pump1", "Pump2", "Pump3", "Pump4","Pump5","Pump6" };
+    QStringList procesObjestItemsMix  = { "Mix","Mix1"};
+    QStringList procesObjestItemsPause  = { "Pause s" };
+    QStringList procesObjestItemsTest  = { "Test Inputs","Test Scales" };
+    QStringList procesObjestItemsPipe  = {
+        "pipe_dir0"
+        ,"pipe_dir1"
+        ,"pipe_dir2"
+        ,"pipe_dir3"
+        ,"pipe_dir4"
+        ,"pipe_dir5"
+        ,"pipe_dir6"
+        ,"pipe_dir7"
+        ,"pipe_dir8"
+        ,"pipe_dir9"
+        ,"pipe_dir10"
+    };
+
+
+
+    QStringList procesObjestItemsComand  = { "Goto", "Stop", "GOtoStart" };
+
 
     QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!
 
@@ -133,7 +208,7 @@ public:
         // int startSizeWi = 10; // pipe len
         int var1 = 0;   //valve |- and pipe angle
         int var2 = 0;
-       // int windowNr = 0;
+        // int windowNr = 0;
         bool formExist = false;
         WidgetDiagramElement* ptrCurrWidget = nullptr;
         WidgetService* ptrCurrWidgetService = nullptr;

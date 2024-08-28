@@ -72,7 +72,7 @@ void ProcesSteps::on_pushButton_Up_clicked()
         if(activeRow + firstLineIndex > 0){
             tabValRecord--;
             firstLineIndex--;
-            qDebug() << "first records" << tabVal.length() << activeRow + firstLineIndex;
+            qDebug() << "first records" << global.tabVal.length() << activeRow + firstLineIndex;
         }
         //  label_n = tabPtr[activeRow].label_npk;
         //  label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
@@ -100,10 +100,10 @@ void ProcesSteps::on_pushButton_Down_clicked()
         label_n->setText(">>");
     }
     else{
-        if(activeRow + firstLineIndex < tabVal.length()-1){
+        if(activeRow + firstLineIndex < global.tabVal.length()-1){
             tabValRecord++;
             firstLineIndex++;
-            qDebug() << "last records" << tabVal.length() << activeRow + firstLineIndex;
+            qDebug() << "last records" << global.tabVal.length() << activeRow + firstLineIndex;
         }
         //  label_n = tabPtr[activeRow].label_npk;
         //  label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
@@ -130,10 +130,10 @@ void ProcesSteps::on_pushButton_Load_clicked()
             }
             //qDebug() << "loadProcesList" << loadProcesList;
 
-            tabVal.clear();
+            global.tabVal.clear();
             for(int i = 0; i < loadProcesList.length(); i++){
                 qDebug() << loadProcesList[i];
-                tVal tabv;
+                Global::tVal tabv;
                 QString str;
 
                 str = loadProcesList[i][0];
@@ -158,13 +158,13 @@ void ProcesSteps::on_pushButton_Load_clicked()
                 }
 
                 tabv.notes = loadProcesList[i][4];
-                tabVal.append(tabv);
+                global.tabVal.append(tabv);
             }
-            qDebug() << "Error! 1" << tabVal.length() << loadProcesList.length() ;
+            qDebug() << "Error! 1" << global.tabVal.length() << loadProcesList.length() ;
 
             // load notes
             ui->textEdit_Notes->clear();
-            for(int i = tabVal.length(); i < loadProcesList.length(); i++){
+            for(int i = global.tabVal.length(); i < loadProcesList.length(); i++){
                 qDebug() << "loadProcesList[i][0]"<< i << loadProcesList[i];
                 ui->textEdit_Notes->append(loadProcesList[i]);
             }
@@ -192,7 +192,7 @@ void ProcesSteps::on_pushButton_clicked()
     qDebug() << "Save";
     saveProcesList.clear();
 
-    for(int num = 0; num < tabVal.length() ; num++ ){
+    for(int num = 0; num < global.tabVal.length() ; num++ ){
         QString cmdStr;
         cmdStr.append(QString::number(num));
         cmdStr.append(",");
@@ -220,7 +220,7 @@ void ProcesSteps::on_pushButton_clicked()
     saveProcesList.append(ui->textEdit_Notes->toPlainText());
     saveProcesList.append("\n");
 
-    qDebug() << saveProcesList;
+    qDebug() << "saveProcesList" << saveProcesList;
 
 
     //QDataStream
@@ -271,7 +271,7 @@ void ProcesSteps::drawWidgets()
     for ( int i = 0; i<15; i++){
 
         tPtr tablePtr;
-        tVal tableVal;
+        Global::tVal tableVal;
         signalMapper = new QSignalMapper(this);
         npk = i;
         tableVal.npk = i;
@@ -302,13 +302,13 @@ void ProcesSteps::drawWidgets()
 
         QComboBox *cmbGroup = new QComboBox;
         tablePtr.cmbGroup = cmbGroup;
-        cmbGroup->addItems({ "Valve", "Pump", "Mix", "Pause","Test","Pipe" });
+        cmbGroup->addItems(global.procesGroupItems);
         cmbGroup->setObjectName(QString::number(npk));
         connect(cmbGroup, SIGNAL(currentIndexChanged(int)), this, SLOT(groupIndexChange(int)));
 
         QComboBox *cmbObject= new QComboBox;
         tablePtr.cmbObject = cmbObject;
-        cmbObject->addItems({ "Valve 1", "Valve 2", "Valve 3", "Valve 4","Valve 5" });
+        cmbObject->addItems(global.procesObjestItemsValve);
         cmbObject->setObjectName(QString::number(npk));
         connect(cmbObject, SIGNAL(currentIndexChanged(int)), this, SLOT(objectIndexChange(int)));
 
@@ -325,7 +325,7 @@ void ProcesSteps::drawWidgets()
         linEditNote->setText("0");
 
         tabPtr.append(tablePtr);
-        tabVal.append(tableVal);
+        global.tabVal.append(tableVal);
 
         QBoxLayout *hLayout = new QHBoxLayout(this);
         hLayout->addWidget(label_npk,0);
@@ -349,62 +349,65 @@ void ProcesSteps::drawWidgets()
 void ProcesSteps::UpdateTable()
 {
 
-    QStringList   pipeItems;
-    pipeItems << "A" << "B";
+   // QStringList   pipeItems;
+   // pipeItems << "A" << "B";
 
     for(int i = 0 ; i <  15; i++){
 
         int num = i + firstLineIndex;
-        qDebug() << "UpdateTable:"  << i << num << tabVal.length();
+        qDebug() << "UpdateTable:"  << i << num << global.tabVal.length();
         QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
         label_npk->setText(QString::number(num));
 
-        int index  = tabVal[num].cmbObjectItem ;
+        int index  = global.tabVal[num].cmbObjectItem ;
         QComboBox *cmbGroup = tabPtr[i].cmbGroup;   // this change tabVal[num].cmbObjectItem
-        cmbGroup->setCurrentIndex(tabVal[num].cmbGroupItem);
+        cmbGroup->setCurrentIndex(global.tabVal[num].cmbGroupItem);
 
         QComboBox *cmbObject = tabPtr[i].cmbObject;
 
 
-        qDebug() << "save tabVal[num].cmbObjectItem" << num << index << tabVal[num].cmbObjectItem;
+        //qDebug() << "save tabVal[num].cmbObjectItem" << num << index << global.tabVal[num].cmbObjectItem;
         //comboBox->addItems(list);
-        qDebug() << "cmbGroup:"  << tabVal[num].cmbGroupItem;
+        qDebug() << "cmbGroup:"  << global.tabVal[num].cmbGroupItem;
         cmbObject->clear();
-        switch (tabVal[num].cmbGroupItem) {
+        switch (global.tabVal[num].cmbGroupItem) {
         case 0: // valve
-            cmbObject->addItems({ "Valve 1", "Valve 2", "Valve 3", "Valve 4","Valve 5" });
+            cmbObject->addItems(global.procesObjestItemsValve);
             break;
         case 1: //  pump
-            cmbObject->addItems({ "Pump 1", "Pump 2", "Pump 3", "Pump 4","Pump 5" });
+            cmbObject->addItems(global.procesObjestItemsPump);
             break;
         case 2: // mix
-            cmbObject->addItems({ "Mix 1"});
+            cmbObject->addItems(global.procesObjestItemsMix);
             break;
         case 3: //  pause
-            cmbObject->addItems({ "pause" });
+            cmbObject->addItems(global.procesObjestItemsPause);
             break;
         case 4: // test
-            cmbObject->addItems({ "test"});
+            cmbObject->addItems(global.procesObjestItemsTest);
             break;
         case 5: // Pipe
-            cmbObject->addItems({ "test1"});
+            cmbObject->addItems(global.procesObjestItemsPipe);
+            break;
+        case 6: // Command
+            cmbObject->addItems(global.procesObjestItemsComand);
             break;
         default:
             break;
 
         }
-        tabVal[num].cmbObjectItem = index ;
-        qDebug() << "restore tabVal[num].cmbObjectItem" << num << index << tabVal[num].cmbObjectItem;
+        global.tabVal[num].cmbObjectItem = index ;
+        qDebug() << "restore tabVal[num].cmbObjectItem" << num << index << global.tabVal[num].cmbObjectItem;
 
-        cmbObject->setCurrentIndex(tabVal[num].cmbObjectItem);
-        qDebug() << "update tabVal[num].cmbObjectItem" << num << tabVal[num].cmbObjectItem;
+        cmbObject->setCurrentIndex(global.tabVal[num].cmbObjectItem);
+        qDebug() << "update tabVal[num].cmbObjectItem" << num << global.tabVal[num].cmbObjectItem;
 
         QLineEdit *linEditVal = tabPtr[i].linEditVal;
-        linEditVal->setText(QString::number(tabVal[num].val));
+        linEditVal->setText(QString::number(global.tabVal[num].val));
 
         QLineEdit *linEditNote = tabPtr[i].linEditNote;
-        linEditNote->setText(tabVal[num].notes);
+        linEditNote->setText(global.tabVal[num].notes);
     }
     QLabel *label_npk = tabPtr[activeRow].label_npk;
     label_npk->setStyleSheet("background:rgb(150,250,150);"); // light green
@@ -421,7 +424,7 @@ void ProcesSteps::linValFinish()
 
         int val  = linEditVal->text().toInt(&ok1);
         if(ok1){
-            tabVal[num + firstLineIndex].val = val;
+            global.tabVal[num + firstLineIndex].val = val;
         }
     }
 }
@@ -433,7 +436,7 @@ void ProcesSteps::linNoteFinish()
     int num = obj->objectName().toInt(&ok);
     if (ok) {
         QLineEdit *linEditNote = tabPtr[num].linEditNote;
-        tabVal[num + firstLineIndex].notes  = linEditNote->text();
+        global.tabVal[num + firstLineIndex].notes  = linEditNote->text();
     }
 }
 
@@ -444,8 +447,8 @@ void ProcesSteps::onClickIns()
     int num = obj->objectName().toInt(&ok);
     if (ok) {
         qDebug() << "onClickIns()" << sender() << num ;
-        tVal tableVal;
-        tabVal.insert(num,tableVal);
+        Global::tVal tableVal;
+        global.tabVal.insert(num,tableVal);
         UpdateTable();
     }
 }
@@ -456,16 +459,14 @@ void ProcesSteps::onClickDel()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
-        qDebug() << "onClickDel()" << num << tabVal.length();
+        qDebug() << "onClickDel()" << num << global.tabVal.length();
 
-        if(tabVal.length() < 16){
-            tVal tableVal;
-            tabVal.append(tableVal);
+        if(global.tabVal.length() < 16){
+            Global::tVal tableVal;
+            global.tabVal.append(tableVal);
         }
-        tabVal.removeAt(num);
-
+        global.tabVal.removeAt(num);
         UpdateTable();
-
     }
 }
 
@@ -476,43 +477,42 @@ void ProcesSteps::groupIndexChange(int index)
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
-        tabVal[num + firstLineIndex].cmbGroupItem = index;
+        global.tabVal[num + firstLineIndex].cmbGroupItem = index;
+
         QComboBox *cmbObject = tabPtr[num].cmbObject;
 
-
-        //comboBox->addItems(list);
-        qDebug() << "cmbGroup:"  <<num << index;
         cmbObject->clear();
         switch (index) {
         case 0: // valve
-            cmbObject->addItems({ "Valve 1", "Valve 2", "Valve 3", "Valve 4","Valve 5" });
+            cmbObject->addItems(global.procesObjestItemsValve);
             break;
         case 1: //  pump
-            cmbObject->addItems({ "Pump 1", "Pump 2", "Pump 3", "Pump 4","Pump 5" });
+            cmbObject->addItems(global.procesObjestItemsPump);
             break;
         case 2: // mix
-            cmbObject->addItems({ "Mix 1"});
+            cmbObject->addItems(global.procesObjestItemsMix);
             break;
         case 3: //  pause
-            cmbObject->addItems({ "sek." });
+            cmbObject->addItems(global.procesObjestItemsPause);
             break;
         case 4: // test
-            cmbObject->addItems({ "test"});
+            cmbObject->addItems(global.procesObjestItemsTest);
             break;
         case 5: // Pipe
-            cmbObject->addItems(global.pipeItems);
+            cmbObject->addItems(global.procesObjestItemsPipe);
+            break;
+        case 6: // Command
+            cmbObject->addItems(global.procesObjestItemsComand);
             break;
         default:
             break;
-        }
+
+
     }
 
 
-
-
-
 }
-
+}
 void ProcesSteps::objectIndexChange(int index)
 {
     //qDebug() << "objectIndexChange" << index << sender();
@@ -520,7 +520,7 @@ void ProcesSteps::objectIndexChange(int index)
     int num = obj->objectName().toInt(&ok);
     if (ok) {
         if(index >= 0){
-            tabVal[num + firstLineIndex].cmbObjectItem = index;
+            global.tabVal[num + firstLineIndex].cmbObjectItem = index;
             qDebug() << "objectIndexChange" << index << num;
         }
     }

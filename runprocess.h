@@ -28,9 +28,17 @@ private:
         StateReset0,
         StateReset1,
         StateInit = 0x200,  // 0x200
-        StateRun = 0x300,// 0x300
+        StateRun = 0x300,   // 0x300
         StateRun1,
-        StateError = 0x600, // 0x600`
+
+        StateValve,
+        StatePump,
+        StateCmdOut,
+        StateCmdOutTXT,
+        StateTest,
+        StatePause,
+        StateNext,
+        StateError = 0x900, // 0x600`
 
     };
 
@@ -38,6 +46,13 @@ private:
     void stateReset(void);
     void stateInit(void);
     void stateRun(void);
+    void stateValve(void);
+    void statePump(void);
+    void stateCmdOut(void);
+    void stateTest(void);
+    void stateCmdOutTXT(void);
+    void stateNext(void);
+
     void stateError(void);
 
 
@@ -62,6 +77,8 @@ private:
     int stateTimerInterval = 0;
     bool stateTimerTimeout = false;
     int tempInt = 0;
+
+    int currentTabVal;
    // Global::rs485WrPar paramr;
 
 

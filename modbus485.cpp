@@ -839,7 +839,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
                 if(range <= 0){
                      qDebug() <<    " kalib value error !!!!!!!!!!!!! " << range;
                    range = 1;
-                    qDebug() <<    " kalib value error !!!!!!!!!!!!! " << range;
+
                 }
 
 
@@ -1227,22 +1227,48 @@ void Modbus485::writeDat() {
 */
 
 void Modbus485::printDIinput1(int start, int finish) {
-    QDebug debug = qDebug();
+  /*  QDebug debug = qDebug();
 
     for (int i = start; i <= finish; i++) {
         debug << global.DIinput[i].value;
     }
+    */
+
+    QString str;
+
+
+    for (int i = start; i <= finish; i++) {
+        str.append(QString::number(global.DIinput[i].value));
+        str.append(" ");
+    }
+    qDebug() << str;
+
 }
 
 void Modbus485::printDIoutput1(int start, int finish) {
     QDebug debug = qDebug();
 
+    /*
     for (int i = start; i <= finish; i++) {
         debug << global.DIoutput[i].value;
     }
     for (int i = start; i <= finish; i++) {
         debug << global.DIoutput[i].update;
     }
+    */
+
+        QString str;
+    for (int i = start; i <= finish; i++) {
+            str.append(QString::number(global.DIoutput[i].value));
+        str.append(" ");
+    }
+    qDebug() << str;
+
+    for (int i = start; i <= finish; i++) {
+        str.append(QString::number(global.DIoutput[i].update));
+        str.append(" ");
+    }
+    qDebug() << str;
 }
 
 

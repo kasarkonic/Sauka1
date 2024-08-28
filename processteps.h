@@ -66,7 +66,8 @@ private:
         QLineEdit *linEditNote = nullptr;
     };
     QList<tPtr>tabPtr;
-
+/*
+ * move to global
     struct  tVal {
         int npk = 0; //QLabel *label_npk;
         int cmbGroupItem = 0; //QComboBox *cmbGroup = nullptr;
@@ -75,7 +76,7 @@ private:
         QString  notes = ""; //    QLineEdit *linEditNote = nullptr;
     };
     QList<tVal>tabVal;
-
+*/
     bool ok;
     bool ok1;
     int activeRow = 0;
