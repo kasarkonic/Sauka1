@@ -29,14 +29,15 @@ private:
         StateReset1,
         StateInit = 0x200,  // 0x200
         StateRun = 0x300,   // 0x300
+
         StateRun1,
 
-        StateValve,
+       // StateValve,
         StatePump,
-        StateCmdOut,
-        StateCmdOutTXT,
-        StateTest,
         StatePause,
+        StateTest,
+        StatePipe,
+        StateCmd,
         StateNext,
         StateError = 0x900, // 0x600`
 
@@ -52,6 +53,7 @@ private:
     void stateTest(void);
     void stateCmdOutTXT(void);
     void stateNext(void);
+    void statePipe(void);
 
     void stateError(void);
 

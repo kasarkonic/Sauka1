@@ -16,7 +16,7 @@ Pipe::Pipe(Global& global, QString name, QWidget* parent)
 #endif
     angle = settings.var1;
 
-    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 

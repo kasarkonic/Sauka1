@@ -72,7 +72,7 @@ void Runprocess::stateInit() {
         int start = true;
         if(start){
             currentTabVal = 0;
-            //         changeState(StateRun);
+                  changeState(StateRun);
         }
         break;
     }
@@ -93,15 +93,34 @@ void Runprocess::stateInit() {
 void Runprocess::stateRun() {
     switch (getState()) {
     case StateRun:
-
+        qDebug() << "StateRun procesGroupItems "
+                 << global.tabVal[currentTabVal].cmbGroupItem
+                 <<  global.tabVal[currentTabVal].cmbObjectItem
+                 <<  global.tabVal[currentTabVal].val
+                 <<  global.tabVal[currentTabVal].notes;
+        //    QStringList procesGroupItems  = { "Valve", "Pump","Pause","Test","Pipe","Command" };
 
         switch (global.tabVal[currentTabVal].cmbGroupItem) {
         case 0: // valve
-            changeState(StateValve);
+            stateValve();
             break;
         case 1: // pump
-            changeState(StatePump);
+            //changeState(StatePump);
             break;
+        case 2: // pause
+            changeState(StateNext,global.tabVal[currentTabVal].val);
+            break;
+        case 3: //  Test
+           // changeState(StateTest);
+            break;
+        case 4: // Pipe
+           // changeState(StatePipe);
+            break;
+        case 5: // Command
+           // changeState(StateCmd);
+            break;
+
+
         default:
             break;
         }
@@ -122,6 +141,31 @@ void Runprocess::stateRun() {
 
 
 
+    case StatePump:
+        break;
+
+    case StatePause:
+        break;
+
+    case StateTest:
+        break;
+
+    case StatePipe:
+        statePipe();
+        break;
+
+    case StateCmd:
+        break;
+
+    case StateNext:
+        stateNext();
+        break;
+
+    default:
+        break;
+
+
+
     }
 }
 
@@ -132,8 +176,6 @@ void Runprocess::stateValve()
 
     out = out + Y1_1_atvērt;        // start real pin addres
     global.DIoutput[out].value = val;
-    global.DIoutput[out].update = true;
-
 
     if(out == Y2_1_atvērt){global.DIoutput[Y2_1_aizv].value = 0;}
     if(out == Y2_2_atvērt){global.DIoutput[Y2_2_aizv].value = 0;}
@@ -220,13 +262,30 @@ void Runprocess::stateCmdOutTXT()
 
 void Runprocess::stateNext()
 {
-    if(global.tabVal.length() > currentTabVal){
-        currentTabVal ++;
-    changeState(StateRun);
+    if(isTimerTimeout()){
+        if(global.tabVal.length() > currentTabVal){
+            currentTabVal ++;
+            changeState(StateRun);
+        }
+        else{
+            changeState(StateIdle);
+        }
     }
-    else{
-     changeState(StateIdle);
-    }
+}
+
+/*!
+ * \brief Runprocess::statePipe
+ * var2  flow direction 0=>No flow, 1=>right,down  2=>left,up
+ */
+
+void Runprocess::statePipe()
+{
+    int pipe = global.tabVal[currentTabVal].cmbObjectItem;
+    int val = global.tabVal[currentTabVal].val > 0;
+
+    pipe = pipe + pipe_dir0;        // start real pin addres
+    global.DIoutput[pipe].value = val;
+    global.DIoutput[pipe].update = true;
 
 }
 
@@ -264,23 +323,17 @@ void Runprocess::runTaskCycle() {
     // Goto master state in state machine (state groups)
 
     switch (getMasterState()) {
-    case StateInit:
-        stateInit();
+    case StateIdle:
+        stateIdle();
         break;
     case StateReset:
         stateReset();
         break;
+    case StateInit:
+        stateInit();
+        break;
     case StateRun:
         stateRun();
-        break;
-    case StateCmdOut:
-        stateCmdOut();
-        break;
-    case StateTest:
-        stateTest();
-        break;
-    case StateCmdOutTXT:
-        stateCmdOutTXT();
         break;
     case StateError:
         stateError();
@@ -324,7 +377,13 @@ void Runprocess::changeState(int newState, int timeout) {
  * \return true, if timeout > elapsed time from changeState(State,timeout)
  */
 bool Runprocess::isTimerTimeout() {
-    return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
+
+    if(stateTimerInterval == 0){    // no timeout
+        return 1;
+    }
+    else{
+        return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
+    }
 }
 
 int Runprocess::getStateRunTime() {

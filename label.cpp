@@ -11,7 +11,7 @@ Label::Label(Global& global, QString name, QWidget* parent)
     this->setPalette(pal);
 #endif
 
-    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
+    timerIdUpd = startTimer(500, Qt::CoarseTimer);  // only for widgetervice position addjust
 
 }
 

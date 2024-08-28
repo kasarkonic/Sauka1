@@ -349,8 +349,8 @@ void ProcesSteps::drawWidgets()
 void ProcesSteps::UpdateTable()
 {
 
-   // QStringList   pipeItems;
-   // pipeItems << "A" << "B";
+        // QStringList   pipeItems;
+        // pipeItems << "A" << "B";
 
     for(int i = 0 ; i <  15; i++){
 
@@ -507,11 +507,14 @@ void ProcesSteps::groupIndexChange(int index)
         default:
             break;
 
+        }
 
+        if(index == 5){// Pipe
+            qDebug() << "if(index == 5){// Pipe" << index << sender();
+            QLineEdit *linEditNote = tabPtr[num].linEditNote;
+            linEditNote->setText("flow No=0, right,down=1 left,up=2");
+        }
     }
-
-
-}
 }
 void ProcesSteps::objectIndexChange(int index)
 {
