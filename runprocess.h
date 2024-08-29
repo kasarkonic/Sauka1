@@ -15,6 +15,9 @@ class Runprocess : public QWidget {
 public:
     explicit Runprocess(Global& global, QWidget* parent = nullptr);
     ~Runprocess();
+    void start(int state);
+    void stop();
+    void pause(bool val);
 protected:
     void    timerEvent(QTimerEvent* event) override;
 
@@ -30,15 +33,15 @@ private:
         StateInit = 0x200,  // 0x200
         StateRun = 0x300,   // 0x300
 
-        StateRun1,
+        StateRun1,   // 0x301
 
        // StateValve,
-        StatePump,
-        StatePause,
-        StateTest,
-        StatePipe,
-        StateCmd,
-        StateNext,
+        StatePump, // 0x302
+        StatePause, // 0x303
+        StateTest, // 0x304
+        StatePipe, // 0x305
+        StateCmd, // 0x306
+        StateNext, // 0x307
         StateError = 0x900, // 0x600`
 
     };
@@ -49,7 +52,7 @@ private:
     void stateRun(void);
     void stateValve(void);
     void statePump(void);
-    void stateCmdOut(void);
+    void stateCmd(void);
     void stateTest(void);
     void stateCmdOutTXT(void);
     void stateNext(void);
@@ -82,6 +85,7 @@ private:
 
     int currentTabVal;
    // Global::rs485WrPar paramr;
+    bool pauseProc;
 
 
 signals:

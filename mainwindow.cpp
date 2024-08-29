@@ -133,6 +133,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     loadSettings();
     // only for testing:
     Scale* scale = new Scale(global, this);
+    ui->pushButton_pause->setCheckable(true);
     //  scale->show();
    // processStepsWindow.show();
 
@@ -545,5 +546,23 @@ void MainWindow::on_pushButton_Recipes_clicked() {
 
 void MainWindow::on_pushButton_Service_clicked() {
     hwService.show();
+}
+
+
+void MainWindow::on_pushButton_start_clicked()
+{
+    runprocess.start(0x300);
+}
+
+void MainWindow::on_pushButton_stop_clicked()
+{
+    runprocess.stop();
+}
+
+void MainWindow::on_pushButton_pause_clicked()
+{
+    pause = !pause;
+    runprocess.pause(pause);
+    ui->pushButton_pause->setChecked(pause);
 }
 

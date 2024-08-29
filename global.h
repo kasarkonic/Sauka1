@@ -125,7 +125,7 @@ public:
     };
     QList<tVal>tabVal;
 
-    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause","Test","Pipe","Command" };
+    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause?","Test","Pipe","Command" };
     QStringList procesObjestItemsValve  = {
         "Y1_1_atvērt"
         ,"Y1_2_atvērt"
@@ -273,7 +273,7 @@ public:
 
 
 
-    QStringList procesObjestItemsComand  = { "Goto", "Stop", "GOtoStart" };
+    QStringList procesObjestItemsComand  = {"Pause", "Goto", "Stop", "GOtoStart" };
 
 
     QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!

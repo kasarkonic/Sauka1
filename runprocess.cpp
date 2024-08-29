@@ -17,12 +17,48 @@ Runprocess::Runprocess(Global& global, QWidget* parent)
 Runprocess::~Runprocess() {
     delete ui;
 }
+/*!
+ * \brief Runprocess::start
+ * \param state
+ * execute  changeState(state)
+ */
+void Runprocess::start(int state)
+{
+    pauseProc = false;
+    currentTabVal = 0;
+    changeState(state);
+}
+/*!
+ * \brief Runprocess::stop
+ *  go to StateIdle
+ */
+
+void Runprocess::stop()
+{
+    pauseProc = false;
+    changeState(StateIdle);
+}
+/*!
+ * \brief Runprocess::pause
+ * \param val
+ * ??????????????????????????????????????
+ */
+void Runprocess::pause(bool val)
+{
+    pauseProc = val;
+}
 
 void Runprocess::timerEvent(QTimerEvent* event) {
     // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
+    if(!pauseProc){
     if (event->timerId() == taskTimer) {
         //qDebug() << "timerEvent " ;
         runTaskCycle();
+    }
+    }
+    else{
+        qDebug() << "!!! Pause !!! " ;
+
     }
 }
 
@@ -93,13 +129,13 @@ void Runprocess::stateInit() {
 void Runprocess::stateRun() {
     switch (getState()) {
     case StateRun:
-        qDebug() << "StateRun procesGroupItems "
+        qDebug() << currentTabVal
+                 <<"StateRun procesGroupItems "
                  << global.tabVal[currentTabVal].cmbGroupItem
                  <<  global.tabVal[currentTabVal].cmbObjectItem
                  <<  global.tabVal[currentTabVal].val
                  <<  global.tabVal[currentTabVal].notes;
-        //    QStringList procesGroupItems  = { "Valve", "Pump","Pause","Test","Pipe","Command" };
-
+        //      QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause","Test","Pipe","Command" };
         switch (global.tabVal[currentTabVal].cmbGroupItem) {
         case 0: // valve
             stateValve();
@@ -107,26 +143,27 @@ void Runprocess::stateRun() {
         case 1: // pump
             //changeState(StatePump);
             break;
-        case 2: // pause
+        case 2: // Mix
+            //changeState(StatePump);
+            break;
+        case 3: // pause???????????????????????????????
             changeState(StateNext,global.tabVal[currentTabVal].val);
             break;
-        case 3: //  Test
+        case 4: //  Test
            // changeState(StateTest);
             break;
-        case 4: // Pipe
-           // changeState(StatePipe);
+        case 5: // Pipe
+            statePipe();
             break;
-        case 5: // Command
-           // changeState(StateCmd);
+        case 6: // Command
+            stateCmd();
             break;
 
 
         default:
+            changeState(StateIdle);
             break;
         }
-
-
-        changeState(StateRun1,1000);
         break;
 
     case StateRun1:
@@ -155,6 +192,7 @@ void Runprocess::stateRun() {
         break;
 
     case StateCmd:
+        stateCmd();
         break;
 
     case StateNext:
@@ -224,12 +262,25 @@ void Runprocess::statePump()
 {
 
 }
+/*!
+ * \brief Runprocess::stateCmd
+ * QStringList procesObjestItemsComand  = {"Pause",  "Goto", "Stop", "GOtoStart" };
+ */
 
-void Runprocess::stateCmdOut()
+void Runprocess::stateCmd()
 {
-    switch (getState()) {
-    case 0:
-
+    switch (global.tabVal[currentTabVal].cmbObjectItem) {
+    case 0: // pause
+        changeState(StateNext,global.tabVal[currentTabVal].val);
+    case 1: //Goto
+        changeState(StateIdle); // ???????????????????????????????????
+        break;
+    case 2: //Stop
+        changeState(StateIdle);
+        break;
+    case 3: //GOtoStart
+        currentTabVal = 0;
+        changeState(StateRun);
         break;
     default:
         break;
@@ -263,7 +314,7 @@ void Runprocess::stateCmdOutTXT()
 void Runprocess::stateNext()
 {
     if(isTimerTimeout()){
-        if(global.tabVal.length() > currentTabVal){
+        if(global.tabVal.length() - 1 > currentTabVal){
             currentTabVal ++;
             changeState(StateRun);
         }
@@ -286,6 +337,8 @@ void Runprocess::statePipe()
     pipe = pipe + pipe_dir0;        // start real pin addres
     global.DIoutput[pipe].value = val;
     global.DIoutput[pipe].update = true;
+    qDebug() <<"global.DIoutput[" << pipe << "] =" << val;
+    changeState(StateNext);
 
 }
 

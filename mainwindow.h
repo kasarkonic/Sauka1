@@ -62,6 +62,12 @@ private slots:
 
     void on_pushButton_Service_clicked();
 
+    void on_pushButton_start_clicked();
+
+    void on_pushButton_stop_clicked();
+
+    void on_pushButton_pause_clicked();
+
 protected:
     Scale scale;
 
@@ -129,7 +135,7 @@ private:
     //void drawWidgets();
     bool initTimer;
     void delAllWid();
-
+    bool pause = false;
     QString statusStr;
 };
 
