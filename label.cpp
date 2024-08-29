@@ -128,6 +128,12 @@ void Label::paintEvent(QPaintEvent* event) {
         dest = QRect(0, 0, width, height);
         str = "Sapropelis";
         break;
+    case 13:
+        width = 150;
+        height = 25;
+        dest = QRect(0, 0, width, height);
+        str = "Termo Sifons";
+        break;
 
 
 

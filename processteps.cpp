@@ -161,25 +161,33 @@ void ProcesSteps::on_pushButton_Load_clicked()
  ///////
 
                 switch (iter) {
-                case 0: // valve
+                case Global::Valve: // valve
                     iter = global.procesObjestItemsValve.indexOf(loadPsplit[2]);
                     break;
-                case 1: //  pump
+                case Global::Pump: //  pump
                     iter = global.procesObjestItemsPump.indexOf(loadPsplit[2]);
                     break;
-                case 2: // mix
+                case Global::Mix: // mix
                     iter = global.procesObjestItemsMix.indexOf(loadPsplit[2]);
                     break;
-                case 3: //  pause?
-                    iter = global.procesObjestItemsPause.indexOf(loadPsplit[2]);
+
+
+
+                case Global::Compare_equ: //  pause?
+                    //??? iter = global.procesObjestItemsPause.indexOf(loadPsplit[2]);
                     break;
-                case 4: // test
-                    iter = global.procesObjestItemsTest.indexOf(loadPsplit[2]);
+                case Global::Compare_les: // test
+                    //??? iter = global.procesObjestItemsTest.indexOf(loadPsplit[2]);
                     break;
-                case 5: // Pipe
+                case Global::Compare_bigger: // test
+                    //??? iter = global.procesObjestItemsTest.indexOf(loadPsplit[2]);
+                    break;
+
+
+                case Global::Pipe: // Pipe
                     iter = global.procesObjestItemsPipe.indexOf(loadPsplit[2]);
                     break;
-                case 6: // Command
+                case Global::Command: // Command
                     iter = global.procesObjestItemsComand.indexOf(loadPsplit[2]);
                     break;
                 default:

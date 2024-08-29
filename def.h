@@ -70,15 +70,15 @@ enum A1DIn
     Sneks_manual_run,
     Sneks_MAN_FWD,
     Sneks_MAN_REV,
-    Kontaktors_1KM1_ieslegts,
-    Kontaktors_2KM1_ieslegts,
-    Kontaktors_3KM1_ieslegts,
-    Kontaktors_5KM1_ieslegts,
-    Kontaktors_6KM1_ieslegts,
-    Kontaktors_7KM1_ieslegts,
+    Is_H2o_pilda_On,
+    Is_N_pilda_On,
+    Is_B_pilda_On,
+    Is_pump2_2_On,
+    Is_dispax_15Kw_On,
+    Is_TermoSifons_On,
     Kontaktors_5KM2_ieslēgts,
     Kontaktors_12KM1_ieslēgts,
-    Motora_aizsardzība_12Q1,
+    Is_dispax_11Kw_On,
     Nop,
     Y6_1_close,
     Y6_1_open,
@@ -189,18 +189,18 @@ enum virtualInputs
 
 enum A1DOut
 {
-    set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
-    On_pilda_H2o,
-    On_pilda_Na,
-    On_pilda_B,
-    set_pump2_2_On_Off_RW = 4,
-    set_dispax_On_Off = 5,
-    On_MOHNO_5_5_On_Off,
+    nop,//set_pump2_2_On_Off_FW = 0,                  // nr. on board  => Q1
+    H2o_pilda_On,
+    N_pilda_On,
+    B_pilda_On,
+    set_pump2_2_On_Off = 4,
+    set_dispax_15Kw_On_Off = 5,
+    TermoSifons_On, //On_MOHNO_5_5_On_Off,
     H3,
     H4,
     H5,
     VFD_Reset,
-    Dispax_2_On,         // jaunais/ 11kW Dispax 2.
+    set_dispax_11Kw_On_,         // jaunais/ 11kW Dispax 2.
 
 
     Y1_1_atvērt = 12,
@@ -357,94 +357,9 @@ enum virtualOutputs
     pipe_dir84,
     pipe_dir85,
     pipe_dir86,
-
+    pipe_dir87,
+    pipe_dir88,
 };
-
-//QStringList   pipeItems;
-//   pipeItems << "pipe_dir0";
-
-/*
-
-  << "pipe_dir0"
-    << " pipe_dir1 " ;
-
-
-
-
-   " pipe_dir2" +
-   " pipe_dir3" +
-   " pipe_dir4" +
-    "pipe_dir5" +
-    "pipe_dir6" +
-    "pipe_dir7" +
-    "pipe_dir8,
-    "pipe_dir9,
-    "pipe_dir10,
-    "pipe_dir11,
-    "pipe_dir12,
-    "pipe_dir13,
-    "pipe_dir14,
-    "pipe_dir15,
-    "pipe_dir16,
-    "pipe_dir17,
-    "pipe_dir18,
-    "pipe_dir19,
-    "pipe_dir20,
-    "pipe_dir21,
-    "pipe_dir22,
-    "pipe_dir23,
-    "pipe_dir24,
-    "pipe_dir25,
-    "pipe_dir26,
-    "pipe_dir27,
-    "pipe_dir28,
-    "pipe_dir29,
-    "pipe_dir30,
-    "pipe_dir31,
-    "pipe_dir32,
-    "pipe_dir33,
-    "pipe_dir34,
-    "pipe_dir35,
-    "pipe_dir36,
-    "pipe_dir37,
-    "pipe_dir38,
-    "pipe_dir39,
-    "pipe_dir40,
-    "pipe_dir41,
-    "pipe_dir42,
-    "pipe_dir43,
-    "pipe_dir44,
-    "pipe_dir45,
-    "pipe_dir46,
-    "pipe_dir47,
-    "pipe_dir48,
-    "pipe_dir49,
-    "pipe_dir50,
-    "pipe_dir51,
-    "pipe_dir52,
-    "pipe_dir53,
-    "pipe_dir54,
-    "pipe_dir55,
-    "pipe_dir56,
-    "pipe_dir57,
-    "pipe_dir58,
-    "pipe_dir59,
-    "pipe_dir60,
-    "pipe_dir61,
-    "pipe_dir62,
-    "pipe_dir63,
-    "pipe_dir64,
-    "pipe_dir65,
-    "pipe_dir66,
-    "pipe_dir67,
-    "pipe_dir68,
-    "pipe_dir69,
-    pipe_dir70";
-
-
-
-*/
-
 
 
 //#define  TVERTNE1LEVEL   1// DIinput   ANinput4_20  //
@@ -470,83 +385,6 @@ enum virtualOutputs
 #define  PUMP_S5_NOFF  38//  DIoutput   //
 
 
-// TVERTNE
-/*
-#define  TVERTNE_T2_LEVEL   1// DIinput   ANinput4_20  //
-#define  TVERTNE_T2_FULL  2//  DIinput   //
-
-#define  TVERTNE_T3_LEVEL   1// DIinput   ANinput4_20  //
-#define  TVERTNE_T3_FULL  2//  DIinput   //
-
-#define  TVERTNE_T4_LEVEL   1// DIinput   ANinput4_20  //
-#define  TVERTNE_T4_FULL  2//  DIinput   //
-
-#define  TVERTNE_T5_LEVEL   1// DIinput   ANinput4_20  //
-#define  TVERTNE_T5_FULL  2//  DIinput   //
-
-// VALVE
-#define VALVE2_1ACT   3
-#define VALVE2_1SWOPEN   23
-#define VALVE2_1SWCLOSE   24
-
-#define VALVE2_2ACT   3
-
-
-#define VALVE2_3_ACT   3
-
-
-#define VALVE2_4ACT   3
-
-
-#define VALVE3_1ACT   3
-
-
-#define VALVE3_2ACT   3
-
-
-#define VALVE3_3_ACT   3
-
-
-#define VALVE3_4ACT   3
-
-
-#define VALVE4_1ACT   3
-
-
-#define VALVE4_2ACT   3
-
-
-#define VALVE4_3_ACT   3
-
-
-#define VALVE4_4ACT   3
-
-
-#define VALVE5_1ACT   3
-
-#define VALVE5_2ACT   3
-
-#define VALVE5_3_ACT   3
-
-#define VALVE5_4ACT   3
-
-
-#define VALVE6_1ACT   3
-#define VALVE6_1SWOPEN   23
-#define VALVE6_1SWCLOSE   24
-
-#define VALVE6_2ACT   3
-#define VALVE6_2SWOPEN   23
-#define VALVE6_2SWCLOSE   24
-
-#define VALVE6_3_ACT   3
-#define VALVE6_3SWOPEN   23
-#define VALVE6_3SWCLOSE   24
-
-#define VALVE6_4ACT   3
-#define VALVE6_4SWOPEN   23
-#define VALVE6_4SWCLOSE   24
-*/
 #define LEVEL_SENSOR_1   101
 #define LEVEL_SENSOR_2   102
 #define LEVEL_SENSOR_3   103

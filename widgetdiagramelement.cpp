@@ -97,7 +97,7 @@ void WidgetDiagramElement::resizeEvent(QResizeEvent* event) {
 
     }
     if (global.widHash[settings.name].page == 2) {
-        qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
+       // qDebug() << "setNewPosition 2 " << global.widHash[settings.name].name << global.zoomKoefPf2;
         if ((int)(1000 * zoomKoefPf2old) != (int)(1000 * global.zoomKoefPf2)) {
             // setNewPosition(global.zoomKoefPf2);
             move(settings.currX, settings.currY);

@@ -125,7 +125,24 @@ public:
     };
     QList<tVal>tabVal;
 
-    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause?","Test","Pipe","Command" };
+   // namespace GroupItems {
+    enum GroupItems {
+        Valve,
+        Pump,
+        Mix,
+        Compare_equ,
+        Compare_les,
+        Compare_bigger,
+        Command,
+        Pipe,
+    };
+   // }
+
+
+
+
+
+    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Compare_equ?","Compare_les","Compare_bigger","Command","Pipe"};
     QStringList procesObjestItemsValve  = {
         "Y1_1_atvērt"
         ,"Y1_2_atvērt"
@@ -269,6 +286,8 @@ public:
         ,"pipe_dir84"
         ,"pipe_dir85"
         ,"pipe_dir86"
+        ,"pipe_dir87"
+        ,"pipe_dir88"
     };
 
 

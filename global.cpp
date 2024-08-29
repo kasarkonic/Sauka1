@@ -522,7 +522,9 @@ Width  startSizeWi
 for pump:
 
     var1  - on/off  forvard  if relay switch
-    var2   - on/off   revers if available
+    var2   - feedback from kelay test On/Off
+
+
 
     var1   - speed	// if invertor drive
     var2 -  1=On, 0=Off
@@ -551,7 +553,7 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //addWidgList(WidgetType::widgT ty,QString name, int npk, int page, int X, int Y, int size, int var1, int var2) {
 
-    addWidgList(WidgetType::Dyno, "Dinamill", 0, 1, 1743, 253, 70, set_dino0_speed, set_dino0_On_Off);
+    addWidgList(WidgetType::Dyno, "Dizpax 11Kw", 0, 1, 1743, 253, 70, set_dino0_speed, set_dino0_On_Off);
     addWidgList(WidgetType::Conveyor, "Šneka konveijer", 0, 1, 385, 1, 146, set_dino0_speed, set_dino0_On_Off);
 
 
@@ -559,7 +561,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::ScalesBase,"Svaru pamatne ",  0, 1,   234,  166,   312,  0, 0);
     addWidgList(WidgetType::ScalesMass,"Svars", 0,1,    218,  77,   77, scales_mass,scales_mass);
 
-    addWidgList(WidgetType::Dispax,"Dispax 3D", 0, 1, 400, 330, 120, set_dispax_On_Off, set_dispax_On_Off);
+    addWidgList(WidgetType::Dispax,"Dispax 15Kw", 0, 1, 400, 330, 120, set_dispax_15Kw_On_Off, Is_dispax_15Kw_On);
     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 2", 1, 1, 233, 251, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
@@ -570,9 +572,9 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"2. Tvertne",2, 1, 1000, 370, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 370, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
-    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 1128, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 1128, 10, 50, set_pump2_2_On_Off, Is_pump2_2_On);
     addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, drive_M4_speed, drive_M4_speed);
-    addWidgList(WidgetType::Pump,"Sūknis Dinamill",2, 1, 1324, 10, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Dispax 11Kw",2, 1, 1324, 10, 50, set_dispax_11Kw_On_, Is_dispax_11Kw_On);
 
 
     addWidgList(WidgetType::Valve,"Y5.1", 0, 1, 705, 67, 30, 0, 0);
@@ -685,7 +687,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 66, 1, 1150, 233, 53, 0, pipe_dir66);
     addWidgList(WidgetType::Pipe,"Caurule", 67, 1, 1252, 330, 49, 90, pipe_dir67);
 
-  // 2 lapa
+    // 2 lapa
 
     addWidgList(WidgetType::Conveyor, "Šneka konveijer 1", 1, 2, 406, 368, 204, set_dino0_speed, set_dino0_On_Off);
     addWidgList(WidgetType::Mix,"Mixeris 1", 1, 2, 600, 439, 163, set_mix_speed, set_mix_On_Off);
@@ -701,15 +703,18 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Label,"Uzraksts 9", 9, 2, 330, 387, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 10", 10, 2, 1055, 376, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 11", 11, 2, 570, 624, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 13", 13, 2, 50, 53, 250, 0, 0);
 
     addWidgList(WidgetType::Tvertne,"H2o Tvertne",5, 2, 300, 50, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
-    addWidgList(WidgetType::Tvertne,"B Tvertne",6, 2, 600, 50, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
-    addWidgList(WidgetType::Tvertne,"Na Tvertne",7, 2, 900, 50, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
+    addWidgList(WidgetType::Tvertne,"Na Tvertne",6, 2, 600, 50, 120, TVERTNE2LEVELPROC, TVERTNE2FULL);
+    addWidgList(WidgetType::Tvertne,"B Tvertne",7, 2, 900, 50, 120, TVERTNE3LEVELPROC, TVERTNE3FULL);
 
-    addWidgList(WidgetType::Pump,"Sūknis H2o",3, 2, 330, 200, 50, On_pilda_H2o, On_pilda_H2o);
-    addWidgList(WidgetType::Pump,"Sūknis B",4, 2, 630, 200, 50, On_pilda_B, On_pilda_B);
-    addWidgList(WidgetType::Pump,"Sūknis Na",5, 2, 930, 200, 50, On_pilda_Na, On_pilda_Na);
-    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2 2",6, 2, 930, 391, 50, set_pump2_2_On_Off_FW, set_pump2_2_On_Off_RW);
+    addWidgList(WidgetType::Pump,"Sūknis H2o",3, 2, 330, 200, 50, H2o_pilda_On, Is_H2o_pilda_On);
+    addWidgList(WidgetType::Pump,"Sūknis B",4, 2, 930, 200, 50, B_pilda_On, Is_B_pilda_On);
+    addWidgList(WidgetType::Pump,"Sūknis Na",5, 2, 630, 200, 50, N_pilda_On, Is_N_pilda_On);
+    addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2 2",6, 2, 930, 391, 50, set_pump2_2_On_Off, Is_pump2_2_On);
+    addWidgList(WidgetType::Pump,"TermoSifons",7, 2, 105, 82, 50, TermoSifons_On, Is_TermoSifons_On);
+
 
     addWidgList(WidgetType::Valve,"18 valve", 18, 2, 344, 310, 30, 0, 0);
     addWidgList(WidgetType::Valve,"19 valve", 19, 2, 644, 310, 30, 0, 0);
@@ -740,6 +745,9 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Pipe,"Caurule", 85, 2, 990, 409, 300, 90, pipe_dir66);
     addWidgList(WidgetType::Pipe,"Caurule", 86, 2, 154, 283, 200, 90, pipe_dir65);
+
+    addWidgList(WidgetType::Pipe,"Caurule", 87, 2, 47, 103, 50, 90, pipe_dir87);
+    addWidgList(WidgetType::Pipe,"Caurule", 88, 2, 161, 103, 50, 90, pipe_dir88);
 
     qDebug() << "create " << widHash.size() << "widgets";
 }
@@ -835,7 +843,7 @@ void Global::addWidgList(WidgetType::widgT ty, QString name, int npk, int page, 
 }
 void Global::createComboxlist()
 {
-        pipeItems
+    pipeItems
         << "pipe_dir0"
         << "pipe_dir1"
         << "pipe_dir2"
@@ -922,7 +930,9 @@ void Global::createComboxlist()
         << "pipe_dir83"
         << "pipe_dir84"
         << "pipe_dir85"
-        << "pipe_dir86";
+        << "pipe_dir86"
+        << "pipe_dir87"
+        << "pipe_dir88";
 
 
 

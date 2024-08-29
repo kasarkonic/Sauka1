@@ -236,14 +236,14 @@ void WidgetService::initUI() //  not update
         str = "Izvēlēts sūknis \"Pump \"\n";
         str.append("Aktuators maina motora griežšanās ātrumu un virzienu\n");
         str.append("IN1 = 0 izslēdz, IN1 > 0 ieslēdz motoru\n");
-        ui->label1_1->setText("Ieslēgts turp");
-        ui->label2_1->setText("Ieslēgts atpakaļ");
+        ui->label1_1->setText("Ieslēgts izeja");
+        ui->label2_1->setText("Padots spriegums ieeja");
         ui->label3_1->setText("");
         ui->label4_1->setText("");
         ui->label4_2->setText("");
 
         if( currentWidnpk == 0){
-            ui->label5_1->setText("Turp");
+         /*   ui->label5_1->setText("Turp");
             ui->label6_1->setText("Atpakal");
 
             ui->pushButton_5_3->setText("Ieslegt/izslegt");
@@ -251,6 +251,7 @@ void WidgetService::initUI() //  not update
 
             ui->horizontalSlider_speed->hide();
             ui->_slider_val->hide();
+            */
         }
 
         else if ( currentWidnpk == 1){       // pump MOHNO 5.5
@@ -333,7 +334,7 @@ void WidgetService::initUI() //  not update
         //str.append("Ieslēdz / Izslēdz\n");
         str.append("IN1 = 0 ieslēgt / izslēgt motoru");
         ui->label1_1->setText("IN1  ");
-        ui->label1_2->setText(QString::number(set_dispax_On_Off));
+        ui->label1_2->setText(QString::number(set_dispax_15Kw_On_Off));
         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
         ui->label2_1->setText("");
         ui->label3_1->setText("");
@@ -458,6 +459,8 @@ void WidgetService::initUI() //  not update
             ui->label_0_2->setText("Nekādas manipulācijas nav paredzētas.");
             ui->label_0_3->setText("");
             str = "teksta Lauks\n";
+            break;
+
         default:
             break;
         }
@@ -704,7 +707,7 @@ void WidgetService::updateFormData()        // update each 100 ms
         //str.append("Ieslēdz / Izslēdz\n");
         // str.append("IN1 = 0 ieslēgt / izslēgt motoru");
         // ui->label1_1->setText("IN1  ");
-        ui->label1_2->setText(QString::number(set_dispax_On_Off));
+        ui->label1_2->setText(QString::number(set_dispax_15Kw_On_Off));
         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
         // ui->label2_1->setText("");
         // ui->label3_1->setText("");

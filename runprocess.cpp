@@ -51,10 +51,13 @@ void Runprocess::pause(bool val)
 void Runprocess::timerEvent(QTimerEvent* event) {
     // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
     if(!pauseProc){
-    if (event->timerId() == taskTimer) {
-        //qDebug() << "timerEvent " ;
-        runTaskCycle();
-    }
+        if (event->timerId() == taskTimer) {
+            //qDebug() << "timerEvent " ;
+
+            if(!pauseProc){
+                runTaskCycle();
+            }
+        }
     }
     else{
         qDebug() << "!!! Pause !!! " ;
@@ -104,11 +107,12 @@ void Runprocess::stateInit() {
     switch (getState()) {
     case StateInit:
         qDebug() << "StateInit " << global.getTick();
+        changeState(StateIdle);
 
-        int start = true;
+        int start = false;
         if(start){
             currentTabVal = 0;
-                  changeState(StateRun);
+            changeState(StateRun);
         }
         break;
     }
@@ -130,7 +134,7 @@ void Runprocess::stateRun() {
     switch (getState()) {
     case StateRun:
         qDebug() << currentTabVal
-                 <<"StateRun procesGroupItems "
+                 <<"StateRun_procesGroupItems "
                  << global.tabVal[currentTabVal].cmbGroupItem
                  <<  global.tabVal[currentTabVal].cmbObjectItem
                  <<  global.tabVal[currentTabVal].val
@@ -146,11 +150,11 @@ void Runprocess::stateRun() {
         case 2: // Mix
             //changeState(StatePump);
             break;
-        case 3: // pause???????????????????????????????
+        case 3: // pause
             changeState(StateNext,global.tabVal[currentTabVal].val);
             break;
         case 4: //  Test
-           // changeState(StateTest);
+            // changeState(StateTest);
             break;
         case 5: // Pipe
             statePipe();
@@ -164,6 +168,7 @@ void Runprocess::stateRun() {
             changeState(StateIdle);
             break;
         }
+
         break;
 
     case StateRun1:
@@ -213,7 +218,10 @@ void Runprocess::stateValve()
     int val = global.tabVal[currentTabVal].val > 0;
 
     out = out + Y1_1_atvērt;        // start real pin addres
-    global.DIoutput[out].value = val;
+    if(out < MAX_DIoutput){
+        global.DIoutput[out].value = val;
+    }
+    qDebug() << "valve addres " << out << "val = " << val;
 
     if(out == Y2_1_atvērt){global.DIoutput[Y2_1_aizv].value = 0;}
     if(out == Y2_2_atvērt){global.DIoutput[Y2_2_aizv].value = 0;}
@@ -272,6 +280,7 @@ void Runprocess::stateCmd()
     switch (global.tabVal[currentTabVal].cmbObjectItem) {
     case 0: // pause
         changeState(StateNext,global.tabVal[currentTabVal].val);
+        break;
     case 1: //Goto
         changeState(StateIdle); // ???????????????????????????????????
         break;
@@ -286,7 +295,6 @@ void Runprocess::stateCmd()
         break;
     }
 }
-
 
 
 void Runprocess::stateTest()
@@ -332,11 +340,12 @@ void Runprocess::stateNext()
 void Runprocess::statePipe()
 {
     int pipe = global.tabVal[currentTabVal].cmbObjectItem;
-    int val = global.tabVal[currentTabVal].val > 0;
-
-    pipe = pipe + pipe_dir0;        // start real pin addres
-    global.DIoutput[pipe].value = val;
-    global.DIoutput[pipe].update = true;
+    int val = global.tabVal[currentTabVal].val;
+    if(pipe < MAX_DIoutput){
+        pipe = pipe + pipe_dir0;        // start real pin addres
+        global.DIoutput[pipe].value = val;
+        global.DIoutput[pipe].update = true;
+    }
     qDebug() <<"global.DIoutput[" << pipe << "] =" << val;
     changeState(StateNext);
 
