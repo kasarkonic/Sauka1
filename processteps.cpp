@@ -173,14 +173,14 @@ void ProcesSteps::on_pushButton_Load_clicked()
 
 
 
-                case Global::Compare_equ: //  pause?
-                    //??? iter = global.procesObjestItemsPause.indexOf(loadPsplit[2]);
+                case Global::IsValveFinish: //  IsValveFinish
+                    iter = global.procesObjestItemsValve.indexOf(loadPsplit[2]);
                     break;
-                case Global::Compare_les: // test
-                    //??? iter = global.procesObjestItemsTest.indexOf(loadPsplit[2]);
+                case Global::Scales: // test scales
+                    iter = global.procesObjestItemsScales.indexOf(loadPsplit[2]);
                     break;
-                case Global::Compare_bigger: // test
-                    //??? iter = global.procesObjestItemsTest.indexOf(loadPsplit[2]);
+                case Global::Tank: // test
+                    iter = global.procesObjestItemsTank.indexOf(loadPsplit[2]);
                     break;
 
 
@@ -432,25 +432,31 @@ void ProcesSteps::UpdateTable()
         qDebug() << "cmbGroup:"  << global.tabVal[num].cmbGroupItem;
         cmbObject->clear();
         switch (global.tabVal[num].cmbGroupItem) {
-        case 0: // valve
+        case Global::Valve: // valve
             cmbObject->addItems(global.procesObjestItemsValve);
             break;
-        case 1: //  pump
+        case Global::Pump:  //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
             break;
-        case 2: // mix
+        case Global::Mix: // mix
             cmbObject->addItems(global.procesObjestItemsMix);
             break;
-        case 3: //  pause?
-            cmbObject->addItems(global.procesObjestItemsPause);
+
+        case Global::IsValveFinish://  pause?
+            cmbObject->addItems(global.procesObjestItemsValve);
             break;
-        case 4: // test
-            cmbObject->addItems(global.procesObjestItemsTest);
+        case Global::Scales: // test
+            cmbObject->addItems(global.procesObjestItemsScales);
             break;
-        case 5: // Pipe
+        case Global::Tank: // test
+            cmbObject->addItems(global.procesObjestItemsTank);
+            break;
+
+
+        case Global::Pipe: // Pipe
             cmbObject->addItems(global.procesObjestItemsPipe);
             break;
-        case 6: // Command
+        case Global::Command: // Command
             cmbObject->addItems(global.procesObjestItemsComand);
             break;
         default:
@@ -543,33 +549,38 @@ void ProcesSteps::groupIndexChange(int index)
 
         cmbObject->clear();
         switch (index) {
-        case 0: // valve
+        case Global::Valve: // valve
             cmbObject->addItems(global.procesObjestItemsValve);
             break;
-        case 1: //  pump
+        case Global::Pump: //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
             break;
-        case 2: // mix
+        case Global::Mix: // mix
             cmbObject->addItems(global.procesObjestItemsMix);
             break;
-        case 3: //  pause?
-            cmbObject->addItems(global.procesObjestItemsPause);
+
+
+        case Global::IsValveFinish: //  pause?
+            cmbObject->addItems(global.procesObjestItemsValve);
             break;
-        case 4: // test
-            cmbObject->addItems(global.procesObjestItemsTest);
+        case Global::Scales: // test
+            cmbObject->addItems(global.procesObjestItemsScales);
             break;
-        case 5: // Pipe
-            cmbObject->addItems(global.procesObjestItemsPipe);
+        case Global::Tank: // Pipe
+            cmbObject->addItems(global.procesObjestItemsTank);
             break;
-        case 6: // Command
+        case Global::Command: // Command
             cmbObject->addItems(global.procesObjestItemsComand);
+            break;
+        case Global::Pipe: // Pipe
+            cmbObject->addItems(global.procesObjestItemsPipe);
             break;
         default:
             break;
 
         }
 
-        if(index == 5){// Pipe
+        if(index == Global::Pipe){// Pipe
             qDebug() << "if(index == 5){// Pipe" << index << sender();
             QLineEdit *linEditNote = tabPtr[num].linEditNote;
             linEditNote->setText("flow No=0, right,down=1 left,up=2");

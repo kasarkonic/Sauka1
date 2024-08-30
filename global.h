@@ -125,24 +125,24 @@ public:
     };
     QList<tVal>tabVal;
 
-   // namespace GroupItems {
+    // namespace GroupItems {
     enum GroupItems {
         Valve,
         Pump,
         Mix,
-        Compare_equ,
-        Compare_les,
-        Compare_bigger,
+        IsValveFinish,
+        Scales,
+        Tank,
         Command,
         Pipe,
     };
-   // }
+    // }
 
 
 
 
 
-    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Compare_equ?","Compare_les","Compare_bigger","Command","Pipe"};
+    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Is Valve Finish","Scales","Is Tank is Full","Command","Pipe"};
     QStringList procesObjestItemsValve  = {
         "Y1_1_atvērt"
         ,"Y1_2_atvērt"
@@ -188,8 +188,23 @@ public:
 
     QStringList procesObjestItemsPump  = { "Pump1", "Pump2", "Pump3", "Pump4","Pump5","Pump6" };
     QStringList procesObjestItemsMix  = { "Mix","Mix1"};
-    QStringList procesObjestItemsPause  = { "Pause s" };
-    QStringList procesObjestItemsTest  = { "Test Inputs","Test Scales" };
+    //QStringList procesObjestItemsPause  = { "Pause_s" };
+    QStringList procesObjestItemsScales  = { "More_then","Less_then" };
+    QStringList procesObjestItemsTank  = {
+        "TVERTNE1FULL"
+        ,"TVERTNE2FULL"
+        ,"TVERTNE3FULL"
+        ,"TVERTNE4FULL"
+        ,"TVERTNE5FULL"
+
+        ,"TVERTNE1LEVELPROC"
+        ,"TVERTNE2LEVELPROC"
+        ,"TVERTNE3LEVELPROC"
+        ,"TVERTNE4LEVELPROC"
+        ,"TVERTNE5LEVELPROC"
+    };
+
+
     QStringList procesObjestItemsPipe  = {
         "pipe_dir0"
         ,"pipe_dir1"
