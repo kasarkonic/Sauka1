@@ -17,8 +17,8 @@
 
 ProcUI1::ProcUI1(Global& global, QWidget* parent) :
     QMainWindow(parent)
-  , global(global)
-  , ui(new Ui::ProcUI1) {
+    , global(global)
+    , ui(new Ui::ProcUI1) {
 
     ui->setupUi(this);
 
@@ -28,6 +28,14 @@ ProcUI1::ProcUI1(Global& global, QWidget* parent) :
 
 ProcUI1::~ProcUI1() {
     delete ui;
+}
+
+void ProcUI1::maximizeWindow()
+{
+    int state = this->windowState();
+    state = state & ~Qt::WindowMinimized;
+    Qt::WindowState wState = static_cast<Qt::WindowState>(state);
+    this->setWindowState(wState);
 }
 
 void ProcUI1::initUI() {
@@ -104,27 +112,27 @@ void ProcUI1::drawWidgets() {
                 new Conveyor(global, widData.name, ui->desktop);
                 // ui->horizontalLayout_Process->addWidget(ConveyorA);
             }
-                break;
+            break;
             case WidgetType::widgT::Dyno:
             {
                 new Dyno(global, widData.name, ui->desktop);
                 // ui->horizontalLayout_Process->addWidget(dynoA);
             }
-                break;
+            break;
 
             case WidgetType::widgT::Mix:
             {
                 new Mix(global, widData.name, ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(mixA);
             }
-                break;
+            break;
 
             case WidgetType::widgT::Pipe:
             {
                 new Pipe(global, widData.name, ui->desktop);
                 // ui->horizontalLayout_Process->addWidget(pipeA);
             }
-                break;
+            break;
 
             case WidgetType::Pump:
             {
@@ -132,7 +140,7 @@ void ProcUI1::drawWidgets() {
                 // ui->horizontalLayout_Process->addWidget(pumpA);
 
             }
-                break;
+            break;
 
             case WidgetType::Tvertne:
             {
@@ -140,7 +148,7 @@ void ProcUI1::drawWidgets() {
                 //ui->horizontalLayout_Process->addWidget(tvertneA);
 
             }
-                break;
+            break;
 
             case WidgetType::Valve:
             {
@@ -148,7 +156,7 @@ void ProcUI1::drawWidgets() {
                 //ui->horizontalLayout_Process->addWidget(valveA);
 
             }
-                break;
+            break;
 
             case WidgetType::ScalesBase:
             {
@@ -156,7 +164,7 @@ void ProcUI1::drawWidgets() {
                 // ui->horizontalLayout_Process->addWidget(scalesBase);
 
             }
-                break;
+            break;
 
             case WidgetType::ScalesMass:
             {
@@ -164,19 +172,19 @@ void ProcUI1::drawWidgets() {
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
 
             }
-                break;
+            break;
             case WidgetType::Dispax:
             {
                 new Dispax(global, widData.name, ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
             }
-                break;
+            break;
             case WidgetType::Label:
             {
                 new Label(global, widData.name, ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
             }
-                break;
+            break;
 
             default:
                 qDebug() << "Wrong widget type !!! " << widData.type;

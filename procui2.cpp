@@ -29,6 +29,14 @@ ProcUI2::~ProcUI2() {
     delete ui;
 }
 
+void ProcUI2::maximizeWindow()
+{
+    int state = this->windowState();
+    state = state & ~Qt::WindowMinimized;
+    Qt::WindowState wState = static_cast<Qt::WindowState>(state);
+    this->setWindowState(wState);
+}
+
 void ProcUI2::initUI() {
     this->move(50, 25);
     this->resize(1820, 980);

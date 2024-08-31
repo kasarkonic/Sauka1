@@ -135,7 +135,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     Scale* scale = new Scale(global, this);
     ui->pushButton_pause->setCheckable(true);
     //  scale->show();
-   // processStepsWindow.show();
+    // processStepsWindow.show();
 
 }
 
@@ -400,13 +400,31 @@ void MainWindow::initUI() {
     str.append("10.11:53 BRĪDINĀJUMS ! vārsta V4 aizversanas laiks 20s morma 12s\n");
     ui->textEdit_Field->setText(str);
 
-    cmbList << "Iestatijumi" << "Receptes" << "Kartiņa" << "Mērījumi" << "Serviss" << "Ražošana" << "Par_mani";
-    ui->comboBox->addItems(cmbList);
+    /*
+    enum mCombo{
+        Iestatijumi,
+        Receptes,
+        Kartiņa,
+        Mērījumi,
+        Serviss,
+        Ražošana,
+        Procesu_programmēšana,
+        Par_mani,
+    };
+
+    QStringList menuComboxList  = {
+            "Iestatijumi"
+            ,"Receptes"
+            ,"Kartiņa"
+            ,"Mērījumi"
+            ,"Serviss"
+            ,"Ražošana"
+            ,"Procesu programmēšana"
+            ,"Par_mani"
+        };
+*/
+    ui->comboBox->addItems(menuComboxList);
     ui->comboBox->setCurrentIndex(0);
-
-
-
-
 
 
     // default settings.
@@ -461,54 +479,60 @@ void MainWindow::on_pushButton_Stop_clicked() {
 }
 
 
+/*
+    enum mCombo{
+        Iestatijumi,
+        Receptes,
+        Kartina,
+        Mērījumi,
+        Serviss,
+        Ražošana,
+        Procesu_programmēšana,
+        Par_mani,
+    };
+      */
 void MainWindow::on_comboBox_currentIndexChanged(int index) {
-    qDebug() << " Combo box index" << index << cmbList[index];
-    // cmbList << "Iestatijumi" << "Receptes" <<"Kartiņa" << "Atskaites" << "Serviss"  << "Ražošana"<< "Par_mani";
 
     switch (index) {
-    case 0:
+    case mCombo::Iestatijumi:
+        // rs232.show();
         break;
 
-    case 1:
+    case mCombo::Receptes:
     {
         Recipet* recipet = new Recipet(global, this);
         recipet->show();
 
         break;
     }
-    case 2:
+    case mCombo::Kartina:
     {
         ComponentCard* componentCard = new ComponentCard(global, this);
         componentCard->show();
 
         break;
     }
-    case 3:
-    {
-        //Rs232* rs232 = new Rs232(global, this);
-        //rs232 = new Rs232(global,this);
-        rs232.show();
-        break;
-    }
-    case 4:
+    case mCombo::Serviss :
     {
         //HWService *hwService = new HWService(global,this);
         //hwService = new HWService(global,this);
         hwService.show();
         break;
     }
-    case 5:
+    case mCombo::Razosana:
     {
         //  Runprocess *runprocess = new Runprocess(global.this);
         runprocess.show();
 
-        // ParMani *parmani = new ParMani(global,this);
-        //parmani = new ParMani(global,this);
-        // parmani->show();
         break;
     }
-
-    case 6:
+    case mCombo::Procesu_programmesana:
+    {
+        procUI1.maximizeWindow();
+        procesSteps.show();
+        break;
+    }
+    case mCombo::Par_mani:
     {
         ParMani* parmani = new ParMani(global, this);
         //parmani = new ParMani(global,this);
@@ -521,16 +545,18 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
     }
 
     ui->comboBox->setCurrentIndex(0);
-    qDebug() << " Combo box index Finish" << index << cmbList[index];
+    qDebug() << " Combo box index Finish" << index << menuComboxList;
 }
 
 
 void MainWindow::on_pushButton_Dyno_clicked() {
+    procUI2.maximizeWindow();
     procUI2.show();
     procUI2.raise();
 }
 
 void MainWindow::on_pushButton_Mix_clicked() {
+    procUI1.maximizeWindow();
     procUI1.show();
     procUI1.raise();
 }

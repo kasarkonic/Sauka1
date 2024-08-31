@@ -80,6 +80,27 @@ protected:
 
 private:
 
+    enum mCombo{
+        Iestatijumi,
+        Receptes,
+        Kartina,
+        Merijumi,
+        Serviss,
+        Razosana,
+        Procesu_programmesana,
+        Par_mani,
+    };
+    QStringList menuComboxList  = {
+        "Iestatijumi"
+        ,"Receptes"
+        ,"Kartiņa"
+        ,"Mērījumi"
+        ,"Serviss"
+        ,"Ražošana"
+        ,"Procesu programmēšana"
+        ,"Par_mani"
+    };
+
     Global& global;
 
     Ui::MainWindow* ui;

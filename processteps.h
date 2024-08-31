@@ -22,6 +22,7 @@ public:
     ProcesSteps &operator=(ProcesSteps &&) = delete;
     explicit ProcesSteps(Global &global, QWidget *parent = nullptr);
     ~ProcesSteps();
+    void maximizeWindow();
 protected:
 
 void wheelEvent(QWheelEvent * event) override;

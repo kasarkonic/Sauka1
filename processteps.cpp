@@ -18,6 +18,14 @@ ProcesSteps::~ProcesSteps()
     delete ui;
 }
 
+void ProcesSteps::maximizeWindow()
+{
+    int state = this->windowState();
+    state = state & ~Qt::WindowMinimized;
+    Qt::WindowState wState = static_cast<Qt::WindowState>(state);
+    this->setWindowState(wState);
+}
+
 void ProcesSteps::wheelEvent(QWheelEvent *event)
 {
     if(event->angleDelta().y() > 0){ // up Wheel
@@ -140,7 +148,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
                     break;
                 }
 
-               Global::tVal tabv;
+                Global::tVal tabv;
                 QString str;
 
                 str = loadPsplit[0];
@@ -158,7 +166,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
                 tabv.cmbGroupItem = iter;   //  loadProcesList[i][1];     !!!!!!!!!!!!!!!!!!!!!!!
                 qDebug() << "loadPsplit[0]" << i << loadPsplit[1] << " = " << iter
                          <<" [i][2] = ]" << loadPsplit[2];
- ///////
+                ///////
 
                 switch (iter) {
                 case Global::Valve: // valve
@@ -170,32 +178,27 @@ void ProcesSteps::on_pushButton_Load_clicked()
                 case Global::Mix: // mix
                     iter = global.procesObjestItemsMix.indexOf(loadPsplit[2]);
                     break;
-
-
-
                 case Global::IsValveFinish: //  IsValveFinish
                     iter = global.procesObjestItemsValve.indexOf(loadPsplit[2]);
                     break;
                 case Global::Scales: // test scales
                     iter = global.procesObjestItemsScales.indexOf(loadPsplit[2]);
                     break;
-                case Global::Tank: // test
+                case Global::Tank: // Tank
                     iter = global.procesObjestItemsTank.indexOf(loadPsplit[2]);
-                    break;
-
-
-                case Global::Pipe: // Pipe
-                    iter = global.procesObjestItemsPipe.indexOf(loadPsplit[2]);
                     break;
                 case Global::Command: // Command
                     iter = global.procesObjestItemsComand.indexOf(loadPsplit[2]);
+                    break;
+                case Global::Pipe: // Pipe
+                    iter = global.procesObjestItemsPipe.indexOf(loadPsplit[2]);
                     break;
                 default:
                     break;
 
                 }
 
- ///////
+                ///////
 
 
                 tabv.cmbObjectItem = iter;  //  loadPsplit[2];    !!!!!!!!!!!!!!!!!!!!!!!
@@ -217,7 +220,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
             //qDebug() << "Error! 1" << global.tabVal.length() << loadProcesList.length() ;
 
 
-  /*
+            /*
 
             // load notes
             ui->textEdit_Notes->clear();
@@ -557,11 +560,13 @@ void ProcesSteps::groupIndexChange(int index)
             break;
         case Global::Mix: // mix
             cmbObject->addItems(global.procesObjestItemsMix);
-            break;
-
-
+            break;   
         case Global::IsValveFinish: //  pause?
             cmbObject->addItems(global.procesObjestItemsValve);
+            {
+                QLineEdit *linEditNote = tabPtr[num].linEditNote;
+                linEditNote->setText("Enter max time here (s)");
+            }
             break;
         case Global::Scales: // test
             cmbObject->addItems(global.procesObjestItemsScales);
@@ -574,16 +579,14 @@ void ProcesSteps::groupIndexChange(int index)
             break;
         case Global::Pipe: // Pipe
             cmbObject->addItems(global.procesObjestItemsPipe);
+            {
+                QLineEdit *linEditNote = tabPtr[num].linEditNote;
+                linEditNote->setText("flow No=0, right,down=1 left,up=2");
+            }
             break;
         default:
             break;
 
-        }
-
-        if(index == Global::Pipe){// Pipe
-            qDebug() << "if(index == 5){// Pipe" << index << sender();
-            QLineEdit *linEditNote = tabPtr[num].linEditNote;
-            linEditNote->setText("flow No=0, right,down=1 left,up=2");
         }
     }
 }

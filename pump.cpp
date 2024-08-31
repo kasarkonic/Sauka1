@@ -20,10 +20,10 @@ void Pump::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     //qDebug() << "Pump updateSettings" << settings.var1;
 
-    speed = (int)global.DIoutput[settings.var1].value;
-    step = (int)(speed) / 10;
-    if (global.DIoutput[settings.var2].value == 0) {
-        step = 0;
+    speed = (int)global.DIinput[settings.var2].value;
+    step = 0;
+    if (speed > 0) {
+        step = 10;
     }
 
 
@@ -31,7 +31,7 @@ void Pump::updateSettings() {
     //speed = (int)global.sensList[dSensAdr].analog /3;
     killTimer(timerIdUpd);
 
-    if (speed & 0x7fff) {
+    if (speed) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer);
     } else {
         timerIdUpd = startTimer(200, Qt::CoarseTimer);

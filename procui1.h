@@ -15,6 +15,7 @@ class ProcUI1 : public QMainWindow {
 public:
     explicit ProcUI1(Global& global, QWidget* parent = nullptr);
     ~ProcUI1();
+    void maximizeWindow();
 
 protected:
 

@@ -38,9 +38,13 @@ private:
        // StateValve,
         StatePump, // 0x302
         StatePause, // 0x303
-        StateTest, // 0x304
-        StatePipe, // 0x305
-        StateCmd, // 0x306
+
+        StatePipe, // 0x304
+        StateCmd, // 0x305
+
+        StateIfValveFinish,// 0x306
+        StateScalesTest,
+        StateTankTest,
         StateNext, // 0x307
         StateError = 0x900, // 0x600`
 
@@ -51,9 +55,11 @@ private:
     void stateInit(void);
     void stateRun(void);
     void stateValve(void);
+    void stateIfValveFinish(void);
     void statePump(void);
     void stateCmd(void);
-    void stateTest(void);
+    void stateScalesTest(void);
+    void stateTankTest(void);
     void stateCmdOutTXT(void);
     void stateNext(void);
     void statePipe(void);
@@ -86,7 +92,7 @@ private:
     int currentTabVal;
    // Global::rs485WrPar paramr;
     bool pauseProc;
-
+    bool ok;
 
 signals:
     void diOutputChangeSi(int i, int value);
