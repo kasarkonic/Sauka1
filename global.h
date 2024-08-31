@@ -186,7 +186,7 @@ public:
         ,"Y6_2_aizv"
     };
 
-    QStringList procesObjestItemsPump  = { "Pump1", "Pump2", "Pump3", "Pump4","Pump5","Pump6" };
+    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
     QStringList procesObjestItemsMix  = { "Mix","Mix1"};
     //QStringList procesObjestItemsPause  = { "Pause_s" };
     QStringList procesObjestItemsScales  = { "More_then","Less_then" };

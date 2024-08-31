@@ -243,7 +243,7 @@ void WidgetService::initUI() //  not update
         ui->label4_2->setText("");
 
         if( currentWidnpk == 0){
-         /*   ui->label5_1->setText("Turp");
+            /*   ui->label5_1->setText("Turp");
             ui->label6_1->setText("Atpakal");
 
             ui->pushButton_5_3->setText("Ieslegt/izslegt");
@@ -674,11 +674,10 @@ void WidgetService::updateFormData()        // update each 100 ms
 
         }
 
-        else if ( currentWidnpk == 1){       // pump MOHNO 5.5
-            actualMotorNode = M4;
-            gearrate = 10;
-
-        }
+     //   else if ( currentWidnpk == 1){       // pump MOHNO 5.5
+     //       actualMotorNode = M4;
+    //        gearrate = 10;
+       // }
 
         else{
 
@@ -692,7 +691,7 @@ void WidgetService::updateFormData()        // update each 100 ms
 
 
         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
-        ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
+        ui->label2_3->setText(QString::number(global.DIinput[widgetElement->settings.var2].value));
 
 
         break;
@@ -1051,24 +1050,25 @@ void WidgetService::on_pushButton_5_3_clicked()
             global.rs485WrList.append(param);
 
         }
-         if(currentWidnpk == 0) {
+       // else if(currentWidnpk == 0) {
 
-            if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
-                global.DIoutput[widgetElement->settings.var1].value = 0;
-                global.DIoutput[widgetElement->settings.var2].value = 0;
-            }
-            else{
-                global.DIoutput[widgetElement->settings.var1].value = 1;
-                global.DIoutput[widgetElement->settings.var2].value = 0;
-            }
-
-            //global.DIoutput[widgetElement->settings.var1].value = 1;
+           // if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
+               // global.DIoutput[widgetElement->settings.var1].value = 0;
+               // global.DIoutput[widgetElement->settings.var2].value = 0;
+           // }
+      //  }
+        else{
+            global.DIoutput[widgetElement->settings.var1].value = 1;
+            //global.DIoutput[widgetElement->settings.var2].value = 0;
         }
 
-        break;
-    default:
-        break;
-    }
+        //global.DIoutput[widgetElement->settings.var1].value = 1;
+
+
+    break;
+default:
+    break;
+}
 }
 
 void WidgetService::on_pushButton_6_3_clicked()
@@ -1120,11 +1120,6 @@ void WidgetService::on_pushButton_6_3_clicked()
         saveSettings(par, val);
 
 
-
-
-
-
-
         break;
     case WidgetType::widgT::Dispax:
         // off
@@ -1155,20 +1150,21 @@ void WidgetService::on_pushButton_6_3_clicked()
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
         }
-        if ( currentWidnpk == 0){
+       // else if ( currentWidnpk == 0){
 
-            if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
-                global.DIoutput[widgetElement->settings.var1].value = 0;
-                global.DIoutput[widgetElement->settings.var2].value = 0;
-            }
+       //     if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
+       //         global.DIoutput[widgetElement->settings.var1].value = 0;
+       //         global.DIoutput[widgetElement->settings.var2].value = 0;
+       //     }
+       // }
             else{
-                global.DIoutput[widgetElement->settings.var1].value =0;
-                global.DIoutput[widgetElement->settings.var2].value = 1;
+                global.DIoutput[widgetElement->settings.var1].value = 0;
+                // global.DIoutput[widgetElement->settings.var2].value = 1;
             }
 
-           // global.DIoutput[widgetElement->settings.var1].value = 0;
+            // global.DIoutput[widgetElement->settings.var1].value = 0;
 
-        }
+
         break;
 
     default:

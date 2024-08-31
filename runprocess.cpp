@@ -145,7 +145,7 @@ void Runprocess::stateRun() {
             stateValve();
             break;
         case Global::Pump: // pump
-            //changeState(StatePump);
+            changeState(StatePump);
             break;
         case Global::Mix: // Mix
             //changeState(StatePump);
@@ -181,6 +181,7 @@ void Runprocess::stateRun() {
         break;
 
     case StatePump:
+        statePump();
         break;
 
     case StatePause:
@@ -298,6 +299,50 @@ void Runprocess::stateIfValveFinish()
 
 void Runprocess::statePump()
 {
+    int out = global.tabVal[currentTabVal].cmbObjectItem; //pump nr
+    int val = global.tabVal[currentTabVal].val > 0;
+    int pumpAddress = 0;
+
+//    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
+
+    switch (out) {
+    case 0:
+        pumpAddress = set_pump2_2_On_Off;
+        break;
+    case 1:
+         pumpAddress = 0;   //??????????????????????  MOHNO DRIVER
+        break;
+    case 2:
+        pumpAddress = set_dispax_11Kw_On_;
+        break;
+    case 3:
+         pumpAddress = H2o_pilda_On;
+        break;
+    case 4:
+         pumpAddress = B_pilda_On;
+        break;
+    case 5:
+        pumpAddress = N_pilda_On;
+        break;
+    case 6:
+        pumpAddress = TermoSifons_On;
+        break;
+    default:
+        break;
+    }
+
+
+    if(pumpAddress < MAX_DIoutput){
+        global.DIoutput[pumpAddress].value = val;
+    }
+  //  qDebug() << "pump addres " << out << "val = " << val;
+    else{
+        qDebug() << "ERROR !!!" <<out <<"Pump address out of range " << pumpAddress;
+    }
+
+    changeState(StateNext);
+
+
 
 }
 /*!
