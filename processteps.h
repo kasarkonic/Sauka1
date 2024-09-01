@@ -72,6 +72,7 @@ private:
         QComboBox *cmbObject = nullptr;
         QLineEdit *linEditVal = nullptr;
         QLineEdit *linEditNote = nullptr;
+        QLabel *labelhelp  = nullptr;
     };
     QList<tPtr>tabPtr;
     /*

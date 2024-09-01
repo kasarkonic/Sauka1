@@ -43,12 +43,12 @@ void ProcesSteps::setTabValRecord(int recNr)
         label_n->setText(">>");
     }
     else{
-            firstLineIndex = recNr - 14;
-            activeRow = recNr - 14;
-            tabValRecord = recNr;
-            label_n = tabPtr[activeRow].label_npk;
-            label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
-            label_n->setText(">>");
+        firstLineIndex = recNr - 14;
+        activeRow = recNr - 14;
+        tabValRecord = recNr;
+        label_n = tabPtr[activeRow].label_npk;
+        label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
+        label_n->setText(">>");
     }
 
 }
@@ -273,13 +273,14 @@ void ProcesSteps::on_pushButton_Load_clicked()
     //activeRow = 0;
     //firstLineIndex = 0;
     // UpdateTable();
-     qDebug() << "Error! not file exist.";
+    qDebug() << "Error! not file exist.";
 }
 
 
 void ProcesSteps::on_pushButton_clicked()
 {
-    qDebug() << "Save -----------------------------------------";
+    qDebug() << "Save -----------------------------------------";   //
+    // global.tabVal[num + firstLineIndex].cmbObjectItem
     saveProcesList.clear();
 
     for(int num = 0; num < global.tabVal.length() ; num++ ){
@@ -287,22 +288,34 @@ void ProcesSteps::on_pushButton_clicked()
         cmdStr.append(QString::number(num));
         cmdStr.append("|");
 
-        QComboBox *cmbGroup = tabPtr[num].cmbGroup;
-        cmdStr.append(cmbGroup->currentText());
+        //QComboBox *cmbGroup = tabPtr[num].cmbGroup;
+        //cmdStr.append(cmbGroup->currentText());
+        //?cmdStr.append(QString().number(global.tabVal[num].cmbGroupItem));
+
+        //cmdStr.append(global.procesGroupItems[global.tabVal[num].cmbGroupItem]);
+        cmdStr.append(global.tabVal[num].strGroupItem);
         cmdStr.append("|");
 
-        QComboBox *cmbObject = tabPtr[num].cmbObject;
-        cmdStr.append(cmbObject->currentText());
+        //QComboBox *cmbObject = tabPtr[num].cmbObject;
+        //cmdStr.append(cmbObject->currentText());
+        //?cmdStr.append(QString().number(global.tabVal[num].cmbObjectItem));
+
+
+        cmdStr.append(global.tabVal[num].strObjectItem);
+
+
         cmdStr.append("|");
 
-        QLineEdit *linEditVal = tabPtr[num].linEditVal;
-        cmdStr.append(linEditVal->text());
+       // QLineEdit *linEditVal = tabPtr[num].linEditVal;
+        //cmdStr.append(linEditVal->text());
+        cmdStr.append(QString().number(global.tabVal[num].val));
         cmdStr.append("|");
 
-        QLineEdit *linEditNote = tabPtr[num].linEditNote;
-        cmdStr.append(linEditNote->text());
+        //QLineEdit *linEditNote = tabPtr[num].linEditNote;
+        //cmdStr.append(linEditNote->text());
+        cmdStr.append(global.tabVal[num].notes);
         cmdStr.append("\n");
-         qDebug() << cmdStr;
+        qDebug() << cmdStr;
         saveProcesList.append(cmdStr);
 
     }
@@ -415,6 +428,11 @@ void ProcesSteps::drawWidgets()
         connect(linEditNote, SIGNAL(editingFinished()), this, SLOT(linNoteFinish()));
         linEditNote->setText("0");
 
+        QLabel *labelhelp = new QLabel(this);
+        tablePtr.labelhelp = labelhelp;
+        labelhelp->setObjectName(QString::number(npk));
+        labelhelp->setText("Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)");
+
         tabPtr.append(tablePtr);
         global.tabVal.append(tableVal);
 
@@ -426,6 +444,7 @@ void ProcesSteps::drawWidgets()
         hLayout->addWidget(cmbObject,5);
         hLayout->addWidget(linEditVal,5);
         hLayout->addWidget(linEditNote,10);
+        hLayout->addWidget(labelhelp,30);
 
         ui->verticalLayout_2->addLayout(hLayout);
 
@@ -508,6 +527,11 @@ void ProcesSteps::UpdateTable()
 
         QLineEdit *linEditNote = tabPtr[i].linEditNote;
         linEditNote->setText(global.tabVal[num].notes);
+
+        QLabel *labelhelp = tabPtr[i].labelhelp;
+        labelhelp->setText(global.tabVal[num].helpStr);
+
+        // tabVal
     }
     QLabel *label_npk = tabPtr[activeRow].label_npk;
     label_npk->setStyleSheet("background:rgb(150,250,150);"); // light green
@@ -576,69 +600,72 @@ void ProcesSteps::groupIndexChange(int index)
 
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
-    if (ok) {
-        global.tabVal[num + firstLineIndex].cmbGroupItem = index;
+    qDebug() << "groupIndexChange" << num << firstLineIndex << global.tabVal.length();
+    if (ok && index >= 0) {
+
+        global.tabVal[num + firstLineIndex].strGroupItem = global.procesGroupItems[index];
 
         QComboBox *cmbObject = tabPtr[num].cmbObject;
+        global.tabVal[num + firstLineIndex].cmbGroupItem = index;
+        global.tabVal[num + firstLineIndex].strGroupItem = global.procesGroupItems[index];
+
+        QString helpTxt;
+
+        QLabel *labelhelp = tabPtr[num].labelhelp;
+        //labelhelp->setText("???");
+
 
         cmbObject->clear();
         switch (index) {
         case Global::Valve: // valve
             cmbObject->addItems(global.procesObjestItemsValve);
+            helpTxt = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
             break;
         case Global::Pump: //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
-            {
-
-                QLineEdit *linEditNote = tabPtr[num].linEditNote;
-                linEditNote->setText("ja MOHNO, drive speed +- 0.1 Hz,");
-            }
+            helpTxt = "Ja MOHNO, drive speed +- 0.1 Hz,";
             break;
         case Global::DRIVES: // DRIVES
             cmbObject->addItems(global.procesObjestItemsDrives);
-            {
-            QLineEdit *linEditNote = tabPtr[num].linEditNote;
-            linEditNote->setText("vertIbas = drive speed +- 0.1 Hz");
-            }
-            break;   
+            helpTxt = "vertIbas = drive speed +- 0.1 Hz";
+
+                break;
         case Global::IsValveFinish: //  pause?
             cmbObject->addItems(global.procesObjestItemsValve);
-            {
-                QLineEdit *linEditNote = tabPtr[num].linEditNote;
-                linEditNote->setText("Enter max time here (s)");
-            }
+            helpTxt = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
             break;
         case Global::Scales: // test
             cmbObject->addItems(global.procesObjestItemsScales);
+            helpTxt = "V->signāla vērtība (kg)";
             break;
         case Global::Tank: // Pipe
             cmbObject->addItems(global.procesObjestItemsTank);
+            helpTxt = "V->signāla piepildījums(%) vai kala sensors 0|1";
             break;
         case Global::Command: // Command
             cmbObject->addItems(global.procesObjestItemsComand);
             break;
         case Global::Pipe: // Pipe
             cmbObject->addItems(global.procesObjestItemsPipe);
-            {
-                QLineEdit *linEditNote = tabPtr[num].linEditNote;
-                linEditNote->setText("flow No=0, right,down=1 left,up=2");
-            }
+            helpTxt = "flow No=0, right,down=1 left,up=2";
             break;
         default:
             break;
 
         }
+        labelhelp->setText(helpTxt);
     }
 }
 void ProcesSteps::objectIndexChange(int index)
 {
-    //qDebug() << "objectIndexChange" << index << sender();
+    qDebug() << "objectIndexChange" << index << sender();
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
-    if (ok) {
-        if(index >= 0){
+    if (ok && index >= 0) {
+            QComboBox *cmbObject = tabPtr[num].cmbObject;
             global.tabVal[num + firstLineIndex].cmbObjectItem = index;
+            global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
             qDebug() << "objectIndexChange" << index << num;
-        }
+
     }
 }

@@ -173,7 +173,7 @@ void Runprocess::stateRun() {
 
 
         default:
-            changeState(StateIdle);
+            changeState(StateNext);
             break;
         }
 

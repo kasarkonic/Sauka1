@@ -119,9 +119,12 @@ public:
     struct  tVal {
         int npk = 0; //QLabel *label_npk;
         int cmbGroupItem = 0; //QComboBox *cmbGroup = nullptr;
+        QString strGroupItem = "";
         int cmbObjectItem = 0;// QComboBox *cmbObject = nullptr;
+        QString strObjectItem = "";
         int  val = 0;      //QLineEdit *linEditVal = nullptr;
         QString  notes = ""; //    QLineEdit *linEditNote = nullptr;
+        QString helpStr = "";
     };
     QList<tVal>tabVal;
 
