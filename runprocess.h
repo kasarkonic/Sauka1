@@ -45,6 +45,8 @@ private:
         StateIfValveFinish,// 0x306
         StateScalesTest,
         StateTankTest,
+        StateDrives, // 0x302
+
         StateNext, // 0x307
         StateError = 0x900, // 0x600`
 
@@ -63,6 +65,7 @@ private:
     void stateCmdOutTXT(void);
     void stateNext(void);
     void statePipe(void);
+    void stateDrives(void);
 
     void stateError(void);
 
@@ -93,9 +96,14 @@ private:
    // Global::rs485WrPar paramr;
     bool pauseProc;
     bool ok;
+    int actualMotorNode;
+    void runDrive( int address, int speed);
+    void stopDrive(int address);
 
 signals:
     void diOutputChangeSi(int i, int value);
+    void stateChange(int step);
+
 };
 
 #endif // RUNPROCESS_H

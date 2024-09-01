@@ -129,7 +129,7 @@ public:
     enum GroupItems {
         Valve,
         Pump,
-        Mix,
+        DRIVES,
         IsValveFinish,
         Scales,
         Tank,
@@ -142,7 +142,7 @@ public:
 
 
 
-    QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Is Valve Finish","Scales","Is Tank is Full","Command","Pipe"};
+    QStringList procesGroupItems  = { "Valve", "Pump", "DRIVES", "Is Valve Finish","Scales","Is Tank is Full","Command","Pipe"};
     QStringList procesObjestItemsValve  = {
         "Y1_1_atvērt"
         ,"Y1_2_atvērt"
@@ -187,7 +187,7 @@ public:
     };
 
     QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
-    QStringList procesObjestItemsMix  = { "Mix","Mix1"};
+    QStringList procesObjestItemsDrives  = { "Mix","Šneks"};
     //QStringList procesObjestItemsPause  = { "Pause_s" };
     QStringList procesObjestItemsScales  = { "More_then","Less_then" };
     QStringList procesObjestItemsTank  = {
@@ -303,6 +303,10 @@ public:
         ,"pipe_dir86"
         ,"pipe_dir87"
         ,"pipe_dir88"
+       // ,"pipe_dir89"
+        ,"pipe_dir90"
+        ,"pipe_dir91"
+        ,"pipe_dir92"
     };
 
 
@@ -534,7 +538,8 @@ public:
     BallValve* ballvalveTest18;
     BallValve* ballvalveTest19;
     BallValve* ballvalveTest20;
-
+    BallValve* ballvalveTest21;
+    BallValve* ballvalveTest22;
 
 private:
 

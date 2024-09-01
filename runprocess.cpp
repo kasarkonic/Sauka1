@@ -60,7 +60,7 @@ void Runprocess::timerEvent(QTimerEvent* event) {
         }
     }
     else{
-        qDebug() << "!!! Pause !!! " ;
+        //qDebug() << "!!! Pause !!! " ;
 
     }
 }
@@ -139,7 +139,7 @@ void Runprocess::stateRun() {
                  <<  global.tabVal[currentTabVal].cmbObjectItem
                  <<  global.tabVal[currentTabVal].val
                  <<  global.tabVal[currentTabVal].notes;
-        //      QStringList procesGroupItems  = { "Valve", "Pump", "Mix", "Pause","Test","Pipe","Command" };
+        //      QStringList procesGroupItems  = { "Valve", "Pump", "DRIVES", "Pause","Test","Pipe","Command" };
         switch (global.tabVal[currentTabVal].cmbGroupItem) {
         case Global::Valve: // valve
             stateValve();
@@ -147,8 +147,8 @@ void Runprocess::stateRun() {
         case Global::Pump: // pump
             changeState(StatePump);
             break;
-        case Global::Mix: // Mix
-            //changeState(StatePump);
+        case Global::DRIVES: // DRIVES
+            changeState(StateDrives);
             break;
 
         case Global::IsValveFinish: //  IsValveFinish?
@@ -190,6 +190,10 @@ void Runprocess::stateRun() {
 
     case StatePipe:
         statePipe();
+        break;
+
+    case StateDrives:
+        stateDrives();
         break;
 
     case StateCmd:
@@ -303,23 +307,29 @@ void Runprocess::statePump()
     int val = global.tabVal[currentTabVal].val > 0;
     int pumpAddress = 0;
 
-//    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
+    //    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
 
     switch (out) {
     case 0:
         pumpAddress = set_pump2_2_On_Off;
         break;
     case 1:
-         pumpAddress = 0;   //??????????????????????  MOHNO DRIVER
+        pumpAddress = 0;   //??????????????????????  MOHNO DRIVER
+        if(val == 0){     // stop
+            stopDrive(M4) ;
+        }
+        if(val > 0){     // stop
+            runDrive(M4,val) ;
+        }
         break;
     case 2:
         pumpAddress = set_dispax_11Kw_On_;
         break;
     case 3:
-         pumpAddress = H2o_pilda_On;
+        pumpAddress = H2o_pilda_On;
         break;
     case 4:
-         pumpAddress = B_pilda_On;
+        pumpAddress = B_pilda_On;
         break;
     case 5:
         pumpAddress = N_pilda_On;
@@ -335,7 +345,7 @@ void Runprocess::statePump()
     if(pumpAddress < MAX_DIoutput){
         global.DIoutput[pumpAddress].value = val;
     }
-  //  qDebug() << "pump addres " << out << "val = " << val;
+    //  qDebug() << "pump addres " << out << "val = " << val;
     else{
         qDebug() << "ERROR !!!" <<out <<"Pump address out of range " << pumpAddress;
     }
@@ -412,23 +422,23 @@ void Runprocess::stateScalesTest()
              << (intervalTimer->elapsed() - stateStartTime)/1000;
 
 }
-    void Runprocess::stateTankTest()
-    {
-        int val = global.tabVal[currentTabVal].val;
-        int in = global.tabVal[currentTabVal].cmbObjectItem;
-        in += TVERTNE1LEVEL;    // offset
-        int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
-        qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
-        if (!ok) {
-            if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
-                qDebug() << "Varning !!!" "maxTime not defined " ;
-            }
-            else if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
-                qDebug() << "ERROR !!!" << val  <<"Tank not change value in  time: " << maxTime<<"s";
-                changeState(StateError);
-            }
+void Runprocess::stateTankTest()
+{
+    int val = global.tabVal[currentTabVal].val;
+    int in = global.tabVal[currentTabVal].cmbObjectItem;
+    in += TVERTNE1LEVEL;    // offset
+    int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
+    qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
+    if (!ok) {
+        if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
+            qDebug() << "Varning !!!" "maxTime not defined " ;
+        }
+        else if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
+            qDebug() << "ERROR !!!" << val  <<"Tank not change value in  time: " << maxTime<<"s";
+            changeState(StateError);
+        }
 
-            /*
+        /*
     QStringList procesObjestItemsTank  = {
         "TVERTNE1FULL"
         ,"TVERTNE2FULL"
@@ -444,164 +454,239 @@ void Runprocess::stateScalesTest()
     };
              */
 
-            if (in > MAX_DIinput){
-                qDebug() << "ERROR !!!" <<"Incorrect sensor address " << in;
-                return;
-            }
-            if( global.DIinput[in].value >= val){
-                 changeState(StateNext);
-            }
+        if (in > MAX_DIinput){
+            qDebug() << "ERROR !!!" <<"Incorrect sensor address " << in;
+            return;
         }
-        qDebug() << "stateTankTest"
-                 << "current:"
-                 << global.DIinput[in].value
-                 << "Destin. :" << val
-                 << maxTime
-                 << (intervalTimer->elapsed() - stateStartTime)/1000;
-    }
-
-    void Runprocess::stateCmdOutTXT()
-    {
-        switch (getState()) {
-        case 0:
-            break;
-        default:
-            break;
+        if( global.DIinput[in].value >= val){
+            changeState(StateNext);
         }
     }
+    qDebug() << "stateTankTest"
+             << "current:"
+             << global.DIinput[in].value
+             << "Destin. :" << val
+             << maxTime
+             << (intervalTimer->elapsed() - stateStartTime)/1000;
+}
 
-    void Runprocess::stateNext()
-    {
-        if(isTimerTimeout()){
-            if(global.tabVal.length() - 1 > currentTabVal){
-                currentTabVal ++;
-                changeState(StateRun);
-            }
-            else{
-                changeState(StateIdle);
-            }
+void Runprocess::stateCmdOutTXT()
+{
+    switch (getState()) {
+    case 0:
+        break;
+    default:
+        break;
+    }
+}
+
+void Runprocess::stateNext()
+{
+    if(isTimerTimeout()){
+        if(global.tabVal.length() - 1 > currentTabVal){
+            currentTabVal ++;
+            emit stateChange(currentTabVal);
+            changeState(StateRun);
+        }
+        else{
+            changeState(StateIdle);
         }
     }
+}
 
-    /*!
+/*!
  * \brief Runprocess::statePipe
  * var2  flow direction 0=>No flow, 1=>right,down  2=>left,up
  */
 
-    void Runprocess::statePipe()
-    {
-        int pipe = global.tabVal[currentTabVal].cmbObjectItem;
-        int val = global.tabVal[currentTabVal].val;
-        if(pipe < MAX_DIoutput){
-            pipe = pipe + pipe_dir0;        // start real pin addres
-            global.DIoutput[pipe].value = val;
-            global.DIoutput[pipe].update = true;
-        }
-        qDebug() <<"global.DIoutput[" << pipe << "] =" << val;
-        changeState(StateNext);
-
+void Runprocess::statePipe()
+{
+    int pipe = global.tabVal[currentTabVal].cmbObjectItem;
+    int val = global.tabVal[currentTabVal].val;
+    if(pipe < MAX_DIoutput){
+        pipe = pipe + pipe_dir0;        // start real pin addres
+        global.DIoutput[pipe].value = val;
+        global.DIoutput[pipe].update = true;
     }
+    qDebug() <<"global.DIoutput[" << pipe << "] =" << val;
+    changeState(StateNext);
 
+}
 
-    void Runprocess::stateError() {
-        switch (getState()) {
-        case StateError:
-            qDebug() << "StateError " << global.getTick();
-            changeState(StateIdle);
-            break;
+void Runprocess::stateDrives()
+{
+    int items = global.tabVal[currentTabVal].cmbObjectItem;
+    int speed = global.tabVal[currentTabVal].val;
+
+    switch (items) {
+    case 0: // mix
+        if(speed == 0){   // item =  0  off
+            stopDrive(M9) ;
         }
+        if(speed >0){   // item > 0 speed
+            runDrive( M9,speed);
+        }
+        break;
+    case 1: // coveyor
+        if(speed == 0){   // item =  0  off
+            stopDrive(M8) ;
+        }
+        if(speed >0){   // item > 0 speed
+            runDrive( M8,speed);
+        }
+        break;
+
+    default:
+        break;
     }
-    /*!
+}
+
+
+void Runprocess::stateError() {
+    switch (getState()) {
+    case StateError:
+        qDebug() << "StateError " << global.getTick();
+        changeState(StateIdle);
+        break;
+    }
+}
+/*!
  * \brief Runprocess::init
  * start statemachine process
  * next iteration every 10ms
  */
-    void Runprocess::init() {
-        task_state = 0;
-        taskTimer = startTimer(100);
-        tempInt = 0;
+void Runprocess::init() {
+    task_state = 0;
+    taskTimer = startTimer(100);
+    tempInt = 0;
+    pauseProc = true;
+    intervalTimer = new QElapsedTimer();
+    intervalTimer->start();
+    task_state = StateInit;
+}
 
-        intervalTimer = new QElapsedTimer();
-        intervalTimer->start();
-        task_state = StateInit;
-    }
-
-    /*!
+/*!
  * \brief Runprocess::runTaskCycle
  *  run iteration
  */
 
-    void Runprocess::runTaskCycle() {
-        // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
-        // Goto master state in state machine (state groups)
+void Runprocess::runTaskCycle() {
+    // qDebug() << " runTaskCycle()  "<< Qt::hex << getState() << Qt::dec << global.getTick();
+    // Goto master state in state machine (state groups)
 
-        switch (getMasterState()) {
+    switch (getMasterState()) {
+    case StateIdle:
+        stateIdle();
+        break;
+    case StateReset:
+        stateReset();
+        break;
+    case StateInit:
+        stateInit();
+        break;
+    case StateRun:
+        stateRun();
+        break;
+    case StateError:
+        stateError();
+        break;
+
+    default:
+        // check for the single states that not grouped together
+        switch (getState()) {
         case StateIdle:
             stateIdle();
             break;
-        case StateReset:
-            stateReset();
-            break;
-        case StateInit:
-            stateInit();
-            break;
-        case StateRun:
-            stateRun();
-            break;
-        case StateError:
-            stateError();
-            break;
-
-        default:
-            // check for the single states that not grouped together
-            switch (getState()) {
-            case StateIdle:
-                stateIdle();
-                break;
-            }
-            break;
         }
+        break;
     }
+}
 
-    int Runprocess::getMasterState() {
-        return task_state & 0xf00;
-    }
+int Runprocess::getMasterState() {
+    return task_state & 0xf00;
+}
 
-    int Runprocess::getState() {
-        return task_state;
-    }
-    /*!
+int Runprocess::getState() {
+    return task_state;
+}
+/*!
  * \brief Runprocess::changeState
  * \param newState
  * \param timeout default -1
  */
-    void Runprocess::changeState(int newState, int timeout) {
-        qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
-        task_state = newState;
-        intervalTimer->start();
-        stateStartTime = intervalTimer->elapsed();//  global.getTick();
+void Runprocess::changeState(int newState, int timeout) {
+    qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+    task_state = newState;
+    intervalTimer->start();
+    stateStartTime = intervalTimer->elapsed();//  global.getTick();
 
-        //qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick() << stateStartTime;
-        stateTimerInterval = 0;
-        if (timeout > -1) {
-            stateTimerInterval = timeout;
-        }
+    //qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick() << stateStartTime;
+    stateTimerInterval = 0;
+    if (timeout > -1) {
+        stateTimerInterval = timeout;
     }
+}
 
-    /*!
+/*!
  * \brief Runprocess::isTimerTimeout
  * \return true, if timeout > elapsed time from changeState(State,timeout)
  */
-    bool Runprocess::isTimerTimeout() {
+bool Runprocess::isTimerTimeout() {
 
-        if(stateTimerInterval == 0){    // no timeout
-            return 1;
-        }
-        else{
-            return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
-        }
+    if(stateTimerInterval == 0){    // no timeout
+        return 1;
     }
+    else{
+        return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
+    }
+}
 
-    int Runprocess::getStateRunTime() {
-        return (intervalTimer->elapsed() - stateStartTime);
-    }
+int Runprocess::getStateRunTime() {
+    return (intervalTimer->elapsed() - stateStartTime);
+}
+
+/*!
+ * \brief ProcesSteps::runDrive
+ * \param address   M4,M8,M9
+ * \param speed     +- 0.1Hz
+ */
+void Runprocess::runDrive(int address, int speed)
+{
+    // motor On
+    Global::rs485WrPar param;
+
+    param.boardAdr = address;
+    param.value = 128;      // reset
+    param.regAdr = CMD_REG;
+    param.len = 1;
+    param.cmd = WR_REG;
+    global.rs485WrList.append(param);
+
+    param.value = 6;
+    global.rs485WrList.append(param);
+
+    param.value = 7;
+    global.rs485WrList.append(param);
+
+    param.value = 15;
+    global.rs485WrList.append(param);
+
+    param.regAdr = LFRD_REG;
+    param.value = speed;
+    param.len = 1;
+    param.cmd = WR_REG;
+    global.rs485WrList.append(param);
+
+
+}
+
+void Runprocess::stopDrive(int address)
+{
+    // motor Off
+    Global::rs485WrPar param;
+    param.boardAdr = address;
+    param.regAdr = CMD_REG;
+    param.value = 7;
+    param.cmd = WR_REG;
+    global.rs485WrList.append(param);
+}

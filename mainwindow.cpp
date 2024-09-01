@@ -118,7 +118,8 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     connect(&runprocess, &Runprocess::diOutputChangeSi,
             &hwService, &HWService::updateDataDi);
-
+    connect(&runprocess, &Runprocess::stateChange,
+            &procesSteps, &ProcesSteps::setTabValRecord);
 
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;

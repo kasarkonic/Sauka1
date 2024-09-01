@@ -26,6 +26,33 @@ void ProcesSteps::maximizeWindow()
     this->setWindowState(wState);
 }
 
+void ProcesSteps::setTabValRecord(int recNr)
+{
+    qDebug() << "Set rec "<< activeRow << recNr;
+
+    int tabValRecord = activeRow + firstLineIndex;
+    QLabel *label_n = tabPtr[activeRow].label_npk;
+    label_n->setStyleSheet("background:rgb(255,255,255);"); // white
+    label_n->setText(QString::number(tabValRecord));
+
+    if(activeRow < 14 && tabValRecord < 14){
+        activeRow = recNr;
+        tabValRecord = recNr;
+        label_n = tabPtr[activeRow].label_npk;
+        label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
+        label_n->setText(">>");
+    }
+    else{
+            firstLineIndex = recNr - 14;
+            activeRow = recNr - 14;
+            tabValRecord = recNr;
+            label_n = tabPtr[activeRow].label_npk;
+            label_n->setStyleSheet("background:rgb(150,250,150);"); // light green
+            label_n->setText(">>");
+    }
+
+}
+
 void ProcesSteps::wheelEvent(QWheelEvent *event)
 {
     if(event->angleDelta().y() > 0){ // up Wheel
@@ -175,8 +202,8 @@ void ProcesSteps::on_pushButton_Load_clicked()
                 case Global::Pump: //  pump
                     iter = global.procesObjestItemsPump.indexOf(loadPsplit[2]);
                     break;
-                case Global::Mix: // mix
-                    iter = global.procesObjestItemsMix.indexOf(loadPsplit[2]);
+                case Global::DRIVES: // mix
+                    iter = global.procesObjestItemsDrives.indexOf(loadPsplit[2]);
                     break;
                 case Global::IsValveFinish: //  IsValveFinish
                     iter = global.procesObjestItemsValve.indexOf(loadPsplit[2]);
@@ -441,8 +468,8 @@ void ProcesSteps::UpdateTable()
         case Global::Pump:  //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
             break;
-        case Global::Mix: // mix
-            cmbObject->addItems(global.procesObjestItemsMix);
+        case Global::DRIVES: // DRIVES
+            cmbObject->addItems(global.procesObjestItemsDrives);
             break;
 
         case Global::IsValveFinish://  pause?
@@ -557,9 +584,18 @@ void ProcesSteps::groupIndexChange(int index)
             break;
         case Global::Pump: //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
+            {
+
+                QLineEdit *linEditNote = tabPtr[num].linEditNote;
+                linEditNote->setText("ja MOHNO, drive speed +- 0.1 Hz,");
+            }
             break;
-        case Global::Mix: // mix
-            cmbObject->addItems(global.procesObjestItemsMix);
+        case Global::DRIVES: // DRIVES
+            cmbObject->addItems(global.procesObjestItemsDrives);
+            {
+            QLineEdit *linEditNote = tabPtr[num].linEditNote;
+            linEditNote->setText("vertIbas = drive speed +- 0.1 Hz");
+            }
             break;   
         case Global::IsValveFinish: //  pause?
             cmbObject->addItems(global.procesObjestItemsValve);

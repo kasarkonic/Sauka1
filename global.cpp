@@ -411,6 +411,16 @@ void Global::createBallValve()
     bv.bValvePtr = ballvalveTest20;
     ballValveList.append(bv);
 
+    ballvalveTest21 = new BallValve(this,"ballvalveTest21",0,0,0,0);
+    bv.npk = 21;
+    bv.bValvePtr = ballvalveTest21;
+    ballValveList.append(bv);
+
+    ballvalveTest22 = new BallValve(this,"ballvalveTest22",0,0,0,0);
+    bv.npk = 22;
+    bv.bValvePtr = ballvalveTest22;
+    ballValveList.append(bv);
+
 
     qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
@@ -573,7 +583,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Tvertne,"1. Tvertne",3, 1, 1300, 370, 120, TVERTNE1LEVELPROC, TVERTNE1FULL);
 
     addWidgList(WidgetType::Pump,"Sūknis Sapropela 2.2",0, 1, 1128, 10, 50, set_pump2_2_On_Off, Is_pump2_2_On);
-    addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 483, 50, drive_M4_speed, drive_M4_speed);
+    addWidgList(WidgetType::Pump,"Sūknis MOHNO 5.5",1, 1, 433, 475, 50, drive_M4_speed, drive_M4_speed);
     addWidgList(WidgetType::Pump,"Dispax 11Kw",2, 1, 1324, 10, 50, set_dispax_11Kw_On_, Is_dispax_11Kw_On);
 
 
@@ -599,7 +609,8 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Valve,"Y6.2", 16, 1, 487, 283, 30, 0, 0);
     addWidgList(WidgetType::Valve,"Y6.1", 17, 1, 408, 283, 30, 0, 0);
-
+    addWidgList(WidgetType::Valve,"Y6.3", 21, 1, 487, 591, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y6.4", 22, 1, 408, 591, 30, 0, 0);
 
     // PIPE
 
@@ -625,8 +636,8 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Pipe,"Caurule", 16, 1, 1108, 330, 57, 90, pipe_dir16);
     addWidgList(WidgetType::Pipe,"Caurule", 17, 1, 1037, 535, 41, 90, pipe_dir17);
-    addWidgList(WidgetType::Pipe,"Caurule", 18, 1, 450, 595, 815, 90, pipe_dir18);
-    addWidgList(WidgetType::Pipe,"Caurule", 19, 1, 854, 655, 799, 90, pipe_dir29);
+    addWidgList(WidgetType::Pipe,"Caurule", 18, 1, 523, 595, 741, 90, pipe_dir18);
+    addWidgList(WidgetType::Pipe,"Caurule", 19, 1, 336, 655, 1327, 90, pipe_dir29);
 
     addWidgList(WidgetType::Pipe,"Caurule", 20, 1, 450, 290, 35, 0, pipe_dir20);
     addWidgList(WidgetType::Pipe,"Caurule", 21, 1, 870, 170, 577, 90, pipe_dir21);
@@ -645,7 +656,7 @@ void Global::creatWidgList() {
 
     addWidgList(WidgetType::Pipe,"Caurule", 32, 1, 246, 290, 156, 90, pipe_dir32);
     addWidgList(WidgetType::Pipe,"Caurule", 33, 1, 808, 535, 57, 90, pipe_dir33);
-    addWidgList(WidgetType::Pipe,"Caurule", 34, 1, 450, 427, 50, 0, pipe_dir34);
+    addWidgList(WidgetType::Pipe,"Caurule", 34, 1, 450, 427, 42, 0, pipe_dir34);
     addWidgList(WidgetType::Pipe,"Caurule", 35, 1, 650, 535, 68, 0, pipe_dir35);
 
     addWidgList(WidgetType::Pipe,"Caurule", 36, 1, 1252, 535, 65, 0, pipe_dir36);
@@ -676,7 +687,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 56, 1, 1493, 231, 111, 0, pipe_dir56);
     addWidgList(WidgetType::Pipe,"Caurule", 57, 1, 1651, 280, 86, 90, pipe_dir57);
     addWidgList(WidgetType::Pipe,"Caurule", 58, 1, 1493, 535, 123, 0, pipe_dir58);
-    addWidgList(WidgetType::Pipe,"Caurule", 59, 1, 450, 539, 68, 0, pipe_dir59);
+    addWidgList(WidgetType::Pipe,"Caurule", 59, 1, 450, 532, 73, 0, pipe_dir59);
 
     addWidgList(WidgetType::Pipe,"Caurule", 60, 1, 818, 70, 45, 90, pipe_dir60);
     addWidgList(WidgetType::Pipe,"Caurule", 61, 1, 661, 330, 41, 90, pipe_dir61);
@@ -686,6 +697,11 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 65, 1, 1255, 535, 44, 90, pipe_dir65);
     addWidgList(WidgetType::Pipe,"Caurule", 66, 1, 1150, 233, 53, 0, pipe_dir66);
     addWidgList(WidgetType::Pipe,"Caurule", 67, 1, 1252, 330, 49, 90, pipe_dir67);
+
+//addWidgList(WidgetType::Pipe,"Caurule", 89, 1, 100, 500, 64, 90, pipe_dir89);
+    addWidgList(WidgetType::Pipe,"Caurule", 90, 1, 442, 595, 30, 90, pipe_dir90);
+    addWidgList(WidgetType::Pipe,"Caurule", 91, 1, 332, 595, 70, 90, pipe_dir91);
+    addWidgList(WidgetType::Pipe,"Caurule", 92, 1, 332, 598, 68, 0, pipe_dir92);
 
     // 2 lapa
 
@@ -932,7 +948,11 @@ void Global::createComboxlist()
         << "pipe_dir85"
         << "pipe_dir86"
         << "pipe_dir87"
-        << "pipe_dir88";
+        << "pipe_dir88"
+       // << "pipe_dir89"
+        << "pipe_dir90"
+        << "pipe_dir91"
+        << "pipe_dir92";
 
 
 

@@ -23,15 +23,21 @@ public:
     explicit ProcesSteps(Global &global, QWidget *parent = nullptr);
     ~ProcesSteps();
     void maximizeWindow();
+
 protected:
 
-void wheelEvent(QWheelEvent * event) override;
+    void wheelEvent(QWheelEvent * event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
 signals:
     void clicked(int npk);
     void currentIndexChanged(int item);
     void editingFinished();
+
+
+
+public slots:
+    void setTabValRecord(int recNr);
 
 private slots:
     void on_pushButton_Up_clicked();
@@ -51,6 +57,7 @@ private slots:
     void linValFinish();
     void linNoteFinish();
 
+
 private:
     Global& global;
     Ui::ProcesSteps *ui;
@@ -67,7 +74,7 @@ private:
         QLineEdit *linEditNote = nullptr;
     };
     QList<tPtr>tabPtr;
-/*
+    /*
  * move to global
     struct  tVal {
         int npk = 0; //QLabel *label_npk;
