@@ -424,6 +424,25 @@ void Global::createBallValve()
 
     qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
+
+   // foreach(ComInfo cmap, comPortMap) {
+   //     qDebug() << cmap.vendorIdentifier;
+   // }
+
+
+
+    procesObjestItemsValve.clear();
+  //  foreach(QList<valItemTab> ivtab, ItemToValveTable){
+  //      procesObjestItemsValve.append({ivtab[0]});
+
+   // }
+
+    for (int i = 0; i < ItemToValveTable.length(); i++){
+         procesObjestItemsValve.append(ItemToValveTable[i].name);
+    }
+    qDebug() << procesObjestItemsValve;
+
+
 }
 
 void Global::needUpdateDIoutputs(int row, int val) {

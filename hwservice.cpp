@@ -52,7 +52,7 @@ HWService::~HWService() {
 
 
 void HWService::updateDataAn(int row, int val) {
-    qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
+   // qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
    // sensListsForm.updateData(row);
    // actListForm.updateData(row);
 

@@ -159,9 +159,11 @@ void ProcesSteps::on_pushButton_Load_clicked()
     {
         if(file.open(QIODevice::ReadOnly  | QIODevice::Text))
         {
+            loadProcesList.clear();
             QTextStream in(&file);
             while (!in.atEnd()) {
                 loadProcesList += in.readLine().split("/n");
+
             }
 
             global.tabVal.clear();
@@ -271,12 +273,13 @@ void ProcesSteps::on_pushButton_Load_clicked()
     //activeRow = 0;
     //firstLineIndex = 0;
     // UpdateTable();
+     qDebug() << "Error! not file exist.";
 }
 
 
 void ProcesSteps::on_pushButton_clicked()
 {
-    qDebug() << "Save";
+    qDebug() << "Save -----------------------------------------";
     saveProcesList.clear();
 
     for(int num = 0; num < global.tabVal.length() ; num++ ){
@@ -299,15 +302,16 @@ void ProcesSteps::on_pushButton_clicked()
         QLineEdit *linEditNote = tabPtr[num].linEditNote;
         cmdStr.append(linEditNote->text());
         cmdStr.append("\n");
-        // qDebug() << cmdStr;
+         qDebug() << cmdStr;
         saveProcesList.append(cmdStr);
+
     }
 
     saveProcesList.append("NOTES: ");
     saveProcesList.append(ui->textEdit_Notes->toPlainText());
     saveProcesList.append("\n");
 
-    qDebug() << "saveProcesList" << saveProcesList;
+    qDebug() << "NOTES: " << ui->textEdit_Notes->toPlainText();
 
 
     //QDataStream

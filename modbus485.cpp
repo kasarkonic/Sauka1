@@ -103,7 +103,7 @@ void Modbus485::test(int address, int value) {
 
 bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 0xffff
 {
-    qDebug() << "Modbus485::wr23IOD32 " << boardAdr << regAdr << Qt::hex << value << Qt::dec <<global.getTick();
+   // qDebug() << "Modbus485::wr23IOD32 " << boardAdr << regAdr << Qt::hex << value << Qt::dec <<global.getTick();
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     Q_ASSERT(startAddress >= 0 && startAddress < 0xffff);
@@ -134,7 +134,7 @@ bool Modbus485::wr23IOD32(int boardAdr, int regAdr, quint16 value)  // 7, 0x70, 
 
 bool Modbus485::wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 value2)
 {
-    qDebug() << "Modbus485::wr23IOD32m " << boardAdr << regAdr << Qt::hex << value1 << value2 << Qt::dec <<global.getTick();
+   // qDebug() << "Modbus485::wr23IOD32m " << boardAdr << regAdr << Qt::hex << value1 << value2 << Qt::dec <<global.getTick();
     const auto table = QModbusDataUnit::HoldingRegisters;   // cmd 06
     int startAddress = regAdr;
     //Q_ASSERT(startAddress >= 0 && startAddress < 200);
@@ -167,7 +167,7 @@ bool Modbus485::wr23IOD32m(int boardAdr, int regAdr, quint16 value1, quint16 val
 
 bool Modbus485::rd23IOD32(int boardAdr, int regAdr, int len) {
 
-    qDebug() << "rd23IOD32" <<boardAdr << regAdr << len << global.getTick();
+   // qDebug() << "rd23IOD32" <<boardAdr << regAdr << len << global.getTick();
 
     if (!modbusDevice) {
         qDebug() << "readDat RET";
@@ -188,12 +188,12 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr, int len) {
         if (!reply->isFinished()) {
             connect(reply, &QModbusReply::finished, this, &Modbus485::onReadReady);
             QModbusDataUnit writeUnit = dataUnit;
-            qDebug()<<"rd23IOD32"<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
+           // qDebug()<<"rd23IOD32"<< readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
                 readRequest().startAddress() << readRequest().value(0)<< readRequest().value(1);
         } else
             delete reply; // broadcast replies return immediately
 
-        qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
+      //  qDebug() << "T=" << global.getTick() - starttemp << " OK res: " ;  // ok digital input
 
         return true;
     } else {
@@ -205,7 +205,7 @@ bool Modbus485::rd23IOD32(int boardAdr, int regAdr, int len) {
 }
 
 bool Modbus485::rd24DIB32(int boardAdr, int regAdr) {
-    qDebug() << "rd24DIB32" <<boardAdr<< regAdr << global.getTick();
+   // qDebug() << "rd24DIB32" <<boardAdr<< regAdr << global.getTick();
     if (!modbusDevice) {
         qDebug() << "readDat RET";
         return false;
@@ -248,7 +248,7 @@ bool Modbus485::rd24DIB32(int boardAdr, int regAdr) {
 }
 
 bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len) {
-    qDebug() << "rdN4AIB16" <<boardAdr << "reg:" << regAdr << "len" << len << global.getTick();
+  //  qDebug() << "rdN4AIB16" <<boardAdr << "reg:" << regAdr << "len" << len << global.getTick();
 
     // processTimeStart = QTime::msecsSinceStartOfDay();
     // timer.start();
@@ -270,7 +270,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len) {
     quint16 numberOfEntries = len;
     QModbusDataUnit dataUnit = QModbusDataUnit(table, startAddress, numberOfEntries);
 
-    qDebug() << "dataUnit.isValid ?"<< dataUnit.isValid();
+   // qDebug() << "dataUnit.isValid ?"<< dataUnit.isValid();
 
     //! [read_data_1]
     if (auto* reply = modbusDevice->sendReadRequest(dataUnit, boardAdr)) {
@@ -280,7 +280,7 @@ bool Modbus485::rdN4AIB16(int boardAdr, int regAdr, int len) {
             // qDebug() << readRequest().registerType() << readRequest().values() << readRequest().valueCount() <<
             //             readRequest().startAddress() << readRequest().value(0) << readRequest().value(1);
         } else{
-            qDebug() << "replies return immediately" <<  readRequest().startAddress() << reply->rawResult().data();
+          //  qDebug() << "replies return immediately" <<  readRequest().startAddress() << reply->rawResult().data();
             delete reply; // broadcast replies return immediately
         }
         return true;
@@ -428,7 +428,7 @@ void Modbus485::timerEvent(QTimerEvent* event) {
 }
 
 void Modbus485::timerWriteSlot() {
-    qDebug() << "Change  Outputs" << global.disableRS485 << global.updateDataOut.need;
+  //  qDebug() << "Change  Outputs" << global.disableRS485 << global.updateDataOut.need;
     // if(!global.disableRS485){
     // if(global.updateDataOut.need){
     //    global.updateDataOut.need = false;
@@ -516,10 +516,10 @@ void Modbus485::onReadReady() {     // RS485 handler
     auto reply = qobject_cast<QModbusReply*>(sender());
 
     if (!reply){
-        qDebug() << "onReadReady not rep" << reply->serverAddress() << global.getTick();
+   //     qDebug() << "onReadReady not rep" << reply->serverAddress() << global.getTick();
         return;
     }
-
+/*
     qDebug() << "";
     qDebug() << "onReadReady from addres" << reply->serverAddress()
              << "start addres"<< reply->result().startAddress()
@@ -527,14 +527,14 @@ void Modbus485::onReadReady() {     // RS485 handler
              << reply->error() << "tic:"<< global.getTick()
              <<  Qt::hex <<reply->rawResult().data() ;    // 0 => no error
 
-
+*/
 
     if (reply->error() == QModbusDevice::NoError) {
         const QModbusDataUnit unit = reply->result();
         datalen = reply->rawResult().data().length();
         replayDataArray = reply->rawResult().data();
 
-        qDebug() << "len: "  << datalen  << "Data:" << replayDataArray;
+       // qDebug() << "len: "  << datalen  << "Data:" << replayDataArray;
 
         //qDebug() << "datalen , reg Type,address" << reply->serverAddress() << replayDataArray.length() << datalen << unit.registerType();
 
@@ -1041,7 +1041,7 @@ len:  25 Data: "\x18W\x03]\x12\xE2\x94\x9E\f\x00\x0E\x03\xF2\x00\x0F\x03\xFF\x07
 
     //dataChangeDi >= 0 ;  emit signal !!!!!!!!!!!!!!!!!!!!
     //dataChangeAn >= 0
-    qDebug() << "RS485Ready = 1" << reply->serverAddress() << global.getTick();
+  //  qDebug() << "RS485Ready = 1" << reply->serverAddress() << global.getTick();
     RS485Ready = true;
 }
 

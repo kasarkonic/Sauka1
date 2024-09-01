@@ -143,6 +143,63 @@ public:
 
 
     QStringList procesGroupItems  = { "Valve", "Pump", "DRIVES", "Is Valve Finish","Scales","Is Tank is Full","Command","Pipe"};
+
+
+    struct  valItemTab {
+        QString name;
+        int nr = 0;
+        int isOpen = 0;
+    };
+
+    QList<valItemTab> ItemToValveTable{
+
+
+        // {"Y1_1_atvērt",0},
+       // ,{"Y1_2_atvērt",0}
+       // ,{"Y1_3_atvērt"
+        {"Y2_1_atvērt"  ,12,1}
+        ,{"Y2_1_aizv"   ,12,0}
+        ,{"Y2_2_atvērt" ,13,1}
+        ,{"Y2_2_aizv"   ,13,0}
+        ,{"Y2_3_atvērt" ,11,1}
+        ,{"Y2_3_aizv"   ,11,0}
+        ,{"Y2_4_atvērt" ,10,1}
+        ,{"Y2_4_aizv"   ,10,0}
+        ,{"Y3_1_atvērt" ,8,1}
+        ,{"Y3_1_aizv"   ,8,0}
+        ,{"Y3_2_atvērt" ,9,1}
+        ,{"Y3_2_aizv"   ,9,0}
+        ,{"Y3_3_atvērt" ,14,1}
+        ,{"Y3_3_aizv"   ,14,0}
+        ,{"Y3_4_atvērt" ,15,1}
+        ,{"Y3_4_aizv"   ,15,0}
+        ,{"Y4_1_atvērt" ,4,1}
+        ,{"Y4_1_aizv"   ,4,0}
+        ,{"Y4_2_atvērt" ,5,1}
+        ,{"Y4_2_aizv"   ,5,0}
+        ,{"Y4_3_atvērt" ,6,1}
+        ,{"Y4_3_aizv"   ,6,0}
+        ,{"Y4_4_atvērt" ,7,1}
+        ,{"Y4_4_aizv"   ,7,0}
+        ,{"Y5_1_atvērt" ,0,1}
+        ,{"Y5_1_aizv"   ,0,0}
+        ,{"Y5_2_atvērt" ,1,1}
+        ,{"Y5_2_aizv"   ,1,0}
+        ,{"Y5_3_atvērt" ,3,1}
+        ,{"Y5_3_aizv"   ,3,0}
+        ,{"Y5_4_atvērt" ,2,1}
+        ,{"Y5_4_aizv"   ,2,0}
+        ,{"Y6_1_atvērt" ,17,1}
+        ,{"Y6_1_aizv"   ,17,0}
+        ,{"Y6_2_atvērt" ,16,1}
+        ,{"Y6_2_aizv"   ,16,0}
+    };
+
+
+
+    QStringList procesObjestItemsValve;
+    /*
+
     QStringList procesObjestItemsValve  = {
         "Y1_1_atvērt"
         ,"Y1_2_atvērt"
@@ -185,6 +242,8 @@ public:
         ,"Y6_2_atvērt"
         ,"Y6_2_aizv"
     };
+    */
+
 
     QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
     QStringList procesObjestItemsDrives  = { "Mix","Šneks"};
