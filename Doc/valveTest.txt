@@ -1,0 +1,59 @@
+0|Valve|Y2_1_atvērt|1|
+1|Is Valve Finish|Y4_1_atvērt|1|12
+2|Valve|Y4_2_atvērt|1|
+3|Is Valve Finish|Y4_2_atvērt|1|12
+4|Valve|Y4_3_atvērt|1|
+5|Is Valve Finish|Y4_3_atvērt|1|12
+6|Valve|Y4_4_atvērt|1|
+7|Is Valve Finish|Y4_4_atvērt|1|12
+8|Valve|Y3_1_atvērt|1|
+9|Is Valve Finish|Y3_1_atvērt|1|12
+10|Valve|Y3_2_atvērt|1|
+11|Is Valve Finish|Y3_2_atvērt|1|12
+12|Valve|Y3_3_atvērt|1|
+13|Is Valve Finish|Y3_3_atvērt|1|12
+14|Valve|Y3_4_atvērt|1|
+15|Is Valve Finish|Y3_4_atvērt|1|12
+16|Valve|Y2_1_atvērt|1|
+17|Is Valve Finish|Y2_1_atvērt|1|12
+18|Valve|Y2_2_atvērt|1|
+19|Is Valve Finish|Y2_2_atvērt|1|12
+20|Valve|Y2_3_atvērt|1|
+21|Is Valve Finish|Y2_3_atvērt|1|12
+22|Valve|Y2_4_atvērt|1|
+23|Is Valve Finish|Y2_4_atvērt|1|12
+24|Valve|Y5_1_atvērt|1|
+25|Is Valve Finish|Y5_1_atvērt|1|12
+26|Valve|Y5_2_atvērt|1|
+27|Is Valve Finish|Y5_2_atvērt|1|12
+28|Valve|Y5_3_atvērt|1|
+29|Is Valve Finish|Y5_3_atvērt|1|12
+30|Valve|Y5_4_atvērt|1|
+31|Is Valve Finish|Y5_4_atvērt|1|12
+32|Command|Pause|5|
+33|Valve|Y4_1_aizv|1|
+34|Valve|Y4_2_aizv|1|
+35|Valve|Y4_2_aizv|1|
+36|Valve|Y4_4_aizv|1|
+37|Valve|Y3_1_aizv|1|
+38|Valve|Y3_2_aizv|1|
+39|Valve|Y3_3_aizv|1|
+40|Valve|Y3_4_aizv|1|
+41|Valve|Y2_1_aizv|1|
+42|Valve|Y2_2_aizv|1|
+43|Valve|Y2_3_aizv|1|
+44|Valve|Y2_4_aizv|1|
+45|Valve|Y5_1_aizv|1|
+46|Valve|Y5_2_aizv|1|
+47|Valve|Y5_3_aizv|1|
+48|Valve|Y5_4_aizv|1|
+49|Command|Pause|5|
+50||Stop|0|
+51|||0|
+52|||0|
+53|||0|
+54|||0|
+55|||0|
+56|||0|
+57|||1|12
+NOTES: NOTES: NOTES: tests atver visus vārstus pēckārtas, tad pause un visus aizver

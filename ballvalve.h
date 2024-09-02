@@ -27,6 +27,11 @@ public:
     int initbattValve( bool stat ); // close/oprn if unknow status 0 close,  1 open.
     int getStatus();
 
+    int getOutOpen() {return outOpen;};
+    int getOutClose()  {return outClose;};
+    int getInOpen()  {return inOpen;};
+    int getInClose()  {return inClose;};
+
 
     enum valveStatus {
         Open,

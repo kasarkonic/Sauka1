@@ -19,6 +19,7 @@ void BallValve::open()
 {
     qDebug() <<"open valve";
     global->DIoutput[outOpen].value = 1;
+    global->DIoutput[outClose].value = 0;
     global->DIoutput[outOpen].update = true;
     startOpenTime = global->getTick();
     startTim();
@@ -30,6 +31,7 @@ void BallValve::close()
 {
     qDebug() <<"close valve";
     global->DIoutput[outClose].value = 1;
+    global->DIoutput[outOpen].value = 0;
     global->DIoutput[outClose].update = true;
     StartCloseTime = global->getTick();
     startTim();
@@ -104,6 +106,7 @@ void BallValve::timerEvent(QTimerEvent *event)
             global->DIoutput[outOpen].update = true;
             qDebug() << "ERROR!!! not open in 10s " ;
             status = valveStatus::Unknow;
+            startOpenTime = 0;
             qDebug() << "ERROR!!! not open in 10s " ;
             killTimer(timerId);
         }
@@ -122,6 +125,7 @@ void BallValve::timerEvent(QTimerEvent *event)
             global->DIoutput[outClose].value = 0;
             global->DIoutput[outClose].update = true;
             status = valveStatus::Unknow;
+            StartCloseTime = 0;
             qDebug() << "ERROR!!! not close in 12s " ;
             killTimer(timerId);
         }

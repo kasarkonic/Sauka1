@@ -35,14 +35,14 @@ private:
 
         StateRun1,   // 0x301
 
-       // StateValve,
+        StateValve,
         StatePump, // 0x302
         StatePause, // 0x303
 
         StatePipe, // 0x304
         StateCmd, // 0x305
 
-        StateIfValveFinish,// 0x306
+        StateIsValveFinish,// 0x306
         StateScalesTest,
         StateTankTest,
         StateDrives, // 0x302
@@ -57,7 +57,7 @@ private:
     void stateInit(void);
     void stateRun(void);
     void stateValve(void);
-    void stateIfValveFinish(void);
+    void stateIsValveFinish(void);
     void statePump(void);
     void stateCmd(void);
     void stateScalesTest(void);

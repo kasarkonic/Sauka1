@@ -3,6 +3,7 @@
 #include "qevent.h"
 #include "ui_processteps.h"
 #include <QFile>
+#include <QFileDialog>
 
 ProcesSteps::ProcesSteps(Global& global, QWidget *parent)
     : QMainWindow(parent)
@@ -104,7 +105,7 @@ void ProcesSteps::on_pushButton_Up_clicked()
         label_n->setText(">>");
     }
     else{
-        if(activeRow + firstLineIndex > 0){
+        if((activeRow + firstLineIndex) > 0){
             tabValRecord--;
             firstLineIndex--;
             qDebug() << "first records" << global.tabVal.length() << activeRow + firstLineIndex;
@@ -151,9 +152,15 @@ void ProcesSteps::on_pushButton_Down_clicked()
 void ProcesSteps::on_pushButton_Load_clicked()
 {
     qDebug() << "Load";
-    QString path = QApplication::applicationDirPath() + "/process.txt";
-    qDebug() << "path" <<path;
-    QFile file(path);
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    "process.txt",
+                                                    tr("Process files (*.txt)"));
+
+
+    // QString path = QApplication::applicationDirPath() + "/process.txt";
+    // qDebug() << "path" <<path;
+    QFile file(fileName);
 
     if(file.exists())
     {
@@ -172,8 +179,21 @@ void ProcesSteps::on_pushButton_Load_clicked()
 
                 QList<QString> loadPsplit = loadProcesList[i].split("|");
                 qDebug() << i << "loadProcesList" <<loadProcesList[i] << loadPsplit.length() << loadPsplit;
+
+                if(loadPsplit.length() == 1){
+                    //QList<QString> loadPsplit;
+                    QString str1 =  loadPsplit.at(0);
+                    QStringList  str2 = str1.split(":");
+
+                    // qDebug() << i << "loadProcesList :::"
+                    //          << str2.at(0);
+                    if(str2.at(0) == "NOTES")
+                        ui->textEdit_Notes->setText(str1);
+                    UpdateTable();
+                }
+
                 qDebug() << i << "------------------------------------" ;
-                if(loadPsplit.length() != 5){
+                if((loadPsplit.length() != 5)  ){
                     break;
                 }
 
@@ -260,20 +280,23 @@ void ProcesSteps::on_pushButton_Load_clicked()
 */
             activeRow = 0;
             firstLineIndex = 0;
-            UpdateTable();
+           // UpdateTable();
 
 
         }
         else{
             qDebug() << "Error! could not open file.";
         }
-        // qDebug() << "Error! 2";
     }
-    // qDebug() << "Error! 3";
-    //activeRow = 0;
-    //firstLineIndex = 0;
-    // UpdateTable();
-    qDebug() << "Error! not file exist.";
+    else{
+        // qDebug() << "Error! 3";
+        //activeRow = 0;
+        //firstLineIndex = 0;
+        // UpdateTable();
+        qDebug() << "Error! not file exist.";
+    }
+
+UpdateTable();
 }
 
 
@@ -281,6 +304,14 @@ void ProcesSteps::on_pushButton_clicked()
 {
     qDebug() << "Save -----------------------------------------";   //
     // global.tabVal[num + firstLineIndex].cmbObjectItem
+
+
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                    "process.txt",
+                                                    tr("Process files (*.txt)"));
+
+
     saveProcesList.clear();
 
     for(int num = 0; num < global.tabVal.length() ; num++ ){
@@ -306,7 +337,7 @@ void ProcesSteps::on_pushButton_clicked()
 
         cmdStr.append("|");
 
-       // QLineEdit *linEditVal = tabPtr[num].linEditVal;
+        // QLineEdit *linEditVal = tabPtr[num].linEditVal;
         //cmdStr.append(linEditVal->text());
         cmdStr.append(QString().number(global.tabVal[num].val));
         cmdStr.append("|");
@@ -327,13 +358,13 @@ void ProcesSteps::on_pushButton_clicked()
     qDebug() << "NOTES: " << ui->textEdit_Notes->toPlainText();
 
 
-    //QDataStream
-    //QTextStream
+    //qDebug() << "path" <<path;
+
+    //QString path = QApplication::applicationDirPath() + "/process.txt";
+    //qDebug() << "path" <<path;
 
 
-    QString path = QApplication::applicationDirPath() + "/process.txt";
-    qDebug() << "path" <<path;
-    QFile file(path);
+    QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly))
     {
         qDebug() << "Error! could not open file.";
@@ -376,6 +407,7 @@ void ProcesSteps::drawWidgets()
 
         tPtr tablePtr;
         Global::tVal tableVal;
+        QString cmdStr;
         signalMapper = new QSignalMapper(this);
         npk = i;
         tableVal.npk = i;
@@ -409,32 +441,41 @@ void ProcesSteps::drawWidgets()
         cmbGroup->addItems(global.procesGroupItems);
         cmbGroup->setObjectName(QString::number(npk));
         connect(cmbGroup, SIGNAL(currentIndexChanged(int)), this, SLOT(groupIndexChange(int)));
+        tableVal.cmbGroupItem = 0;
+        tableVal.strGroupItem = global.procesGroupItems[0];
+
 
         QComboBox *cmbObject= new QComboBox(this);
         tablePtr.cmbObject = cmbObject;
         cmbObject->addItems(global.procesObjestItemsValve);
         cmbObject->setObjectName(QString::number(npk));
         connect(cmbObject, SIGNAL(currentIndexChanged(int)), this, SLOT(objectIndexChange(int)));
+        tableVal.cmbObjectItem = 0;
+        tableVal.strObjectItem = global.procesObjestItemsValve[0];
+
 
         QLineEdit *linEditVal = new QLineEdit(this);
         tablePtr.linEditVal = linEditVal;
         linEditVal->setObjectName(QString::number(npk));
         connect(linEditVal, SIGNAL(editingFinished()), this, SLOT(linValFinish()));
         linEditVal->setText("0");
+        tableVal.val= 0;
+
 
         QLineEdit *linEditNote = new QLineEdit(this);
         tablePtr.linEditNote = linEditNote;
         linEditNote->setObjectName(QString::number(npk));
         connect(linEditNote, SIGNAL(editingFinished()), this, SLOT(linNoteFinish()));
         linEditNote->setText("0");
+        tableVal.notes = "";
 
         QLabel *labelhelp = new QLabel(this);
         tablePtr.labelhelp = labelhelp;
         labelhelp->setObjectName(QString::number(npk));
         labelhelp->setText("Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)");
-
+        tableVal.notes = "";
         tabPtr.append(tablePtr);
-        global.tabVal.append(tableVal);
+        tableVal.helpStr = ("Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)");
 
         QBoxLayout *hLayout = new QHBoxLayout(this);
         hLayout->addWidget(label_npk,0);
@@ -448,6 +489,12 @@ void ProcesSteps::drawWidgets()
 
         ui->verticalLayout_2->addLayout(hLayout);
 
+        global.tabVal.append(tableVal);
+
+        qDebug() << tableVal.npk
+                 << tableVal.cmbGroupItem
+                 <<tableVal.strGroupItem
+                 << tableVal.strObjectItem;
     }
 
     QLabel *label_npk = tabPtr[activeRow].label_npk;
@@ -462,13 +509,13 @@ void ProcesSteps::drawWidgets()
 void ProcesSteps::UpdateTable()
 {
 
-        // QStringList   pipeItems;
-        // pipeItems << "A" << "B";
+    // QStringList   pipeItems;
+    // pipeItems << "A" << "B";
 
     for(int i = 0 ; i <  15; i++){
 
         int num = i + firstLineIndex;
-        qDebug() << "UpdateTable:"  << i << num << global.tabVal.length();
+        qDebug() << "UpdateTable:"  << i << firstLineIndex << num << global.tabVal.length();
         QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
         label_npk->setText(QString::number(num));
@@ -572,7 +619,7 @@ void ProcesSteps::onClickIns()
     if (ok) {
         qDebug() << "onClickIns()" << sender() << num ;
         Global::tVal tableVal;
-        global.tabVal.insert(num,tableVal);
+        global.tabVal.insert(num + firstLineIndex,tableVal);
         UpdateTable();
     }
 }
@@ -585,11 +632,11 @@ void ProcesSteps::onClickDel()
     if (ok) {
         qDebug() << "onClickDel()" << num << global.tabVal.length();
 
-        if(global.tabVal.length() < 16){
+        if(global.tabVal.length() < 17){
             Global::tVal tableVal;
             global.tabVal.append(tableVal);
         }
-        global.tabVal.removeAt(num);
+        global.tabVal.removeAt(num + firstLineIndex);
         UpdateTable();
     }
 }
@@ -629,7 +676,7 @@ void ProcesSteps::groupIndexChange(int index)
             cmbObject->addItems(global.procesObjestItemsDrives);
             helpTxt = "vertIbas = drive speed +- 0.1 Hz";
 
-                break;
+            break;
         case Global::IsValveFinish: //  pause?
             cmbObject->addItems(global.procesObjestItemsValve);
             helpTxt = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
@@ -662,10 +709,10 @@ void ProcesSteps::objectIndexChange(int index)
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok && index >= 0) {
-            QComboBox *cmbObject = tabPtr[num].cmbObject;
-            global.tabVal[num + firstLineIndex].cmbObjectItem = index;
-            global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
-            qDebug() << "objectIndexChange" << index << num;
+        QComboBox *cmbObject = tabPtr[num].cmbObject;
+        global.tabVal[num + firstLineIndex].cmbObjectItem = index;
+        global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
+        qDebug() << "objectIndexChange" << index << num;
 
     }
 }
