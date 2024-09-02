@@ -280,7 +280,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
 */
             activeRow = 0;
             firstLineIndex = 0;
-           // UpdateTable();
+            // UpdateTable();
 
 
         }
@@ -296,7 +296,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
         qDebug() << "Error! not file exist.";
     }
 
-UpdateTable();
+    UpdateTable();
 }
 
 
@@ -402,7 +402,22 @@ void ProcesSteps::on_textEdit_Notes_textChanged()
 void ProcesSteps::drawWidgets()
 {
     int npk = 0;
-
+    // all data in global.tabVal
+    global.tabVal.clear();
+    /*
+     *
+    struct  tVal {
+        int npk = 0; //QLabel *label_npk;
+        int cmbGroupItem = 0; //QComboBox *cmbGroup = nullptr;
+        QString strGroupItem = "";
+        int cmbObjectItem = 0;// QComboBox *cmbObject = nullptr;
+        QString strObjectItem = "";
+        int  val = 0;      //QLineEdit *linEditVal = nullptr;
+        QString  notes = ""; //    QLineEdit *linEditNote = nullptr;
+        QString helpStr = "";
+    };
+     *
+     */
     for ( int i = 0; i<15; i++){
 
         tPtr tablePtr;
@@ -458,24 +473,24 @@ void ProcesSteps::drawWidgets()
         tablePtr.linEditVal = linEditVal;
         linEditVal->setObjectName(QString::number(npk));
         connect(linEditVal, SIGNAL(editingFinished()), this, SLOT(linValFinish()));
-        linEditVal->setText("0");
-        tableVal.val= 0;
+        linEditVal->setText("1");
+        tableVal.val= 1;
 
 
         QLineEdit *linEditNote = new QLineEdit(this);
         tablePtr.linEditNote = linEditNote;
         linEditNote->setObjectName(QString::number(npk));
         connect(linEditNote, SIGNAL(editingFinished()), this, SLOT(linNoteFinish()));
-        linEditNote->setText("0");
+        linEditNote->setText("");
         tableVal.notes = "";
 
         QLabel *labelhelp = new QLabel(this);
         tablePtr.labelhelp = labelhelp;
         labelhelp->setObjectName(QString::number(npk));
-        labelhelp->setText("Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)");
-        tableVal.notes = "";
+        QString str = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
+        labelhelp->setText(str);
         tabPtr.append(tablePtr);
-        tableVal.helpStr = ("Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)");
+        tableVal.helpStr = (str);
 
         QBoxLayout *hLayout = new QHBoxLayout(this);
         hLayout->addWidget(label_npk,0);
@@ -490,11 +505,21 @@ void ProcesSteps::drawWidgets()
         ui->verticalLayout_2->addLayout(hLayout);
 
         global.tabVal.append(tableVal);
-
+        /*
         qDebug() << tableVal.npk
                  << tableVal.cmbGroupItem
                  <<tableVal.strGroupItem
                  << tableVal.strObjectItem;
+
+        qDebug() << global.tabVal.last().npk
+                 << global.tabVal.last().cmbGroupItem
+                 << global.tabVal.last().strGroupItem
+                 << global.tabVal.last().cmbObjectItem
+                 << global.tabVal.last().strObjectItem
+                 << global.tabVal.last().val
+                 << global.tabVal.last().notes
+                 << global.tabVal.last().helpStr;
+*/
     }
 
     QLabel *label_npk = tabPtr[activeRow].label_npk;
@@ -515,7 +540,12 @@ void ProcesSteps::UpdateTable()
     for(int i = 0 ; i <  15; i++){
 
         int num = i + firstLineIndex;
-        qDebug() << "UpdateTable:"  << i << firstLineIndex << num << global.tabVal.length();
+        qDebug() << "UpdateTable:"  << i << firstLineIndex << num << activeRow << global.tabVal.length();
+
+        if(num >= global.tabVal.length()){
+            return;
+        }
+
         QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
         label_npk->setText(QString::number(num));
@@ -630,12 +660,18 @@ void ProcesSteps::onClickDel()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
-        qDebug() << "onClickDel()" << num << global.tabVal.length();
+        qDebug() << "onClickDel()"  << num << firstLineIndex << activeRow << sender();
 
-        if(global.tabVal.length() < 17){
+        if(global.tabVal.length() < 16){
             Global::tVal tableVal;
             global.tabVal.append(tableVal);
         }
+        else if(firstLineIndex + 14 >= global.tabVal.length()){  // last row
+            Global::tVal tableVal;
+            activeRow--;
+            global.tabVal.append(tableVal);
+        }
+
         global.tabVal.removeAt(num + firstLineIndex);
         UpdateTable();
     }
@@ -643,21 +679,20 @@ void ProcesSteps::onClickDel()
 
 void ProcesSteps::groupIndexChange(int index)
 {
-    qDebug() << "groupIndexChange" << index << sender();
+    //qDebug() << "groupIndexChange" << index << sender();
 
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     qDebug() << "groupIndexChange" << num << firstLineIndex << global.tabVal.length();
     if (ok && index >= 0) {
-
-        global.tabVal[num + firstLineIndex].strGroupItem = global.procesGroupItems[index];
-
-        QComboBox *cmbObject = tabPtr[num].cmbObject;
         global.tabVal[num + firstLineIndex].cmbGroupItem = index;
         global.tabVal[num + firstLineIndex].strGroupItem = global.procesGroupItems[index];
 
-        QString helpTxt;
 
+        global.tabVal[num + firstLineIndex].cmbObjectItem = 0;
+
+        QComboBox *cmbObject = tabPtr[num].cmbObject;
+        QString helpTxt;
         QLabel *labelhelp = tabPtr[num].labelhelp;
         //labelhelp->setText("???");
 
@@ -666,34 +701,44 @@ void ProcesSteps::groupIndexChange(int index)
         switch (index) {
         case Global::Valve: // valve
             cmbObject->addItems(global.procesObjestItemsValve);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsValve[0];
+            global.tabVal[num + firstLineIndex].val = 1;
             helpTxt = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
             break;
         case Global::Pump: //  pump
             cmbObject->addItems(global.procesObjestItemsPump);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsPump[0];
             helpTxt = "Ja MOHNO, drive speed +- 0.1 Hz,";
             break;
         case Global::DRIVES: // DRIVES
             cmbObject->addItems(global.procesObjestItemsDrives);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsDrives[0];
             helpTxt = "vertIbas = drive speed +- 0.1 Hz";
 
             break;
         case Global::IsValveFinish: //  pause?
             cmbObject->addItems(global.procesObjestItemsValve);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsValve[0];
             helpTxt = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
             break;
         case Global::Scales: // test
             cmbObject->addItems(global.procesObjestItemsScales);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsScales[0];
             helpTxt = "V->signāla vērtība (kg)";
             break;
         case Global::Tank: // Pipe
             cmbObject->addItems(global.procesObjestItemsTank);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsTank[0];
             helpTxt = "V->signāla piepildījums(%) vai kala sensors 0|1";
             break;
         case Global::Command: // Command
             cmbObject->addItems(global.procesObjestItemsComand);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsComand[0];
+
             break;
         case Global::Pipe: // Pipe
             cmbObject->addItems(global.procesObjestItemsPipe);
+            global.tabVal[num + firstLineIndex].strGroupItem = global.procesObjestItemsPipe[0];
             helpTxt = "flow No=0, right,down=1 left,up=2";
             break;
         default:
@@ -705,14 +750,13 @@ void ProcesSteps::groupIndexChange(int index)
 }
 void ProcesSteps::objectIndexChange(int index)
 {
-    qDebug() << "objectIndexChange" << index << sender();
+    //qDebug() << "objectIndexChange" << index << sender();
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok && index >= 0) {
+        qDebug() << "objectIndexChange" << index << num << firstLineIndex << sender();
         QComboBox *cmbObject = tabPtr[num].cmbObject;
         global.tabVal[num + firstLineIndex].cmbObjectItem = index;
         global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
-        qDebug() << "objectIndexChange" << index << num;
-
     }
 }
