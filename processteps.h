@@ -111,6 +111,7 @@ private:
 
     QList<QString>saveProcesList;
     QList<QString>loadProcesList;
+    bool enableGroupCh = true;
 
 };
 
