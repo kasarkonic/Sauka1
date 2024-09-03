@@ -33,6 +33,10 @@ signals:
     void clicked(int npk);
     void currentIndexChanged(int item);
     void editingFinished();
+    void startR();
+    void stopR();
+    void pauseR();
+
 
 
 
@@ -40,9 +44,9 @@ public slots:
     void setTabValRecord(int recNr);
 
 private slots:
-    void on_pushButton_Up_clicked();
+   // void on_pushButton_Up_clicked();
 
-    void on_pushButton_Down_clicked();
+   // void on_pushButton_Down_clicked();
 
     void on_pushButton_Load_clicked();
 
@@ -57,6 +61,18 @@ private slots:
     void linValFinish();
     void linNoteFinish();
 
+
+    void on_pushButton_SlUp_clicked();
+
+    void on_pushButton_SlDown_clicked();
+
+    void on_verticalSlider_valueChanged(int value);
+
+    void on_pushButton_Start_clicked();
+
+    void on_pushButton_Stop_clicked();
+
+    void on_pushButton_Pause_clicked();
 
 private:
     Global& global;

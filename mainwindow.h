@@ -45,6 +45,9 @@ public:
 
 public slots:
     void changeInputVal(int row, int val);
+   // void startR();
+   // void stopR();
+   // void pauseR();
 
 private slots:
 

@@ -3,7 +3,7 @@
  <class>ProcesSteps</class>
  <widget class="QWidget" name="ProcesSteps">
   <property name="windowModality">
-   <enum>Qt::WindowModality::NonModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -45,7 +45,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,10,1,1">
     <property name="sizeConstraint">
-     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+     <enum>QLayout::SetDefaultConstraint</enum>
     </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -60,7 +60,7 @@
          <string>Procese Nosaukums</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -113,19 +113,85 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Pamācība</string>
+         <string>Instrukcija</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2"/>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,100">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QPushButton" name="pushButton_SlUp">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="autoRepeat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="verticalSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximum">
+             <number>304</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_SlDown">
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="autoRepeat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_Up">
+       <widget class="QPushButton" name="pushButton_Start">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -133,12 +199,12 @@
          </size>
         </property>
         <property name="text">
-         <string>Up</string>
+         <string>Start</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_Down">
+       <widget class="QPushButton" name="pushButton_Stop">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -146,7 +212,14 @@
          </size>
         </property>
         <property name="text">
-         <string>Down</string>
+         <string>Stop</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_Pause">
+        <property name="text">
+         <string>Pause</string>
         </property>
        </widget>
       </item>

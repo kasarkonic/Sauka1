@@ -111,6 +111,9 @@ private:
     void saveSettings(QString par, int val);
     QString par;
     int val;
+    QColor col;
+    QString qss_green;
+    QString qss_red;
 
 };
 

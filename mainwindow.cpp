@@ -121,6 +121,14 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     connect(&runprocess, &Runprocess::stateChange,
             &procesSteps, &ProcesSteps::setTabValRecord);
 
+    connect(&procesSteps, &ProcesSteps::startR,
+            this, &MainWindow::on_pushButton_start_clicked);
+
+    connect(&procesSteps, &ProcesSteps::stopR,
+            this, &MainWindow::on_pushButton_stop_clicked);
+
+    connect(&procesSteps, &ProcesSteps::pauseR,
+            this, &MainWindow::on_pushButton_pause_clicked);
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
