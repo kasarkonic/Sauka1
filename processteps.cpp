@@ -614,8 +614,9 @@ void ProcesSteps::linValFinish()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
+        qDebug() << "linNoteFinish()" << num <<"+"<< firstLineIndex << sender()<<"L:"<< global.tabVal.length();
         QLineEdit *linEditVal = tabPtr[num].linEditVal;
-
+        setTabValRecord(num);
         int val  = linEditVal->text().toInt(&ok1);
         if(ok1){
             global.tabVal[num + firstLineIndex].val = val;
@@ -625,12 +626,14 @@ void ProcesSteps::linValFinish()
 
 void ProcesSteps::linNoteFinish()
 {
-    qDebug() << "linNoteFinish()" << sender();
+    // qDebug() << "linNoteFinish()" << num <<"+"<< firstLineIndex << sender();
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
+        qDebug() << "linNoteFinish()" << num <<"+"<< firstLineIndex << sender();
         QLineEdit *linEditNote = tabPtr[num].linEditNote;
         global.tabVal[num + firstLineIndex].notes  = linEditNote->text();
+        setTabValRecord(num);
     }
 }
 
@@ -658,20 +661,14 @@ void ProcesSteps::onClickDel()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
-        qDebug() << "onClickDel()"  << num << firstLineIndex << 5 << sender();
-
-        if(global.tabVal.length() < 15 + 1){
-            Global::tVal tableVal;
-            global.tabVal.append(tableVal);
-        }
-        else if(firstLineIndex + 14 >= global.tabVal.length()){  // last row
-            // Global::tVal tableVal;
-            //  activeRow--;
-            // global.tabVal.append(tableVal);
-        }
+        qDebug() << "onClickDel()"  << num << firstLineIndex << sender()<< "l:" << global.tabVal.length();
 
         global.tabVal.removeAt(num + firstLineIndex);
+        Global::tVal tableVal;
+        global.tabVal.append(tableVal);
+
         UpdateTable();
+        setTabValRecord(num);
     }
 }
 
@@ -692,6 +689,7 @@ void ProcesSteps::groupIndexChange(int index)
             qDebug() <<"UpdateTable group == false";
         }
     }
+    setTabValRecord(num);
 }
 void ProcesSteps::objectIndexChange(int index)
 {
@@ -732,6 +730,7 @@ void ProcesSteps::objectIndexChange(int index)
         }
         */
         UpdateTable();
+        setTabValRecord(num);
     }
 }
 
