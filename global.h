@@ -122,7 +122,7 @@ public:
         QString strGroupItem = "";
         int cmbObjectItem = 0;// QComboBox *cmbObject = nullptr;
         QString strObjectItem = "";
-        int  val = 0;      //QLineEdit *linEditVal = nullptr;
+        int  val = 1;      //QLineEdit *linEditVal = nullptr;
         QString  notes = ""; //    QLineEdit *linEditNote = nullptr;
         QString helpStr = "";
     };
@@ -140,9 +140,6 @@ public:
         Pipe,
     };
     // }
-
-
-
 
 
     QStringList procesGroupItems  = { "Valve", "Pump", "DRIVES", "Is Valve Finish","Scales","Is Tank is Full","Command","Pipe"};
@@ -248,8 +245,8 @@ public:
     */
 
 
-    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Mohno 5.5", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
-    QStringList procesObjestItemsDrives  = { "Mix","Šneks"};
+    QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Dispax 15Kw", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
+    QStringList procesObjestItemsDrives  = { "Mix","Šneks","Mohno 5.5"};
     //QStringList procesObjestItemsPause  = { "Pause_s" };
     QStringList procesObjestItemsScales  = { "More_then","Less_then" };
     QStringList procesObjestItemsTank  = {
@@ -373,7 +370,17 @@ public:
 
 
 
-    QStringList procesObjestItemsComand  = {"Pause", "Goto", "Stop", "GOtoStart" };
+
+    enum Cmd {
+        PAUSE,
+        GOTO,
+        STOP,
+        GOTOSTART,
+        CLOSEVALLVE,
+        IFVALVESCLOSE
+    };
+
+    QStringList procesObjestItemsComand  = {"Pause", "Goto", "Stop", "GOtoStart","Close valves","Is valvesClose"};
 
 
     QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!

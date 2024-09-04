@@ -35,19 +35,23 @@ private:
 
         StateRun1,   // 0x301
 
-        StateValve,
-        StatePump, // 0x302
-        StatePause, // 0x303
+        StateValve,// 0x302
+        StatePump, // 0x303
+        StatePause, // 0x304
 
-        StatePipe, // 0x304
-        StateCmd, // 0x305
+        StatePipe, // 0x305
+        StateCmd, // 0x306
 
-        StateIsValveFinish,// 0x306
-        StateScalesTest,
-        StateTankTest,
-        StateDrives, // 0x302
+        StateCloseValves,// 0x307
+        StateIsVallvesClose, // 0x308
 
-        StateNext, // 0x307
+
+        StateIsValveFinish,// 0x309
+        StateScalesTest,// 0x310
+        StateTankTest,// 0x311
+        StateDrives, // 0x312
+
+        StateNext, // 0x313
         StateError = 0x900, // 0x600`
 
     };
@@ -66,6 +70,9 @@ private:
     void stateNext(void);
     void statePipe(void);
     void stateDrives(void);
+
+    void stateCloseValves(void);
+    void stateIsVallvesClose(void);
 
     void stateError(void);
 
@@ -93,7 +100,7 @@ private:
     int tempInt = 0;
 
     int currentTabVal;
-   // Global::rs485WrPar paramr;
+    // Global::rs485WrPar paramr;
     bool pauseProc;
     bool ok;
     int actualMotorNode;

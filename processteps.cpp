@@ -458,7 +458,7 @@ void ProcesSteps::drawWidgets()
 
     ui->verticalSlider->setMinimum(0);
     ui->verticalSlider->setMaximum(global.tabVal.length()-1);
-    ui->verticalSlider->setInvertedAppearance(true);
+    ui->verticalSlider->setInvertedAppearance(false);
 
     ui->pushButton_SlUp->setText("\u2191");
     ui->pushButton_SlDown->setText("\u2193");
@@ -478,8 +478,12 @@ void ProcesSteps::UpdateTable()
         // qDebug() << "UpdateSlider:" << firstLineIndex  << activeRow << global.tabVal.length();
 
     // ui->verticalSlider->setMinimum(0);
-    ui->verticalSlider->setMaximum(global.tabVal.length()-1);
-     ui->verticalSlider->setSliderPosition(activeRow + firstLineIndex);
+    ui->verticalSlider->setMaximum((global.tabVal.length()-1));
+    ui->verticalSlider->setSliderPosition(global.tabVal.length()-1 - (activeRow + firstLineIndex));
+
+    //qDebug() << "UpdateSlider"  << 0 << activeRow <<-(global.tabVal.length()-1)<<activeRow + firstLineIndex;
+
+
     qDebug() << "UpdateTable:"  << firstLineIndex << activeRow << global.tabVal.length() <<"eEnable:" <<enableGroupCh;
 
     for(int i = 0 ; i <  15; i++){
@@ -495,8 +499,8 @@ void ProcesSteps::UpdateTable()
 
         if(num >= global.tabVal.length()){
 
-                //    QLabel *label_npk = tabPtr[i].label_npk;
-                //    label_npk->setText(QString::number(num));
+            //    QLabel *label_npk = tabPtr[i].label_npk;
+            //    label_npk->setText(QString::number(num));
 
             QComboBox *cmbGroup = tabPtr[i].cmbGroup;   // this change tabVal[num].cmbObjectItem
             cmbGroup->setCurrentIndex(0);///(Global::GroupItems::Command);
@@ -541,11 +545,11 @@ void ProcesSteps::UpdateTable()
             switch (global.tabVal[num].cmbGroupItem) {
             case Global::Valve: // valve
                 cmbObject->addItems(global.procesObjestItemsValve);
-                 hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
-               break;
+                hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
+                break;
             case Global::Pump:  //  pump
                 cmbObject->addItems(global.procesObjestItemsPump);
-                 hstr = "Pump help";
+                hstr = "Pump help";
                 break;
             case Global::DRIVES: // DRIVES
                 cmbObject->addItems(global.procesObjestItemsDrives);
@@ -554,23 +558,23 @@ void ProcesSteps::UpdateTable()
 
             case Global::IsValveFinish://  pause?
                 cmbObject->addItems(global.procesObjestItemsValve);
-                  hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
+                hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
                 break;
             case Global::Scales: // test
                 cmbObject->addItems(global.procesObjestItemsScales);
-                 hstr = "vairāk/ mazak par:, sasniedzamā vērtība:, max izpildes laiks(s)";
+                hstr = "vairāk/ mazak par:, sasniedzamā vērtība:, max izpildes laiks(s)";
                 break;
             case Global::Tank: // test
                 cmbObject->addItems(global.procesObjestItemsTank);
-                 hstr = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
+                hstr = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
                 break;
             case Global::Pipe: // Pipe
                 cmbObject->addItems(global.procesObjestItemsPipe);
-                 hstr = "caurules bultas vieziena 0,1,2:, V->signāla vērtība:";
+                hstr = "caurules bultas vieziena 0,1,2:, V->signāla vērtība:";
                 break;
             case Global::Command: // Command
                 cmbObject->addItems(global.procesObjestItemsComand);
-                 hstr = "Komandas izpildei";
+                hstr = "Komandas izpildei";
                 break;
             default:
                 return;
@@ -592,10 +596,6 @@ void ProcesSteps::UpdateTable()
 
             QLineEdit *linEditNote = tabPtr[i].linEditNote;
             linEditNote->setText(global.tabVal[num].notes);
-
-            QLabel *labelhelp = tabPtr[i].labelhelp;
-            labelhelp->setText(hstr);
-            global.tabVal[num].helpStr = hstr;
 
             // tabVal
         }
@@ -644,6 +644,7 @@ void ProcesSteps::onClickIns()
         qDebug() << "onClickIns()" << sender() << firstLineIndex << num << activeRow << global.tabVal.length();
         Global::tVal tableVal;
         global.tabVal.insert(num + firstLineIndex,tableVal);
+
         if(num == 14) {// last
             firstLineIndex ++;
         }
@@ -695,7 +696,7 @@ void ProcesSteps::groupIndexChange(int index)
 void ProcesSteps::objectIndexChange(int index)
 {
     if(!enableGroupCh){ // qDebug() <<"UpdateTable obj == false";
-       return;
+        return;
     }
 
 
@@ -707,9 +708,14 @@ void ProcesSteps::objectIndexChange(int index)
         qDebug() << "objectIndexChange A" << index << num << firstLineIndex << sender();
         //QComboBox *cmbObject = tabPtr[num].cmbObject;
         global.tabVal[num + firstLineIndex].cmbObjectItem = index;
-       // global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
-       // qDebug() << "objectIndexChange B" << global.tabVal[num + firstLineIndex].cmbObjectItem << global.tabVal[num + firstLineIndex].strObjectItem;
-       // cmbObject->setCurrentIndex(index);
+
+        if(global.tabVal[num + firstLineIndex].cmbGroupItem == Global::IsValveFinish){
+            global.tabVal[num + firstLineIndex].notes = QString().number(12);
+        }
+
+        // global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
+        // qDebug() << "objectIndexChange B" << global.tabVal[num + firstLineIndex].cmbObjectItem << global.tabVal[num + firstLineIndex].strObjectItem;
+        // cmbObject->setCurrentIndex(index);
 
         /*
         obj = sender();
@@ -725,7 +731,7 @@ void ProcesSteps::objectIndexChange(int index)
             }
         }
         */
-            UpdateTable();
+        UpdateTable();
     }
 }
 
@@ -768,7 +774,7 @@ void ProcesSteps::on_verticalSlider_valueChanged(int value)
     if(!enableGroupCh){ // qDebug() <<"UpdateTable obj == false";
         return;
     }
-        // qDebug() << "Slider_valueChanged" << value << global.tabVal.length();
+    // qDebug() << "Slider_valueChanged" << value << global.tabVal.length();
 
     if(value < global.tabVal.length()){
         setTabValRecord(value);
