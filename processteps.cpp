@@ -34,22 +34,6 @@ void ProcesSteps::maximizeWindow()
 
 void ProcesSteps::setTabValRecord(int recNr)
 {
-    qDebug() << "Set rec "<< activeRow << recNr << firstLineIndex << recNr - firstLineIndex;
-    // return;
-    if(recNr > (global.tabVal.length() - 1)){
-        return;
-    }
-    if(recNr < firstLineIndex){
-        firstLineIndex = recNr;
-    }
-
-    if((recNr - firstLineIndex ) >= 14){
-        firstLineIndex = recNr - 7;
-    }
-
-
-
-    activeRow = recNr - firstLineIndex  ;   // kurā rinda rāda
 
     qDebug() << "Set rec recNr="<<recNr << recNr - firstLineIndex << " == 14  " << (global.tabVal.length() - 1) << " > "<< recNr;
     // if(((recNr - firstLineIndex ) >= 14) && ((global.tabVal.length() - 1) >  recNr ))
@@ -73,6 +57,7 @@ void ProcesSteps::setTabValRecord(int recNr)
         else{
             label_npk->setText(QString::number(i));
             label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
+            label_npk->setText(QString::number(i + firstLineIndex));
         }
     }
 }
@@ -524,10 +509,10 @@ void ProcesSteps::UpdateTable()
         int num = i + firstLineIndex;
         // qDebug() << "UpdateTable:"  << i << firstLineIndex << num << activeRow << global.tabVal.length();
 
-        QLabel *label_npk = tabPtr[i].label_npk;
+       // QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
-        label_npk->setText(QString::number(num));
-        label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
+       // label_npk->setText(QString::number(num));
+       // label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
 
 
         if(num >= global.tabVal.length()){
@@ -638,11 +623,11 @@ void ProcesSteps::UpdateTable()
         }
     }
     qDebug() << " QLabel *label_npk "<< activeRow << tabPtr.length();
-    QLabel *label_npk = tabPtr[activeRow].label_npk;
-    label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
+  //  QLabel *label_npk = tabPtr[activeRow].label_npk;
+  //  label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
     //label_npk->setStyleSheet("background-color:green;");// light green
-    label_npk->setText(">>");
-
+  //  label_npk->setText(">>");
+    setTabValRecord(activeRow);
     enableGroupCh = true;
 }
 
@@ -818,7 +803,7 @@ void ProcesSteps::on_pushButton_SlDown_clicked()
         activeRow++;
     }
     else{
-        if(activeRow + firstLineIndex +1 < global.tabVal.length()){
+        if(activeRow + firstLineIndex + 1 < global.tabVal.length()){
             firstLineIndex++;
             qDebug() << "last records" << global.tabVal.length() << activeRow + firstLineIndex;
         }
