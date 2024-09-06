@@ -246,7 +246,7 @@ public:
 
 
     QStringList procesObjestItemsPump  = { "Sapropelis 2.2", "Dispax 15Kw", "Dispax 11Kw", "Pump H2o","Pump B","Pump Na","Pump Sifons" };
-    QStringList procesObjestItemsDrives  = { "Mix","Šneks","Mohno 5.5"};
+    QStringList procesObjestItemsDrives  = { "Mix","Sneks","Mohno 5.5"};
     //QStringList procesObjestItemsPause  = { "Pause_s" };
     QStringList procesObjestItemsScales  = { "More_then","Less_then" };
     QStringList procesObjestItemsTank  = {
