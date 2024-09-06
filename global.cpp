@@ -656,7 +656,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 16, 1, 1108, 330, 57, 90, pipe_dir16);
     addWidgList(WidgetType::Pipe,"Caurule", 17, 1, 1037, 535, 41, 90, pipe_dir17);
     addWidgList(WidgetType::Pipe,"Caurule", 18, 1, 523, 595, 741, 90, pipe_dir18);
-    addWidgList(WidgetType::Pipe,"Caurule", 19, 1, 336, 655, 1327, 90, pipe_dir29);
+    addWidgList(WidgetType::Pipe,"Caurule", 19, 1, 336, 655, 1327, 90, pipe_dir19);
 
     addWidgList(WidgetType::Pipe,"Caurule", 20, 1, 450, 290, 35, 0, pipe_dir20);
     addWidgList(WidgetType::Pipe,"Caurule", 21, 1, 870, 170, 577, 90, pipe_dir21);
@@ -756,30 +756,30 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Valve,"20 valve", 20, 2, 944, 310, 30, 0, 0);
 
     addWidgList(WidgetType::Pipe,"Caurule", 68, 2, 610, 441, 28, 0, pipe_dir60);
-    addWidgList(WidgetType::Pipe,"Caurule", 69, 2, 630, 368, 102, 0, pipe_dir61);
-    addWidgList(WidgetType::Pipe,"Caurule", 70, 2, 650, 347, 122, 0, pipe_dir62);
-    addWidgList(WidgetType::Pipe,"Caurule", 71, 2, 670, 368, 102, 0, pipe_dir63);
-    addWidgList(WidgetType::Pipe,"Caurule", 72, 2, 690, 410, 60, 0, pipe_dir64);
+    addWidgList(WidgetType::Pipe,"Caurule", 69, 2, 630, 368, 102, 0, pipe_dir69);
+    addWidgList(WidgetType::Pipe,"Caurule", 70, 2, 650, 347, 122, 0, pipe_dir70);
+    addWidgList(WidgetType::Pipe,"Caurule", 71, 2, 670, 368, 102, 0, pipe_dir71);
+    addWidgList(WidgetType::Pipe,"Caurule", 72, 2, 690, 410, 60, 0, pipe_dir72);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 73, 2, 350, 168, 27, 0, pipe_dir65);
-    addWidgList(WidgetType::Pipe,"Caurule", 74, 2, 650, 168, 27, 0, pipe_dir66);
-    addWidgList(WidgetType::Pipe,"Caurule", 75, 2, 950, 168, 27, 0, pipe_dir67);
+    addWidgList(WidgetType::Pipe,"Caurule", 73, 2, 350, 168, 27, 0, pipe_dir73);
+    addWidgList(WidgetType::Pipe,"Caurule", 74, 2, 650, 168, 27, 0, pipe_dir74);
+    addWidgList(WidgetType::Pipe,"Caurule", 75, 2, 950, 168, 27, 0, pipe_dir75);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 76, 2, 350, 257, 50, 0, pipe_dir65);
-    addWidgList(WidgetType::Pipe,"Caurule", 77, 2, 650, 257, 50, 0, pipe_dir66);
-    addWidgList(WidgetType::Pipe,"Caurule", 78, 2, 950, 257, 50, 0, pipe_dir67);
+    addWidgList(WidgetType::Pipe,"Caurule", 76, 2, 350, 257, 50, 0, pipe_dir76);
+    addWidgList(WidgetType::Pipe,"Caurule", 77, 2, 650, 257, 50, 0, pipe_dir77);
+    addWidgList(WidgetType::Pipe,"Caurule", 78, 2, 950, 257, 50, 0, pipe_dir78);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 79, 2, 350, 368, 282, 90, pipe_dir65);
-    addWidgList(WidgetType::Pipe,"Caurule", 80, 2, 673, 368, 290, 90, pipe_dir66);
-    addWidgList(WidgetType::Pipe,"Caurule", 81, 2, 690, 409, 233, 90, pipe_dir67);
+    addWidgList(WidgetType::Pipe,"Caurule", 79, 2, 350, 368, 282, 90, pipe_dir79);
+    addWidgList(WidgetType::Pipe,"Caurule", 80, 2, 673, 368, 290, 90, pipe_dir80);
+    addWidgList(WidgetType::Pipe,"Caurule", 81, 2, 690, 409, 233, 90, pipe_dir81);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 82, 2, 644, 555, 69, 0, pipe_dir67);
+    addWidgList(WidgetType::Pipe,"Caurule", 82, 2, 644, 555, 69, 0, pipe_dir82);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 83, 2, 350, 345, 32, 0, pipe_dir65);
-    addWidgList(WidgetType::Pipe,"Caurule", 84, 2, 950, 345, 32, 0, pipe_dir67);
+    addWidgList(WidgetType::Pipe,"Caurule", 83, 2, 350, 345, 32, 0, pipe_dir83);
+    addWidgList(WidgetType::Pipe,"Caurule", 84, 2, 950, 345, 32, 0, pipe_dir84);
 
-    addWidgList(WidgetType::Pipe,"Caurule", 85, 2, 990, 409, 300, 90, pipe_dir66);
-    addWidgList(WidgetType::Pipe,"Caurule", 86, 2, 154, 283, 200, 90, pipe_dir65);
+    addWidgList(WidgetType::Pipe,"Caurule", 85, 2, 990, 409, 300, 90, pipe_dir85);
+    addWidgList(WidgetType::Pipe,"Caurule", 86, 2, 154, 283, 200, 90, pipe_dir86);
 
     addWidgList(WidgetType::Pipe,"Caurule", 87, 2, 47, 103, 50, 90, pipe_dir87);
     addWidgList(WidgetType::Pipe,"Caurule", 88, 2, 161, 103, 50, 90, pipe_dir88);
@@ -968,7 +968,7 @@ void Global::createComboxlist()
         << "pipe_dir86"
         << "pipe_dir87"
         << "pipe_dir88"
-       // << "pipe_dir89"
+       // << "pipe_dir89"       not in pict.
         << "pipe_dir90"
         << "pipe_dir91"
         << "pipe_dir92";

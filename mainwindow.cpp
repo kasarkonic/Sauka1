@@ -537,8 +537,9 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
     }
     case mCombo::Procesu_programmesana:
     {
-        procUI1.maximizeWindow();
+       // procUI1.maximizeWindow();
         procesSteps.show();
+       procesSteps.maximizeWindow();
         break;
     }
     case mCombo::Par_mani:

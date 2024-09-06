@@ -31,7 +31,7 @@ void Pipe::updateSettings() {
     WidgetDiagramElement::updateSettings();
     killTimer(timerIdUpd);
 
-
+   // qDebug() << "Pipe" << settings.name << global.DIoutput[settings.var2].value;
     if(global.DIoutput[settings.var2].value == 0){ // not move arrow
         timerIdUpd = startTimer(250, Qt::CoarseTimer); // not rotate
     }

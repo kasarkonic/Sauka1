@@ -50,11 +50,14 @@ void ProcesSteps::setTabValRecord(int recNr)
 void ProcesSteps::wheelEvent(QWheelEvent *event)
 {
     if(event->angleDelta().y() > 0){ // up Wheel
-        // on_pushButton_Up_clicked();
+         on_pushButton_SlUp_clicked();
     }
     else if(event->angleDelta().y() < 0){ //down Wheel
-        // on_pushButton_Down_clicked();
+         on_pushButton_SlDown_clicked();
     }
+
+   // qDebug() << "Up:" << event->angleDelta().y() << "Down:" << event->angleDelta().y();
+
 }
 
 void ProcesSteps::keyPressEvent(QKeyEvent *event)
@@ -418,7 +421,7 @@ void ProcesSteps::drawWidgets()
         QLabel *labelhelp = new QLabel(this);
         tablePtr.labelhelp = labelhelp;
         labelhelp->setObjectName(QString::number(i));
-        QString str = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
+        QString str = "help??";
         labelhelp->setText(str);
         tabPtr.append(tablePtr);
         tableVal.helpStr = (str);
@@ -453,7 +456,7 @@ void ProcesSteps::drawWidgets()
     }
 
     QLabel *label_npk = tabPtr[activeRow].label_npk;
-    label_npk->setStyleSheet("background:rgb(150,250,150);");// light green
+    label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
     label_npk->setText(">>");
 
     ui->verticalSlider->setMinimum(0);
@@ -494,7 +497,7 @@ void ProcesSteps::UpdateTable()
         QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
         label_npk->setText(QString::number(num));
-        label_npk->setStyleSheet("background:rgb(250, 250, 250, 175);"); // white
+        label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
 
 
         if(num >= global.tabVal.length()){
@@ -524,7 +527,7 @@ void ProcesSteps::UpdateTable()
                 QLabel *label_npk = tabPtr[i].label_npk;
                 //label_npk->setText(QString::number(tabVal[num].npk));
                 label_npk->setText(QString::number(num));
-                label_npk->setStyleSheet("background:rgb(250, 250, 250, 175);"); // white
+                label_npk->setStyleSheet("background:rgb(250, 250, 250);"); // white
 */
 
 
@@ -539,38 +542,38 @@ void ProcesSteps::UpdateTable()
             //qDebug() << "save tabVal[num].cmbObjectItem" << num << index << global.tabVal[num].cmbObjectItem;
             //comboBox->addItems(list);
 
-            qDebug() << "cmbGroup:"  <<num << global.tabVal[num].cmbGroupItem << global.tabVal[num].cmbObjectItem;
+           // qDebug() << "cmbGroup:"  <<num << global.tabVal[num].cmbGroupItem << global.tabVal[num].cmbObjectItem;
             cmbObject->clear();
             QString hstr;
             switch (global.tabVal[num].cmbGroupItem) {
             case Global::Valve: // valve
                 cmbObject->addItems(global.procesObjestItemsValve);
-                hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
+                hstr = "Vārsts/darbība:,  signāls:,  max izpildes laiks(s):";
                 break;
             case Global::Pump:  //  pump
                 cmbObject->addItems(global.procesObjestItemsPump);
-                hstr = "Pump help";
+                hstr =  "Sūknis:, signāls 1/0:";
                 break;
             case Global::DRIVES: // DRIVES
                 cmbObject->addItems(global.procesObjestItemsDrives);
-                hstr = "Drives help";
+                hstr = "Draivs:, ātrums, ja 0 apsājas";
                 break;
 
             case Global::IsValveFinish://  pause?
                 cmbObject->addItems(global.procesObjestItemsValve);
-                hstr = "vārsta ieejas kods:,signāla vērtība:, max izpildes laiks(s):";
+                hstr = "Vārsts/darbība: ,gaida sign. 1/0: ,signāla vērtība:, max izpildes laiks(s):";
                 break;
             case Global::Scales: // test
                 cmbObject->addItems(global.procesObjestItemsScales);
-                hstr = "vairāk/ mazak par:, sasniedzamā vērtība:, max izpildes laiks(s)";
+                hstr = "svari: , vairāk/mazāk par:, sasniedzamā vērtība:,  Max izpildes laiks(s)";
                 break;
             case Global::Tank: // test
                 cmbObject->addItems(global.procesObjestItemsTank);
-                hstr = "Obj->Izejas signāls, V->signāla vērtība, pz->max izpildes laiks(s)";
+                hstr = "Tvertnes sensors:, Sasniedzamā vērtība:,  Max izpildes laiks(s)";
                 break;
             case Global::Pipe: // Pipe
                 cmbObject->addItems(global.procesObjestItemsPipe);
-                hstr = "caurules bultas vieziena 0,1,2:, V->signāla vērtība:";
+                hstr = "caurules bultas vieziena 0,1,2:, Vērtība:";
                 break;
             case Global::Command: // Command
                 cmbObject->addItems(global.procesObjestItemsComand);
@@ -597,12 +600,16 @@ void ProcesSteps::UpdateTable()
             QLineEdit *linEditNote = tabPtr[i].linEditNote;
             linEditNote->setText(global.tabVal[num].notes);
 
+            QLabel *labelHelp = tabPtr[i].labelhelp;
+            global.tabVal[num].helpStr = hstr;
+            labelHelp->setText(hstr);
+
             // tabVal
         }
     }
-    qDebug() << " QLabel *label_npk "<< activeRow << tabPtr.length();
+    //qDebug() << " QLabel *label_npk "<< activeRow << tabPtr.length();
     QLabel *label_npk = tabPtr[activeRow].label_npk;
-    label_npk->setStyleSheet("background:rgb(150,250,150);");// light green
+    label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
     //label_npk->setStyleSheet("background-color:green;");// light green
     label_npk->setText(">>");
 
@@ -615,6 +622,7 @@ void ProcesSteps::linValFinish()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
+        qDebug() << "linNoteFinish()" << num <<"+"<< firstLineIndex << sender()<<"L:"<< global.tabVal.length();
         QLineEdit *linEditVal = tabPtr[num].linEditVal;
 
         int val  = linEditVal->text().toInt(&ok1);
@@ -663,16 +671,16 @@ void ProcesSteps::onClickDel()
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok) {
-        qDebug() << "onClickDel()"  << num << firstLineIndex << 5 << sender();
+        qDebug() << "onClickDel()"  << num << firstLineIndex << 5 << sender() << global.tabVal.length();
 
-        if(global.tabVal.length() < 15 + 1){
-            Global::tVal tableVal;
-            global.tabVal.append(tableVal);
-        }
-        else if(firstLineIndex + 14 >= global.tabVal.length()){  // last row
-            // Global::tVal tableVal;
-            //  activeRow--;
-            // global.tabVal.append(tableVal);
+       // if(global.tabVal.length() < 15 + 1){
+       //     Global::tVal tableVal;
+      //      global.tabVal.append(tableVal);
+      //  }
+        if(firstLineIndex + 14 >= global.tabVal.length()){  // last row
+             Global::tVal tableVal;
+              activeRow--;
+             global.tabVal.append(tableVal);
         }
 
         global.tabVal.removeAt(num + firstLineIndex);
@@ -689,7 +697,7 @@ void ProcesSteps::groupIndexChange(int index)
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     qDebug() << "groupIndexChange" << num << firstLineIndex << index << global.tabVal.length() <<"eEnable:" <<enableGroupCh;
-    if (ok && index >= 0) {
+    if (ok && (index >= 0) && ((num + firstLineIndex) < global.tabVal.length())) {
         global.tabVal[num + firstLineIndex].cmbGroupItem = index;
 
         if(enableGroupCh){
@@ -780,7 +788,7 @@ void ProcesSteps::on_pushButton_SlDown_clicked()
 
 void ProcesSteps::on_verticalSlider_valueChanged(int value)
 {
-
+/*
     if(!enableGroupCh){ // qDebug() <<"UpdateTable obj == false";
         return;
     }
@@ -789,6 +797,7 @@ void ProcesSteps::on_verticalSlider_valueChanged(int value)
     if(value < global.tabVal.length()){
         setTabValRecord(value);
     }
+    */
 }
 
 void ProcesSteps::on_pushButton_Start_clicked()

@@ -656,6 +656,7 @@ void Runprocess::stateDrives()
     default:
         break;
     }
+     changeState(StateNext);
 }
 
 void Runprocess::stateCloseValves()
