@@ -359,7 +359,7 @@ enum virtualOutputs
     pipe_dir86,
     pipe_dir87,
     pipe_dir88,
-  //  pipe_dir89,
+    pipe_dir89,
     pipe_dir90,
     pipe_dir91,
     pipe_dir92,

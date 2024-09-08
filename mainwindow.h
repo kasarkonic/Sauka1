@@ -158,6 +158,7 @@ private:
     void delAllWid();
     bool pause = false;
     QString statusStr;
+    void processtepsPrwsNext();
 };
 
 

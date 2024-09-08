@@ -36,6 +36,13 @@ WidgetService::WidgetService(Global& global, WidgetDiagramElement* widgetElement
     ui->label_0_3->setText("Vērtība");
     ui->horizontalSlider_speed->setRange(-100,100);
     ui->horizontalSlider_speed->setValue(50);
+
+    col = QColor(Qt::green);
+    qss_green = QString("background-color: %1").arg(col.name());
+
+    col = QColor(Qt::red);
+    qss_red = QString("background-color: %1").arg(col.name());
+
     initUI();
     updateFormData();   // data from global. ...
     timerId = startTimer(100);
@@ -148,8 +155,8 @@ void WidgetService::initUI() //  not update
 
 
             ui->label4_3->setText("Kalibresana");
-            ui->pushButton_5_3->setText("Saglabat pilna");
-            ui->pushButton_6_3->setText("Saglabat tuksa");
+            ui->pushButton_6_3->setText("Saglabat pilna");
+            ui->pushButton_5_3->setText("Saglabat tuksa");
 
         }
 
@@ -199,8 +206,11 @@ void WidgetService::initUI() //  not update
             str1.append(" s");
             ui->lineEdit_6_2->setText(str1);
         */
-            ui->pushButton_5_3->setText(" Aizvērt vārstu");
-            ui->pushButton_6_3->setText("Atvērt vārstu");
+            ui->pushButton_6_3->setText(" Aizvērt vārstu");
+            ui->pushButton_5_3->setText("Atvērt vārstu");
+            ui->pushButton_5_3->setStyleSheet(qss_green);
+            ui->pushButton_6_3->setStyleSheet(qss_red);
+
 
             str = "Izvēlēts elements \"Valve \"\n";
             str.append("ON OFF islēdz/ atslēdz vārstu motoru\n");
@@ -217,8 +227,8 @@ void WidgetService::initUI() //  not update
             ui->label2_1->setText("In vārsts ciet");
             ui->label3_1->setText("Out atvērt vārstu");
             ui->label4_1->setText("Out aizvērt vārstu");
-            ui->label5_1->setText("Aizvēršanās laiks");
-            ui->label6_1->setText("Atvēršanās laiks");
+            ui->label5_1->setText("Atvēršanās laiks");
+            ui->label6_1->setText("Aizvēršanās laiks");
             ui->horizontalSlider_speed->hide();
             ui->_slider_val->hide();
         }
@@ -263,8 +273,13 @@ void WidgetService::initUI() //  not update
             ui->label2_3->setText(QString::number(23));
             ui->label3_3->setText(QString::number(33));
             ui->label4_3->setText("");
-            ui->pushButton_5_3->setText("Ieslēgt");
-            ui->pushButton_6_3->setText("Izslēgt");
+            ui->pushButton_6_3->setText("Ieslēgt");
+            ui->pushButton_5_3->setText("Izslēgt");
+
+            ui->pushButton_6_3->setText(" Aizvērt vārstu");
+            ui->pushButton_5_3->setText("Atvērt vārstu");
+            ui->pushButton_5_3->setStyleSheet(qss_green);
+            ui->pushButton_6_3->setStyleSheet(qss_red);
 
             ui->line_14->hide();
             ui->line_15->hide();
@@ -282,10 +297,15 @@ void WidgetService::initUI() //  not update
             ui->label6_1->setText("Izslēgt sūkni");
             ui->pushButton_5_3->setText("Ieslēgt");
             ui->pushButton_6_3->setText("Izslēgt");
+           // ui->pushButton_6_3->setText(" Aizvērt vārstu");
+           // ui->pushButton_5_3->setText("Atvērt vārstu");
+
+            ui->pushButton_5_3->setStyleSheet(qss_green);
+            ui->pushButton_6_3->setStyleSheet(qss_red);
         }
 
-        // ui->pushButton_5_3->setText("Ieslēgt Turp");
-        // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
+        // ui->pushButton_6_3->setText("Ieslēgt Turp");
+        // ui->pushButton_5_3->setText("Izslēgt Atpakaļ");
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
@@ -298,8 +318,8 @@ void WidgetService::initUI() //  not update
         ui->label2_3->setText(QString::number(global.DIoutput[widgetElement->settings.var2].value));
         ui->label3_3->setText("");
         ui->label4_3->setText("");
-        // ui->pushButton_5_3->setText("Ieslēgt");
-        // ui->pushButton_6_3->setText("Izslēgt");
+        // ui->pushButton_6_3->setText("Ieslēgt");
+        // ui->pushButton_5_3->setText("Izslēgt");
 
         ui->line_14->hide();
         ui->line_15->hide();
@@ -339,8 +359,8 @@ void WidgetService::initUI() //  not update
             ui->label3_3->setText("");
             ui->label4_3->setText("");
 
-            ui->pushButton_5_3->setText("ieslēgt");
-            ui->pushButton_6_3->setText("izslēgt");
+            ui->pushButton_6_3->setText("ieslēgt");
+            ui->pushButton_5_3->setText("izslēgt");
             ui->lineEdit_5_2->setText("");
             ui->lineEdit_6_2->setText("");
             ui->lineEdit_5_2->hide();
@@ -348,6 +368,10 @@ void WidgetService::initUI() //  not update
             ui->horizontalSlider_speed->setDisabled(true);
             ui->horizontalSlider_speed->hide();
             ui->_slider_val->hide();
+           // ui->pushButton_6_3->setText(" Aizvērt vārstu");
+           // ui->pushButton_5_3->setText("Atvērt vārstu");
+            ui->pushButton_5_3->setStyleSheet(qss_green);
+            ui->pushButton_6_3->setStyleSheet(qss_red);
         }
 
 
@@ -409,6 +433,11 @@ void WidgetService::initUI() //  not update
         ui->label4_3->setText("");
         ui->pushButton_5_3->setText("Ieslēgt");
         ui->pushButton_6_3->setText("Izslēgt");
+        //ui->pushButton_6_3->setText(" Aizvērt vārstu");
+       // ui->pushButton_5_3->setText("Atvērt vārstu");
+
+        ui->pushButton_5_3->setStyleSheet(qss_green);
+        ui->pushButton_6_3->setStyleSheet(qss_red);
 
         ui->line_14->hide();
         ui->line_15->hide();
@@ -471,8 +500,8 @@ void WidgetService::initUI() //  not update
         ui->label2_3->setText("");
         ui->label3_3->setText("");
         ui->label4_3->setText("");
-        ui->pushButton_5_3->hide();
         ui->pushButton_6_3->hide();
+        ui->pushButton_5_3->hide();
         ui->line_14->hide();
         ui->line_15->hide();
         ui->line_16->hide();
@@ -567,32 +596,32 @@ void WidgetService::updateFormData()        // update each 100 ms
             case 0:
                 ui->label3_3->setText(QString::number(global.DIinput[TVERTNE4TEMP].value));
                 ui->label4_2->setText(QString::number(global.DIinput[TVERTNE4LEVEL].avr));
-                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE4KALIBFULL].value));
-                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE4KALIBEMPTY].value));
+                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE4KALIBFULL].value));
+                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE4KALIBEMPTY].value));
                 break;
             case 1:
                 ui->label3_3->setText(QString::number(global.DIinput[TVERTNE3TEMP].value));
                 ui->label4_2->setText(QString::number(global.DIinput[TVERTNE3LEVEL].avr));
-                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE3KALIBFULL].value));
-                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE3KALIBEMPTY].value));
+                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE3KALIBFULL].value));
+                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE3KALIBEMPTY].value));
                 break;
             case 2:
                 ui->label3_3->setText(QString::number(global.DIinput[TVERTNE2TEMP].value));
                 ui->label4_2->setText(QString::number(global.DIinput[TVERTNE2LEVEL].avr));
-                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE2KALIBFULL].value));
-                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE2KALIBEMPTY].value));
+                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE2KALIBFULL].value));
+                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE2KALIBEMPTY].value));
                 break;
             case 3:
                 ui->label3_3->setText(QString::number(global.DIinput[TVERTNE1TEMP].value));
                 ui->label4_2->setText(QString::number(global.DIinput[TVERTNE1LEVEL].avr));
-                //ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE1KALIBFULL].value));
-                //ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE1KALIBEMPTY].value));
+                //ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE1KALIBFULL].value));
+                //ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE1KALIBEMPTY].value));
                 break;
             case 4:
                 ui->label3_3->setText(QString::number(global.DIinput[TVERTNE5TEMP].value));
                 ui->label4_2->setText(QString::number(global.DIinput[TVERTNE5LEVEL].avr));
-                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE5KALIBFULL].value));
-                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE5KALIBEMPTY].value));
+                // ui->lineEdit_6_2->setText(QString::number(global.DIinput[TVERTNE5KALIBFULL].value));
+                // ui->lineEdit_5_2->setText(QString::number(global.DIinput[TVERTNE5KALIBEMPTY].value));
                 break;
             default:
                 break;
@@ -600,8 +629,8 @@ void WidgetService::updateFormData()        // update each 100 ms
 
 
             //   ui->label4_3->setText("Kalibresana");
-            //   ui->pushButton_5_3->setText("Saglabat pilna");
-            //   ui->pushButton_6_3->setText("Saglabat tuksa");
+            //   ui->pushButton_6_3->setText("Saglabat pilna");
+            //   ui->pushButton_5_3->setText("Saglabat tuksa");
 
         }
 
@@ -638,13 +667,13 @@ void WidgetService::updateFormData()        // update each 100 ms
             str1.append(".");
             str1.append(QString::number((int)closeTime%10));
             str1.append(" s");
-            ui->lineEdit_5_2->setText(str1);
+            ui->lineEdit_6_2->setText(str1);
 
             str1 = QString::number((openTime/10));
             str1.append(".");
             str1.append(QString::number((int)openTime%10));
             str1.append(" s");
-            ui->lineEdit_6_2->setText(str1);
+            ui->lineEdit_5_2->setText(str1);
 
         }
 
@@ -657,8 +686,8 @@ void WidgetService::updateFormData()        // update each 100 ms
             //        ui->label5_1->setText("Ieslēgt");
             //        ui->label6_1->setText("Izslēgt");
 
-            //        ui->pushButton_5_3->setText("Ieslegt");
-            //        ui->pushButton_6_3->setText("Izslegt");
+            //        ui->pushButton_6_3->setText("Ieslegt");
+            //        ui->pushButton_5_3->setText("Izslegt");
 
         }
 
@@ -671,8 +700,8 @@ void WidgetService::updateFormData()        // update each 100 ms
 
         }
 
-        // ui->pushButton_5_3->setText("Ieslēgt Turp");
-        // ui->pushButton_6_3->setText("Izslēgt Atpakaļ");
+        // ui->pushButton_6_3->setText("Ieslēgt Turp");
+        // ui->pushButton_5_3->setText("Izslēgt Atpakaļ");
 
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
@@ -920,7 +949,7 @@ void WidgetService::on_lineEdit_options_editingFinished() {
 
 
 
-void WidgetService::on_pushButton_5_3_clicked()
+void WidgetService::on_pushButton_6_3_clicked()
 {
 
 
@@ -981,77 +1010,38 @@ void WidgetService::on_pushButton_5_3_clicked()
 
     case WidgetType::widgT::Dispax:
         // off
-        global.DIoutput[widgetElement->settings.var1].value = 1;
+        global.DIoutput[widgetElement->settings.var1].value = 0;
         break;
     case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor On
+        // motor Off
+
         param.boardAdr = actualMotorNode;
-        param.value = 128;
         param.regAdr = CMD_REG;
-        param.len = 1;
-        param.cmd = WR_REG;
-        global.rs485WrList.append(param);
-
-        param.value = 6;
-        global.rs485WrList.append(param);
-
         param.value = 7;
-        global.rs485WrList.append(param);
-
-        param.value = 15;
-        global.rs485WrList.append(param);
-
-        param.regAdr = LFRD_REG;
-        param.value = rpm;
-        param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
+
         break;
 
+
+
     case WidgetType::widgT::Pump:
-        // save calibration full
-        if(currentWidnpk == 1){ // pump 2.2
-            // motor On
+        // off
+
+        if ( currentWidnpk == 1){       // pump 5.5 MOHNO
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
-            param.value = 128;
             param.regAdr = CMD_REG;
-            param.len = 1;
-            param.cmd = WR_REG;
-            global.rs485WrList.append(param);
-
-            param.value = 6;
-            global.rs485WrList.append(param);
-
             param.value = 7;
-            global.rs485WrList.append(param);
-
-            param.value = 15;
-            global.rs485WrList.append(param);
-
-            param.regAdr = LFRD_REG;
-            param.value = rpm;
-            param.len = 1;
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
-
         }
-        // else if(currentWidnpk == 0) {
 
-        // if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
-        // global.DIoutput[widgetElement->settings.var1].value = 0;
-        // global.DIoutput[widgetElement->settings.var2].value = 0;
-        // }
-        //  }
         else{
-            global.DIoutput[widgetElement->settings.var1].value = 1;
-            //global.DIoutput[widgetElement->settings.var2].value = 0;
+            global.DIoutput[widgetElement->settings.var1].value = 0;
         }
-
-        //global.DIoutput[widgetElement->settings.var1].value = 1;
-
 
         break;
     default:
@@ -1059,7 +1049,7 @@ void WidgetService::on_pushButton_5_3_clicked()
     }
 }
 
-void WidgetService::on_pushButton_6_3_clicked()
+void WidgetService::on_pushButton_5_3_clicked()
 {
 
     switch (widgetElement->global.widHash[currentWid].type) {
@@ -1110,48 +1100,70 @@ void WidgetService::on_pushButton_6_3_clicked()
 
         break;
     case WidgetType::widgT::Dispax:
-        // off
-        global.DIoutput[widgetElement->settings.var1].value = 0;
+        // on
+        global.DIoutput[widgetElement->settings.var1].value = 1;
         break;
     case WidgetType::widgT::Mix:
-
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor Off
-
+        // motor On
         param.boardAdr = actualMotorNode;
+        param.value = 128;
         param.regAdr = CMD_REG;
+        param.len = 1;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+
+        param.value = 6;
+        global.rs485WrList.append(param);
+
         param.value = 7;
+        global.rs485WrList.append(param);
+
+        param.value = 15;
+        global.rs485WrList.append(param);
+
+        param.regAdr = LFRD_REG;
+        param.value = rpm;
+        param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
 
 
         break;
     case WidgetType::widgT::Pump:
-        // motor off
+        // motor on
 
-        if ( currentWidnpk == 1){       // pump 5.5 MOHNO
+        if(currentWidnpk == 1){ // pump 2.2
+            // motor On
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
+            param.value = 128;
             param.regAdr = CMD_REG;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
+
+            param.value = 6;
+            global.rs485WrList.append(param);
+
             param.value = 7;
+            global.rs485WrList.append(param);
+
+            param.value = 15;
+            global.rs485WrList.append(param);
+
+            param.regAdr = LFRD_REG;
+            param.value = rpm;
+            param.len = 1;
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
         }
-        // else if ( currentWidnpk == 0){
 
-        //     if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
-        //         global.DIoutput[widgetElement->settings.var1].value = 0;
-        //         global.DIoutput[widgetElement->settings.var2].value = 0;
-        //     }
-        // }
         else{
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            // global.DIoutput[widgetElement->settings.var2].value = 1;
+            global.DIoutput[widgetElement->settings.var1].value = 1;
+
         }
-
-        // global.DIoutput[widgetElement->settings.var1].value = 0;
-
 
         break;
 
@@ -1163,13 +1175,13 @@ void WidgetService::on_pushButton_6_3_clicked()
 
 
 
-void WidgetService::on_lineEdit_5_2_editingFinished()
+void WidgetService::on_lineEdit_6_2_editingFinished()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
 
-        int val = ui->lineEdit_5_2->text().toInt(&ok);
+        int val = ui->lineEdit_6_2->text().toInt(&ok);
         if (!ok) {
-            ui->lineEdit_5_2->setText("Kļūda!");
+            ui->lineEdit_6_2->setText("Kļūda!");
             val = 0;
         }
         switch (currentWidnpk) {
@@ -1196,12 +1208,12 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
 }
 
 
-void WidgetService::on_lineEdit_6_2_editingFinished()
+void WidgetService::on_lineEdit_5_2_editingFinished()
 {
     if(widgetElement->global.widHash[currentWid].type == WidgetType::widgT::Tvertne) {
-        int val = ui->lineEdit_6_2->text().toInt(&ok);
+        int val = ui->lineEdit_5_2->text().toInt(&ok);
         if (!ok) {
-            ui->lineEdit_6_2->setText("Kļūda!");
+            ui->lineEdit_5_2->setText("Kļūda!");
             val = 0;
         }
         switch (currentWidnpk) {

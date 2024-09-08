@@ -118,11 +118,28 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     connect(&runprocess, &Runprocess::diOutputChangeSi,
             &hwService, &HWService::updateDataDi);
+
     connect(&runprocess, &Runprocess::stateChange,
             &procesSteps, &ProcesSteps::setTabValRecord);
 
-    // sender, &Sender::valueChanged,
-    //     receiver, &Receiver::updateValue;
+    connect(&procesSteps, &ProcesSteps::startR,
+            this, &MainWindow::on_pushButton_start_clicked);
+
+    connect(&procesSteps, &ProcesSteps::stopR,
+            this, &MainWindow::on_pushButton_stop_clicked);
+
+    connect(&procesSteps, &ProcesSteps::pauseR,
+            this, &MainWindow::on_pushButton_pause_clicked);
+
+    connect(&procesSteps, &ProcesSteps::nextR,
+            this, &MainWindow::processtepsPrwsNext);
+
+
+  //  connect(&runprocess, &Runprocess::printInfoR,
+  //          this, &procesSteps, &ProcesSteps::printInfoP );
+
+
+
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
     qDebug() << "-------------------modbus485.init()";
@@ -464,6 +481,11 @@ void MainWindow::delAllWid() {
     }
 }
 
+void MainWindow::processtepsPrwsNext()
+{
+    runprocess.next();
+}
+
 
 
 void MainWindow::on_pushButton_Stop_clicked() {
@@ -529,8 +551,9 @@ void MainWindow::on_comboBox_currentIndexChanged(int index) {
     }
     case mCombo::Procesu_programmesana:
     {
-        procUI1.maximizeWindow();
+       // procUI1.maximizeWindow();
         procesSteps.show();
+       procesSteps.maximizeWindow();
         break;
     }
     case mCombo::Par_mani:

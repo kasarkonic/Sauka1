@@ -33,16 +33,22 @@ signals:
     void clicked(int npk);
     void currentIndexChanged(int item);
     void editingFinished();
+    void startR();
+    void stopR();
+    void pauseR();
+    void nextR();
+
 
 
 
 public slots:
     void setTabValRecord(int recNr);
+     void printInfoP(int  state);
 
 private slots:
-    void on_pushButton_Up_clicked();
+   // void on_pushButton_Up_clicked();
 
-    void on_pushButton_Down_clicked();
+   // void on_pushButton_Down_clicked();
 
     void on_pushButton_Load_clicked();
 
@@ -56,6 +62,21 @@ private slots:
     void objectIndexChange(int index);
     void linValFinish();
     void linNoteFinish();
+
+
+    void on_pushButton_SlUp_clicked();
+
+    void on_pushButton_SlDown_clicked();
+
+    void on_verticalSlider_valueChanged(int value);
+
+    void on_pushButton_Start_clicked();
+
+    void on_pushButton_Stop_clicked();
+
+    void on_pushButton_Pause_clicked();
+
+    void on_pushButton_Nezxt_clicked();
 
 
 private:
@@ -95,6 +116,7 @@ private:
 
     QList<QString>saveProcesList;
     QList<QString>loadProcesList;
+    bool enableGroupCh = true;
 
 };
 
