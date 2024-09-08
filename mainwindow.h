@@ -45,9 +45,6 @@ public:
 
 public slots:
     void changeInputVal(int row, int val);
-   // void startR();
-   // void stopR();
-   // void pauseR();
 
 private slots:
 
@@ -161,6 +158,7 @@ private:
     void delAllWid();
     bool pause = false;
     QString statusStr;
+    void processtepsPrwsNext();
 };
 
 

@@ -18,6 +18,7 @@ public:
     void start(int state);
     void stop();
     void pause(bool val);
+    void next();
 protected:
     void    timerEvent(QTimerEvent* event) override;
 

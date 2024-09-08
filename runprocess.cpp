@@ -48,6 +48,11 @@ void Runprocess::pause(bool val)
     pauseProc = val;
 }
 
+void Runprocess::next()
+{
+changeState(StateNext);
+}
+
 void Runprocess::timerEvent(QTimerEvent* event) {
     // qDebug() << "timerEvent " << event->timerId() << " -> " << taskTimer << global.getTick();
     if(!pauseProc){
@@ -496,13 +501,13 @@ void Runprocess::stateScalesTest()
 
     int val = global.tabVal[currentTabVal].val;
 
+    if(global.tabVal[currentTabVal].notes == ""){
+        global.tabVal[currentTabVal].notes = "600";
+    }
     int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
     qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
     if (!ok) {
         if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
-            qDebug() << "Varning !!!" "maxTime not defined " ;
-        }
-        else if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
             qDebug() << "ERROR !!!" << val  <<"Scales not change value in  time: " << maxTime<<"s";
             changeState(StateError);
         }

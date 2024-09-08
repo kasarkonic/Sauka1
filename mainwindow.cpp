@@ -129,6 +129,10 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     connect(&procesSteps, &ProcesSteps::pauseR,
             this, &MainWindow::on_pushButton_pause_clicked);
+
+    connect(&procesSteps, &ProcesSteps::nextR,
+            this, &MainWindow::processtepsPrwsNext);
+
     // sender, &Sender::valueChanged,
     //     receiver, &Receiver::updateValue;
     currentTime = "currentTime";
@@ -470,6 +474,11 @@ void MainWindow::delAllWid() {
             //  qDebug() << widData.name<< " close() ";
         }
     }
+}
+
+void MainWindow::processtepsPrwsNext()
+{
+    runprocess.next();
 }
 
 
