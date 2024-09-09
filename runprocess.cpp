@@ -50,7 +50,7 @@ void Runprocess::pause(bool val)
 
 void Runprocess::next()
 {
-changeState(StateNext);
+    changeState(StateNext);
 }
 
 void Runprocess::timerEvent(QTimerEvent* event) {
@@ -72,6 +72,7 @@ void Runprocess::timerEvent(QTimerEvent* event) {
 
 void Runprocess::stateIdle() {
     // changeState(StateReset);
+    emit printInfo("stateIdle");
 }
 
 void Runprocess::stateReset() {
@@ -300,7 +301,7 @@ void Runprocess::stateValve()
 
 
     qDebug() << "valve addres " << out << "val = " << val;
-/*
+    /*
     if(out == Y2_1_atvērt){global.DIoutput[Y2_1_aizv].value = 0;}
     if(out == Y2_2_atvērt){global.DIoutput[Y2_2_aizv].value = 0;}
     if(out == Y2_3_atvērt){global.DIoutput[Y2_3_aizv].value = 0;}
@@ -362,17 +363,13 @@ void Runprocess::stateIsValveFinish()
 
 
 
-    qDebug() << "stateIsValveFinish?????????????????? " <<out <<  global.DIinput[out].value << val;
+    qDebug() << "stateIsValveFinish?????????????????? " <<out <<  global.DIinput[out].value << val << currentTabVal << currItem;
 
-    if(global.ItemToValveTable[currItem].isOpen ){
-        /*
-    if(val  == 0){   // close ?
+    qDebug() << "ItemToValveTable[currItem].isOpe " <<global.ItemToValveTable[currItem].isOpen;
 
-        if(global.DIinput[inClose].value == 1){
-            changeState(StateNext);
-        }
-    }
-*/
+
+    if(global.ItemToValveTable[currItem].isOpen == 1 ){  // test open
+
         if(val  == 1 ){   // open ?
 
             if(global.DIinput[inOpen].value == 1){
@@ -381,19 +378,35 @@ void Runprocess::stateIsValveFinish()
 
             if(global.DIinput[inOpen].value == 1 && global.DIinput[inClose].value == 1) {
                 qDebug() << "ERROR !!!" <<out <<"Valve open and Close in one time  " ;
-                changeState(StateError);
+                // changeState(StateError);
             }
         }
+    }
 
-        if(val  == 0){   // close ?
 
-            if(global.DIinput[inClose].value == 0){ // ????????????
+
+    if(global.ItemToValveTable[currItem].isOpen == 0 ){ // test close
+
+
+        qDebug() << "val:" << val << global.DIinput[inClose].value ;
+
+
+        if(val  == 1 ){   // close ?
+
+            if(global.DIinput[inClose].value == 1){
                 changeState(StateNext);
             }
+
+            if(global.DIinput[inClose].value == 1 && global.DIinput[inClose].value == 1) {
+                qDebug() << "ERROR !!!" <<out <<"Valve open and Close in one time  " ;
+                // changeState(StateError);
+            }
         }
+        qDebug() << "???:" ;
+    }
 
-
-
+    emit printInfo("StateIsValveFinish");
+    /*
         int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
         qDebug() << "maxTime " << intervalTimer->elapsed() << " - " << stateStartTime << (intervalTimer->elapsed() - stateStartTime)/1000 <<maxTime ;
         if (ok) {
@@ -408,6 +421,7 @@ void Runprocess::stateIsValveFinish()
                  << (intervalTimer->elapsed() - stateStartTime)/1000;
 
     }
+    */
 }
 void Runprocess::statePump()
 {
@@ -468,6 +482,7 @@ void Runprocess::stateCmd()
 {
     switch (global.tabVal[currentTabVal].cmbObjectItem) {
     case Global::PAUSE: // pause
+        emit printInfo("Cmd PAUSE");
         changeState(StateNext,global.tabVal[currentTabVal].val * 1000);   // s
         break;
     case Global::GOTO: //Goto
@@ -506,13 +521,17 @@ void Runprocess::stateScalesTest()
     }
     int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
     qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
-    if (!ok) {
+    if (ok) {
         if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
             qDebug() << "ERROR !!!" << val  <<"Scales not change value in  time: " << maxTime<<"s";
             changeState(StateError);
         }
 
-        //    QStringList procesObjestItemsScales  = { "More_then","Less_then" };
+        QStringList procesObjestItemsScales  = { "More_then","Less_then" };
+
+
+
+        qDebug() << "------------------------test scale test val:" << val << " cur.val:" << global.DIinput[scales_mass].value<< " item:" << global.tabVal[currentTabVal].cmbObjectItem;
         switch (global.tabVal[currentTabVal].cmbObjectItem) {
         case 0: // "More_then"
             if(global.DIinput[scales_mass].value >= val){
@@ -528,12 +547,14 @@ void Runprocess::stateScalesTest()
             break;
         }
     }
+
     qDebug() << "stateScalesTest"
              << "current:"
              << global.DIinput[scales_mass].value
              << "Destin. :" << val
              << maxTime
              << (intervalTimer->elapsed() - stateStartTime)/1000;
+
 
 }
 void Runprocess::stateTankTest()
@@ -542,7 +563,7 @@ void Runprocess::stateTankTest()
     int in = global.tabVal[currentTabVal].cmbObjectItem;
     in += TVERTNE1LEVEL;    // offset
     int maxTime = global.tabVal[currentTabVal].notes.toInt(&ok);
-    qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
+    // qDebug() << "maxTime ???" << maxTime << (intervalTimer->elapsed())/1000;
     if (!ok) {
         if((intervalTimer->elapsed() - stateStartTime)/1000 > maxTime){ // compare s
             qDebug() << "Varning !!!" "maxTime not defined " ;
@@ -661,7 +682,7 @@ void Runprocess::stateDrives()
     default:
         break;
     }
-     changeState(StateNext);
+    changeState(StateNext);
 }
 
 void Runprocess::stateCloseValves()
@@ -675,12 +696,38 @@ void Runprocess::stateCloseValves()
         int outClose = bVal.bValvePtr->outClose;
         int inOpen = bVal.bValvePtr->inOpen;
         int inClose = bVal.bValvePtr->inClose;
+        /*
+        qDebug() << currentWidnpk
+                 << "valve"
+                 << outOpen
+                 << outClose
+                 << inOpen
+                 << inClose;
+      */
+        bVal.bValvePtr->close();
+    }
+
+    global.DIoutput[0].update = true;   // update all outputs
+    global.DIoutput[32].update = true;
+    changeState(StateIsVallvesClose);
+}
+
+void Runprocess::stateIsVallvesClose()
+{
+    bool res = false;
+    foreach (Global::bvalve  bVal,  global.ballValveList){
+
+        int currentWidnpk = bVal.npk;
+        int outOpen = bVal.bValvePtr->outOpen;
+        int outClose = bVal.bValvePtr->outClose;
+        int inOpen = bVal.bValvePtr->inOpen;
+        int inClose = bVal.bValvePtr->inClose;
 
 
-       // int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
-       // int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
-       // int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
-       // int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
+        // int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
+        // int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
+        // int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
+        // int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
 
         qDebug() << currentWidnpk
                  << "valve"
@@ -689,40 +736,12 @@ void Runprocess::stateCloseValves()
                  << inOpen
                  << inClose;
 
-        bVal.bValvePtr->close();
+        res = res & bVal.bValvePtr->isClose();
     }
-/*
-    int out = global.tabVal[currentTabVal].cmbObjectItem;
-    int val = global.tabVal[currentTabVal].val > 0;
 
-    // out = out + Y1_1_atvērt;        // start real pin addres
-    // if(out < MAX_DIoutput){
-    //     global.DIoutput[out].value = val;
-    // }
-
-    int currItem = global.tabVal[currentTabVal].cmbObjectItem;
-    int  currentWidnpk =  global.ItemToValveTable[currItem].nr;
-
-    int outOpen = global.ballValveList[currentWidnpk].bValvePtr->outOpen;    // output address
-    int outClose = global.ballValveList[currentWidnpk].bValvePtr->outClose;
-    int inOpen = global.ballValveList[currentWidnpk].bValvePtr->inOpen;
-    int inClose = global.ballValveList[currentWidnpk].bValvePtr->inClose;
-    */
-    global.DIoutput[0].update = true;   // update all outputs
-    global.DIoutput[32].update = true;
-    changeState(StateIsVallvesClose);
-}
-
-void Runprocess::stateIsVallvesClose()
-{
-
-
-
-
-     qDebug() << "StateIsVallvesClose " << global.getTick();
-     qDebug() << "StateIsVallvesClose " << global.getTick();
-     qDebug() << "StateIsVallvesClose " << global.getTick();
- changeState(StateNext);
+    if(res){
+        changeState(StateNext);
+    }
 }
 
 
@@ -800,6 +819,7 @@ int Runprocess::getState() {
  */
 void Runprocess::changeState(int newState, int timeout) {
     qDebug() << "TCS:" << Qt::hex << getState() << " -> " << Qt::hex << newState<< Qt::dec <<"Tick:"<< global.getTick();
+    emit printInfo("newState  TCS:" + QString::number(newState));
     task_state = newState;
     intervalTimer->start();
     stateStartTime = intervalTimer->elapsed();//  global.getTick();
@@ -821,6 +841,10 @@ bool Runprocess::isTimerTimeout() {
         return 1;
     }
     else{
+        emit printInfo("Timer: "
+                       + QString::number((stateTimerInterval - (intervalTimer->elapsed() - stateStartTime))/1000)
+                       + "s  from "
+                       + QString::number( stateTimerInterval/1000 ));
         return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
     }
 }

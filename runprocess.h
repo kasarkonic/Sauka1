@@ -19,8 +19,17 @@ public:
     void stop();
     void pause(bool val);
     void next();
+
+signals:
+    void diOutputChangeSi(int i, int value);
+    void stateChange(int step);
+    void printInfo(QString info);
+
+
+
 protected:
     void    timerEvent(QTimerEvent* event) override;
+
 
 private:
 
@@ -107,10 +116,6 @@ private:
     int actualMotorNode;
     void runDrive( int address, int speed);
     void stopDrive(int address);
-
-signals:
-    void diOutputChangeSi(int i, int value);
-    void stateChange(int step);
 
 };
 

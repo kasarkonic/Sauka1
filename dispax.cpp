@@ -75,13 +75,6 @@ void Dispax::paintEvent(QPaintEvent* event) {
     painter.setPen(pen);
     painter.drawPolygon(points, 3);
 
-
-    //  imgBackground= new QImage();
-    //  imgBackground->load(":/pictures/mixeris3.png");
-
-    //  *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
-    //  painter.drawImage(QPoint(), *imgBackground);
-
     resize(settings.currSize, settings.currSize);
 }
 

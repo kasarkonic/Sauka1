@@ -118,6 +118,7 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
     connect(&runprocess, &Runprocess::diOutputChangeSi,
             &hwService, &HWService::updateDataDi);
+
     connect(&runprocess, &Runprocess::stateChange,
             &procesSteps, &ProcesSteps::setTabValRecord);
 
@@ -133,8 +134,14 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
     connect(&procesSteps, &ProcesSteps::nextR,
             this, &MainWindow::processtepsPrwsNext);
 
-    // sender, &Sender::valueChanged,
-    //     receiver, &Receiver::updateValue;
+
+    connect(&runprocess, &Runprocess::printInfo,
+             &procesSteps, &ProcesSteps::printInfo);
+
+  //  connect(&runprocess, &Runprocess::stateChange,
+  //          &procesSteps, &ProcesSteps::setTabValRecord);
+
+
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
     qDebug() << "-------------------modbus485.init()";
