@@ -295,8 +295,8 @@ void WidgetService::initUI() //  not update
         else{
             ui->label5_1->setText("Ieslēgt sūkni");
             ui->label6_1->setText("Izslēgt sūkni");
-            ui->pushButton_6_3->setText("Ieslēgt");
-            ui->pushButton_5_3->setText("Izslēgt");
+            ui->pushButton_5_3->setText("Ieslēgt");
+            ui->pushButton_6_3->setText("Izslēgt");
            // ui->pushButton_6_3->setText(" Aizvērt vārstu");
            // ui->pushButton_5_3->setText("Atvērt vārstu");
 
@@ -431,8 +431,8 @@ void WidgetService::initUI() //  not update
         ui->label2_3->setText(QString::number(23));
         ui->label3_3->setText(QString::number(33));
         ui->label4_3->setText("");
-        ui->pushButton_6_3->setText("Ieslēgt");
-        ui->pushButton_5_3->setText("Izslēgt");
+        ui->pushButton_5_3->setText("Ieslēgt");
+        ui->pushButton_6_3->setText("Izslēgt");
         //ui->pushButton_6_3->setText(" Aizvērt vārstu");
        // ui->pushButton_5_3->setText("Atvērt vārstu");
 
@@ -1010,77 +1010,38 @@ void WidgetService::on_pushButton_6_3_clicked()
 
     case WidgetType::widgT::Dispax:
         // off
-        global.DIoutput[widgetElement->settings.var1].value = 1;
+        global.DIoutput[widgetElement->settings.var1].value = 0;
         break;
     case WidgetType::widgT::Mix:
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor On
+        // motor Off
+
         param.boardAdr = actualMotorNode;
-        param.value = 128;
         param.regAdr = CMD_REG;
-        param.len = 1;
-        param.cmd = WR_REG;
-        global.rs485WrList.append(param);
-
-        param.value = 6;
-        global.rs485WrList.append(param);
-
         param.value = 7;
-        global.rs485WrList.append(param);
-
-        param.value = 15;
-        global.rs485WrList.append(param);
-
-        param.regAdr = LFRD_REG;
-        param.value = rpm;
-        param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
+
         break;
 
+
+
     case WidgetType::widgT::Pump:
-        // save calibration full
-        if(currentWidnpk == 1){ // pump 2.2
-            // motor On
+        // off
+
+        if ( currentWidnpk == 1){       // pump 5.5 MOHNO
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
-            param.value = 128;
             param.regAdr = CMD_REG;
-            param.len = 1;
-            param.cmd = WR_REG;
-            global.rs485WrList.append(param);
-
-            param.value = 6;
-            global.rs485WrList.append(param);
-
             param.value = 7;
-            global.rs485WrList.append(param);
-
-            param.value = 15;
-            global.rs485WrList.append(param);
-
-            param.regAdr = LFRD_REG;
-            param.value = rpm;
-            param.len = 1;
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
-
         }
-        // else if(currentWidnpk == 0) {
 
-        // if( global.DIoutput[widgetElement->settings.var1].value == 1){ //pump work Fw/
-        // global.DIoutput[widgetElement->settings.var1].value = 0;
-        // global.DIoutput[widgetElement->settings.var2].value = 0;
-        // }
-        //  }
         else{
-            global.DIoutput[widgetElement->settings.var1].value = 1;
-            //global.DIoutput[widgetElement->settings.var2].value = 0;
+            global.DIoutput[widgetElement->settings.var1].value = 0;
         }
-
-        //global.DIoutput[widgetElement->settings.var1].value = 1;
-
 
         break;
     default:
@@ -1139,48 +1100,70 @@ void WidgetService::on_pushButton_5_3_clicked()
 
         break;
     case WidgetType::widgT::Dispax:
-        // off
-        global.DIoutput[widgetElement->settings.var1].value = 0;
+        // on
+        global.DIoutput[widgetElement->settings.var1].value = 1;
         break;
     case WidgetType::widgT::Mix:
-
     case WidgetType::widgT::Dyno:
     case WidgetType::widgT::Conveyor:
-        // motor Off
-
+        // motor On
         param.boardAdr = actualMotorNode;
+        param.value = 128;
         param.regAdr = CMD_REG;
+        param.len = 1;
+        param.cmd = WR_REG;
+        global.rs485WrList.append(param);
+
+        param.value = 6;
+        global.rs485WrList.append(param);
+
         param.value = 7;
+        global.rs485WrList.append(param);
+
+        param.value = 15;
+        global.rs485WrList.append(param);
+
+        param.regAdr = LFRD_REG;
+        param.value = rpm;
+        param.len = 1;
         param.cmd = WR_REG;
         global.rs485WrList.append(param);
 
 
         break;
     case WidgetType::widgT::Pump:
-        // motor off
+        // motor on
 
-        if ( currentWidnpk == 1){       // pump 5.5 MOHNO
+        if(currentWidnpk == 1){ // pump 2.2
+            // motor On
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
+            param.value = 128;
             param.regAdr = CMD_REG;
+            param.len = 1;
+            param.cmd = WR_REG;
+            global.rs485WrList.append(param);
+
+            param.value = 6;
+            global.rs485WrList.append(param);
+
             param.value = 7;
+            global.rs485WrList.append(param);
+
+            param.value = 15;
+            global.rs485WrList.append(param);
+
+            param.regAdr = LFRD_REG;
+            param.value = rpm;
+            param.len = 1;
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
         }
-        // else if ( currentWidnpk == 0){
 
-        //     if( global.DIoutput[widgetElement->settings.var2].value == 1){ //pump work RW/
-        //         global.DIoutput[widgetElement->settings.var1].value = 0;
-        //         global.DIoutput[widgetElement->settings.var2].value = 0;
-        //     }
-        // }
         else{
-            global.DIoutput[widgetElement->settings.var1].value = 0;
-            // global.DIoutput[widgetElement->settings.var2].value = 1;
+            global.DIoutput[widgetElement->settings.var1].value = 1;
+
         }
-
-        // global.DIoutput[widgetElement->settings.var1].value = 0;
-
 
         break;
 

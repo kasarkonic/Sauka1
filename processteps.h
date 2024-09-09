@@ -36,12 +36,14 @@ signals:
     void startR();
     void stopR();
     void pauseR();
+    void nextR();
 
 
 
 
 public slots:
     void setTabValRecord(int recNr);
+     void printInfo(QString info);
 
 private slots:
    // void on_pushButton_Up_clicked();
@@ -73,6 +75,9 @@ private slots:
     void on_pushButton_Stop_clicked();
 
     void on_pushButton_Pause_clicked();
+
+    void on_pushButton_Nezxt_clicked();
+
 
 private:
     Global& global;

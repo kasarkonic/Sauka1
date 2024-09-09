@@ -34,37 +34,33 @@ void ProcesSteps::maximizeWindow()
 
 void ProcesSteps::setTabValRecord(int recNr)
 {
-    qDebug() << "Set rec "<< activeRow << recNr << firstLineIndex << recNr - firstLineIndex;
-    // return;
-    if(recNr > (global.tabVal.length() - 1)){
+    qDebug() << "setTabValRecord" << recNr;
+    if(recNr >= global.tabVal.length()){
+        qDebug() << "setTabVal out of range rec:" << recNr <<" l:" << global.tabVal.length();
         return;
     }
-    if(recNr < firstLineIndex){
-        firstLineIndex = recNr;
-    }
-
-    if((recNr - firstLineIndex ) >= 14){
-        firstLineIndex = recNr - 7;
-    }
-
-
-
-    activeRow = recNr - firstLineIndex  ;   // kurā rinda rāda
-
-    qDebug() << "Set rec recNr="<<recNr << recNr - firstLineIndex << " == 14  " << (global.tabVal.length() - 1) << " > "<< recNr;
+    //qDebug() << "Set rec recNr="<<recNr << recNr - firstLineIndex << " == 14  " << (global.tabVal.length() - 1) << " > "<< recNr;
     // if(((recNr - firstLineIndex ) >= 14) && ((global.tabVal.length() - 1) >  recNr ))
     // {
     //    firstLineIndex++ ;
     //    activeRow--;
     //}
-    qDebug() << "Set rec "<< activeRow << recNr << firstLineIndex;
+    //qDebug() << "Set rec "<< activeRow << recNr << firstLineIndex;
     // UpdateTable();
 
-    for (int i = 0; i<14; i++){
+    if(recNr > (firstLineIndex + 14)){
+        firstLineIndex++;
+    }
+
+    if(recNr < (firstLineIndex)){
+        firstLineIndex = recNr;
+    }
+
+    for (int i = 0; i<=14; i++){
         QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
 
-        if(i == activeRow ){
+        if((i + firstLineIndex) == recNr ){
 
             label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
             //label_npk->setStyleSheet("background-color:green;");// light green
@@ -72,7 +68,9 @@ void ProcesSteps::setTabValRecord(int recNr)
         }
         else{
             label_npk->setText(QString::number(i));
-            label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
+            label_npk->setStyleSheet("background:rgba(250, 250, 250, 175);"); // white
+            // label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
+            label_npk->setText(QString::number(i + firstLineIndex));
         }
     }
 }
@@ -124,6 +122,24 @@ void ProcesSteps::on_pushButton_Load_clicked()
 
     // QString path = QApplication::applicationDirPath() + "/process.txt";
     // qDebug() << "path" <<path;
+
+
+    QStringList strl = fileName.split("/");
+    QString str1 = strl.last();
+    str1.replace(str1.length()-4,4,"");
+
+    QString str = "Process: \"";
+    str.append(str1);
+    str.append("\"");
+
+
+
+   // QString str = "Process: \"" + fileName + "\"";
+
+
+
+
+    ui->label_Name->setText(str);
     QFile file(fileName);
 
     if(file.exists())
@@ -244,7 +260,7 @@ void ProcesSteps::on_pushButton_Load_clicked()
 */
             activeRow = 0;
             firstLineIndex = 0;
-            // UpdateTable();
+            UpdateTable();
 
 
         }
@@ -291,15 +307,20 @@ void ProcesSteps::on_pushButton_clicked()
         cmdStr.append(global.tabVal[num].strGroupItem);
         cmdStr.append("|");
 
+        //  qDebug()<<"strGroupItem" << num << global.tabVal[num].cmbGroupItem << global.tabVal[num].strGroupItem;
+
+
+
+
         //QComboBox *cmbObject = tabPtr[num].cmbObject;
         //cmdStr.append(cmbObject->currentText());
         //?cmdStr.append(QString().number(global.tabVal[num].cmbObjectItem));
 
 
         cmdStr.append(global.tabVal[num].strObjectItem);
-
-
         cmdStr.append("|");
+
+        //  qDebug()<<"strGroupItem" << num << global.tabVal[num].cmbObjectItem << global.tabVal[num].strObjectItem;
 
         // QLineEdit *linEditVal = tabPtr[num].linEditVal;
         //cmdStr.append(linEditVal->text());
@@ -365,6 +386,8 @@ void ProcesSteps::on_textEdit_Notes_textChanged()
 
 void ProcesSteps::drawWidgets()
 {
+    QFont font;
+    font.setBold(true);
     int npk = 0;
     // all data in global.tabVal
     global.tabVal.clear();
@@ -419,19 +442,21 @@ void ProcesSteps::drawWidgets()
         cmbGroup->addItems(global.procesGroupItems);
         cmbGroup->setObjectName(QString::number(i));
         connect(cmbGroup, SIGNAL(currentIndexChanged(int)), this, SLOT(groupIndexChange(int)));
-        tableVal.cmbGroupItem = 0;
-        tableVal.strGroupItem = global.procesGroupItems[0];
+        tableVal.cmbGroupItem = global.GroupItems::Command;
+        tableVal.strGroupItem = global.procesGroupItems[global.GroupItems::Command];
+        cmbGroup->setFont(font);
 
 
         QComboBox *cmbObject= new QComboBox(this);
         tablePtr.cmbObject = cmbObject;
         cmbObject->addItems(global.procesObjestItemsValve);
         cmbObject->setObjectName(QString::number(i));
-        cmbObject->setCurrentIndex(1);      // only for testing
+        cmbObject->setCurrentIndex(global.Cmd::STOP);      // only for testing
 
         connect(cmbObject, SIGNAL(currentIndexChanged(int)), this, SLOT(objectIndexChange(int)));
-        tableVal.cmbObjectItem = 0;
-        tableVal.strObjectItem = global.procesObjestItemsValve[0];
+        tableVal.cmbObjectItem = global.Cmd::STOP;
+        tableVal.strObjectItem = global.procesObjestItemsComand[global.Cmd::STOP];
+        cmbObject->setFont(font);
 
         QLineEdit *linEditVal = new QLineEdit(this);
         tablePtr.linEditVal = linEditVal;
@@ -439,6 +464,7 @@ void ProcesSteps::drawWidgets()
         connect(linEditVal, SIGNAL(editingFinished()), this, SLOT(linValFinish()));
         linEditVal->setText("1");
         tableVal.val= 1;
+        linEditVal->setFont(font);
 
 
         QLineEdit *linEditNote = new QLineEdit(this);
@@ -447,11 +473,12 @@ void ProcesSteps::drawWidgets()
         connect(linEditNote, SIGNAL(editingFinished()), this, SLOT(linNoteFinish()));
         linEditNote->setText("");
         tableVal.notes = "";
+        linEditNote->setFont(font);
 
         QLabel *labelhelp = new QLabel(this);
         tablePtr.labelhelp = labelhelp;
         labelhelp->setObjectName(QString::number(i));
-        QString str = "help??";
+        QString str = "help?";
         labelhelp->setText(str);
         tabPtr.append(tablePtr);
         tableVal.helpStr = (str);
@@ -468,7 +495,7 @@ void ProcesSteps::drawWidgets()
 
         ui->verticalLayout_4->addLayout(hLayout);
         global.tabVal.append(tableVal);
-        /*
+   /*
         qDebug() << tableVal.npk
                  << tableVal.cmbGroupItem
                  <<tableVal.strGroupItem
@@ -495,6 +522,7 @@ void ProcesSteps::drawWidgets()
 
     ui->pushButton_SlUp->setText("\u2191");
     ui->pushButton_SlDown->setText("\u2193");
+    UpdateTable();
 
 }
 /*!
@@ -515,8 +543,6 @@ void ProcesSteps::UpdateTable()
     ui->verticalSlider->setSliderPosition(global.tabVal.length()-1 - (activeRow + firstLineIndex));
 
     //qDebug() << "UpdateSlider"  << 0 << activeRow <<-(global.tabVal.length()-1)<<activeRow + firstLineIndex;
-
-
     // qDebug() << "UpdateTable:"  << firstLineIndex << activeRow << global.tabVal.length() <<"eEnable:" <<enableGroupCh;
 
     for(int i = 0 ; i <  15; i++){
@@ -524,13 +550,14 @@ void ProcesSteps::UpdateTable()
         int num = i + firstLineIndex;
         // qDebug() << "UpdateTable:"  << i << firstLineIndex << num << activeRow << global.tabVal.length();
 
-        QLabel *label_npk = tabPtr[i].label_npk;
+        // QLabel *label_npk = tabPtr[i].label_npk;
         //label_npk->setText(QString::number(tabVal[num].npk));
-        label_npk->setText(QString::number(num));
-        label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
+        // label_npk->setText(QString::number(num));
+        // label_npk->setStyleSheet("background:rgba(250, 250, 250, 255);"); // white
 
 
         if(num >= global.tabVal.length()){
+            //  qDebug() << "UpdateTable out of tab range" << "i:" << i << "fi" <<firstLineIndex << "l:" << global.tabVal.length();
 
             //    QLabel *label_npk = tabPtr[i].label_npk;
             //    label_npk->setText(QString::number(num));
@@ -553,6 +580,7 @@ void ProcesSteps::UpdateTable()
         }
 
         else{
+            //  qDebug() << "UpdateTable in range" << "i:" << i << "fi" <<firstLineIndex << "l:" << global.tabVal.length();
             /*
                 QLabel *label_npk = tabPtr[i].label_npk;
                 //label_npk->setText(QString::number(tabVal[num].npk));
@@ -638,11 +666,11 @@ void ProcesSteps::UpdateTable()
         }
     }
     qDebug() << " QLabel *label_npk "<< activeRow << tabPtr.length();
-    QLabel *label_npk = tabPtr[activeRow].label_npk;
-    label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
+    //  QLabel *label_npk = tabPtr[activeRow].label_npk;
+    //  label_npk->setStyleSheet("background:rgba(150,250,150,255);");// light green
     //label_npk->setStyleSheet("background-color:green;");// light green
-    label_npk->setText(">>");
-
+    //  label_npk->setText(">>");
+    setTabValRecord(activeRow);
     enableGroupCh = true;
 }
 
@@ -699,6 +727,7 @@ void ProcesSteps::onClickIns()
         qDebug() << "5 setTabValRecord "<< num + firstLineIndex;
         setTabValRecord(num + firstLineIndex);
         UpdateTable();
+        setTabValRecord(num + firstLineIndex);
 
     }
 
@@ -711,15 +740,21 @@ void ProcesSteps::onClickDel()
     if (ok) {
         qDebug() << "onClickDel()"  << num << firstLineIndex << sender()<< "l:" << global.tabVal.length();
 
-        // if(global.tabVal.length() < 15 + 1){
-        //     Global::tVal tableVal;
-        //      global.tabVal.append(tableVal);
-        //  }
-        if(firstLineIndex + 14 >= global.tabVal.length()){  // last row
+
+        if((global.tabVal.length() -1) == num + firstLineIndex){    // last tab element
             Global::tVal tableVal;
-            activeRow--;
             global.tabVal.append(tableVal);
+            qDebug() << "onClickDel(1)" << global.tabVal.length() -1;
         }
+
+        global.tabVal.removeAt(num + firstLineIndex);
+
+        if(global.tabVal.length() < 15){
+            Global::tVal tableVal;
+            global.tabVal.append(tableVal);
+            qDebug() << "onClickDel(2)" << global.tabVal.length();
+        }
+
         qDebug() << "4 setTabValRecord "<< num + firstLineIndex;
         setTabValRecord(num + firstLineIndex);
         UpdateTable();
@@ -731,11 +766,22 @@ void ProcesSteps::groupIndexChange(int index)
 {
     //qDebug() << "groupIndexChange" << index << sender();
 
+    if(!enableGroupCh){ // qDebug() <<"UpdateTable obj == false";
+        return;
+    }
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     qDebug() << "groupIndexChange" << num << firstLineIndex << index << global.tabVal.length() <<"eEnable:" <<enableGroupCh;
     if (ok && (index >= 0) && ((num + firstLineIndex) < global.tabVal.length())) {
         global.tabVal[num + firstLineIndex].cmbGroupItem = index;
+        global.tabVal[num + firstLineIndex].strGroupItem = global.procesGroupItems[index];
+
+
+        if(index == Global::IsValveFinish || index == Global::Valve){
+            global.tabVal[num + firstLineIndex].val = 1;
+            global.tabVal[num + firstLineIndex].notes = QString().number(12);
+        }
+
 
         if(enableGroupCh){
             qDebug() << "3 setTabValRecord "<< num + firstLineIndex;
@@ -747,6 +793,7 @@ void ProcesSteps::groupIndexChange(int index)
         }
         qDebug() << "2 setTabValRecord "<< num;
         setTabValRecord(num);
+        UpdateTable();
     }
 }
 void ProcesSteps::objectIndexChange(int index)
@@ -761,32 +808,26 @@ void ProcesSteps::objectIndexChange(int index)
     QObject* obj = sender();
     int num = obj->objectName().toInt(&ok);
     if (ok && index >= 0) {
-        qDebug() << "objectIndexChange A" << index << num << firstLineIndex << sender();
-        //QComboBox *cmbObject = tabPtr[num].cmbObject;
+        QComboBox *cmbObject = tabPtr[num].cmbObject;
+        //qDebug() << "objectIndexChange A" << index << num << firstLineIndex << sender();
         global.tabVal[num + firstLineIndex].cmbObjectItem = index;
+        global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
 
         if(global.tabVal[num + firstLineIndex].cmbGroupItem == Global::IsValveFinish){
+            global.tabVal[num + firstLineIndex].val = 1;
             global.tabVal[num + firstLineIndex].notes = QString().number(12);
         }
+        if(global.tabVal[num + firstLineIndex].cmbGroupItem == Global::Valve){
+            global.tabVal[num + firstLineIndex].val = 1;
+            global.tabVal[num + firstLineIndex].notes = QString().number(12);
+        }
+
 
         // global.tabVal[num + firstLineIndex].strObjectItem = cmbObject->currentText();
         // qDebug() << "objectIndexChange B" << global.tabVal[num + firstLineIndex].cmbObjectItem << global.tabVal[num + firstLineIndex].strObjectItem;
         // cmbObject->setCurrentIndex(index);
 
-        /*
-        obj = sender();
-        num = obj->objectName().toInt(&ok);
-        if (ok > 0) {
-            qDebug() << "objectIndexChange" << index << num << firstLineIndex << sender();
-            QComboBox *cmbObject = tabPtr[num].cmbGroup;
 
-            if(cmbObject->currentIndex() == Global::Pump){
-                QLineEdit *linEditVal = tabPtr[num].linEditVal;
-                linEditVal->setText("1");
-                global.tabVal[num + firstLineIndex].val = 1;
-            }
-        }
-        */
         qDebug() << "1 setTabValRecord "<< num + firstLineIndex;
         setTabValRecord(num + firstLineIndex);
         UpdateTable();
@@ -797,33 +838,53 @@ void ProcesSteps::objectIndexChange(int index)
 void ProcesSteps::on_pushButton_SlUp_clicked()
 {
     qDebug() << "Up" <<activeRow << firstLineIndex  << global.tabVal.length();
+    qDebug() << "1 fi:" << firstLineIndex << "ac:" << activeRow <<"l:"<< global.tabVal.length();
 
-    if(activeRow > 0){
-        activeRow--;
+    if(activeRow <= 0){
+        return;
     }
-    else{
-        if((activeRow + firstLineIndex) > 0){
-            firstLineIndex--;
-            qDebug() << "first records" << global.tabVal.length() << activeRow + firstLineIndex;
-        }
+    activeRow--;
+
+    if((activeRow < firstLineIndex) > 0){
+        firstLineIndex--;
+        qDebug() << "first records" << global.tabVal.length() << activeRow + firstLineIndex;
     }
+    qDebug() << "2 fi:" << firstLineIndex << "ac:" << activeRow <<"l:"<< global.tabVal.length();
+
     UpdateTable();
+   // setTabValRecord(activeRow);
 }
 
 
 void ProcesSteps::on_pushButton_SlDown_clicked()
 {
     qDebug() << "Down"<<activeRow << firstLineIndex  << global.tabVal.length();
-    if(activeRow < 14 ){
-        activeRow++;
+    qDebug() << "1 fi:" << firstLineIndex << "ac:" << activeRow <<"l:"<< global.tabVal.length();
+
+    if(activeRow >= global.tabVal.length())
+    {
+        qDebug() << "Out";
+        return;
     }
-    else{
-        if(activeRow + firstLineIndex +1 < global.tabVal.length()){
-            firstLineIndex++;
-            qDebug() << "last records" << global.tabVal.length() << activeRow + firstLineIndex;
-        }
+
+    activeRow++;
+ /*
+    if((activeRow - firstLineIndex) > 14 ){
+        //activeRow--;???????????????????????????????????????????
+        firstLineIndex++;
+        qDebug() << " no last" ;
     }
+
+        if((activeRow + firstLineIndex)  > global.tabVal.length()-1){
+        //activeRow--;
+        //firstLineIndex--;
+        qDebug() << "last" << global.tabVal.length() << activeRow + firstLineIndex;
+    }
+    */
+    qDebug() << "2 fi:" << firstLineIndex << "ac:" << activeRow <<"l:"<< global.tabVal.length();
+
     UpdateTable();
+   // setTabValRecord(activeRow);
 }
 
 
@@ -852,5 +913,16 @@ void ProcesSteps::on_pushButton_Stop_clicked()
 void ProcesSteps::on_pushButton_Pause_clicked()
 {
     emit pauseR();
+}
+
+
+void ProcesSteps::on_pushButton_Nezxt_clicked()
+{
+    emit nextR();
+}
+
+void ProcesSteps::printInfo(QString info)
+{
+    ui->label_Info->setText(info);
 }
 

@@ -606,8 +606,8 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pump,"Dispax 11Kw",2, 1, 1324, 10, 50, set_dispax_11Kw_On_, Is_dispax_11Kw_On);
 
 
-    addWidgList(WidgetType::Valve,"Y5.1", 0, 1, 705, 67, 30, 0, 0);
-    addWidgList(WidgetType::Valve,"Y5.2", 1, 1, 782, 67, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.1", 0, 1, 784, 63, 30, 0, 0);
+    addWidgList(WidgetType::Valve,"Y5.2", 1, 1, 705, 63, 30, 0, 0);
     addWidgList(WidgetType::Valve,"Y5.4", 2, 1, 1524, 160, 30, 0, 0);
     addWidgList(WidgetType::Valve,"Y5.3", 3, 1, 1452, 160, 30, 0, 0);
 
