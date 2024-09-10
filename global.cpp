@@ -425,20 +425,20 @@ void Global::createBallValve()
     qDebug() << "ballValveList[0].name" << ballValveList[0].bValvePtr->name << ballValveList[1].bValvePtr->name;
 
 
-   // foreach(ComInfo cmap, comPortMap) {
-   //     qDebug() << cmap.vendorIdentifier;
-   // }
+    // foreach(ComInfo cmap, comPortMap) {
+    //     qDebug() << cmap.vendorIdentifier;
+    // }
 
 
 
     procesObjestItemsValve.clear();
-  //  foreach(QList<valItemTab> ivtab, ItemToValveTable){
-  //      procesObjestItemsValve.append({ivtab[0]});
+    //  foreach(QList<valItemTab> ivtab, ItemToValveTable){
+    //      procesObjestItemsValve.append({ivtab[0]});
 
-   // }
+    // }
 
     for (int i = 0; i < ItemToValveTable.length(); i++){
-         procesObjestItemsValve.append(ItemToValveTable[i].name);
+        procesObjestItemsValve.append(ItemToValveTable[i].name);
     }
     qDebug() << procesObjestItemsValve;
 
@@ -593,7 +593,7 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Dispax,"Dispax 15Kw", 0, 1, 400, 330, 120, set_dispax_15Kw_On_Off, Is_dispax_15Kw_On);
     addWidgList(WidgetType::Label,"Uzraksts 1", 0, 1, 1644, 230, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 2", 1, 1, 233, 251, 250, 0, 0);
-    addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 243, 1, 250, 0, 0);
+    addWidgList(WidgetType::Label,"Uzraksts 3", 2, 1, 233, 3, 250, 0, 0);
     addWidgList(WidgetType::Label,"Uzraksts 12", 12, 1, 1647, 136, 250, 0, 0);
 
     addWidgList(WidgetType::Tvertne,"4. Tvertne",0, 1, 1598, 1, 120, TVERTNE4LEVELPROC, TVERTNE4FULL);
@@ -711,13 +711,13 @@ void Global::creatWidgList() {
     addWidgList(WidgetType::Pipe,"Caurule", 60, 1, 818, 70, 45, 90, pipe_dir60);
     addWidgList(WidgetType::Pipe,"Caurule", 61, 1, 661, 330, 41, 90, pipe_dir61);
     addWidgList(WidgetType::Pipe,"Caurule", 62, 1, 1186, 28, 129, 90, pipe_dir62);
-    addWidgList(WidgetType::Pipe,"Caurule", 63, 1, 533, 50, 40, 0, pipe_dir63);
+    addWidgList(WidgetType::Pipe,"Caurule", 63, 1, 554, 34, 57, 0, pipe_dir63);
     addWidgList(WidgetType::Pipe,"Caurule", 64, 1, 959, 537, 64, 0, pipe_dir64);
     addWidgList(WidgetType::Pipe,"Caurule", 65, 1, 1255, 535, 44, 90, pipe_dir65);
     addWidgList(WidgetType::Pipe,"Caurule", 66, 1, 1150, 233, 53, 0, pipe_dir66);
     addWidgList(WidgetType::Pipe,"Caurule", 67, 1, 1252, 330, 49, 90, pipe_dir67);
 
-//addWidgList(WidgetType::Pipe,"Caurule", 89, 1, 100, 500, 64, 90, pipe_dir89);
+    addWidgList(WidgetType::Pipe,"Caurule", 89, 1, 537, 34, 28, 90, pipe_dir89);
     addWidgList(WidgetType::Pipe,"Caurule", 90, 1, 442, 595, 30, 90, pipe_dir90);
     addWidgList(WidgetType::Pipe,"Caurule", 91, 1, 332, 595, 70, 90, pipe_dir91);
     addWidgList(WidgetType::Pipe,"Caurule", 92, 1, 332, 598, 68, 0, pipe_dir92);
@@ -968,7 +968,7 @@ void Global::createComboxlist()
         << "pipe_dir86"
         << "pipe_dir87"
         << "pipe_dir88"
-       // << "pipe_dir89"       not in pict.
+        // << "pipe_dir89"       not in pict.
         << "pipe_dir90"
         << "pipe_dir91"
         << "pipe_dir92";
