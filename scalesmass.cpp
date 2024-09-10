@@ -46,7 +46,7 @@ void ScalesMass::paintEvent(QPaintEvent* event) {
     if(massValue > 2000){
         str = "ERROR";
     }
-    // qDebug() << massValue << str;
+     qDebug() << massValue << str;
 
     QFont font("times", settings.currSize / 6);
     painter.setFont(font);

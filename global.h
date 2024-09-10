@@ -374,10 +374,11 @@ public:
         STOP,
         GOTOSTART,
         CLOSEVALLVE,
-        IFVALVESCLOSE
+        IFVALVESCLOSE,
+        RESETSCALES,
     };
 
-    QStringList procesObjestItemsComand  = {"Pause", "Goto", "Stop", "GOtoStart","Close valves","Is valvesClose"};
+    QStringList procesObjestItemsComand  = {"Pause", "Goto", "Stop", "GOtoStart","Close valves","Is valvesClose","Reset scales"};
 
 
     QList <int>tvertneTemp;     // temperatura tvertnēs !!!!!!!!!!!!!!!!!!!
@@ -613,6 +614,7 @@ private:
     int tick;
     void create_IN_OUT_list();
     void creatWidgList();
+    void creatWidgListPipe();
     void addWidgList(WidgetType::widgT ty, QString name, int npk, int page, int X, int Y, int size, int var1, int var2);
     void creatActList();
     void addActList(QString name, ActuatorType::actT tp, int addres);

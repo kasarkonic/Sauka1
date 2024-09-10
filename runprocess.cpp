@@ -228,6 +228,9 @@ void Runprocess::stateRun() {
         stateIsVallvesClose();
         break;
 
+    case StateResetScales:
+        stateResetScales();
+        break;
 
 
     case StateNext:
@@ -482,7 +485,7 @@ void Runprocess::stateCmd()
 {
     switch (global.tabVal[currentTabVal].cmbObjectItem) {
     case Global::PAUSE: // pause
-        emit printInfo("Cmd PAUSE");
+        emit printInfo("Cmd PAUSE  " + global.tabVal[currentTabVal].notes);
         changeState(StateNext,global.tabVal[currentTabVal].val * 1000);   // s
         break;
     case Global::GOTO: //Goto
@@ -503,7 +506,10 @@ void Runprocess::stateCmd()
         currentTabVal = 0;
         changeState(StateIsVallvesClose);
         break;
-
+    case Global::RESETSCALES: //GOtoStart
+        currentTabVal = 0;
+        changeState(StateResetScales);
+        break;
 
     default:
         break;
@@ -529,16 +535,24 @@ void Runprocess::stateScalesTest()
 
         QStringList procesObjestItemsScales  = { "More_then","Less_then" };
 
-
+        emit printInfo(" wait   " + global.tabVal[currentTabVal].notes);
 
         qDebug() << "------------------------test scale test val:" << val << " cur.val:" << global.DIinput[scales_mass].value<< " item:" << global.tabVal[currentTabVal].cmbObjectItem;
         switch (global.tabVal[currentTabVal].cmbObjectItem) {
         case 0: // "More_then"
+             emit printInfo("Waiting for the scales to reach "
+                           + QString::number(global.DIinput[scales_mass].value)
+                           + ",now is "
+                           + QString::number(val));
             if(global.DIinput[scales_mass].value >= val){
                 changeState(StateNext);
             }
             break;
         case 1: //"Less_then"
+            emit printInfo("Waiting for the scales to be less than "
+                           + QString::number(global.DIinput[scales_mass].value)
+                           + ", now is "
+                           + QString::number(val));
             if(global.DIinput[scales_mass].value <= val){
                 changeState(StateNext);
             }
@@ -744,6 +758,11 @@ void Runprocess::stateIsVallvesClose()
     }
 }
 
+void Runprocess::stateResetScales()
+{
+    emit resetScales();
+}
+
 
 void Runprocess::stateError() {
     switch (getState()) {
@@ -844,7 +863,8 @@ bool Runprocess::isTimerTimeout() {
         emit printInfo("Timer: "
                        + QString::number((stateTimerInterval - (intervalTimer->elapsed() - stateStartTime))/1000)
                        + "s  from "
-                       + QString::number( stateTimerInterval/1000 ));
+                       + QString::number( stateTimerInterval/1000 )
+                       + "s");
         return((intervalTimer->elapsed() - stateStartTime) > stateTimerInterval);
     }
 }

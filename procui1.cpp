@@ -9,7 +9,7 @@
 #include "dispax.h"
 #include "label.h"
 #include "tvertne.h"
-#include "global.h"
+//#include "global.h"
 #include "valve.h"
 #include "scalesbase.h"
 #include "scalesmass.h"
@@ -104,7 +104,7 @@ void ProcUI1::drawWidgets() {
 
     foreach(Global::wdataStruct widData, global.widHash) {
 
-        if (widData.page == 1) {    // all pages
+        if (widData.page == 1) {    // reaktori page
             // qDebug() << "drawWidgets Draw: " << widData.type << widData.name << "page" <<widData.page ;
             switch (widData.type) {
             case WidgetType::widgT::Conveyor:
@@ -120,20 +120,21 @@ void ProcUI1::drawWidgets() {
             }
             break;
 
+            case WidgetType::widgT::Pipe:
+            {
+                auto pip =  new Pipe(global, widData.name, ui->desktop);
+                // ui->horizontalLayout_Process->addWidget(pipeA);
+                pip->lower();
+            }
+            break;
+
             case WidgetType::widgT::Mix:
             {
-                new Mix(global, widData.name, ui->desktop);
+                auto mix =  new Mix(global, widData.name, ui->desktop);
+                mix->raise();
                 //ui->horizontalLayout_Process->addWidget(mixA);
             }
             break;
-
-            case WidgetType::widgT::Pipe:
-            {
-                new Pipe(global, widData.name, ui->desktop);
-                // ui->horizontalLayout_Process->addWidget(pipeA);
-            }
-            break;
-
             case WidgetType::Pump:
             {
                 new Pump(global, widData.name, ui->desktop);
@@ -160,7 +161,8 @@ void ProcUI1::drawWidgets() {
 
             case WidgetType::ScalesBase:
             {
-                new ScalesBase(global, widData.name, ui->desktop);
+               auto scb =  new ScalesBase(global, widData.name, ui->desktop);
+                scb->raise();
                 // ui->horizontalLayout_Process->addWidget(scalesBase);
 
             }
@@ -170,7 +172,6 @@ void ProcUI1::drawWidgets() {
             {
                 new ScalesMass(global, widData.name, ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
-
             }
             break;
             case WidgetType::Dispax:

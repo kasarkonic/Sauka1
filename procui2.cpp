@@ -135,25 +135,25 @@ void ProcUI2::drawWidgets() {
                 new Conveyor(global, widData.name, ui->desktop_2);
                 // ui->horizontalLayout_Process->addWidget(ConveyorA);
             }
-                break;
+            break;
             case WidgetType::widgT::Dyno:
             {
                 new Dyno(global, widData.name, ui->desktop_2);
                 // ui->horizontalLayout_Process->addWidget(dynoA);
             }
             break;
-
-            case WidgetType::widgT::Mix:
-            {
-                new Mix(global, widData.name, ui->desktop_2);
-                //ui->horizontalLayout_Process->addWidget(mixA);
-            }
-            break;
-
             case WidgetType::widgT::Pipe:
             {
-                new Pipe(global, widData.name, ui->desktop_2);
+                auto pip =  new Pipe(global, widData.name, ui->desktop_2);
                 //ui->horizontalLayout_Process->addWidget(pipeA);
+                pip->lower();
+            }
+            break;
+            case WidgetType::widgT::Mix:
+            {
+                auto mix =new Mix(global, widData.name, ui->desktop_2);
+                mix->raise();
+                //ui->horizontalLayout_Process->addWidget(mixA);
             }
             break;
 
@@ -185,13 +185,13 @@ void ProcUI2::drawWidgets() {
             {
                 new ScalesBase(global, widData.name, ui->desktop_2);
                 //ui->horizontalLayout_Process->addWidget(scalesBase);
-
             }
             break;
 
             case WidgetType::ScalesMass:
             {
-                new ScalesMass(global, widData.name, ui->desktop_2);
+                auto scb =  new ScalesMass(global, widData.name, ui->desktop_2);
+                scb->raise();
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
 
             }

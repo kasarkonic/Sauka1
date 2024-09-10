@@ -4,20 +4,7 @@
 #include <QMainWindow>
 #include "global.h"
 #include "recipeform.h"
-/*
-#include "dyno.h"
-#include "conveyor.h"
-#include "mix.h"
-#include "pipe.h"
-#include "pump.h"
-#include "dispax.h"
-#include "label.h"
-#include "recipeform.h"
-#include "tvertne.h"
-#include "valve.h"
-#include "scalesbase.h"
-#include "scalesmass.h"
-*/
+
 namespace Ui {
     class ProcUI2;
 }

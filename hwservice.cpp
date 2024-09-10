@@ -55,7 +55,8 @@ void HWService::updateDataAn(int row, int val) {
    // qDebug() << " REC HWService::updateDataAn(int row) " << row << val;
    // sensListsForm.updateData(row);
    // actListForm.updateData(row);
-
+    Q_UNUSED(row);
+    Q_UNUSED(val);
     QString str = "An in 0-16   ";
 
     for (int i = 0;i < 8; i++) {

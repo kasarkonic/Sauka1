@@ -24,6 +24,8 @@ public:
     QSerialPort* sc_serial;
     ~Scale();
 
+public slots:
+    void resetScales();
 
 protected:
     void    timerEvent(QTimerEvent* event) override;

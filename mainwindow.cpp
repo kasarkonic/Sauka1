@@ -140,7 +140,8 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
 
   //  connect(&runprocess, &Runprocess::stateChange,
   //          &procesSteps, &ProcesSteps::setTabValRecord);
-
+    connect (&runprocess,&Runprocess::resetScales,
+            &scale,&Scale::resetScales);
 
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);

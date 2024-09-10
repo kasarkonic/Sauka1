@@ -137,6 +137,11 @@ void Scale::readSerial() {
     }
 }
 
+void Scale::resetScales()
+{
+        sendData("01ZERO\r\n");
+}
+
 
 
 void Scale::timerEvent(QTimerEvent* event) {
@@ -150,7 +155,7 @@ void Scale::timerEvent(QTimerEvent* event) {
     if (event->timerId() == timerRead) {
         // qDebug()<< "Event Id";
         att++;
-        sendData("01READ\r\n");
+        sendData("01READ\r\n");        
     }
 
     if (event->timerId() == timerInit) {

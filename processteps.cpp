@@ -389,6 +389,7 @@ void ProcesSteps::drawWidgets()
     QFont font;
     font.setBold(true);
     int npk = 0;
+     Q_UNUSED(npk);
     // all data in global.tabVal
     global.tabVal.clear();
     /*
@@ -890,6 +891,7 @@ void ProcesSteps::on_pushButton_SlDown_clicked()
 
 void ProcesSteps::on_verticalSlider_valueChanged(int value)
 {
+    Q_UNUSED(value);
     /*
     if(!enableGroupCh){ // qDebug() <<"UpdateTable obj == false";
         return;

@@ -65,10 +65,12 @@ void Conveyor::paintEvent(QPaintEvent* event) {
     rad = (int)settings.currSize / 8;
 
     float an = att * M_PI / 180;
+   // int x = rad;    // offset from corner 0:0
+   // int y = rad;    // offset from corner 0:0
 
-    points[0] = QPoint(rad * cos(an) + rad, rad * sin(an) + rad);
-    points[1] = QPoint(rad * cos(an + 2 * M_PI / 3) + rad, rad * sin(an + 2 * M_PI / 3) + rad);
-    points[2] = QPoint(rad * cos(an + 4 * M_PI / 3) + rad, rad * sin(an + 4 * M_PI / 3) + rad);
+    points[0] = QPoint(rad * cos(an) + 3*rad, rad * sin(an) + 3*rad);
+    points[1] = QPoint(rad * cos(an + 2 * M_PI / 3) + 3*rad, rad * sin(an + 2 * M_PI / 3) + 3*rad);
+    points[2] = QPoint(rad * cos(an + 4 * M_PI / 3) + 3*rad, rad * sin(an + 4 * M_PI / 3) + 3*rad);
 
     pen.setWidth(2);
     pen.setColor(Qt::black);

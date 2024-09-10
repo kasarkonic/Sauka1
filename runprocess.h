@@ -24,6 +24,7 @@ signals:
     void diOutputChangeSi(int i, int value);
     void stateChange(int step);
     void printInfo(QString info);
+    void resetScales();
 
 
 
@@ -60,7 +61,7 @@ private:
         StateScalesTest,// 0x310
         StateTankTest,// 0x311
         StateDrives, // 0x312
-
+        StateResetScales,
         StateNext, // 0x313
         StateError = 0x900, // 0x600`
 
@@ -83,7 +84,7 @@ private:
 
     void stateCloseValves(void);
     void stateIsVallvesClose(void);
-
+    void stateResetScales(void);
     void stateError(void);
 
 
