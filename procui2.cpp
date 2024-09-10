@@ -1,4 +1,5 @@
 #include "procui2.h"
+#include "shower.h"
 #include "ui_procui2.h"
 
 #include "dyno.h"
@@ -12,6 +13,7 @@
 #include "valve.h"
 #include "scalesbase.h"
 #include "scalesmass.h"
+#include "shower.h"
 
 
 
@@ -200,6 +202,12 @@ void ProcUI2::drawWidgets() {
             case WidgetType::Dispax:
             {
                 new Dispax(global, widData.name, ui->desktop_2);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
+            break;
+            case WidgetType::Shower:
+            {
+                new Shower(global, widData.name, ui->desktop_2);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
             }
             break;

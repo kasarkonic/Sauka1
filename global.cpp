@@ -582,6 +582,10 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //addWidgList(WidgetType::widgT ty,QString name, int npk, int page, int X, int Y, int size, int var1, int var2) {
     creatWidgListPipe();
+    addWidgList(WidgetType::Shower, "Dusa", 0, 1, 10, 250, 100, 0, 0);
+
+
+
     addWidgList(WidgetType::Dyno, "Dizpax 11Kw", 0, 1, 1743, 253, 70, set_dino0_speed, set_dino0_On_Off);
     addWidgList(WidgetType::Conveyor, "Šneka konveijer", 0, 1, 385, 1, 146, set_dino0_speed, set_dino0_On_Off);
 

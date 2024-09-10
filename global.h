@@ -58,6 +58,7 @@ enum widgT {
     Dispax,
     Label,
     Conveyor,
+    Shower,
 };
 }
 

@@ -704,13 +704,13 @@ void Runprocess::stateCloseValves()
 
 
     foreach (Global::bvalve  bVal,  global.ballValveList){
-
+     /*
         int currentWidnpk = bVal.npk;
         int outOpen = bVal.bValvePtr->outOpen;
         int outClose = bVal.bValvePtr->outClose;
         int inOpen = bVal.bValvePtr->inOpen;
         int inClose = bVal.bValvePtr->inClose;
-        /*
+
         qDebug() << currentWidnpk
                  << "valve"
                  << outOpen

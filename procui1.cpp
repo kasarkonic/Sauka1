@@ -13,7 +13,7 @@
 #include "valve.h"
 #include "scalesbase.h"
 #include "scalesmass.h"
-
+#include "shower.h"
 
 ProcUI1::ProcUI1(Global& global, QWidget* parent) :
     QMainWindow(parent)
@@ -180,6 +180,11 @@ void ProcUI1::drawWidgets() {
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
             }
             break;
+            case WidgetType::Shower:
+            {
+                new Shower(global, widData.name, ui->desktop);
+                //ui->horizontalLayout_Process->addWidget(scalesMass);
+            }
             case WidgetType::Label:
             {
                 new Label(global, widData.name, ui->desktop);
