@@ -161,7 +161,7 @@ void ProcUI1::drawWidgets() {
 
             case WidgetType::ScalesBase:
             {
-               auto scb =  new ScalesBase(global, widData.name, ui->desktop);
+                auto scb =  new ScalesBase(global, widData.name, ui->desktop);
                 scb->raise();
                 // ui->horizontalLayout_Process->addWidget(scalesBase);
 
@@ -185,6 +185,7 @@ void ProcUI1::drawWidgets() {
                 new Shower(global, widData.name, ui->desktop);
                 //ui->horizontalLayout_Process->addWidget(scalesMass);
             }
+            break;
             case WidgetType::Label:
             {
                 new Label(global, widData.name, ui->desktop);
