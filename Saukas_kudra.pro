@@ -47,6 +47,7 @@ SOURCES += \
     scalesmass.cpp \
     senslistsform.cpp \
     sensortablemodel.cpp \
+    shower.cpp \
     tvertne.cpp \
     valve.cpp \
     widgetdiagramelement.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     scalesmass.h \
     senslistsform.h \
     sensortablemodel.h \
+    shower.h \
     tvertne.h \
     valve.h \
     widgetdiagramelement.h \

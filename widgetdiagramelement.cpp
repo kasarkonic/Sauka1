@@ -1,5 +1,5 @@
 #include "widgetdiagramelement.h"
-#include<QMouseEvent>
+//#include<QMouseEvent>
 #include "widgetservice.h"
 //#include "global.h"
 

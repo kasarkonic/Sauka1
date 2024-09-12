@@ -20,14 +20,13 @@ Conveyor::Conveyor(Global& global, QString name, QWidget* parent)
 void Conveyor::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
     // qDebug() << "Conveyor updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
-
+    speed = (int)global.DIoutput[settings.var1].value;
     killTimer(timerIdUpd);
-    if (global.DIoutput[settings.var1].value) {
+    if (speed) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
     } else {
-        timerIdUpd = startTimer(100, Qt::CoarseTimer); // not rotate
+        timerIdUpd = startTimer(200, Qt::CoarseTimer); // not rotate
     }
-    //repaint();
     update();
 }
 
@@ -57,11 +56,38 @@ void Conveyor::paintEvent(QPaintEvent* event) {
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
+
+
+
+    QPen pen;
+    QPoint points[4];
+    int rad = settings.currSize - 4;// minus pen
+    rad = (int)settings.currSize / 8;
+
+    float an = att * M_PI / 180;
+   // int x = rad;    // offset from corner 0:0
+   // int y = rad;    // offset from corner 0:0
+
+    points[0] = QPoint(rad * cos(an) + 3*rad, rad * sin(an) + 3*rad);
+    points[1] = QPoint(rad * cos(an + 2 * M_PI / 3) + 3*rad, rad * sin(an + 2 * M_PI / 3) + 3*rad);
+    points[2] = QPoint(rad * cos(an + 4 * M_PI / 3) + 3*rad, rad * sin(an + 4 * M_PI / 3) + 3*rad);
+
+    pen.setWidth(2);
+    pen.setColor(Qt::black);
+    painter.setBrush(triangColor);
+    painter.setPen(pen);
+    painter.drawPolygon(points, 3);
+
     resize(settings.currSize, settings.currSize);
 }
 void Conveyor::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
         if (event->timerId() == timerIdUpd) {
+        int step = speed;
+        att += step;
+        if (att > 360) {
+            att = 0;
+        }
             updateSettings();
         }
 }

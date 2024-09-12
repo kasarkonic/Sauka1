@@ -24,6 +24,7 @@
 #include "scale.h"
 #include "runprocess.h"
 #include "processteps.h"
+#include "shower.h"
 
 
 
@@ -126,6 +127,7 @@ private:
     Rs232 rs232;
     HWService hwService;
     ProcesSteps procesSteps;
+   // Shower shower;
     // ParMani *parmani;
 
 

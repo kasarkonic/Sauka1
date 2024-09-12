@@ -1,28 +1,19 @@
-#include "dispax.h"
-
-Dispax::Dispax(Global& global, QString name, QWidget* parent)
-    : WidgetDiagramElement(global, name, parent)
+#include "shower.h"
 
 
+Shower::Shower(Global& global, QString name, QWidget* parent)
+ : WidgetDiagramElement(global, name, parent)
 {
-    global.widHash[settings.name].ptrCurrWidget = this;
-    //*
-#ifdef ENABLE_WIDGET_SIZE
-    QPalette pal = QPalette();
-    pal.setColor(QPalette::Window, QColor(0, 0, 0, 50));
-    this->setAutoFillBackground(true);
-    this->setPalette(pal);
-#endif
-
-    timerIdUpd = startTimer(200, Qt::CoarseTimer);  // only for widgetervice position addjust
-
+    updateSettings();
 }
 
-void Dispax::updateSettings() {
+
+void Shower::updateSettings() {
     WidgetDiagramElement::updateSettings(); // base class
-    // qDebug() << "Mix updateSettings" << settings.currX << settings.currY << settings.act_Addres1<< global.getTick();
+     //qDebug() << "Shower updateSettings" << settings.currX << settings.currY << global.getTick();
 
     speed = (int)global.DIoutput[settings.var1].value;
+    speed = 20;  // for testing
     killTimer(timerIdUpd);
     if (speed) {
         timerIdUpd = startTimer(50, Qt::CoarseTimer); //rotate
@@ -31,28 +22,36 @@ void Dispax::updateSettings() {
     }
     update();
 }
+\
 
-void Dispax::paintEvent(QPaintEvent* event) {
+
+void Shower::paintEvent(QPaintEvent* event) {
     Q_UNUSED(event);
 
-    //qDebug() << "MIX paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<<"\n" ;
+   // qDebug() << "Shower paintEvent"<<settings.name <<settings.currX << settings.currY << settings.currSize<< speed <<"\n" ;
 
     QPainter painter(this);
     QPen pen;
-    pen.setWidth(4);    //draw mix
-    pen.setColor(Qt::red);
-    painter.setBrush(Qt::red);
-    painter.setPen(pen);
+    //  pen.setWidth(4);    //draw Shower
+    //  pen.setColor(Qt::red);
+    //  painter.setBrush(Qt::red);
+    //  painter.setPen(pen);
 
     imgBackground = new QImage();
-    imgBackground->load(":/pictures/dispax.png");
+
+    if(att >= 0 && att <= 120)
+    imgBackground->load(":/pictures/shower11.png");
+    if(att > 120 && att <= 240)
+        imgBackground->load(":/pictures/shower12.png");
+    if(att > 240 && att <= 360)
+        imgBackground->load(":/pictures/shower13.png");
 
     *imgBackground = imgBackground->scaled(settings.currSize, settings.currSize, Qt::KeepAspectRatio);
     painter.drawImage(QPoint(), *imgBackground);
 
-
+  /*
     QPoint points[4];
-    /*
+
     points[0] = QPoint(0 + settings.currX,0 + settings.currY);
     points[1] = QPoint(settings.currSize + settings.currX,0 + settings.currY);
     points[2] = QPoint(settings.currSize + settings.currX,settings.currSize + settings.currY);
@@ -60,8 +59,9 @@ void Dispax::paintEvent(QPaintEvent* event) {
 
    // painter.drawPolygon(points,4);/  nezinu kas parsarkanu kluci ????
 */
+    /*
     int rad = settings.currSize - 4;// minus pen
-    rad = (int)settings.currSize / 5;
+    rad = (int)settings.currSize / 7;
 
     float an = att * M_PI / 180;
 
@@ -75,29 +75,35 @@ void Dispax::paintEvent(QPaintEvent* event) {
     painter.setPen(pen);
     painter.drawPolygon(points, 3);
 
+*/
+
+
+    //int y = this->geometry().height();
+    //int x = this->geometry().width();
+   // qDebug() << "shower "<< x << y;
     resize(settings.currSize, settings.currSize);
 }
 
-void Dispax::timerEvent(QTimerEvent* event) {
+void Shower::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
-        if (event->timerId() == timerIdUpd) {
-            int step = speed;
-            att += step;
-            if (att > 360) {
-                att = 0;
-            }
-            updateSettings();
+    if (event->timerId() == timerIdUpd) {
+        int step = speed;
+        att += step;
+        if (att > 360) {
+            att = 0;
         }
+        updateSettings();
+    }
 }
 
 /*
-void Mix::mousePressEvent(QMouseEvent *event){
+void Shower::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
        // qDebug() << "Mix mousePressEvent" ;
        //  updateSettings();
     }
 }
-void Mix::mouseMoveEvent(QMouseEvent *event)
+void Shower::mouseMoveEvent(QMouseEvent *event)
 {
     event->accept();
 
@@ -114,7 +120,7 @@ void Mix::mouseMoveEvent(QMouseEvent *event)
     //() << "Pump mouseMoveEvent dx:dy" << pointX - mouseStartPointX << pointY - mouseStartPointY ;
 }
 
-void Mix::mouseDoubleClickEvent(QMouseEvent *event)
+void Shower::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         qDebug() << "Mix mouseDoubleClickEvent" ;

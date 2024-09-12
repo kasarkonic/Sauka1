@@ -21,7 +21,12 @@ public:
     void next();
 
 signals:
-    void printInfoR(int  state);
+    void diOutputChangeSi(int i, int value);
+    void stateChange(int step);
+    void printInfo(QString info);
+    void resetScales();
+
+
 
 protected:
     void    timerEvent(QTimerEvent* event) override;
@@ -56,7 +61,7 @@ private:
         StateScalesTest,// 0x310
         StateTankTest,// 0x311
         StateDrives, // 0x312
-
+        StateResetScales,
         StateNext, // 0x313
         StateError = 0x900, // 0x600`
 
@@ -79,7 +84,7 @@ private:
 
     void stateCloseValves(void);
     void stateIsVallvesClose(void);
-
+    void stateResetScales(void);
     void stateError(void);
 
 
@@ -112,11 +117,6 @@ private:
     int actualMotorNode;
     void runDrive( int address, int speed);
     void stopDrive(int address);
-
-signals:
-    void diOutputChangeSi(int i, int value);
-    void stateChange(int step);
-
 
 };
 

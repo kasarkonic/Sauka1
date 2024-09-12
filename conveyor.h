@@ -17,7 +17,10 @@ protected:
     //    void    mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
+    int att = 360;
+    int speed = 0;
     QImage* imgBackground;
+    QColor  triangColor = Qt::blue;
 
 };
 

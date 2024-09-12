@@ -155,8 +155,8 @@ void WidgetService::initUI() //  not update
 
 
             ui->label4_3->setText("Kalibresana");
-            ui->pushButton_6_3->setText("Saglabat pilna");
-            ui->pushButton_5_3->setText("Saglabat tuksa");
+            ui->pushButton_5_3->setText("Saglabat pilna");
+            ui->pushButton_6_3->setText("Saglabat tuksa");
 
         }
 
@@ -254,7 +254,7 @@ void WidgetService::initUI() //  not update
 
         if ( currentWidnpk == 1){       // pump MOHNO 5.5
             actualMotorNode = M4;
-            gearrate = 10;
+            gearrate = 15;
             ui->label1_1->setText("Ātrums");
             ui->label2_1->setText("Statuss");
             ui->label3_1->setText("Kļūda");
@@ -276,8 +276,8 @@ void WidgetService::initUI() //  not update
             ui->pushButton_6_3->setText("Ieslēgt");
             ui->pushButton_5_3->setText("Izslēgt");
 
-            ui->pushButton_6_3->setText(" Aizvērt vārstu");
-            ui->pushButton_5_3->setText("Atvērt vārstu");
+            ui->pushButton_5_3->setText("Ieslegt");
+            ui->pushButton_6_3->setText("Izslegt");
             ui->pushButton_5_3->setStyleSheet(qss_green);
             ui->pushButton_6_3->setStyleSheet(qss_red);
 
@@ -1154,7 +1154,7 @@ void WidgetService::on_pushButton_5_3_clicked()
             global.rs485WrList.append(param);
 
             param.regAdr = LFRD_REG;
-            param.value = rpm;
+            param.value = 50 * gearrate;
             param.len = 1;
             param.cmd = WR_REG;
             global.rs485WrList.append(param);
@@ -1186,19 +1186,19 @@ void WidgetService::on_lineEdit_6_2_editingFinished()
         }
         switch (currentWidnpk) {
         case 0:
-            global.DIinput[TVERTNE4KALIBFULL].value = val;
+            global.DIinput[TVERTNE4KALIBEMPTY].value = val;
             break;
         case 1:
-            global.DIinput[TVERTNE3KALIBFULL].value = val;
+            global.DIinput[TVERTNE3KALIBEMPTY].value = val;
             break;
         case 2:
-            global.DIinput[TVERTNE2KALIBFULL].value = val;
+            global.DIinput[TVERTNE2KALIBEMPTY].value = val;
             break;
         case 3:
-            global.DIinput[TVERTNE1KALIBFULL].value = val;
+            global.DIinput[TVERTNE1KALIBEMPTY].value = val;
             break;
         case 4:
-            global.DIinput[TVERTNE5KALIBFULL].value = val;
+            global.DIinput[TVERTNE5KALIBEMPTY].value = val;
             break;
         default:
             break;
@@ -1218,19 +1218,19 @@ void WidgetService::on_lineEdit_5_2_editingFinished()
         }
         switch (currentWidnpk) {
         case 0:
-            global.DIinput[TVERTNE4KALIBEMPTY].value = val;
+            global.DIinput[TVERTNE4KALIBFULL].value = val;
             break;
         case 1:
-            global.DIinput[TVERTNE3KALIBEMPTY].value = val;
+            global.DIinput[TVERTNE3KALIBFULL].value = val;
             break;
         case 2:
-            global.DIinput[TVERTNE2KALIBEMPTY].value = val;
+            global.DIinput[TVERTNE2KALIBFULL].value = val;
             break;
         case 3:
-            global.DIinput[TVERTNE1KALIBEMPTY].value = val;
+            global.DIinput[TVERTNE1KALIBFULL].value = val;
             break;
         case 4:
-            global.DIinput[TVERTNE5KALIBEMPTY].value = val;
+            global.DIinput[TVERTNE5KALIBFULL].value = val;
             break;
         default:
             break;
@@ -1271,8 +1271,7 @@ void WidgetService::on_horizontalSlider_speed_valueChanged(int value)
     case WidgetType::widgT::Pump:
         if ( currentWidnpk == 1){       // pump 2.2
             actualMotorNode = M4;
-
-            rpm = value * gearrate;
+            rpm =(int) (value * gearrate);
             // speed change
             param.boardAdr = actualMotorNode;
             param.value = rpm;

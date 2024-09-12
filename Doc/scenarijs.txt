@@ -2,12 +2,17 @@
 1|Pipe|pipe_dir76|1|
 2|Pipe|pipe_dir69|1|
 3|Pipe|pipe_dir79|1|
+<<<<<<< HEAD
 4|Command|Pause|20|
+=======
+4|Scales|More_then|50|600
+>>>>>>> 1e22b2bffe33c77e79ce92f00d02950eac62f7f6
 5|Pump|Pump H2o|0|
 6|Pipe|pipe_dir76|0|
 7|Pipe|pipe_dir69|0|
 8|Pipe|pipe_dir79|0|
 9|DRIVES|Mix|300|
+<<<<<<< HEAD
 10|DRIVES|Sneks|450|
 11|Command|Pause|20|
 12|DRIVES|Sneks|0|
@@ -41,11 +46,45 @@
 28|Is Valve Finish|Y2_2_atvērt|1|12
 29|Is Valve Finish|Y5_1_atvērt|1|12
 30|Valve|Y5_2_aizv|1|
+=======
+10|DRIVES|Šneks|300|
+11|Command|Pause|30|
+12|DRIVES|Šneks|0|
+13|Valve|Y5_4_atvērt|1|
+14|Valve|Y4_1_atvērt|1|
+15|Pump|Pump Sifons|1|
+55|Pipe|pipe_dir87|1|
+56|Pipe|pipe_dir88|1|
+16|Is Valve Finish|Y5_4_atvērt|1|12
+17|Is Valve Finish|Y5_1_atvērt|1|12
+18|Pump|Sapropelis 2.2|1|
+19|Pump|Dispax 11Kw|1|
+6|Pipe|pipe_dir15|1|
+7|Pipe|pipe_dir21|1|
+8|Pipe|pipe_dir2|1|
+6|Pipe|pipe_dir12|2|
+7|Pipe|pipe_dir3|2|
+8|Pipe|pipe_dir62|2|
+6|Pipe|pipe_dir0|2|
+7|Pipe|pipe_dir11|2|
+20|Command|Pause|30|
+21|Valve|Y5_4_aizv|1|
+22|Is Valve Finish|Y5_4_aizv|1|12
+23|Valve|Y5_3_atvērt|1|
+24|Is Valve Finish|Y5_3_atvērt|1|12
+25|Command|Pause|30|
+26|Valve|Y2_2_atvērt|1|
+27|Valve|Y5_2_atvērt|1|
+28|Is Valve Finish|Y2_2_atvērt|1|12
+29|Is Valve Finish|Y5_2_atvērt|1|12
+30|Valve|Y5_1_aizv|1|
+>>>>>>> 1e22b2bffe33c77e79ce92f00d02950eac62f7f6
 31|Valve|Y2_1_atvērt|1|
 32|Valve|Y2_1_atvērt|1|
 33|Valve|Y2_1_atvērt|1|
 34|Valve|Y2_1_atvērt|1|
 35|Valve|Y2_1_atvērt|1|
+<<<<<<< HEAD
 36|Command|Pause|1|
 37|Command|Pause|5|
 38|DRIVES|Mix|0|
@@ -118,4 +157,66 @@
 93|Command|Stop|1|
 94|Command|Stop|1|
 95|Command|Stop|1|
+=======
+36|Scales|Less_then|5|
+37|Command|Pause|30|
+38|DRIVES|Mix|0|
+39|Pump|Sapropelis 2.2|0|
+40|Pump|Dispax 11Kw|0|
+6|Pipe|pipe_dir15|0|
+7|Pipe|pipe_dir21|0|
+8|Pipe|pipe_dir2|0|
+6|Pipe|pipe_dir12|0|
+7|Pipe|pipe_dir3|0|
+8|Pipe|pipe_dir62|0|
+6|Pipe|pipe_dir0|0|
+7|Pipe|pipe_dir11|0|
+41|Valve|Y5_2_aizv|1|
+42|Valve|Y5_3_aizv|1|
+43|Valve|Y2_2_aizv|1|
+44|Is Valve Finish|Y5_2_aizv|1|12
+45|Is Valve Finish|Y5_3_aizv|1|12
+46|Is Valve Finish|Y2_2_aizv|1|12
+47|Valve|Y2_1_atvērt|1|
+48|Valve|Y6_2_atvērt|1|
+49|Valve|Y2_3_atvērt|1|
+50|Is Valve Finish|Y2_1_atvērt|1|
+51|Is Valve Finish|Y6_2_atvērt|1|12
+52|Is Valve Finish|Y2_3_atvērt|1|12
+53|DRIVES|Mohno 5.5|600|
+54|Pump|Dispax 15Kw|1|
+55|Pipe|pipe_dir24|1|
+56|Pipe|pipe_dir36|1|
+57|Pipe|pipe_dir13|1|
+58|Pipe|pipe_dir67|1|
+59|Pipe|pipe_dir55|1|
+60|Pipe|pipe_dir18|2|
+61|Pipe|pipe_dir59|2|
+62|Pipe|pipe_dir34|2|
+63|Pipe|pipe_dir65|2|
+64|Pipe|pipe_dir8|2|
+65|Command|Pause|30|
+66|DRIVES|Mohno 5.5|0|
+67|Pump|Dispax 15Kw|0|
+68|Pipe|pipe_dir24|0|
+69|Pipe|pipe_dir36|0|
+70|Pipe|pipe_dir13|0|
+71|Pipe|pipe_dir67|0|
+72|Pipe|pipe_dir55|0|
+73|Pipe|pipe_dir18|0|
+74|Pipe|pipe_dir59|0|
+75|Pipe|pipe_dir34|0|
+76|Pipe|pipe_dir65|0|
+77|Pipe|pipe_dir8|0|
+78|Valve|Y2_1_aizv|1|
+79|Valve|Y6_2_aizv|1|
+80|Valve|Y2_3_aizv|1|
+81|Is Valve Finish|Y2_1_aizv|1|
+82|Is Valve Finish|Y6_2_aizv|1|12
+83|Is Valve Finish|Y2_3_aizv|1|12
+84|Valve|Y2_4_atvērt|1|
+85|Command|Stop|1|
+86|Command|Stop|1|
+87|Command|Stop|1|
+>>>>>>> 1e22b2bffe33c77e79ce92f00d02950eac62f7f6
 NOTES: NOTES: NOTES: NOTES: NOTES: NOTES: NOTES: NOTES:

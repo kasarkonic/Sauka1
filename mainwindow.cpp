@@ -135,10 +135,13 @@ MainWindow::MainWindow(Global& global, QWidget* parent)
             this, &MainWindow::processtepsPrwsNext);
 
 
-  //  connect(&runprocess, &Runprocess::printInfoR,
-  //          this, &procesSteps, &ProcesSteps::printInfoP );
+    connect(&runprocess, &Runprocess::printInfo,
+             &procesSteps, &ProcesSteps::printInfo);
 
-
+  //  connect(&runprocess, &Runprocess::stateChange,
+  //          &procesSteps, &ProcesSteps::setTabValRecord);
+    connect (&runprocess,&Runprocess::resetScales,
+            &scale,&Scale::resetScales);
 
     currentTime = "currentTime";
     ui->label_2->setText(currentTime);
@@ -164,7 +167,8 @@ MainWindow::~MainWindow() {
 
 void MainWindow::changeInputVal(int row, int val) {
     Q_UNUSED(val);
-
+    Q_UNUSED(row);
+/*
     foreach(Global::wdataStruct widData, global.widHash) {
 
 
@@ -174,6 +178,7 @@ void MainWindow::changeInputVal(int row, int val) {
             widData.ptrCurrWidget->updateSettings();
         }
     }
+    */
 }
 
 

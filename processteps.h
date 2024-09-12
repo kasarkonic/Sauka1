@@ -43,7 +43,7 @@ signals:
 
 public slots:
     void setTabValRecord(int recNr);
-     void printInfoP(int  state);
+     void printInfo(QString info);
 
 private slots:
    // void on_pushButton_Up_clicked();
