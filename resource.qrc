@@ -17,5 +17,8 @@
         <file>pictures/dispax.png</file>
         <file>pictures/conveyor1.png</file>
         <file>pictures/shower.png</file>
+        <file>pictures/shower11.png</file>
+        <file>pictures/shower12.png</file>
+        <file>pictures/shower13.png</file>
     </qresource>
 </RCC>

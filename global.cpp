@@ -582,7 +582,7 @@ page = 3   draw on all pages
 void Global::creatWidgList() {
     //addWidgList(WidgetType::widgT ty,QString name, int npk, int page, int X, int Y, int size, int var1, int var2) {
     creatWidgListPipe();
-    addWidgList(WidgetType::Shower, "Dusa", 0, 1, 10, 250, 100, 0, 0);
+    addWidgList(WidgetType::Shower, "Dusa", 0, 1, 819, 386, 40, 0, 0);
 
 
 
