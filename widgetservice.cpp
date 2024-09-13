@@ -566,21 +566,6 @@ void WidgetService::updateFormData()        // update each 100 ms
             int levelv = global.DIinput[level].value;
             int fullv =  global.DIinput[full].value;
 
-            /*      str = "Izvēlēts elements \"TVERTNE \"\n";
-            str.append("IN1 tvertnes līmenis\n");
-
-            str.append(QString::number(currentWidnpk));
-            str.append("\nIN2 drošības līmeņa devējs\n");
-
-            ui->label1_1->setText("Līmenis tvertnē %");
-            ui->label2_1->setText("Pilnas Tv. devējs");
-            ui->label3_1->setText("Temperatūra C" + strDeg);
-
-            ui->label4_1->setText("Sensora vertiba");
-            ui->label5_1->setText("Pilnu Tv. sensors");
-            ui->label6_1->setText("Tuksas Tv. sensors");
-
-         */
             ui->label1_2->setText(QString::number(level));
             ui->label2_2->setText(QString::number(full));
 
@@ -626,11 +611,6 @@ void WidgetService::updateFormData()        // update each 100 ms
             default:
                 break;
             }
-
-
-            //   ui->label4_3->setText("Kalibresana");
-            //   ui->pushButton_6_3->setText("Saglabat pilna");
-            //   ui->pushButton_5_3->setText("Saglabat tuksa");
 
         }
 
@@ -681,35 +661,11 @@ void WidgetService::updateFormData()        // update each 100 ms
 
     case WidgetType::widgT::Pump:
 
-
-        if( currentWidnpk == 0){
-            //        ui->label5_1->setText("Ieslēgt");
-            //        ui->label6_1->setText("Izslēgt");
-
-            //        ui->pushButton_6_3->setText("Ieslegt");
-            //        ui->pushButton_5_3->setText("Izslegt");
-
-        }
-
-        //   else if ( currentWidnpk == 1){       // pump MOHNO 5.5
-        //       actualMotorNode = M4;
-        //        gearrate = 10;
-        // }
-
-        else{
-
-        }
-
-        // ui->pushButton_6_3->setText("Ieslēgt Turp");
-        // ui->pushButton_5_3->setText("Izslēgt Atpakaļ");
-
         ui->label1_2->setText(QString::number(widgetElement->settings.var1));
         ui->label2_2->setText(QString::number(widgetElement->settings.var2));
 
-
         ui->label1_3->setText(QString::number(global.DIoutput[widgetElement->settings.var1].value));
         ui->label2_3->setText(QString::number(global.DIinput[widgetElement->settings.var2].value));
-
 
         break;
 
@@ -1134,7 +1090,7 @@ void WidgetService::on_pushButton_5_3_clicked()
     case WidgetType::widgT::Pump:
         // motor on
 
-        if(currentWidnpk == 1){ // pump 2.2
+        if(currentWidnpk == 1){ // Sūknis MOHNO 5.5
             // motor On
             actualMotorNode = M4;
             param.boardAdr = actualMotorNode;
