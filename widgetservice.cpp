@@ -402,7 +402,6 @@ void WidgetService::initUI() //  not update
             actualMotorNode = M8;
             gearrate = -28;
             str = "Izvēlēts transportieris\n";
-
             break;
         default:
             break;

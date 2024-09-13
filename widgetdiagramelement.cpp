@@ -14,26 +14,7 @@ WidgetDiagramElement::WidgetDiagramElement(Global& global, QString name, QWidget
     updateSettings();
 
 }
-/*
-void WidgetDiagramElement::setNewPosition(float koef)
-{
- //    qDebug() << "WidgetDiagramElement 1::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
-//    settings.currX<<settings.currY << koef ;
-//    settings.currX = global.widHash[settings.name].startX/koef;
- //   settings.currY = global.widHash[settings.name].startY/koef;
- //   settings.currSize = global.widHash[settings.name].startSize/koef;
- //   settings.options = global.widHash[settings.name].var1;
- //   qDebug() << "WidgetDiagramElement 2::setNewPosition()" <<settings.name << global.zoomKoef<<settings.startX<<settings.startY<<
- //   settings.currX<<settings.currY << koef ;
 
-    move(settings.currX,settings.currY);
-    //repaint();
-    //resize(settings.currSize,settings.currSize);
-
-  //  updateSettings();
-
-}
-*/
 void WidgetDiagramElement::updateSettings() {
     // qDebug() << "WidgetDiagramElement::updateSettings()";
 
